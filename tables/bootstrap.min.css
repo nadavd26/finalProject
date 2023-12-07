@@ -1373,9 +1373,14 @@ pre code {
 }
 
 .table td,.table th {
-    padding: .75rem;
+    padding-left: 1.87rem;
+    padding-right: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
     vertical-align: top;
-    border-top: 1px solid #e9ecef
+    vertical-align: middle;
+    border: 1px solid #0d0d0e;
+    text-align: center;
 }
 
 .table thead th {
