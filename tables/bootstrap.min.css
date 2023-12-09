@@ -1380,9 +1380,16 @@ pre code {
     padding-bottom: 1rem;
     vertical-align: top;
     vertical-align: middle;
-    border: 1px solid #0d0d0e;
     text-align: center;
+    border: 1px solid #0d0d0e !important;
+    border-left-width: 0px !important;
+    border-top-width: 0px !important;
 }
+
+.table tbody tr th{
+    border-top-width: 1px !important;
+}
+
 
 .table thead th {
     vertical-align: bottom;

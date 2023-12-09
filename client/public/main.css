@@ -1,0 +1,100 @@
+
+  * {
+      margin: 0px; 
+      padding: 0px; 
+      box-sizing: border-box;
+  }
+  
+  body, html {
+      height: 100%;
+      font-family: sans-serif;
+  }
+
+  .container-table100 {
+    background: #fff;
+  
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .wrap-table100 {
+    width: 80%;
+  }
+  
+  .top-buttons {
+    max-height: 50px;
+  }
+
+  .down-buttons{
+    max-height: 50px;
+  }
+
+  .save-btn{
+    background-color: #cccccc !important;
+    border-color: #cccccc !important;
+    color: #222222 !important;
+  }
+
+  .upload-image{
+    max-width: 100%; /* Ensure the image doesn't exceed the button width */
+      max-height: 100%; /* Ensure the image doesn't exceed the button height */
+      vertical-align: middle; /* Align the image vertically in the middle */
+  }
+
+  th, td {
+    font-weight: unset;
+    padding-right: 10px;
+  }
+  
+  .table100-body td {
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+
+  table {
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+  }
+
+  .table td {
+    border-left-width: 0px !important;
+    background-color: white;
+  }
+
+  .static-position{
+    position: sticky;
+    position: -webkit-sticky;
+    left: 0;
+  }
+
+  .table tbody tr .first-column {
+    border-left-width: 1px !important;
+  }
+  
+  
+  
+  .table100-body {
+    max-height: 585px;
+    overflow: auto;
+  }
+  
+  .first-row{
+      position: sticky;
+      top: 0;
+      z-index: 1; /* Ensure it's above other elements */
+  }
+
+  .blue{
+    background-color: #6c7ae0;
+  }
+
+  td.green {
+    background-color: green;
+  }
+  
