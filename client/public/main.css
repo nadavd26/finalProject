@@ -75,6 +75,8 @@
 
   .table tbody tr .first-column {
     border-left-width: 1px !important;
+    white-space: pre-wrap !important;
+    width: 200px;
   }
   
   
@@ -91,10 +93,10 @@
   }
 
   .blue{
-    background-color: #6c7ae0;
+    background-color: rgba(111, 126, 221, 0.72);
   }
 
   td.green {
-    background-color: green;
+    background-color: rgba(54, 232, 98, 0.5);
   }
   
