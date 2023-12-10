@@ -26,3 +26,8 @@
   .scrollbar::-webkit-scrollbar-corner {
     background: transparent;
   }
+
+  .scrollbar::-webkit-scrollbar {
+    width: 15px; /* Set the width of the scrollbar */
+    height: 15px;
+  }

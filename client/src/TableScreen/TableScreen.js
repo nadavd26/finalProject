@@ -17,10 +17,10 @@ function TableScreen({ workersAndShifts }) {
                     <Table workersAndShifts={workersAndShifts}></Table>
                     <div className="row"><br/></div>
                     <div className="d-flex justify-content-between mb-3 down-buttons">
-                        <div className="col-3"></div>
-                        <button className="btn btn-secondary col-3">Edit</button>
-                        <button className="btn btn-secondary col-3 save-btn">Save</button>
-                        <div className="col-3"></div>
+                        <div className="col-2"></div>
+                        <button className="btn btn-secondary col-4">Edit</button>
+                        <button className="btn btn-secondary col-4 save-btn">Save</button>
+                        <div className="col-2"></div>
                     </div>
                 </div>
             </div>)
