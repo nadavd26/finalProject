@@ -3,7 +3,7 @@ import Upload from './images/uploadImage.webp'
 //expecting json: [{"worker":"name1", "shifts":[true, true, false, ...]}, {"worker":"name2", "shifts":[true, true, false, ...]}, ....]
 function TableScreen({ workersAndShifts }) {
     return (
-            <div>
+            <div id="table-screen">
                 <div className="container-fluid py-3">
                     <div className="d-flex justify-content-between mb-3 top-buttons">
                         <div className="col-1"></div>

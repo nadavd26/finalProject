@@ -7,7 +7,6 @@ function Table({ workersAndShifts }) {
         <div className="container-table100">
             <div className="wrap-table100">
                 <div className="ver1 m-b-110">
-                    <div className="table100-head scrollbar"></div>
                     <div className="table100-body scrollbar">
                         <table className="table table-hover table-striped">
                             <tbody>

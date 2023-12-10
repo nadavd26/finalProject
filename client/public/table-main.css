@@ -10,9 +10,13 @@
       font-family: sans-serif;
   }
 
-  .container-table100 {
-    background: #fff;
-  
+  #table-screen {
+    background-image: url('./gradient-background-light-blue.jpg');
+    background-repeat:round;
+    height: 100vh;
+    width: 100vw;
+  }
+  .container-table100 {  
     display: -webkit-box;
     display: -webkit-flex;
     display: -moz-box;
@@ -97,6 +101,6 @@
   }
 
   td.green {
-    background-color: rgba(54, 232, 98, 0.5);
+    background-color: rgba(131, 226, 145, 1);
   }
-  
+
