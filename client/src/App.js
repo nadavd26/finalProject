@@ -9,9 +9,21 @@ const clientId = "697357189642-cv95irflcae6i8dm2nidpvokkqtpv62k.apps.googleuserc
 
 function App() {
   const booleanArray = new Array(48).fill(false);
-  booleanArray[0] = true;
-  booleanArray[5] = true;
-  booleanArray[10] = true;
+
+// Set some elements to true
+booleanArray[0] = true;
+booleanArray[5] = true;
+booleanArray[10] = true;
+
+// Add more true values
+booleanArray[15] = true;
+booleanArray[20] = true;
+booleanArray[25] = true;
+
+// ... continue adding more true values as needed
+
+console.log(booleanArray);
+
   const booleanArray2 = new Array(48).fill(false);
   booleanArray2[13] = true;
   booleanArray2[14] = true;

@@ -104,7 +104,14 @@
     background-color: rgba(131, 226, 145, 1);
   }
 
+  td.gray {
+    background-color: #dee2e6;
+  }
+
+  td.dark-green {
+    background-color: rgb(25, 189, 66);
+  }
+
   #table{
     margin: 0;
   }
-

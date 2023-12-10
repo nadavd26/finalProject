@@ -62,8 +62,14 @@ function Table({ workersAndShifts }) {
                                     <th className="cell100 last-columns blue">06:30 - 07:00</th>
                                 </tr>
                                 {workersAndShifts.map((workerData, index) => (
-                                    <ShiftsRow key={index} {...workerData} />
+                                    <ShiftsRow
+                                        key={index}
+                                        {...workerData}
+                                        defaultColor={index % 2 === 0 ? 'white' : 'gray'}
+                                        optionalColor={index % 2 === 0 ? 'green' : 'dark-green'}
+                                    />
                                 ))}
+
                             </tbody>
                         </table>
                     </div>
