@@ -83,7 +83,7 @@
 }
 
 #table-screen .table100-body {
-  max-height: 75vh;
+  max-height: 70vh;
   overflow: auto;
 }
 
@@ -112,3 +112,4 @@
 #table-screen #table {
   margin: 0;
 }
+
