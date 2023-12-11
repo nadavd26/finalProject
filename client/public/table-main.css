@@ -1,117 +1,114 @@
 
-  * {
-      margin: 0px; 
-      padding: 0px; 
-      box-sizing: border-box;
-    }
-  
-  body, html {
-      height: 100%;
-      font-family: sans-serif;
-  }
+#table-screen body, html {
+  height: 100%;
+  font-family: sans-serif;
+}
 
-  #table-screen {
-    background-image: url('./gradient-background-light-blue.jpg');
-    background-repeat:round;
-    height: 100vh;
-    width: 100vw;
-  }
-  .container-table100 {  
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  
-  .wrap-table100 {
-    width: 80%;
-  }
-  
-  .top-buttons {
-    max-height: 50px;
-  }
+#table-screen {
+margin: 0px; 
+  padding: 0px; 
+  box-sizing: border-box;
+background-image: url('./gradient-background-light-blue.jpg');
+background-repeat:round;
+height: 100vh;
+width: 100vw;
+}
+#table-screen .container-table100 {  
+display: -webkit-box;
+display: -webkit-flex;
+display: -moz-box;
+display: -ms-flexbox;
+display: flex;
+align-items: center;
+justify-content: center;
+flex-wrap: wrap;
+}
 
-  .down-buttons{
-    max-height: 50px;
-  }
+#table-screen .wrap-table100 {
+width: 80%;
+}
 
-  .save-btn{
-    background-color: #cccccc !important;
-    border-color: #cccccc !important;
-    color: #222222 !important;
-  }
+#table-screen .top-buttons {
+max-height: 50px;
+}
 
-  .upload-image{
-    max-width: 100%; /* Ensure the image doesn't exceed the button width */
-      max-height: 100%; /* Ensure the image doesn't exceed the button height */
-      vertical-align: middle; /* Align the image vertically in the middle */
-  }
+#table-screen .down-buttons{
+max-height: 50px;
+}
 
-  th, td {
-    font-weight: unset;
-    padding-right: 10px;
-  }
-  
-  .table100-body td {
-    padding-top: 16px;
-    padding-bottom: 16px;
-  }
+#table-screen .save-btn{
+background-color: #cccccc !important;
+border-color: #cccccc !important;
+color: #222222 !important;
+}
 
-  table {
-    border-collapse: separate !important;
-    border-spacing: 0 !important;
-  }
+#table-screen .upload-image{
+max-width: 100%; /* Ensure the image doesn't exceed the button width */
+  max-height: 100%; /* Ensure the image doesn't exceed the button height */
+  vertical-align: middle; /* Align the image vertically in the middle */
+}
 
-  .table td {
-    border-left-width: 0px !important;
-    background-color: white;
-  }
+#table-screen th, td {
+font-weight: unset;
+padding-right: 10px;
+}
 
-  .static-position{
-    position: sticky;
-    position: -webkit-sticky;
-    left: 0;
-  }
+#table-screen .table100-body td {
+padding-top: 16px;
+padding-bottom: 16px;
+}
 
-  .table tbody tr .first-column {
-    border-left-width: 1px !important;
-    white-space: pre-wrap !important;
-    width: 200px;
-  }
-  
-  
-  
-  .table100-body {
-    max-height: 75vh;
-    overflow: auto;
-  }
-  
-  .first-row{
-      position: sticky;
-      top: 0;
-      z-index: 1; /* Ensure it's above other elements */
-  }
+#table-screen table {
+border-collapse: separate !important;
+border-spacing: 0 !important;
+}
 
-  .blue{
-    background-color: rgba(111, 126, 221, 1);
-  }
+#table-screen .table td {
+border-left-width: 0px !important;
+background-color: white;
+}
 
-  td.green {
-    background-color: rgba(131, 226, 145, 1);
-  }
+#table-screen .static-position{
+position: sticky;
+position: -webkit-sticky;
+left: 0;
+}
 
-  td.gray {
-    background-color: #dee2e6;
-  }
+#table-screen .table tbody tr .first-column {
+border-left-width: 1px !important;
+white-space: pre-wrap !important;
+width: 200px;
+}
 
-  td.dark-green {
-    background-color: rgb(25, 189, 66);
-  }
 
-  #table{
-    margin: 0;
-  }
+
+#table-screen .table100-body {
+max-height: 75vh;
+overflow: auto;
+}
+
+#table-screen .first-row{
+  position: sticky;
+  top: 0;
+  z-index: 1; /* Ensure it's above other elements */
+}
+
+#table-screen .blue{
+background-color: rgba(111, 126, 221, 1);
+}
+
+#table-screen td.green {
+background-color: rgba(131, 226, 145, 1);
+}
+
+#table-screen td.gray {
+background-color: #dee2e6;
+}
+
+#table-screen td.dark-green {
+background-color: rgb(25, 189, 66);
+}
+
+#table-screen #table{
+margin: 0;
+}
