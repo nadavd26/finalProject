@@ -1,6 +1,7 @@
 import Table from "./conponenets/Table";
 import Upload from './images/uploadImage.webp'
-//expecting json: [{"worker":"name1", "shifts":[true, true, false, ...]}, {"worker":"name2", "shifts":[true, true, false, ...]}, ....]
+// expecting json: [{"worker":"name1", "shifts":[true, true, false, ...]}, {"worker":"name2", "shifts":[true, true, false, ...]}, ....]
+// every boolean array is 48 cells, starting from 7:00, ending at 23:30
 function TableScreen({ workersAndShifts }) {
     return (
             <div id="table-screen">
