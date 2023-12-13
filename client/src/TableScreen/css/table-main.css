@@ -1,0 +1,115 @@
+#table-screen body,
+#table-screen html {
+  height: 100%;
+  font-family: sans-serif;
+}
+
+#table-screen {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-image: url('../../../public/gradient-background-light-blue.jpg');
+  background-repeat: round;
+  height: 100vh;
+  width: 100vw;
+}
+
+#table-screen .container-table100 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+#table-screen .wrap-table100 {
+  width: 80%;
+}
+
+#table-screen .top-buttons {
+  max-height: 50px;
+}
+
+#table-screen .down-buttons {
+  max-height: 50px;
+}
+
+#table-screen .save-btn {
+  background-color: #cccccc !important;
+  border-color: #cccccc !important;
+  color: #222222 !important;
+}
+
+#table-screen .upload-image {
+  max-width: 100%;
+  max-height: 100%;
+  vertical-align: middle;
+}
+
+#table-screen th,
+#table-screen td {
+  font-weight: unset;
+  padding-right: 10px;
+}
+
+#table-screen .table100-body td {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+#table-screen table {
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+}
+
+#table-screen .table td {
+  border-left-width: 0 !important;
+  background-color: white;
+}
+
+#table-screen .static-position {
+  position: sticky;
+  position: -webkit-sticky;
+  left: 0;
+}
+
+#table-screen .table tbody tr .first-column {
+  border-left-width: 1px !important;
+  white-space: pre-wrap !important;
+  width: 200px;
+}
+
+#table-screen .table100-body {
+  max-height: 70vh;
+  overflow: auto;
+}
+
+#table-screen .first-row {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+#table-screen .blue {
+  background-color: rgba(111, 126, 221, 1);
+}
+
+#table-screen td.green {
+  background-color: rgba(131, 226, 145, 1);
+}
+
+#table-screen td.gray {
+  background-color: #dee2e6;
+}
+
+#table-screen td.dark-green {
+  background-color: rgb(25, 189, 66);
+}
+
+#table-screen #table {
+  margin: 0;
+}
+
