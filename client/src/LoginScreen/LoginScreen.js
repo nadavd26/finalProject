@@ -1,7 +1,7 @@
 import LoginButton from './components/login';
 import './LoginScreen.css';
 
-function LoginScreen() {
+function LoginScreen(callback) {
 
   return (
     <div id='login-screen'>

@@ -10,6 +10,9 @@ import { gapi } from 'gapi-script';
 import LoginScreen from './LoginScreen/LoginScreen';
 import UploadScreen from './UploadScreen/UploadScreen';
 import TableScreen from './TableScreen/TableScreen'
+import { AuthProvider } from './AuthContext';
+import { ProtectedRoute } from './ProtectedRoute' 
+
 const clientId = "697357189642-cv95irflcae6i8dm2nidpvokkqtpv62k.apps.googleusercontent.com"
 
 function Root() {
@@ -101,16 +104,45 @@ function Root() {
     { name: 'Aiden Reed', shifts: booleanArray2 },
   ];
 
-return (
-    <Routes>
-      <Route exact path="/" element={<LoginScreen />} />
-      <Route path="/upload" element={ <UploadScreen />} />
-      <Route path="/table" element={<TableScreen daysWorkersAndShifts={{
-        Sunday: workersAndShifts1, Monday: workersAndShifts2, Tuesday: workersAndShifts3, Wednesday: workersAndShifts4,
-        Thursday: workersAndShifts5, Friday: workersAndShifts6, Saturday: workersAndShifts7
-      }} />} />
-      <Route path="*" element={<LoginScreen />} />
-    </Routes>
+  function loginSuccess() {
+    console.log("login success")
+  }
+
+  function loginFailure() {
+    console.log("login failure")
+  }
+  return (
+    <AuthProvider>
+      <Routes>
+        <Route exact path="/" element={<LoginScreen/>} />
+        <Route
+          path="/upload"
+          element={<ProtectedRoute component={<UploadScreen />} />}
+        />
+        <Route
+          path="/table"
+          element={
+            <ProtectedRoute
+              component={
+                <TableScreen
+                  daysWorkersAndShifts={{
+                    Sunday: workersAndShifts1,
+                    Monday: workersAndShifts2,
+                    Tuesday: workersAndShifts3,
+                    Wednesday: workersAndShifts4,
+                    Thursday: workersAndShifts5,
+                    Friday: workersAndShifts6,
+                    Saturday: workersAndShifts7,
+                  }}
+                />
+              }
+            />
+          }
+        />
+        <Route path="*" element={<LoginScreen />} />
+      </Routes>
+    </AuthProvider>
+
   );
 }
 
