@@ -3,19 +3,16 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Link,
-  BrowserRouter,
+  Navigate
 } from "react-router-dom";
 import { gapi } from 'gapi-script';
 import LoginScreen from './LoginScreen/LoginScreen';
 import UploadScreen from './UploadScreen/UploadScreen';
 import TableScreen from './TableScreen/TableScreen'
-import { AuthProvider } from './AuthContext';
-import { ProtectedRoute } from './ProtectedRoute' 
-
+import { UserContext } from './Context/UserContext'
 const clientId = "697357189642-cv95irflcae6i8dm2nidpvokkqtpv62k.apps.googleusercontent.com"
 
-function Root() {
+function App() {
   useEffect(() => {
     function start() {
       gapi.client.init({
@@ -28,7 +25,6 @@ function Root() {
   }, []);
 
   const booleanArray = new Array(48).fill(false);
-
   // Set some elements to true
   booleanArray[0] = true;
   booleanArray[5] = true;
@@ -111,46 +107,40 @@ function Root() {
   function loginFailure() {
     console.log("login failure")
   }
+
+  const [user, setUser] = useState(null);
+
   return (
-    <AuthProvider>
+    <UserContext.Provider value={{ user, setUser }}>
       <Routes>
-        <Route exact path="/" element={<LoginScreen/>} />
+        <Route exact path="/" element={<LoginScreen />} />
         <Route
           path="/upload"
-          element={<ProtectedRoute component={<UploadScreen />} />}
+          element={user ? <UploadScreen /> : <Navigate replace to="/" />}
+        />
+        <Route
+          path="/login"
+          element={<LoginScreen />}
         />
         <Route
           path="/table"
-          element={
-            <ProtectedRoute
-              component={
-                <TableScreen
-                  daysWorkersAndShifts={{
-                    Sunday: workersAndShifts1,
-                    Monday: workersAndShifts2,
-                    Tuesday: workersAndShifts3,
-                    Wednesday: workersAndShifts4,
-                    Thursday: workersAndShifts5,
-                    Friday: workersAndShifts6,
-                    Saturday: workersAndShifts7,
-                  }}
-                />
-              }
-            />
+          element={user ?
+            <TableScreen
+              daysWorkersAndShifts={{
+                Sunday: workersAndShifts1,
+                Monday: workersAndShifts2,
+                Tuesday: workersAndShifts3,
+                Wednesday: workersAndShifts4,
+                Thursday: workersAndShifts5,
+                Friday: workersAndShifts6,
+                Saturday: workersAndShifts7,
+              }}
+            /> : <Navigate replace to="/" />
           }
         />
         <Route path="*" element={<LoginScreen />} />
       </Routes>
-    </AuthProvider>
-
-  );
-}
-
-function App() {
-  return (
-    <BrowserRouter>
-      <Root />
-    </BrowserRouter>
+    </UserContext.Provider>
   );
 }
 

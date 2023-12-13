@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import Upload from "../TableScreen/images/uploadImage.webp";
 import './UploadScreen.css'
 import UploadFile from "./UploadFile";
+import { useNavigate } from 'react-router-dom'
+
 function UploadScreen() {
   const [selectedButton, setSelectedButton] = useState("FirstFileButton");
   const [showSubmitAlert, setShowSubmitAlert] = useState(false);
@@ -10,12 +11,15 @@ function UploadScreen() {
     SecondFileButton: { file: null, isFileAdded: false },
     ThirdFileButton: { file: null, isFileAdded: false },
   });
+  const navigate = useNavigate();
+
 
   const handleButtonClick = (buttonId) => {
     setSelectedButton(buttonId);
   };
 
   const handleFileAdded = (buttonId, file) => {
+    setShowSubmitAlert(false);
     setFileStates((prevFileStates) => ({
       ...prevFileStates,
       [buttonId]: { file, isFileAdded: true },
@@ -30,8 +34,13 @@ function UploadScreen() {
   };
 
   const handleSubmit = () => {
-    setShowSubmitAlert(!(fileStates.FirstFileButton.isFileAdded && fileStates.SecondFileButton.isFileAdded && fileStates.ThirdFileButton.isFileAdded));
+    if (!(fileStates.FirstFileButton.isFileAdded && fileStates.SecondFileButton.isFileAdded && fileStates.ThirdFileButton.isFileAdded)) {
+      setShowSubmitAlert(true);
+    } else {
+      navigate("/table")
+    }
   }
+
 
   const buttonStyles = (buttonId) => {
     return selectedButton === buttonId

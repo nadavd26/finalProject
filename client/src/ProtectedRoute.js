@@ -1,11 +1,12 @@
 import React from 'react';
 import { Route, Navigate } from 'react-router-dom';
-import { useAuth } from './AuthContext'; // Import the useAuth hook
+import { useContext } from 'react';
+import { UserContext } from './Context/UserContext'
 
 export const ProtectedRoute = ({ component }) => {
-    const { isLoggedIn } = useAuth();
+    const { user, setUser } = useContext(UserContext); // Destructure the login function from useAuth
 
-    return isLoggedIn ? (
+    return user ? (
         React.cloneElement(component, {})
     ) : (
         <Navigate to="/" replace />
