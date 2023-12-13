@@ -1,14 +1,29 @@
-import './App.css';
-import LoginButton from './LoginScreen/components/login';
-import LogoutButton from './components/logout';
-import { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  BrowserRouter,
+} from "react-router-dom";
 import { gapi } from 'gapi-script';
 import LoginScreen from './LoginScreen/LoginScreen';
-import TableScreen from './TableScreen/TableScreen';
-
+import UploadScreen from './UploadScreen/UploadScreen';
+import TableScreen from './TableScreen/TableScreen'
 const clientId = "697357189642-cv95irflcae6i8dm2nidpvokkqtpv62k.apps.googleusercontent.com"
 
-function App() {
+function Root() {
+  useEffect(() => {
+    function start() {
+      gapi.client.init({
+        clientId: clientId,
+        scope: "",
+      })
+    }
+
+    gapi.load('client:auth2', start);
+  }, []);
+
   const booleanArray = new Array(48).fill(false);
 
   // Set some elements to true
@@ -86,23 +101,25 @@ function App() {
     { name: 'Aiden Reed', shifts: booleanArray2 },
   ];
 
-  useEffect(() => {
-    function start() {
-      gapi.client.init({
-        clientId: clientId,
-        scope: ""
-      })
-    };
-
-    gapi.load('client:auth2', start);
-  });
-
-  return (
-    <div className="App">
-      <LoginScreen />
-    </div>
+return (
+    <Routes>
+      <Route exact path="/" element={<LoginScreen />} />
+      <Route path="/upload" element={ <UploadScreen />} />
+      <Route path="/table" element={<TableScreen daysWorkersAndShifts={{
+        Sunday: workersAndShifts1, Monday: workersAndShifts2, Tuesday: workersAndShifts3, Wednesday: workersAndShifts4,
+        Thursday: workersAndShifts5, Friday: workersAndShifts6, Saturday: workersAndShifts7
+      }} />} />
+      <Route path="*" element={<LoginScreen />} />
+    </Routes>
   );
+}
 
+function App() {
+  return (
+    <BrowserRouter>
+      <Root />
+    </BrowserRouter>
+  );
 }
 
 export default App;
