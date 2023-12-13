@@ -3,6 +3,7 @@ import LoginButton from './LoginScreen/components/login';
 import LogoutButton from './components/logout';
 import { useEffect } from 'react';
 import { gapi } from 'gapi-script';
+import LoginScreen from './LoginScreen/LoginScreen';
 import TableScreen from './TableScreen/TableScreen';
 
 const clientId = "697357189642-cv95irflcae6i8dm2nidpvokkqtpv62k.apps.googleusercontent.com"
@@ -85,8 +86,15 @@ console.log(booleanArray);
     { name: 'Aiden Reed', shifts: booleanArray2 },
   ];
 
-  return <TableScreen daysWorkersAndShifts={{Sunday : workersAndShifts1, Monday: workersAndShifts2, Tuesday : workersAndShifts3, Wednesday: workersAndShifts4,
-  Thursday : workersAndShifts5, Friday : workersAndShifts6, Saturday : workersAndShifts7}}/>
+    gapi.load('client:auth2', start);
+  });
+
+  return (
+    <div className="App">
+      <LoginScreen />
+    </div>
+  );
+
 }
 
 export default App;
