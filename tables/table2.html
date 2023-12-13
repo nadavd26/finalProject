@@ -1,233 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<title>Table V04</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
-
-<link rel="stylesheet" type="text/css" href="font.css">
-
-<link rel="stylesheet" type="text/css" href="animate.css">
-
-<link rel="stylesheet" type="text/css" href="select2.min.css">
-
-
-<link rel="stylesheet" type="text/css" href="util.css">
-<link rel="stylesheet" type="text/css" href="main.css">
-<link rel="stylesheet" type="text/css" href="perfect-scrollbar.css">
+    <title>Table V04</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="stylesheet" type="text/css" href="perfect-scrollbar.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 
 <body>
-<div class="container-table100">
-<div class="wrap-table100">
-<div class="table100 ver1 m-b-110">
-<div class="table100-head">
-<table class="table">
-<thead>
-<tr class="row100 head">
-<th class="cell100 first-column">Name</th>
-<th class="cell100 last-columns">Sunday</th>
-<th class="cell100 last-columns">Monday</th>
-<th class="cell100 last-columns">Tuesday</th>
-<th class="cell100 last-columns">Wednesday</th>
-<th class="cell100 last-columns">Thursday</th>
-<th class="cell100 last-columns">Friday</th>
-<th class="cell100 last-columns">Saturday</th>
-</tr>
-</thead>
-</table>
-</div>
-<div class="table100-body scrollbar">
-<table class="table table-hover table-striped">
-<tbody>
-<tr class="row100 body">
-<td class="cell100 first-column">Meir</td>
-<td class="cell100 last-columns">7:00 - 11:30</td>
-<td class="cell100 last-columns">--</td>
-<td class="cell100 last-columns">--</td>
-<td class="cell100 last-columns">7:00 - 13:00</td>
-<td class="cell100 last-columns">--</td>
-<td class="cell100 last-columns">7:00 - 12:00</td>
-<td class="cell100 last-columns">7:00 - 14:00</td>
-</tr>
-<tr class="row100 body">
-<td class="cell100 first-column">Haim</td>
-<td class="cell100 last-columns">10:00 - 15:00</td>
-<td class="cell100 last-columns">7:00 - 11:00</td>
-<td class="cell100 last-columns">9:00 - 13:00</td>
-<td class="cell100 last-columns">--</td>
-<td class="cell100 last-columns">11:00 - 17:00</td>
-<td class="cell100 last-columns">--</td>
-<td class="cell100 last-columns">--</td>
-</tr>
-<tr class="row100 body">
-<td class="cell100 first-column">Cohen</td>
-<td class="cell100 last-columns">--</td>
-<td class="cell100 last-columns">10:00 - 16:00</td>
-<td class="cell100 last-columns">14:00 - 20:00</td>
-<td class="cell100 last-columns">10:00 - 17:00</td>
-<td class="cell100 last-columns">--</td>
-<td class="cell100 last-columns">9:00 - 15:00</td>
-<td class="cell100 last-columns">--</td>
-</tr>
-<tr class="row100 body">
-<td class="cell100 first-column">Levi</td>
-<td class="cell100 last-columns">12:00 - 20:00</td>
-<td class="cell100 last-columns">10:00 - 13:00</td>
-<td class="cell100 last-columns">--</td>
-<td class="cell100 last-columns">--</td>
-<td class="cell100 last-columns">--</td>
-<td class="cell100 last-columns">13:00 - 16:00</td>
-<td class="cell100 last-columns">7:00 - 14:00</td>
-</tr>
-<tr class="row100 body">
-<td class="cell100 first-column">Zohar</td>
-<td class="cell100 last-columns">12:00 - 20:00</td>
-<td class="cell100 last-columns">--</td>
-<td class="cell100 last-columns">13:00 - 16:30</td>
-<td class="cell100 last-columns">12:00 - 18:30</td>
-<td class="cell100 last-columns">12:00 - 16:00</td>
-<td class="cell100 last-columns">--</td>
-<td class="cell100 last-columns">10:00 - 17:30</td>
+    <div class="container-fluid py-3">
+        <div class="d-flex justify-content-between mb-3 top-buttons">
+            <div class="col-1"></div>
+            <button class="btn btn-secondary col-4">Amount of employees required for each shift</button>
+            <button class="btn btn-primary col-4">Allocation of employees</button>
+            <button class="btn btn-success col-2">
+                <img src="uploadImage.webp" alt="Upload" class="upload-image">
+            </button>
+            <div class="col-1"></div>
+        </div>
 
-</tr>
-<td class="cell100 first-column">Moshe</td>
-<td class="cell100 last-columns">10:00 - 15:00</td>
-<td class="cell100 last-columns">7:00 - 11:00</td>
-<td class="cell100 last-columns">9:00 - 13:00</td>
-<td class="cell100 last-columns">--</td>
-<td class="cell100 last-columns">11:00 - 17:00</td>
-<td class="cell100 last-columns">--</td>
-<td class="cell100 last-columns">--</td>
-</tr>
-<tr class="row100 body">
-<td class="cell100 first-column">Amit</td>
-<td class="cell100 last-columns">12:00 - 14:00</td>
-<td class="cell100 last-columns">8:00 - 13:00</td>
-<td class="cell100 last-columns">--</td>
-<td class="cell100 last-columns">10:00 - 13:00</td>
-<td class="cell100 last-columns">--</td>
-<td class="cell100 last-columns">13:00 - 16:00</td>
-<td class="cell100 last-columns">7:00 - 14:00</td>
-</tr>
-<tr class="row100 body">
-<td class="cell100 first-column">Tal</td>
-<td class="cell100 last-columns">--</td>
-<td class="cell100 last-columns">10:00 - 16:00</td>
-<td class="cell100 last-columns">14:00 - 20:00</td>
-<td class="cell100 last-columns">--</td>
-<td class="cell100 last-columns">--</td>
-<td class="cell100 last-columns">9:00 - 15:00</td>
-<td class="cell100 last-columns">--</td>
-</tr>
-<tr class="row100 body">
-<td class="cell100 first-column">Bar</td>
-<td class="cell100 last-columns">12:00 - 18:00</td>
-<td class="cell100 last-columns">--</td>
-<td class="cell100 last-columns">13:00 - 18:00</td>
-<td class="cell100 last-columns">--</td>
-<td class="cell100 last-columns">7:00 - 13:00</td>
-<td class="cell100 last-columns">--</td>
-<td class="cell100 last-columns">--</td>
-</tr>
-<tr class="row100 body">
-<td class="cell100 first-column">Meir</td>
-<td class="cell100 last-columns">--</td>
-<td class="cell100 last-columns">7:00 - 14:30</td>
-<td class="cell100 last-columns">--</td>
-<td class="cell100 last-columns">7:00 - 13:00</td>
-<td class="cell100 last-columns">7:00 - 14:00</td>
-<td class="cell100 last-columns">7:00 - 12:30</td>
-<td class="cell100 last-columns">--</td>
-</tr>
-<tr class="row100 body">
-<td class="cell100 first-column">Cohen</td>
-<td class="cell100 last-columns">--</td>
-<td class="cell100 last-columns">11:00 - 16:00</td>
-<td class="cell100 last-columns">--</td>
-<td class="cell100 last-columns">13:00 - 17:00</td>
-<td class="cell100 last-columns">14:00 - 20:00</td>
-<td class="cell100 last-columns">7:00 - 13:00</td>
-<td class="cell100 last-columns">--</td>
-</tr>
-<tr class="row100 body">
-<td class="cell100 first-column">Like a butterfly</td>
-<td class="cell100 last-columns">Boxing</td>
-<td class="cell100 last-columns">9:00 AM - 11:00 AM</td>
-<td class="cell100 last-columns">Aaron Chapman</td>
-<td class="cell100 last-columns">10</td>
-</tr>
-<tr class="row100 body">
-<td class="cell100 first-column">Mind & Body</td>
-<td class="cell100 last-columns">Yoga</td>
-<td class="cell100 last-columns">8:00 AM - 9:00 AM</td>
-<td class="cell100 last-columns">Adam Stewart</td>
-<td class="cell100 last-columns">15</td>
-</tr>
-<tr class="row100 body">
-<td class="cell100 first-column">Crit Cardio</td>
-<td class="cell100 last-columns">Gym</td>
-<td class="cell100 last-columns">9:00 AM - 10:00 AM</td>
-<td class="cell100 last-columns">Aaron Chapman</td>
-<td class="cell100 last-columns">10</td>
-</tr>
-<tr class="row100 body">
-<td class="cell100 first-column">Wheel Pose Full Posture</td>
-<td class="cell100 last-columns">Yoga</td>
-<td class="cell100 last-columns">7:00 AM - 8:30 AM</td>
-<td class="cell100 last-columns">Donna Wilson</td>
-<td class="cell100 last-columns">15</td>
-</tr>
-<tr class="row100 body">
-<td class="cell100 first-column">Playful Dancer's Flow</td>
-<td class="cell100 last-columns">Yoga</td>
-<td class="cell100 last-columns">8:00 AM - 9:00 AM</td>
-<td class="cell100 last-columns">Donna Wilson</td>
-<td class="cell100 last-columns">10</td>
-</tr>
-<tr class="row100 body">
-<td class="cell100 first-column">Zumba Dance</td>
-<td class="cell100 last-columns">Dance</td>
-<td class="cell100 last-columns">5:00 PM - 7:00 PM</td>
-<td class="cell100 last-columns">Donna Wilson</td>
-<td class="cell100 last-columns">20</td>
-</tr>
-<tr class="row100 body">
-<td class="cell100 first-column">Cardio Blast</td>
-<td class="cell100 last-columns">Gym</td>
-<td class="cell100 last-columns">5:00 PM - 7:00 PM</td>
-<td class="cell100 last-columns">Randy Porter</td>
-<td class="cell100 last-columns">10</td>
-</tr>
-<tr class="row100 body">
-<td class="cell100 first-column">Pilates Reformer</td>
-<td class="cell100 last-columns">Gym</td>
-<td class="cell100 last-columns">8:00 AM - 9:00 AM</td>
-<td class="cell100 last-columns">Randy Porter</td>
-<td class="cell100 last-columns">10</td>
-</tr>
-<tr class="row100 body">
-<td class="cell100 first-column">Supple Spine and Shoulders</td>
-<td class="cell100 last-columns">Yoga</td>
-<td class="cell100 last-columns">6:30 AM - 8:00 AM</td>
-<td class="cell100 last-columns">Randy Porter</td>
-<td class="cell100 last-columns">15</td>
-</tr>
-<tr class="row100 body">
-<td class="cell100 first-column">Yoga for Divas</td>
-<td class="cell100 last-columns">Yoga</td>
-<td class="cell100 last-columns">9:00 AM - 11:00 AM</td>
-<td class="cell100 last-columns">Donna Wilson</td>
-<td class="cell100 last-columns">20</td>
-</tr>
-<tr class="row100 body">
-<td class="cell100 first-column">Virtual Cycle</td>
-<td class="cell100 last-columns">Gym</td>
-<td class="cell100 last-columns">8:00 AM - 9:00 AM</td>
-<td class="cell100 last-columns">Randy Porter</td>
-<td class="cell100 last-columns">20</td>
-</tr>
-</tbody>
-</table>
-</div>
+        <div class="container-table100">
+            <div class="wrap-table100">
+                <div class="ver1 m-b-110">
+                    <div class="table100-head scrollbar">
+                    </div>
+                    <div class="table100-body scrollbar">
+                        <table class="table table-hover table-striped">
+                            <tbody>
+                                <tr class="row100 body first-row">
+                                    <th class="cell100 first-column first-column-body blue static-position"></th>
+                                    <th class="cell100 last-columns blue">7:00 - 7:30</th>
+                                    <th class="cell100 last-columns blue">7:30 - 8:00</th>
+                                    <th class="cell100 last-columns blue">8:00 - 8:30</th>
+                                    <th class="cell100 last-columns blue">8:30 - 9:00</th>
+                                    <th class="cell100 last-columns blue">9:00 - 9:30</th>
+                                    <th class="cell100 last-columns blue">9:30 - 10:00</th>
+                                    <th class="cell100 last-columns blue">10:00 - 10:30</th>
+                                    <th class="cell100 last-columns blue">10:30 - 11:00</th>
+                                    <th class="cell100 last-columns blue">11:00 - 11:30</th>
+                                    <th class="cell100 last-columns blue">11:30 - 12:00</th>
+                                    <th class="cell100 last-columns blue">12:00 - 12:30</th>
+                                    <th class="cell100 last-columns blue">12:30 - 13:00</th>
+                                    <th class="cell100 last-columns blue">13:00 - 13:30</th>
+                                    <th class="cell100 last-columns blue">13:30 - 14:00</th>
+                                    <th class="cell100 last-columns blue">14:00 - 14:30</th>
+                                    <th class="cell100 last-columns blue">14:30 - 15:00</th>
+                                    <th class="cell100 last-columns blue">15:00 - 15:30</th>
+                                    <th class="cell100 last-columns blue">15:30 - 16:00</th>
+                                    <th class="cell100 last-columns blue">16:00 - 16:30</th>
+                                    <th class="cell100 last-columns blue">16:30 - 17:00</th>
+                                    <th class="cell100 last-columns blue">17:00 - 17:30</th>
+                                    <th class="cell100 last-columns blue">17:30 - 18:00</th>
+                                    <th class="cell100 last-columns blue">18:00 - 18:30</th>
+                                    <th class="cell100 last-columns blue">18:30 - 19:00</th>
+                                    <th class="cell100 last-columns blue">19:00 - 19:30</th>
+                                    <th class="cell100 last-columns blue">19:30 - 20:00</th>
+                                    <th class="cell100 last-columns blue">20:00 - 20:30</th>
+                                    <th class="cell100 last-columns blue">20:30 - 21:00</th>
+                                    <th class="cell100 last-columns blue">21:00 - 21:30</th>
+                                    <th class="cell100 last-columns blue">21:30 - 22:00</th>
+                                    <th class="cell100 last-columns blue">22:00 - 22:30</th>
+                                    <th class="cell100 last-columns blue">22:30 - 23:00</th>
+                                    <th class="cell100 last-columns blue">23:00 - 23:30</th>
+                                    <th class="cell100 last-columns blue">23:30 - 00:00</th>
+                                    <th class="cell100 last-columns blue">00:00 - 00:00</th>
+                                    <th class="cell100 last-columns blue">00:30 - 01:00</th>
+                                    <th class="cell100 last-columns blue">01:00 - 00:00</th>
+                                    <th class="cell100 last-columns blue">01:30 - 02:00</th>
+                                    <th class="cell100 last-columns blue">02:00 - 02:30</th>
+                                    <th class="cell100 last-columns blue">02:30 - 03:00</th>
+                                    <th class="cell100 last-columns blue">03:00 - 03:30</th>
+                                    <th class="cell100 last-columns blue">03:30 - 04:00</th>
+                                    <th class="cell100 last-columns blue">04:00 - 04:30</th>
+                                    <th class="cell100 last-columns blue">04:30 - 05:00</th>
+                                    <th class="cell100 last-columns blue">05:00 - 05:30</th>
+                                    <th class="cell100 last-columns blue">05:30 - 06:00</th>
+                                    <th class="cell100 last-columns blue">06:00 - 06:30</th>
+                                    <th class="cell100 last-columns blue">06:30 - 07:00</th>
+                                </tr>
+                                <tr class="row100 body last-rows">
+                                    <td class="cell100 first-column static-position">Haim</td>
+                                    <td class="cell100 last-columns green"></td>
+                                    <td class="cell100 last-columns green"></td>
+                                    <td class="cell100 last-columns"></td>
+                                    <td class="cell100 last-columns"></td>
+                                    <td class="cell100 last-columns"></td>
+                                    <td class="cell100 last-columns"></td>
+                                    <td class="cell100 last-columns"></td>
+                                    <td class="cell100 last-columns"></td>
+                                    <td class="cell100 last-columns"></td>
+                                    <td class="cell100 last-columns"></td>
+                                    <td class="cell100 last-columns"></td>
+                                    <td class="cell100 last-columns green"></td>
+                                    <td class="cell100 last-columns green"></td>
+                                    <td class="cell100 last-columns green"></td>
+                                    <td class="cell100 last-columns"></td>
+                                    <td class="cell100 last-columns"></td>
+                                    <td class="cell100 last-columns"></td>
+                                    <td class="cell100 last-columns"></td>
+                                    <td class="cell100 last-columns"></td>
+                                    <td class="cell100 last-columns"></td>
+                                    <td class="cell100 last-columns"></td>
+                                    <td class="cell100 last-columns"></td>
+                                    <td class="cell100 last-columns"></td>
+                                    <td class="cell100 last-columns green"></td>
+                                    <td class="cell100 last-columns green"></td>
+                                    <td class="cell100 last-columns green"></td>
+                                    <td class="cell100 last-columns"></td>
+                                    <td class="cell100 last-columns green"></td>
+                                    <td class="cell100 last-columns green"></td>
+                                    <td class="cell100 last-columns green"></td>
+                                    <td class="cell100 last-columns"></td>
+                                    <td class="cell100 last-columns"></td>
+                                    <td class="cell100 last-columns"></td>
+                                    <td class="cell100 last-columns"></td>
+                                    <td class="cell100 last-columns"></td>
+                                    <td class="cell100 last-columns"></td>
+                                    <td class="cell100 last-columns"></td>
+                                    <td class="cell100 last-columns"></td>
+                                    <td class="cell100 last-columns green"></td>
+                                    <td class="cell100 last-columns green"></td>
+                                    <td class="cell100 last-columns green"></td>
+                                    <td class="cell100 last-columns"></td>
+                                    <td class="cell100 last-columns green"></td>
+                                    <td class="cell100 last-columns green"></td>
+                                    <td class="cell100 last-columns green"></td>
+                                    <td class="cell100 last-columns"></td>
+                                    <td class="cell100 last-columns"></td>
+                                    <td class="cell100 last-columns"></td>
+                                </tr>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class = "row"><br></div>
+
+        <div class="d-flex justify-content-between mb-3 down-buttons">
+            <div class="col-3"></div>
+            <button class="btn btn-secondary col-3">Edit</button>
+            <button class="btn btn-secondary col-3 save-btn">Save</button>
+            <div class="col-3"></div>
+        </div>
+    </div>
+</body>
+
+</html>
