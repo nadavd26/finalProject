@@ -41,6 +41,21 @@ function UploadScreen() {
     }
   }
 
+  const handleEdit = () => {
+    var numOfFile = 1
+    if (selectedButton === "SecondFileButton") {
+      numOfFile = 2
+    } 
+    if (selectedButton === "ThirdFileButton") {
+      numOfFile = 3
+    }
+    navigate("/edit" + numOfFile, {
+      // state: {
+      //   numOfFile : numOfFile
+      // }
+    });
+  }
+
 
   const buttonStyles = (buttonId) => {
     return selectedButton === buttonId
@@ -102,9 +117,10 @@ function UploadScreen() {
       )}
       <div className="btn-container">
         <div className="d-flex justify-content-between mb-3 top-buttons">
-          <div className="col-4"></div>
-          <button className="btn btn-success col-4" onClick={handleSubmit}>Upload File</button>
-          <div className="col-4"></div>
+          <div className="col-3"></div>
+          <button className="btn btn-success col-3" onClick={handleSubmit}>Upload File</button>
+          <button className="btn btn-secondary col-3" onClick={handleEdit}>Edit</button>
+          <div className="col-3"></div>
         </div>
       </div>
       <div className="d-flex justify-content-between mb-3">
