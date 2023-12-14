@@ -14,7 +14,6 @@ const createUser = async (email, familyName, givenName, googleId, imageUrl, name
 };
 
 const isUserInDBByEmail = async (email) => {
-    console.log('In login')
     try {
         const user = await User.findOne({ email });
         if (user) {
@@ -27,5 +26,19 @@ const isUserInDBByEmail = async (email) => {
     }
 };
 
-module.exports = {createUser, isUserInDBByEmail}
+const getUser = async (email, googleId) => {
+    const user = await User.findOne({ email, googleId });
+    if (user === null) throw new Error("Incorrect email or google id.");
+    const newUser = new User({
+        email: user.email,
+        givenName: user.givenName,
+        googleId: user.googleId,
+        familyName: user.familyName,
+        name: user.name
+    });
+    newUser._id = user._id;
+    return newUser;
+}
+
+module.exports = { createUser, isUserInDBByEmail, getUser }
 

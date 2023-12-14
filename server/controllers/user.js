@@ -1,4 +1,5 @@
 const UserService = require("../services/user");
+const jwt = require("jsonwebtoken");
 
 const createUser = async (req, res) => {
     try {
@@ -10,7 +11,15 @@ const createUser = async (req, res) => {
             req.body.imageUrl,
             req.body.name
         );
-        res.sendStatus(200);
+        //Creating token
+        let user = await UserService.getUser(req.body.email, req.body.googleId)
+        if (user != null) {
+            user = user.toObject();
+            const token = jwt.sign(user, process.env.SECRET_KEY, {
+                expiresIn: "20m",
+            });
+            res.status(200).send(token);
+        }
     } catch (err) {
         if (err.name === "Error") {
             res.sendStatus(409);
@@ -20,14 +29,19 @@ const createUser = async (req, res) => {
 
 const login = async (req, res) => {
     try {
-        console.log(req.body.email);
         bool = await UserService.isUserInDBByEmail(req.body.email)
-        console.log(2)
         if (bool) {   //Checking if the user is in the DB.
-            res.sendStatus(200);
+            //Creating token
+            let user = await UserService.getUser(req.body.email, req.body.googleId)
+            if (user != null) {
+                user = user.toObject();
+                const token = jwt.sign(user, process.env.SECRET_KEY, {
+                    expiresIn: "20m",
+                });
+                res.status(200).send(token);
+            }
         }
         else { //Need to add him to the DB.
-            console.log(12);
             await createUser(req, res);
         }
     } catch (err) {
@@ -36,4 +50,4 @@ const login = async (req, res) => {
         }
     }
 }
-module.exports = { login , createUser}
+module.exports = { login, createUser }
