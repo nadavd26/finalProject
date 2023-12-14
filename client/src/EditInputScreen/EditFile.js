@@ -20,6 +20,9 @@ function EditFile() {
     }
 
     const isNumberOfWorkersValid = (numOfWorkers) => {
+        if (numOfWorkers === "") {
+            return false
+        }
         const parsedValue = Number(numOfWorkers);
         return Number.isInteger(parsedValue) && parsedValue >= 0;
     };
@@ -36,11 +39,19 @@ function EditFile() {
     };
 
     const handleCellEdit = (rowIndex, columnIndex, value) => {
-        const updatedContent = content.map((row, i) =>
-            i === rowIndex ? row.map((cell, j) => (j === columnIndex ? value : cell)) : row
-        );
+        const updatedContent = content.map((row, i) => {
+            if (i === rowIndex) {
+                return {
+                    ...row,
+                    value: row.value.map((cell, j) => (j === columnIndex ? value : cell)),
+                };
+            } else {
+                return row;
+            }
+        });
         setContent(updatedContent);
     };
+
 
     const handleSave = () => {
         console.log("save content is:");

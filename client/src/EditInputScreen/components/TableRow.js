@@ -4,17 +4,15 @@ import rowAddImage from '../Images/addRow.png'
 import "../css/TableRow.css"; // Import your CSS file for styling
 
 export default function TableRow({ row, rowIndex, onCellEdit, onRowDelete, onRowAdd, firstRow }) {
-    const [oldValue, setOldValue] = useState("");
+    var oldValue = ""
     const [rowTransparent, setRowTransparent] = useState("")
 
     const handleFocus = (index, value) => {
-        setOldValue(value);
-        // Add a class to change the background color when focused
+        oldValue = value
         document.getElementById(`cell-${rowIndex}-${index}`).classList.add("focused-cell");
     };
 
     const handleCellEdit = (columnIndex, value, e) => {
-        // Remove the class when focus is lost
         document.getElementById(`cell-${rowIndex}-${columnIndex}`).classList.remove("focused-cell");
 
         if (firstRow[columnIndex].validate(value)) {
@@ -34,6 +32,7 @@ export default function TableRow({ row, rowIndex, onCellEdit, onRowDelete, onRow
         setRowTransparent("")
         onRowAdd(rowIndex)
     }
+    console.log("row is: " + row)
 
     if (row.length === 0) {
         return null; // Return null if the row is empty
@@ -61,7 +60,7 @@ export default function TableRow({ row, rowIndex, onCellEdit, onRowDelete, onRow
                     </button>
                 </td>) :
                     <td id="addRow">
-                        <button className="btn btn-sm border-0 p-0" id="deleteRow" onClick={handleAddRow}>
+                        <button className="btn btn-sm border-0 p-0" onClick={handleAddRow}>
                             <img src={rowAddImage} alt="Image" className="img-fluid" />
                         </button>
                     </td>}

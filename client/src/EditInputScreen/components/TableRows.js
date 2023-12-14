@@ -2,10 +2,10 @@ import TableRow from "./TableRow";
 //first row : [{name : , validate : function}, ....]
 export default function TableRows({ content, onCellEdit, firstRow, onRowDelete, onRowAdd }) {
     return (
-        content.map((row, index) => (
+        content.map((rowMap, index) => (
             <TableRow
                 rowIndex={index}
-                row={row.value}
+                row={rowMap.value}
                 onRowDelete={onRowDelete}
                 onRowAdd={onRowAdd}
                 onCellEdit={onCellEdit}
