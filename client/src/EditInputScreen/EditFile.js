@@ -72,11 +72,15 @@ function EditFile() {
 
     const deleteRow = (rowIndex) => {
         if (rowIndex >= 0 && rowIndex < content.length) {
-            const newContent = [...content];
-            newContent[rowIndex].deleted = true;
-            setContent(newContent);
-        } else {
-            console.error("Invalid rowIndex for deleteRow:", rowIndex);
+            setContent((prevContent) => {
+                const newContent = [...prevContent];
+                if (newContent[rowIndex].value.every((val) => val === "")) {
+                    newContent.splice(rowIndex, 1);
+                } else {
+                    newContent[rowIndex].deleted = true;
+                }
+                return newContent;
+            });
         }
     };
 

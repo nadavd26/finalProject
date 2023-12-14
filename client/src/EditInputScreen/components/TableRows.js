@@ -5,7 +5,7 @@ export default function TableRows({ content, onCellEdit, firstRow, onRowDelete, 
         content.map((rowMap, index) => (
             <TableRow
                 rowIndex={index}
-                row={rowMap.value}
+                row={rowMap}
                 onRowDelete={onRowDelete}
                 onRowAdd={onRowAdd}
                 onCellEdit={onCellEdit}
