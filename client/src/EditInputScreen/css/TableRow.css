@@ -1,10 +1,10 @@
 /* TableRow.css */
-.focused-cell {
+#table-row .focused-cell {
     background-color: rgb(158, 241, 179) !important;
     outline: none;
 }
 
-#deleteRow {
+#table-row #deleteRow {
     width: 75px !important;
     height: 75px !important;
     background-color: transparent !important;
@@ -12,14 +12,19 @@
     border: none !important;
 }
 
-.transparent {
-    background-color: rgba(223, 212, 212, 0.7) !important;
+#table-row .transparent {
+    background-color: rgb(240, 92, 92) !important;
 }
 
-#addRow {
+#table-row #addRow {
     width: 75px !important;
     height: 75px !important;
     background-color: transparent !important;
     outline: none !important;
     border: none !important;
+}
+
+#table-row .no-outline:focus {
+    outline: none !important;
+    box-shadow: none !important;
 }

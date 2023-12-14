@@ -40,7 +40,7 @@ export default function TableRow({ row, rowIndex, onCellEdit, onRowDelete, onRow
 
     return (
         <>
-            <tr className="row100 body last-rows">
+            <tr className="row100 body last-rows" id="table-row">
                 {row.map((value, index) => (
                     <td
                         key={index}
@@ -49,18 +49,18 @@ export default function TableRow({ row, rowIndex, onCellEdit, onRowDelete, onRow
                         suppressContentEditableWarning={true}
                         onBlur={(e) => handleCellEdit(index, e.target.innerText, e)}
                         onFocus={(e) => handleFocus(index, e.target.innerText)}
-                        contentEditable={true}
+                        contentEditable={rowTransparent === "" ? true : false}
                     >
                         {value}
                     </td>
                 ))}
                 {rowTransparent === "" ? (<td id="deleteRow">
-                    <button className="btn btn-sm border-0 p-0" onClick={handleDeleteRow}>
+                    <button className="btn btn-sm border-0 p-0 no-outline" onClick={handleDeleteRow}>
                         <img src={rowDeleteImage} alt="Image" className="img-fluid" />
                     </button>
                 </td>) :
                     <td id="addRow">
-                        <button className="btn btn-sm border-0 p-0" onClick={handleAddRow}>
+                        <button className="btn btn-sm border-0 p-0 no-outline" onClick={handleAddRow}>
                             <img src={rowAddImage} alt="Image" className="img-fluid" />
                         </button>
                     </td>}
