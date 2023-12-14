@@ -35,7 +35,6 @@ function App() {
   booleanArray[20] = true;
   booleanArray[25] = true;
   // ... continue adding more true values as needed
-  console.log(booleanArray);
   const booleanArray2 = new Array(48).fill(false);
   booleanArray2[13] = true;
   booleanArray2[14] = true;
@@ -100,14 +99,6 @@ function App() {
     { name: 'Ella Scott', shifts: booleanArray },
     { name: 'Aiden Reed', shifts: booleanArray2 },
   ];
-
-  function loginSuccess() {
-    console.log("login success")
-  }
-
-  function loginFailure() {
-    console.log("login failure")
-  }
 
   const [user, setUser] = useState(null);
 

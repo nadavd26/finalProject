@@ -79,7 +79,6 @@
 #edit-file .table tbody tr .first-column {
   border-left-width: 1px !important;
   white-space: pre-wrap !important;
-  width: 200px;
 }
 
 #edit-file .table100-body {

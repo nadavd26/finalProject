@@ -8,7 +8,7 @@ import { useLocation } from 'react-router-dom';
 function EditFile() {
     const location = useLocation();
     const { numOfFile } = location.state
-    const [content, setContent] = useState([["", "", "", "", ""]])
+    const [content, setContent] = useState([{ "value": ["", "", "", "", ""], "deleted": false }])
     const isDayValid = (day) => {
         const validDays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
         return validDays.includes(day);
@@ -20,9 +20,10 @@ function EditFile() {
     }
 
     const isNumberOfWorkersValid = (numOfWorkers) => {
-        const parsedValue = parseInt(numOfWorkers, 10);
+        const parsedValue = Number(numOfWorkers);
         return Number.isInteger(parsedValue) && parsedValue >= 0;
-    }
+    };
+
 
     function isSkillValid(input) {
         const regex = /^(?=.*[a-zA-Z])[a-zA-Z0-9@'",.!?]*$/;
@@ -30,7 +31,7 @@ function EditFile() {
     }
 
     const addRowHandler = () => {
-        const newRow = ["", "", "", "", ""];
+        const newRow = { "value": ["", "", "", "", ""], "deleted": false }
         setContent((prevContent) => [...prevContent, newRow]);
     };
 
@@ -47,9 +48,28 @@ function EditFile() {
             console.log(row);
         });
     };
-    
 
-    
+    const addRow = (rowIndex) => {
+        if (rowIndex >= 0 && rowIndex < content.length) {
+            const newContent = [...content];
+            newContent[rowIndex].deleted = false;
+            setContent(newContent);
+        } else {
+            console.error("Invalid rowIndex for addRow:", rowIndex);
+        }
+    };
+
+    const deleteRow = (rowIndex) => {
+        if (rowIndex >= 0 && rowIndex < content.length) {
+            const newContent = [...content];
+            newContent[rowIndex].deleted = true;
+            setContent(newContent);
+        } else {
+            console.error("Invalid rowIndex for deleteRow:", rowIndex);
+        }
+    };
+
+
     var firstRow = []
     if (numOfFile == 1) {
         firstRow = [{ name: "Day", validate: isDayValid },
@@ -71,7 +91,7 @@ function EditFile() {
                     <div className="col-1"></div>
                 </div>
                 <br></br>
-                <Table firstRow={firstRow} content={content} onCellEdit={handleCellEdit}></Table>
+                <Table firstRow={firstRow} content={content} onCellEdit={handleCellEdit} onRowDelete={deleteRow} onRowAdd={addRow}></Table>
                 <div className="row"><br /></div>
                 <div className="d-flex justify-content-between mb-3 down-buttons">
                     <div className="col-3"></div>
