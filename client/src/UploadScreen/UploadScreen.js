@@ -45,14 +45,14 @@ function UploadScreen() {
     var numOfFile = 1
     if (selectedButton === "SecondFileButton") {
       numOfFile = 2
-    } 
+    }
     if (selectedButton === "ThirdFileButton") {
       numOfFile = 3
     }
-    navigate("/edit" + numOfFile, {
-      // state: {
-      //   numOfFile : numOfFile
-      // }
+    navigate("/edit", {
+      state: {
+        numOfFile: [numOfFile]
+      }
     });
   }
 

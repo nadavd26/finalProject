@@ -1,10 +1,13 @@
 import TableRow from "./TableRow";
-export default function TableRows({ content }) {
+//first row : [{name : , validate : function}, ....]
+export default function TableRows({ content, onCellEdit, firstRow }) {
     return (
         content.map((row, index) => (
             <TableRow
-                key={index}
+                rowIndex={index}
                 row={row}
+                onCellEdit={onCellEdit}
+                firstRow={firstRow}
             />
         ))
     );
