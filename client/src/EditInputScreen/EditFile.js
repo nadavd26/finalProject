@@ -8,42 +8,18 @@ import { useLocation } from 'react-router-dom';
 function EditFile() {
     const location = useLocation();
     const { numOfFile } = location.state
-    const [content, setContent] = useState([{ "value": ["", "", "", "", ""], "deleted": false }])
-    const isDayValid = (day) => {
-        const validDays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-        return validDays.includes(day);
-    }
-
-    const isHourValid = (time) => {
-        const timeRegex = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
-        return timeRegex.test(time);
-    }
-
-    const isNumberOfWorkersValid = (numOfWorkers) => {
-        if (numOfWorkers === "") {
-            return false
-        }
-        const parsedValue = Number(numOfWorkers);
-        return Number.isInteger(parsedValue) && parsedValue >= 0;
-    };
-
-
-    function isSkillValid(input) {
-        const regex = /^(?=.*[a-zA-Z])[a-zA-Z0-9@'",.!?]*$/;
-        return regex.test(input);
-    }
-
+    const [content, setContent] = useState([{ "value": ["Sunday", "", "06:00", "23:00", ""], "valid": false }])
     const addRowHandler = () => {
-        const newRow = { "value": ["", "", "", "", ""], "deleted": false }
+        const newRow = { "value": ["Sunday", "", "06:00", "23:00", ""], "valid": false }
         setContent((prevContent) => [...prevContent, newRow]);
     };
 
-    const handleCellEdit = (rowIndex, columnIndex, value) => {
+    const handleCellEdit = (rowIndex, columnIndex, value, isValid=true) => {
         const updatedContent = content.map((row, i) => {
             if (i === rowIndex) {
                 return {
-                    ...row,
                     value: row.value.map((cell, j) => (j === columnIndex ? value : cell)),
+                    valid: isValid
                 };
             } else {
                 return row;
@@ -71,17 +47,6 @@ function EditFile() {
     };
 
     const deleteRow = (rowIndex) => {
-        // if (rowIndex >= 0 && rowIndex < content.length) {
-        //     setContent((prevContent) => {
-        //         const newContent = [...prevContent];
-        //         if (newContent[rowIndex].value.every((val) => val === "")) {
-        //             newContent.splice(rowIndex, 1);
-        //         } else {
-        //             newContent[rowIndex].deleted = true;
-        //         }
-        //         return newContent;
-        //     });
-        // }
         if (rowIndex >= 0 && rowIndex < content.length) {
             setContent((prevContent) => {
                 const newContent = [...prevContent];
@@ -89,16 +54,6 @@ function EditFile() {
                 return newContent;
             })
         };
-    }
-
-
-    var firstRow = []
-    if (numOfFile == 1) {
-        firstRow = [{ name: "Day", validate: isDayValid },
-        { name: "Skill", validate: isSkillValid },
-        { name: "From", validate: isHourValid },
-        { name: "Until", validate: isHourValid }
-            , { name: "Required Number Of Workers", validate: isNumberOfWorkersValid }]
     }
 
     return (
@@ -113,7 +68,7 @@ function EditFile() {
                     <div className="col-1"></div>
                 </div>
                 <br></br>
-                <Table firstRow={firstRow} content={content} onCellEdit={handleCellEdit} onRowDelete={deleteRow} onRowAdd={addRow}></Table>
+                <Table content={content} onCellEdit={handleCellEdit} onRowDelete={deleteRow} onRowAdd={addRow}></Table>
                 <div className="row"><br /></div>
                 <div className="d-flex justify-content-between mb-3 down-buttons">
                     <div className="col-3"></div>

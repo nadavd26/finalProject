@@ -49,3 +49,7 @@
     width: 100% !important;
     height: 100% !important;
 }
+
+.red {
+    background-color: red !important;
+}
