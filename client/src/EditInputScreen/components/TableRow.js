@@ -2,33 +2,21 @@ import rowDeleteImage from '../Images/deleteRow.png'
 import "../css/TableRow.css"; // Import your CSS file for styling
 import DayDropdown from './DayDropdown';
 
-export default function TableRow({ row, rowIndex, onCellEdit, onRowDelete, onRowAdd, firstRow }) {
+export default function TableRow({ row, rowIndex, onCellEdit, onRowDelete, onRowAdd, firstRow, isNumberOfWorkersValid, isSkillValid }) {
     var oldValue = ""
-    const isNumberOfWorkersValid = (numOfWorkers) => {
-        if (numOfWorkers === "") {
-            return false
-        }
-        const parsedValue = Number(numOfWorkers);
-        return Number.isInteger(parsedValue) && parsedValue >= 0;
-    };
-
-    function isSkillValid(input) {
-        const regex = /^(?=.*[a-zA-Z])[a-zA-Z0-9@'",.!?]*$/;
-        return regex.test(input);
-    }
     const handleFocus = (index, value) => {
         oldValue = value
         document.getElementById(`cell-${rowIndex}-${index}`).classList.add("focused-cell");
     };
 
-    const handleCellEdit = (columnIndex, value, e) => {
+    const handleNumberOfWorkersEdit = (columnIndex, value, e) => {
         document.getElementById(`cell-${rowIndex}-${columnIndex}`).classList.remove("focused-cell");
         onCellEdit(rowIndex, columnIndex, value);
     };
 
     const handleSkillEdit = (columnIndex, value, e) => {
         document.getElementById(`cell-${rowIndex}-${columnIndex}`).classList.remove("focused-cell");
-        onCellEdit(rowIndex, columnIndex, value, isSkillValid(value));
+        onCellEdit(rowIndex, columnIndex, value);
     };
 
     const handleTimeEdit = (columnIndex, id) => {
@@ -143,8 +131,16 @@ export default function TableRow({ row, rowIndex, onCellEdit, onRowDelete, onRow
                     </select>
                 </td>
 
-                <td id={`cell-${rowIndex}-${1}`} class={"cell100 last-columns"} contenteditable="true" onBlur={(e) => handleSkillEdit(1, e.target.innerText, e)}
-                    onFocus={(e) => handleFocus(1, e.target.innerText)}>{row.value[1]}</td>
+                <td
+                    id={`cell-${rowIndex}-${1}`}
+                    className={`cell100 last-columns ${isSkillValid(row.value[1]) ? '' : 'red'}`}
+                    contentEditable="true"
+                    onBlur={(e) => handleSkillEdit(1, e.target.innerText, e)}
+                    onFocus={(e) => handleFocus(1, e.target.innerText)}
+                >
+                    {row.value[1]}
+                </td>
+
 
                 <td id={`cell-${rowIndex}-${2}`} class="cell100 last-columns" onBlur={(e) => handleTimeEdit(2, "appt1-" + rowIndex)}
                     onFocus={(e) => handleFocus(2, e.target.innerText)}>
@@ -159,7 +155,7 @@ export default function TableRow({ row, rowIndex, onCellEdit, onRowDelete, onRow
                     </select>
                 </td>
 
-                <td id={`cell-${rowIndex}-${4}`} class="cell100 last-columns " contenteditable="true" onBlur={(e) => handleCellEdit(4, e.target.innerText, e)}
+                <td id={`cell-${rowIndex}-${4}`} className={`cell100 last-columns ${isNumberOfWorkersValid(row.value[4]) ? '' : 'red'}`} contenteditable="true" onBlur={(e) => handleNumberOfWorkersEdit(4, e.target.innerText, e)}
                     onFocus={(e) => handleFocus(4, e.target.innerText)}>{row.value[4]}</td>
             </tr >
         </>

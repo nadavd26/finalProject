@@ -14,7 +14,7 @@ function EditFile() {
         setContent((prevContent) => [...prevContent, newRow]);
     };
 
-    const handleCellEdit = (rowIndex, columnIndex, value, isValid=true) => {
+    const handleCellEdit = (rowIndex, columnIndex, value, isValid = true) => {
         const updatedContent = content.map((row, i) => {
             if (i === rowIndex) {
                 return {
@@ -28,6 +28,18 @@ function EditFile() {
         setContent(updatedContent);
     };
 
+    const isNumberOfWorkersValid = (numOfWorkers) => {
+        if (numOfWorkers === "") {
+            return false
+        }
+        const parsedValue = Number(numOfWorkers);
+        return Number.isInteger(parsedValue) && parsedValue >= 0;
+    };
+
+    function isSkillValid(input) {
+        const regex = /^(?=.*[a-zA-Z])[a-zA-Z0-9@'",.!?]*$/;
+        return regex.test(input);
+    }
 
     const handleSave = () => {
         console.log("save content is:");
@@ -68,7 +80,8 @@ function EditFile() {
                     <div className="col-1"></div>
                 </div>
                 <br></br>
-                <Table content={content} onCellEdit={handleCellEdit} onRowDelete={deleteRow} onRowAdd={addRow}></Table>
+                <Table content={content} onCellEdit={handleCellEdit} onRowDelete={deleteRow} onRowAdd={addRow}
+                    isNumberOfWorkersValid={isNumberOfWorkersValid} isSkillValid={isSkillValid}></Table>
                 <div className="row"><br /></div>
                 <div className="d-flex justify-content-between mb-3 down-buttons">
                     <div className="col-3"></div>
