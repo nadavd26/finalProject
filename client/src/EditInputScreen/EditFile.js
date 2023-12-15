@@ -8,25 +8,23 @@ import { useLocation } from 'react-router-dom';
 function EditFile() {
     const location = useLocation();
     const { numOfFile } = location.state
-    const [content, setContent] = useState([{ "value": ["Sunday", "", "06:00", "23:00", ""], "valid": false }])
+    const [content, setContent] = useState([["Sunday", "", "06:00", "23:00", ""]])
     const addRowHandler = () => {
-        const newRow = { "value": ["Sunday", "", "06:00", "23:00", ""], "valid": false }
+        const newRow = ["Sunday", "", "06:00", "23:00", ""]
         setContent((prevContent) => [...prevContent, newRow]);
     };
 
-    const handleCellEdit = (rowIndex, columnIndex, value, isValid = true) => {
+    const handleCellEdit = (rowIndex, columnIndex, value) => {
         const updatedContent = content.map((row, i) => {
             if (i === rowIndex) {
-                return {
-                    value: row.value.map((cell, j) => (j === columnIndex ? value : cell)),
-                    valid: isValid
-                };
+                return row.map((cell, j) => (j === columnIndex ? value : cell));
             } else {
                 return row;
             }
         });
         setContent(updatedContent);
     };
+    
 
     const isNumberOfWorkersValid = (numOfWorkers) => {
         if (numOfWorkers === "") {

@@ -133,12 +133,12 @@ export default function TableRow({ row, rowIndex, onCellEdit, onRowDelete, onRow
 
                 <td
                     id={`cell-${rowIndex}-${1}`}
-                    className={`cell100 last-columns ${isSkillValid(row.value[1]) ? '' : 'red'}`}
+                    className={`cell100 last-columns ${isSkillValid(row[1]) ? '' : 'red'}`}
                     contentEditable="true"
                     onBlur={(e) => handleSkillEdit(1, e.target.innerText, e)}
                     onFocus={(e) => handleFocus(1, e.target.innerText)}
                 >
-                    {row.value[1]}
+                    {row[1]}
                 </td>
 
 
@@ -155,8 +155,8 @@ export default function TableRow({ row, rowIndex, onCellEdit, onRowDelete, onRow
                     </select>
                 </td>
 
-                <td id={`cell-${rowIndex}-${4}`} className={`cell100 last-columns ${isNumberOfWorkersValid(row.value[4]) ? '' : 'red'}`} contenteditable="true" onBlur={(e) => handleNumberOfWorkersEdit(4, e.target.innerText, e)}
-                    onFocus={(e) => handleFocus(4, e.target.innerText)}>{row.value[4]}</td>
+                <td id={`cell-${rowIndex}-${4}`} className={`cell100 last-columns ${isNumberOfWorkersValid(row[4]) ? '' : 'red'}`} contenteditable="true" onBlur={(e) => handleNumberOfWorkersEdit(4, e.target.innerText, e)}
+                    onFocus={(e) => handleFocus(4, e.target.innerText)}>{row[4]}</td>
             </tr >
         </>
     );
