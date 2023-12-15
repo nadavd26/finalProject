@@ -68,16 +68,7 @@ function EditFile() {
 
     return (
         <div id="edit-file">
-            <div className="container-fluid py-3">
-                <div className="d-flex justify-content-between mb-3 top-buttons">
-                    <div className="col-1"></div>
-                    <button className="btn btn-secondary col-4">Amount of employees required for each shift</button>
-                    <button className="btn btn-primary col-4">Allocation of employees</button>
-                    <button className="btn btn-success col-2">
-                    </button>
-                    <div className="col-1"></div>
-                </div>
-                <br></br>
+            <div className="container-fluid py-3">         
                 <Table content={content} onCellEdit={handleCellEdit} onRowDelete={deleteRow} onRowAdd={addRow}
                     isNumberOfWorkersValid={isNumberOfWorkersValid} isSkillValid={isSkillValid}></Table>
                 <div className="row"><br /></div>
