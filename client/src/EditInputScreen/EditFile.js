@@ -71,18 +71,25 @@ function EditFile() {
     };
 
     const deleteRow = (rowIndex) => {
+        // if (rowIndex >= 0 && rowIndex < content.length) {
+        //     setContent((prevContent) => {
+        //         const newContent = [...prevContent];
+        //         if (newContent[rowIndex].value.every((val) => val === "")) {
+        //             newContent.splice(rowIndex, 1);
+        //         } else {
+        //             newContent[rowIndex].deleted = true;
+        //         }
+        //         return newContent;
+        //     });
+        // }
         if (rowIndex >= 0 && rowIndex < content.length) {
             setContent((prevContent) => {
                 const newContent = [...prevContent];
-                if (newContent[rowIndex].value.every((val) => val === "")) {
-                    newContent.splice(rowIndex, 1);
-                } else {
-                    newContent[rowIndex].deleted = true;
-                }
+                newContent.splice(rowIndex, 1);
                 return newContent;
-            });
-        }
-    };
+            })
+        };
+    }
 
 
     var firstRow = []

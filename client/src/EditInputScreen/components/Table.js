@@ -1,7 +1,7 @@
 import React from 'react';
 import TableRows from './TableRows';
 //first row : [{name : , validate : function}, ....]
-function Table({ firstRow, content, onCellEdit, onRowDelete, onRowAdd  }) {
+function Table({ firstRow, content, onCellEdit, onRowDelete, onRowAdd }) {
     return (
         <div className="container-table100">
             <div className="wrap-table100">
@@ -10,12 +10,14 @@ function Table({ firstRow, content, onCellEdit, onRowDelete, onRowAdd  }) {
                         <table className="table table-hover table-striped" id="table">
                             <tbody>
                                 <tr className="row100 body first-row">
-                                    <th className="cell100 first-column first-column-body"></th>
-                                    {firstRow.map((column, index) => (
-                                        <th className={`cell100  ${index === 0 ? 'second-column' : 'last-columns'} blue`}>{column.name}</th>
-                                    ))}
+                                    <th className="cell100 first-column first-column-body col-1"></th>
+                                    <th class="cell100  second-column blue col-2">Day</th>
+                                    <th class="cell100  last-columns blue col-3">Skill</th>
+                                    <th class="cell100  last-columns blue col-2">From</th>
+                                    <th class="cell100  last-columns blue col-2">Until</th>
+                                    <th class="cell100  last-columns blue col-2">Required Number Of Workers</th>
                                 </tr>
-                                <TableRows firstRow={firstRow} content={content} onCellEdit={onCellEdit} onRowDelete={onRowDelete} onRowAdd={onRowAdd}/>
+                                <TableRows firstRow={firstRow} content={content} onCellEdit={onCellEdit} onRowDelete={onRowDelete} onRowAdd={onRowAdd} />
                             </tbody>
                         </table>
                     </div>
@@ -26,3 +28,4 @@ function Table({ firstRow, content, onCellEdit, onRowDelete, onRowAdd  }) {
 }
 
 export default Table;
+

@@ -5,7 +5,6 @@
 }
 
 #table-row #deleteRow {
-    background-color: transparent !important;
     outline: none !important;
     border-top: none;
     border-left: none;
@@ -17,7 +16,6 @@
 }
 
 #table-row #addRow {
-    background-color: transparent !important;
     outline: none !important;
     border-top: none;
     border-left: none;
@@ -39,4 +37,15 @@
     width: 25px !important;
     height: 25px !important;
     background-color: transparent
+}
+
+#addBtn {
+    width: 25px !important;
+    height: 25px !important;
+    background-color: transparent
+}
+
+#addImg {
+    width: 100% !important;
+    height: 100% !important;
 }
