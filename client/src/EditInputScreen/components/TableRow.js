@@ -36,11 +36,22 @@ export default function TableRow({ row, rowIndex, onCellEdit, onRowDelete, onRow
     return (
         <>
             <tr className="row100 body last-rows" id="table-row">
+            {/* <td id="deleteRow" className='cell100 first-column'></td> */}
+                {!row.deleted ? (<td id="deleteRow" className='cell100 first-column static-position '>
+                    <button className="border-0 p-0 no-outline" onClick={handleDeleteRow} id="deleteBtn">
+                        <img src={rowDeleteImage} alt="Image" className="img-fluid" id="deleteImg"/>
+                    </button>
+                </td>) :
+                    <td id="addRow" className='cell100 first-column static-position'>
+                        <button className="btn btn-sm border-0 p-0 no-outline" onClick={handleAddRow}>
+                            <img src={rowAddImage} alt="Image" className="img-fluid" />
+                        </button>
+                    </td>}
                 {row.value.map((value, index) => (
                     <td
                         key={index}
                         id={`cell-${rowIndex}-${index}`}
-                        className={`cell100 ${index === 0 ? 'first-column' : 'last-columns'} ${row.deleted ? 'transparent' : ''}`}
+                        className={`cell100 ${index === 0 ? 'second-column' : 'last-columns'} ${row.deleted ? 'transparent' : ''}`}
                         suppressContentEditableWarning={true}
                         onBlur={(e) => handleCellEdit(index, e.target.innerText, e)}
                         onFocus={(e) => handleFocus(index, e.target.innerText)}
@@ -49,16 +60,7 @@ export default function TableRow({ row, rowIndex, onCellEdit, onRowDelete, onRow
                         {value}
                     </td>
                 ))}
-                {!row.deleted ? (<td id="deleteRow">
-                    <button className="btn btn-sm border-0 p-0 no-outline" onClick={handleDeleteRow}>
-                        <img src={rowDeleteImage} alt="Image" className="img-fluid" />
-                    </button>
-                </td>) :
-                    <td id="addRow">
-                        <button className="btn btn-sm border-0 p-0 no-outline" onClick={handleAddRow}>
-                            <img src={rowAddImage} alt="Image" className="img-fluid" />
-                        </button>
-                    </td>}
+
             </tr>
         </>
     );

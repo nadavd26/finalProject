@@ -5,11 +5,11 @@
 }
 
 #table-row #deleteRow {
-    width: 75px !important;
-    height: 75px !important;
     background-color: transparent !important;
     outline: none !important;
-    border: none !important;
+    border-top: none;
+    border-left: none;
+    border-bottom: none;
 }
 
 #table-row .transparent {
@@ -17,14 +17,26 @@
 }
 
 #table-row #addRow {
-    width: 75px !important;
-    height: 75px !important;
     background-color: transparent !important;
     outline: none !important;
-    border: none !important;
+    border-top: none;
+    border-left: none;
+    border-bottom: none;
+    
 }
 
 #table-row .no-outline:focus {
     outline: none !important;
     box-shadow: none !important;
+}
+
+#deleteImg {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+#deleteBtn {
+    width: 25px !important;
+    height: 25px !important;
+    background-color: transparent
 }

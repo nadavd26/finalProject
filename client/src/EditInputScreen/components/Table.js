@@ -10,9 +10,9 @@ function Table({ firstRow, content, onCellEdit, onRowDelete, onRowAdd  }) {
                         <table className="table table-hover table-striped" id="table">
                             <tbody>
                                 <tr className="row100 body first-row">
-                                    <th className="cell100 first-column first-column-body blue">{firstRow[0].name}</th>
-                                    {firstRow.slice(1).map((column, index) => (
-                                        <th className="cell100 last-columns blue">{column.name}</th>
+                                    <th className="cell100 first-column first-column-body"></th>
+                                    {firstRow.map((column, index) => (
+                                        <th className={`cell100  ${index === 0 ? 'second-column' : 'last-columns'} blue`}>{column.name}</th>
                                     ))}
                                 </tr>
                                 <TableRows firstRow={firstRow} content={content} onCellEdit={onCellEdit} onRowDelete={onRowDelete} onRowAdd={onRowAdd}/>
