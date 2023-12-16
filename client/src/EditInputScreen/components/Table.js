@@ -10,7 +10,7 @@ function Table({ firstRow, content, onCellEdit, onRowDelete, onRowAdd, isNumberO
                         <table className="table table-hover table-striped" id="table">
                             <tbody>
                                 <tr className="row100 body first-row">
-                                    <th className="cell100 first-column first-column-body col-1"></th>
+                                    <th className="cell100 col-1 first-column"></th>
                                     <th class="cell100  second-column blue col-2">Day</th>
                                     <th class="cell100  last-columns blue col-3">Skill</th>
                                     <th class="cell100  last-columns blue col-2">From</th>

@@ -82,6 +82,7 @@
   width: 50px !important;
   height: 50px !important;
   background: none !important;
+  visibility: hidden !important;
 }
 
 #edit-file .table tbody tr .second-column {
@@ -101,7 +102,7 @@
 }
 
 #edit-file .blue {
-  background-color: rgba(111, 126, 221, 1);
+  background-color: rgb(111, 126, 221);
 }
 
 #edit-file td.green {

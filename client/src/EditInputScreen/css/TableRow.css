@@ -11,10 +11,6 @@
     border-bottom: none;
 }
 
-#table-row .transparent {
-    background-color: rgb(240, 92, 92) !important;
-}
-
 #table-row #addRow {
     outline: none !important;
     border-top: none;
@@ -36,18 +32,8 @@
 #deleteBtn {
     width: 25px !important;
     height: 25px !important;
+    visibility: visible;
     background-color: transparent
-}
-
-#addBtn {
-    width: 25px !important;
-    height: 25px !important;
-    background-color: transparent
-}
-
-#addImg {
-    width: 100% !important;
-    height: 100% !important;
 }
 
 .red {
