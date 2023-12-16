@@ -123,7 +123,7 @@ function EditFile() {
                                 Required Number Of Workers is a non-negative integer.
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Go Back</button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Go Back</button>
                             </div>
                         </div>
                     </div>
@@ -145,7 +145,7 @@ function EditFile() {
                             <div class="modal-footer">
                                 <div className="col-4" />
                                 <div className="col-2">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick={finishEdit}>Finish</button>
+                                    <button type="button" class="btn btn-success" data-dismiss="modal" onClick={finishEdit}>Finish</button>
                                 </div>
                                 <div className="col-2">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Keep Editing</button>
