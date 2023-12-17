@@ -82,6 +82,9 @@ export default function TableRow({ row, rowErrors, rowIndex, onCellEdit, onRowDe
     };
 
     function adjustTime(timeString, addHalfHour = true) {
+        if (timeString === "23:30" && addHalfHour) {
+            return "24:00"
+        }
         const [hours, minutes] = timeString.split(':').map(Number);
         let totalMinutes = hours * 60 + minutes;
         totalMinutes += addHalfHour ? 30 : -30;
@@ -93,8 +96,8 @@ export default function TableRow({ row, rowErrors, rowIndex, onCellEdit, onRowDe
     }
 
     var minFromHour = "00:00";
-    var maxFromHour = adjustTime(row[3], false)
-    var minUntilHour = adjustTime(row[2], true)
+    var maxFromHour = rowErrors[3] ? "23:30" : adjustTime(row[3], false)
+    var minUntilHour = rowErrors[2] ? "00:30" : adjustTime(row[2], true)
     var maxUntilHour = "24:00";
 
     const timeOptionsFrom = generateTimeOptions(minFromHour, maxFromHour);
