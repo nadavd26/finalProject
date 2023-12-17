@@ -80,32 +80,14 @@ export default function TableRow({ row, rowIndex, onCellEdit, onRowDelete, onRow
     var minUntilHour = adjustTime(row[2], true)
     var maxUntilHour = "23:00";
 
-    var fromElement = document.getElementById("appt1-" + rowIndex);
-    if (fromElement) {
-        var fromValue = fromElement.value;
-        if (fromValue !== "") {
-            minUntilHour = adjustTime(fromValue);
-            if (minUntilHour >= 0) {
-                maxFromHour = adjustTime(minUntilHour, false);
-            }
-        }
-    }
-
-    var untilElement = document.getElementById("appt2-" + rowIndex);
-    if (untilElement) {
-        var untilValue = untilElement.value;
-        if (untilValue !== "") {
-            maxFromHour = adjustTime(untilValue, false);
-            if (maxFromHour >= 0) {
-                minUntilHour = adjustTime(maxFromHour);
-            }
-        }
-    }
-
     const timeOptionsFrom = generateTimeOptions(minFromHour, maxFromHour);
     const timeOptionsUntil = generateTimeOptions(minUntilHour, maxUntilHour);
 
-
+    if (row[4] == 150 && row[2] == "13:00") {
+        console.log("-----------------------")
+        console.log(row[2] + " " + row[3])
+        console.log("-----------------------")
+    }
 
     return (
         <>
@@ -118,7 +100,7 @@ export default function TableRow({ row, rowIndex, onCellEdit, onRowDelete, onRow
 
                 <td id={`cell-${rowIndex}-${0}`} class="cell100 second-column" onBlur={(e) => handleDayEdit(0, "selectDay-" + rowIndex)}
                     onFocus={(e) => handleFocus(0, e.target.innerText)}>
-                    <select id={`selectDay-${rowIndex}`}  defaultValue={row[0]}>
+                    <select id={`selectDay-${rowIndex}`}  value={row[0]} defaultValue="select">
                         <option value="sunday">Sunday</option>
                         <option value="monday">Monday</option>
                         <option value="tuesday">Tuesday</option>
@@ -142,13 +124,13 @@ export default function TableRow({ row, rowIndex, onCellEdit, onRowDelete, onRow
 
                 <td id={`cell-${rowIndex}-${2}`} class="cell100 last-columns" onBlur={(e) => handleTimeEdit(2, "appt1-" + rowIndex)}
                     onFocus={(e) => handleFocus(2, e.target.innerText)}>
-                    <select id={`appt1-${rowIndex}`} name="appt" required defaultValue={row[2]}>
+                    <select id={`appt1-${rowIndex}`} name="appt" required value={row[2]} defaultValue="select">
                         {timeOptionsFrom}
                     </select></td>
 
                 <td id={`cell-${rowIndex}-${3}`} class="cell100 last-columns " onBlur={(e) => handleTimeEdit(3, "appt2-" + rowIndex)}
                     onFocus={(e) => handleFocus(3, e.target.innerText)}>
-                    <select id={`appt2-${rowIndex}`} name="appt" required defaultValue={row[3]}>
+                    <select id={`appt2-${rowIndex}`} name="appt" required value={row[3]} defaultValue="select">
                         {timeOptionsUntil}
                     </select>
                 </td>

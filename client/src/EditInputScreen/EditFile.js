@@ -31,6 +31,10 @@ function EditFile() {
         return result;
     };
 
+    for (var i = 0; i < content.length; i++) {
+        console.log(content[i].join(','));
+    }
+
     function parseTime(inputTime) {
         const trimmedTime = inputTime.trim(); 
         const timeComponents = trimmedTime.split(':');
@@ -73,22 +77,58 @@ function EditFile() {
                 errorMsg += "line " + (i + 1) + " column 2 " + "invalid skill" + "\n"
             }
 
+            let fromTimeValid = true
+            let untilTimeValid = true
             const from = table[i][2]
             const formatFrom = parseTime(from)
             if (!formatFrom) {
+                fromTimeValid = false
                 isValid = false
                 errorMsg += "line " + (i + 1) + " column 3 " + "invalid from hour" + "\n"
             } else {
                 table[i][2] = formatFrom
             }
+            if (fromTimeValid) {
+                if (formatFrom[4] != "0" || (formatFrom[3] != "0" && formatFrom[3] != "3")) {
+                    errorMsg += "line " + (i + 1) + " column 3 " + "time interval is 30 minutes" + "\n"
+                    isValid = false
+                }
+                
+                if (formatFrom < "06:00") {
+                    errorMsg += "line " + (i + 1) + " column 3 " + "min from time is 06:00" + "\n"
+                    isValid = false
+                }
 
+                if (formatFrom > "22:30") {
+                    errorMsg += "line " + (i + 1) + " column 3 " + "max from time is 22:30" + "\n"
+                    isValid = false
+                }
+            }
+            
             const until = table[i][3]
             const formatUntil = parseTime(until)
             if (!formatUntil) {
                 isValid = false
+                untilTimeValid = false
                 errorMsg += "line " + (i + 1) + " column 4 " + "invalid until hour" + "\n"
             } else {
                 table[i][3] = formatUntil
+            }
+
+            if (untilTimeValid) {
+                if (formatUntil[4] != "0" || (formatUntil[3] != "0" && formatUntil[3] != "3")) {
+                    errorMsg += "line " + (i + 1) + " column 4 " + "time interval is 30 minutes" + "\n"
+                }
+
+                if (formatUntil > "23:00") {
+                    errorMsg += "line " + (i + 1) + " column 4 " + "max until time is 23:00" + "\n"
+                    isValid = false
+                }
+
+                if (formatFrom < "06:30") {
+                    errorMsg += "line " + (i + 1) + " column 4 " + "min until time is 06:30" + "\n"
+                    isValid = false
+                }
             }
 
             const numOfWorkers = table[i][4]
