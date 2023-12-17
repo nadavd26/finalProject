@@ -2,7 +2,7 @@ import rowDeleteImage from '../Images/deleteRow.png'
 import "../css/TableRow.css"; // Import your CSS file for styling
 import DayDropdown from './DayDropdown';
 
-export default function TableRow({ row, rowIndex, onCellEdit, onRowDelete, onRowAdd, firstRow, isNumberOfWorkersValid, isSkillValid }) {
+export default function TableRow({ row, rowErrors, rowIndex, onCellEdit, onRowDelete}) {
     const handleFocus = (index) => {
         document.getElementById(`cell-${rowIndex}-${index}`).classList.add("focused-cell");
     };
@@ -33,10 +33,6 @@ export default function TableRow({ row, rowIndex, onCellEdit, onRowDelete, onRow
         onRowDelete(rowIndex)
     }
 
-    const handleAddRow = () => {
-        onRowAdd(rowIndex)
-    }
-
     const generateTimeOptions = (minHour, maxHour) => {
         const [minHourValue, minMinuteValue] = minHour.split(':').map(Number);
         const [maxHourValue, maxMinuteValue] = maxHour.split(':').map(Number);
@@ -53,7 +49,31 @@ export default function TableRow({ row, rowIndex, onCellEdit, onRowDelete, onRow
                     (hour === maxHourValue && minute <= maxMinuteValue)
                 ) {
                     const formattedTime = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
-                    timeOptions.push(<option value={formattedTime}>{formattedTime}</option>);                  
+                    timeOptions.push(<option value={formattedTime}>{formattedTime}</option>);
+                }
+            }
+        }
+
+        return timeOptions
+    };
+
+    const generateArrayTimeOptions = (minHour, maxHour) => {
+        const [minHourValue, minMinuteValue] = minHour.split(':').map(Number);
+        const [maxHourValue, maxMinuteValue] = maxHour.split(':').map(Number);
+        const timeOptions = [];
+        if (minHour === maxHour) {
+            timeOptions.push(minHour);
+            return timeOptions
+        }
+        for (let hour = minHourValue; hour <= maxHourValue; hour++) {
+            for (let minute = 0; minute <= 30; minute += 30) {
+                if (
+                    (hour === minHourValue && minute >= minMinuteValue) ||
+                    (hour > minHourValue && hour < maxHourValue) ||
+                    (hour === maxHourValue && minute <= maxMinuteValue)
+                ) {
+                    const formattedTime = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+                    timeOptions.push(formattedTime);
                 }
             }
         }
@@ -78,13 +98,11 @@ export default function TableRow({ row, rowIndex, onCellEdit, onRowDelete, onRow
     var maxUntilHour = "24:00";
 
     const timeOptionsFrom = generateTimeOptions(minFromHour, maxFromHour);
+    const arrayTimeOptionsFrom = generateArrayTimeOptions(minFromHour, maxFromHour)
+    const arrayTimeOptionsUntil = generateArrayTimeOptions(minUntilHour, maxUntilHour)
     const timeOptionsUntil = generateTimeOptions(minUntilHour, maxUntilHour);
 
-    if (row[4] == 150 && row[2] == "13:00") {
-        console.log("-----------------------")
-        console.log(row[2] + " " + row[3])
-        console.log("-----------------------")
-    }
+    console.log(row)
 
     return (
         <>
@@ -95,22 +113,38 @@ export default function TableRow({ row, rowIndex, onCellEdit, onRowDelete, onRow
                     </button>
                 </td>
 
-                <td id={`cell-${rowIndex}-${0}`} class="cell100 second-column" onBlur={(e) => handleOnBlur(0)}
-                    onFocus={(e) => handleFocus(0)}>
+                <td id={`cell-${rowIndex}-${0}`} className={`cell100 second-column ${rowErrors[0] ? 'red' : ''}`} onBlur={(e) => handleOnBlur(0)} onFocus={(e) => handleFocus(0)}>
                     <select id={`selectDay-${rowIndex}`} value={row[0]} onChange={(e) => handleDayEdit(0, e.target.value)}>
-                        <option value="sunday">Sunday</option>
-                        <option value="monday">Monday</option>
-                        <option value="tuesday">Tuesday</option>
-                        <option value="wednesday">Wednesday</option>
-                        <option value="thursday">Thursday</option>
-                        <option value="friday">Friday</option>
-                        <option value="saturday">Saturday</option>
+                        {["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"].includes(row[0]) ? (
+                            <>
+                                <option value="sunday">Sunday</option>
+                                <option value="monday">Monday</option>
+                                <option value="tuesday">Tuesday</option>
+                                <option value="wednesday">Wednesday</option>
+                                <option value="thursday">Thursday</option>
+                                <option value="friday">Friday</option>
+                                <option value="saturday">Saturday</option>
+                            </>
+                        ) : (
+                            <>
+                                <option value={row[0]} hidden>{row[0]}</option>
+                                <option value="sunday">Sunday</option>
+                                <option value="monday">Monday</option>
+                                <option value="tuesday">Tuesday</option>
+                                <option value="wednesday">Wednesday</option>
+                                <option value="thursday">Thursday</option>
+                                <option value="friday">Friday</option>
+                                <option value="saturday">Saturday</option>
+                            </>
+                        )}
                     </select>
                 </td>
 
+
+
                 <td
                     id={`cell-${rowIndex}-${1}`}
-                    className={`cell100 last-columns ${isSkillValid(row[1]) ? '' : 'red'}`}
+                    className={`cell100 last-columns ${rowErrors[1] ? 'red' : ''}`}
                     contentEditable="true"
                     onBlur={(e) => handleSkillEdit(1, e.target.innerText, e)}
                     onFocus={(e) => handleFocus(1, e.target.innerText)}
@@ -119,20 +153,43 @@ export default function TableRow({ row, rowIndex, onCellEdit, onRowDelete, onRow
                 </td>
 
 
-                <td id={`cell-${rowIndex}-${2}`} class="cell100 last-columns" onBlur={(e) => handleOnBlur(2)}
-                    onFocus={(e) => handleFocus(2)}>
-                    <select id={`appt1-${rowIndex}`} name="appt" required value={row[2]} onChange={(e) => handleTimeEdit(2, e.target.value)}>
-                        {timeOptionsFrom}
-                    </select></td>
-
-                <td id={`cell-${rowIndex}-${3}`} class="cell100 last-columns " onBlur={(e) => handleOnBlur(3)}
-                    onFocus={(e) => handleFocus(3)}>
-                    <select id={`appt2-${rowIndex}`} name="appt" required value={row[3]} onChange={(e) => handleTimeEdit(3, e.target.value)}>
-                        {timeOptionsUntil}
+                <td id={`cell-${rowIndex}-${2}`} className={`cell100 last-columns ${rowErrors[2] ? 'red' : ''}`} onBlur={(e) => handleOnBlur(2)} onFocus={(e) => handleFocus(2)}>
+                    <select id={`appt1-${rowIndex}`} name="appt" required value={row[2]}onChange={(e) => handleTimeEdit(2, e.target.value)}>
+                        {arrayTimeOptionsFrom.includes(row[2]) ? (
+                            <>
+                                {timeOptionsFrom}
+                            </>
+                        ) : (
+                            <>
+                                <option value={row[2]} hidden>
+                                    {row[2]}
+                                </option>
+                                {timeOptionsFrom}
+                            </>
+                        )}
                     </select>
                 </td>
 
-                <td id={`cell-${rowIndex}-${4}`} className={`cell100 last-columns ${isNumberOfWorkersValid(row[4]) ? '' : 'red'}`} contenteditable="true" onBlur={(e) => handleNumberOfWorkersEdit(4, e.target.innerText, e)}
+
+                <td id={`cell-${rowIndex}-${3}`} className={`cell100 last-columns ${rowErrors[3] ? 'red' : ''}`} onBlur={(e) => handleOnBlur(3)}
+                    onFocus={(e) => handleFocus(3)}>
+                    <select id={`appt2-${rowIndex}`} name="appt" required value={row[3]} onChange={(e) => handleTimeEdit(3, e.target.value)}>
+                    {arrayTimeOptionsUntil.includes(row[3]) ? (
+                            <>
+                                {timeOptionsUntil}
+                            </>
+                        ) : (
+                            <>
+                                <option value={row[3]} hidden>
+                                    {row[3]}
+                                </option>
+                                {timeOptionsUntil}
+                            </>
+                        )}
+                    </select>
+                </td>
+
+                <td id={`cell-${rowIndex}-${4}`} className={`cell100 last-columns ${rowErrors[4] ? 'red' : ''}`} contenteditable="true" onBlur={(e) => handleNumberOfWorkersEdit(4, e.target.innerText, e)}
                     onFocus={(e) => handleFocus(4, e.target.innerText)}>{row[4]}</td>
             </tr >
         </>

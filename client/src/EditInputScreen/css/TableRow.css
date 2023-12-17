@@ -39,3 +39,7 @@
 .red {
     background-color: rgb(230, 96, 96) !important;
 }
+
+.optionInvisible {
+    display: none;
+}

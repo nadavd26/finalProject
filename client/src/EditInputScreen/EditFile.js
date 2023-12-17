@@ -11,7 +11,8 @@ function EditFile() {
     const location = useLocation();
     const navigate = useNavigate();
     const { numOfFile, file } = location.state
-    const [content, setContent] = useState([["Sunday", "", "00:00", "24:00", ""]])
+    const [content, setContent] = useState([["sunday", "", "00:00", "24:00", ""]])
+    const [errors, setErrors] = useState([[false, true, false, false, true]])
     const [showErrorModel, setShowErrorModel] = useState(false)
     const [showSuccessModel, setShowSuccessModel] = useState(false)
     const [showBackModal, setShowBackModal] = useState(false)
@@ -36,7 +37,7 @@ function EditFile() {
     }
 
     function parseTime(inputTime) {
-        const trimmedTime = inputTime.trim(); 
+        const trimmedTime = inputTime.trim();
         const timeComponents = trimmedTime.split(':');
         let hours, minutes;
         if (timeComponents.length === 2) {
@@ -59,6 +60,7 @@ function EditFile() {
     const initAndCheck = (table) => {
         let errorMsg = ""
         let isValid = true
+        const errorsFound = Array.from({ length: table.length }, () => Array(5).fill(false));
         for (let i = 0; i < table.length; i++) {
             if (table[i].length != 5) {
                 isValid = false
@@ -68,12 +70,14 @@ function EditFile() {
             const day = table[i][0]
             if (day != "sunday" && day != "monday" && day != "tuesday" && day != "wednesday" && day != "thursday" && day != "friday" && day != "saturday") {
                 isValid = false
+                errorsFound[i][0] = true
                 errorMsg += "line " + (i + 1) + " column 1 " + "invalid day" + "\n"
             }
 
             const skill = table[i][1]
             if (!isSkillValid(skill)) {
                 isValid = false
+                errorsFound[i][1] = true
                 errorMsg += "line " + (i + 1) + " column 2 " + "invalid skill" + "\n"
             }
 
@@ -83,6 +87,7 @@ function EditFile() {
             const formatFrom = parseTime(from)
             if (!formatFrom) {
                 fromTimeValid = false
+                errorsFound[i][2] = true
                 isValid = false
                 errorMsg += "line " + (i + 1) + " column 3 " + "invalid from hour" + "\n"
             } else {
@@ -92,24 +97,28 @@ function EditFile() {
                 if (formatFrom[4] != "0" || (formatFrom[3] != "0" && formatFrom[3] != "3")) {
                     errorMsg += "line " + (i + 1) + " column 3 " + "time interval is 30 minutes" + "\n"
                     isValid = false
+                    errorsFound[i][2] = true
                 }
-                
+
                 if (formatFrom < "00:00") {
                     errorMsg += "line " + (i + 1) + " column 3 " + "min from time is 00:00" + "\n"
                     isValid = false
+                    errorsFound[i][2] = true
                 }
 
                 if (formatFrom > "23:30") {
                     errorMsg += "line " + (i + 1) + " column 3 " + "max from time is 23:30" + "\n"
                     isValid = false
+                    errorsFound[i][2] = true
                 }
             }
-            
+
             const until = table[i][3]
             const formatUntil = parseTime(until)
             if (!formatUntil) {
                 isValid = false
                 untilTimeValid = false
+                errorsFound[i][3] = true
                 errorMsg += "line " + (i + 1) + " column 4 " + "invalid until hour" + "\n"
             } else {
                 table[i][3] = formatUntil
@@ -118,34 +127,42 @@ function EditFile() {
             if (untilTimeValid) {
                 if (formatUntil[4] != "0" || (formatUntil[3] != "0" && formatUntil[3] != "3")) {
                     errorMsg += "line " + (i + 1) + " column 4 " + "time interval is 30 minutes" + "\n"
+                    errorsFound[i][3] = true
                 }
 
                 if (formatUntil > "24:00") {
                     errorMsg += "line " + (i + 1) + " column 4 " + "max until time is 24:00" + "\n"
                     isValid = false
+                    errorsFound[i][3] = true
                 }
 
                 if (formatUntil < "00:30") {
                     errorMsg += "line " + (i + 1) + " column 4 " + "min until time is 00:30" + "\n"
                     isValid = false
+                    errorsFound[i][3] = true
+                }
+
+                if (fromTimeValid && formatFrom >= formatUntil) {
+                    errorMsg += "line " + (i + 1) + " column 3 and 4 " + "until time is before or equal from time" + "\n"
+                    isValid = false
+                    errorsFound[i][3] = true
+                    errorsFound[i][2] = true
                 }
             }
 
             const numOfWorkers = table[i][4]
             const modifiedNumOfWorkers = parseInt(numOfWorkers)
-            if (isNaN(modifiedNumOfWorkers)) {
+            if (!isNumberOfWorkersValid(modifiedNumOfWorkers)) {
                 isValid = false
+                errorsFound[i][4] = true
                 errorMsg += "line " + (i + 1) + " column 5 " + "invalid number of workers" + "\n"
             } else {
                 table[i][4] = modifiedNumOfWorkers
             }
         }
 
-        console.log("errorMsg = " + errorMsg)
-        if (!isValid) {
-            return null
-        }
-        return table
+        setContent(table)
+        setErrors(errorsFound)
     }
 
     useEffect(() => {
@@ -153,14 +170,11 @@ function EditFile() {
             const reader = new FileReader();
             reader.onload = function (e) {
                 const csv_data = e.target.result;
-                const csv_array = initAndCheck(csv_to_array(csv_data, ',', false));
+                const csv_array = csv_to_array(csv_data, ',', false)
                 if (!csv_array) {
                     console.log("problem")
                 } else {
-                    setContent(csv_array);
-                    csv_array.forEach((line, index) => {
-                        console.log(`Line ${index + 1}:`, line);
-                    });
+                    initAndCheck(csv_array);
                 }
                 console.log("data is:", csv_array);
                 // Log every line              
@@ -171,8 +185,10 @@ function EditFile() {
 
 
     const addRowHandler = () => {
-        const newRow = ["Sunday", "", "00:00", "24:00", ""]
+        const newRow = ["sunday", "", "00:00", "24:00", ""]
+        const newErrorRow = [false, true, false, false, true]
         setContent((prevContent) => [...prevContent, newRow]);
+        setErrors((prevErrors) => [...prevErrors, newErrorRow]);
     };
 
     const handleCellEdit = (rowIndex, columnIndex, value) => {
@@ -183,7 +199,42 @@ function EditFile() {
                 return row;
             }
         });
+
+        var updatedErrors
+        switch (columnIndex) {
+            case 1:
+                updatedErrors = errors.map((row, i) => {
+                    if (i === rowIndex) {
+                        return row.map((cell, j) => (j === columnIndex ? !isSkillValid(updatedContent[i][j]) : cell));
+                    } else {
+                        return row;
+                    }
+                });
+                break; // Add break statement here
+
+            case 4:
+                updatedErrors = errors.map((row, i) => {
+                    if (i === rowIndex) {
+                        return row.map((cell, j) => (j === columnIndex ? !isNumberOfWorkersValid(updatedContent[i][j]) : cell));
+                    } else {
+                        return row;
+                    }
+                });
+                break; // Add break statement here
+
+            default:
+                updatedErrors = errors.map((row, i) => {
+                    if (i === rowIndex) {
+                        return row.map((cell, j) => (j === columnIndex ? false : cell));
+                    } else {
+                        return row;
+                    }
+                });
+                break; // Add break statement here
+        }
+
         setContent(updatedContent);
+        setErrors(updatedErrors)
     };
 
 
@@ -196,6 +247,7 @@ function EditFile() {
     };
 
     function isSkillValid(input) {
+        console.log("input : " + input)
         const regex = /^(?=.*[a-zA-Z])[a-zA-Z0-9@'",.!? ]*$/;
         return regex.test(input);
     }
@@ -205,23 +257,15 @@ function EditFile() {
         if (content.length === 0) {
             valid = false
         }
-        content.forEach((row) => {
-            if (!isSkillValid(row[1]) || !isNumberOfWorkersValid(row[4])) {
-                valid = false
-            }
+        errors.forEach((row) => {
+            row.forEach((cell) => {
+                if (cell) {
+                    valid = false
+                }
+            })
         });
         setShowErrorModel(!valid)
         setShowSuccessModel(valid)
-    };
-
-    const addRow = (rowIndex) => {
-        if (rowIndex >= 0 && rowIndex < content.length) {
-            const newContent = [...content];
-            newContent[rowIndex].deleted = false;
-            setContent(newContent);
-        } else {
-            console.error("Invalid rowIndex for addRow:", rowIndex);
-        }
     };
 
     const deleteRow = (rowIndex) => {
@@ -230,6 +274,12 @@ function EditFile() {
                 const newContent = [...prevContent];
                 newContent.splice(rowIndex, 1);
                 return newContent;
+            })
+
+            setErrors((prevErrors) => {
+                const newErrors = [...prevErrors];
+                newErrors.splice(rowIndex, 1);
+                return newErrors;
             })
         };
     }
@@ -268,7 +318,7 @@ function EditFile() {
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#backModal" onClick={handleBack}>Back</button>
                 </div>
                 <div className="col-11"></div>
-                <Table content={content} onCellEdit={handleCellEdit} onRowDelete={deleteRow} onRowAdd={addRow}
+                <Table content={content} onCellEdit={handleCellEdit} onRowDelete={deleteRow} errors={errors}
                     isNumberOfWorkersValid={isNumberOfWorkersValid} isSkillValid={isSkillValid}></Table>
                 <div className="row"><br /></div>
                 <div className="d-flex justify-content-between mb-3 down-buttons">
