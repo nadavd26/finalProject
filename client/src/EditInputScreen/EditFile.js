@@ -11,7 +11,7 @@ function EditFile() {
     const location = useLocation();
     const navigate = useNavigate();
     const { numOfFile, file } = location.state
-    const [content, setContent] = useState([["Sunday", "", "06:00", "23:00", ""]])
+    const [content, setContent] = useState([["Sunday", "", "00:00", "24:00", ""]])
     const [showErrorModel, setShowErrorModel] = useState(false)
     const [showSuccessModel, setShowSuccessModel] = useState(false)
     const [showBackModal, setShowBackModal] = useState(false)
@@ -94,13 +94,13 @@ function EditFile() {
                     isValid = false
                 }
                 
-                if (formatFrom < "06:00") {
-                    errorMsg += "line " + (i + 1) + " column 3 " + "min from time is 06:00" + "\n"
+                if (formatFrom < "00:00") {
+                    errorMsg += "line " + (i + 1) + " column 3 " + "min from time is 00:00" + "\n"
                     isValid = false
                 }
 
-                if (formatFrom > "22:30") {
-                    errorMsg += "line " + (i + 1) + " column 3 " + "max from time is 22:30" + "\n"
+                if (formatFrom > "23:30") {
+                    errorMsg += "line " + (i + 1) + " column 3 " + "max from time is 23:30" + "\n"
                     isValid = false
                 }
             }
@@ -120,13 +120,13 @@ function EditFile() {
                     errorMsg += "line " + (i + 1) + " column 4 " + "time interval is 30 minutes" + "\n"
                 }
 
-                if (formatUntil > "23:00") {
-                    errorMsg += "line " + (i + 1) + " column 4 " + "max until time is 23:00" + "\n"
+                if (formatUntil > "24:00") {
+                    errorMsg += "line " + (i + 1) + " column 4 " + "max until time is 24:00" + "\n"
                     isValid = false
                 }
 
-                if (formatFrom < "06:30") {
-                    errorMsg += "line " + (i + 1) + " column 4 " + "min until time is 06:30" + "\n"
+                if (formatUntil < "00:30") {
+                    errorMsg += "line " + (i + 1) + " column 4 " + "min until time is 00:30" + "\n"
                     isValid = false
                 }
             }
@@ -171,7 +171,7 @@ function EditFile() {
 
 
     const addRowHandler = () => {
-        const newRow = ["Sunday", "", "06:00", "23:00", ""]
+        const newRow = ["Sunday", "", "00:00", "24:00", ""]
         setContent((prevContent) => [...prevContent, newRow]);
     };
 

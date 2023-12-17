@@ -77,16 +77,18 @@
 }
 
 #edit-file .table tbody tr .first-column {
-  border: none !important;
   white-space: pre-wrap !important;
   width: 50px !important;
   height: 50px !important;
-  background: none !important;
-  visibility: hidden !important;
+  border-left: 1px solid black !important;
+  border-right: 1px solid black !important;
+}
+
+#first-row-first-col {
+  z-index: 3 !important;
 }
 
 #edit-file .table tbody tr .second-column {
-  border-left-width: 1px !important;
 }
 
 

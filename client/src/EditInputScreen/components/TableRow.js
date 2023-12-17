@@ -53,10 +53,11 @@ export default function TableRow({ row, rowIndex, onCellEdit, onRowDelete, onRow
                     (hour === maxHourValue && minute <= maxMinuteValue)
                 ) {
                     const formattedTime = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
-                    timeOptions.push(<option value={formattedTime}>{formattedTime}</option>);
+                    timeOptions.push(<option value={formattedTime}>{formattedTime}</option>);                  
                 }
             }
         }
+
         return timeOptions
     };
 
@@ -71,10 +72,10 @@ export default function TableRow({ row, rowIndex, onCellEdit, onRowDelete, onRow
         return resultTimeString;
     }
 
-    var minFromHour = "06:00";
+    var minFromHour = "00:00";
     var maxFromHour = adjustTime(row[3], false)
     var minUntilHour = adjustTime(row[2], true)
-    var maxUntilHour = "23:00";
+    var maxUntilHour = "24:00";
 
     const timeOptionsFrom = generateTimeOptions(minFromHour, maxFromHour);
     const timeOptionsUntil = generateTimeOptions(minUntilHour, maxUntilHour);
