@@ -3,7 +3,7 @@ import "../css/TableRow.css"; // Import your CSS file for styling
 import DayDropdown from './DayDropdown';
 
 export default function TableRow({ row, rowIndex, onCellEdit, onRowDelete, onRowAdd, firstRow, isNumberOfWorkersValid, isSkillValid }) {
-    const handleFocus = (index, value) => {
+    const handleFocus = (index) => {
         document.getElementById(`cell-${rowIndex}-${index}`).classList.add("focused-cell");
     };
 
@@ -17,21 +17,17 @@ export default function TableRow({ row, rowIndex, onCellEdit, onRowDelete, onRow
         onCellEdit(rowIndex, columnIndex, value);
     };
 
-    const handleTimeEdit = (columnIndex, id) => {
-        document.getElementById(`cell-${rowIndex}-${columnIndex}`).classList.remove("focused-cell");
-        var inputElement = document.getElementById(id);
-        var inputValue = inputElement.value;
-        onCellEdit(rowIndex, columnIndex, inputValue);
-        // console.log(inputValue)
+    const handleTimeEdit = (columnIndex, value) => {
+        onCellEdit(rowIndex, columnIndex, value);
     };
 
-    const handleDayEdit = (columnIndex, id) => {
-        document.getElementById(`cell-${rowIndex}-${columnIndex}`).classList.remove("focused-cell");
-        var inputElement = document.getElementById(id);
-        var inputValue = inputElement.value;
-        onCellEdit(rowIndex, columnIndex, inputValue);
-        console.log(inputValue)
+    const handleDayEdit = (columnIndex, value) => {
+        onCellEdit(rowIndex, columnIndex, value);
     };
+
+    const handleOnBlur = (columnIndex) => {
+        document.getElementById(`cell-${rowIndex}-${columnIndex}`).classList.remove("focused-cell");
+    }
 
     const handleDeleteRow = () => {
         onRowDelete(rowIndex)
@@ -98,9 +94,9 @@ export default function TableRow({ row, rowIndex, onCellEdit, onRowDelete, onRow
                     </button>
                 </td>
 
-                <td id={`cell-${rowIndex}-${0}`} class="cell100 second-column" onBlur={(e) => handleDayEdit(0, "selectDay-" + rowIndex)}
-                    onFocus={(e) => handleFocus(0, e.target.innerText)}>
-                    <select id={`selectDay-${rowIndex}`}  value={row[0]} defaultValue="select">
+                <td id={`cell-${rowIndex}-${0}`} class="cell100 second-column" onBlur={(e) => handleOnBlur(0)}
+                    onFocus={(e) => handleFocus(0)}>
+                    <select id={`selectDay-${rowIndex}`} value={row[0]} onChange={(e) => handleDayEdit(0, e.target.value)}>
                         <option value="sunday">Sunday</option>
                         <option value="monday">Monday</option>
                         <option value="tuesday">Tuesday</option>
@@ -122,15 +118,15 @@ export default function TableRow({ row, rowIndex, onCellEdit, onRowDelete, onRow
                 </td>
 
 
-                <td id={`cell-${rowIndex}-${2}`} class="cell100 last-columns" onBlur={(e) => handleTimeEdit(2, "appt1-" + rowIndex)}
-                    onFocus={(e) => handleFocus(2, e.target.innerText)}>
-                    <select id={`appt1-${rowIndex}`} name="appt" required value={row[2]} defaultValue="select">
+                <td id={`cell-${rowIndex}-${2}`} class="cell100 last-columns" onBlur={(e) => handleOnBlur(2)}
+                    onFocus={(e) => handleFocus(2)}>
+                    <select id={`appt1-${rowIndex}`} name="appt" required value={row[2]} onChange={(e) => handleTimeEdit(2, e.target.value)}>
                         {timeOptionsFrom}
                     </select></td>
 
-                <td id={`cell-${rowIndex}-${3}`} class="cell100 last-columns " onBlur={(e) => handleTimeEdit(3, "appt2-" + rowIndex)}
-                    onFocus={(e) => handleFocus(3, e.target.innerText)}>
-                    <select id={`appt2-${rowIndex}`} name="appt" required value={row[3]} defaultValue="select">
+                <td id={`cell-${rowIndex}-${3}`} class="cell100 last-columns " onBlur={(e) => handleOnBlur(3)}
+                    onFocus={(e) => handleFocus(3)}>
+                    <select id={`appt2-${rowIndex}`} name="appt" required value={row[3]} onChange={(e) => handleTimeEdit(3, e.target.value)}>
                         {timeOptionsUntil}
                     </select>
                 </td>
