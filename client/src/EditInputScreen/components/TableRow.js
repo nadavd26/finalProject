@@ -3,9 +3,7 @@ import "../css/TableRow.css"; // Import your CSS file for styling
 import DayDropdown from './DayDropdown';
 
 export default function TableRow({ row, rowIndex, onCellEdit, onRowDelete, onRowAdd, firstRow, isNumberOfWorkersValid, isSkillValid }) {
-    var oldValue = ""
     const handleFocus = (index, value) => {
-        oldValue = value
         document.getElementById(`cell-${rowIndex}-${index}`).classList.add("focused-cell");
     };
 
@@ -78,8 +76,8 @@ export default function TableRow({ row, rowIndex, onCellEdit, onRowDelete, onRow
     }
 
     var minFromHour = "06:00";
-    var maxFromHour = "22:30";
-    var minUntilHour = "06:30";
+    var maxFromHour = adjustTime(row[3], false)
+    var minUntilHour = adjustTime(row[2], true)
     var maxUntilHour = "23:00";
 
     var fromElement = document.getElementById("appt1-" + rowIndex);
@@ -120,7 +118,7 @@ export default function TableRow({ row, rowIndex, onCellEdit, onRowDelete, onRow
 
                 <td id={`cell-${rowIndex}-${0}`} class="cell100 second-column" onBlur={(e) => handleDayEdit(0, "selectDay-" + rowIndex)}
                     onFocus={(e) => handleFocus(0, e.target.innerText)}>
-                    <select id={`selectDay-${rowIndex}`}>
+                    <select id={`selectDay-${rowIndex}`}  defaultValue={row[0]}>
                         <option value="sunday">Sunday</option>
                         <option value="monday">Monday</option>
                         <option value="tuesday">Tuesday</option>
@@ -144,13 +142,13 @@ export default function TableRow({ row, rowIndex, onCellEdit, onRowDelete, onRow
 
                 <td id={`cell-${rowIndex}-${2}`} class="cell100 last-columns" onBlur={(e) => handleTimeEdit(2, "appt1-" + rowIndex)}
                     onFocus={(e) => handleFocus(2, e.target.innerText)}>
-                    <select id={`appt1-${rowIndex}`} name="appt" required defaultValue="06:00">
+                    <select id={`appt1-${rowIndex}`} name="appt" required defaultValue={row[2]}>
                         {timeOptionsFrom}
                     </select></td>
 
                 <td id={`cell-${rowIndex}-${3}`} class="cell100 last-columns " onBlur={(e) => handleTimeEdit(3, "appt2-" + rowIndex)}
                     onFocus={(e) => handleFocus(3, e.target.innerText)}>
-                    <select id={`appt2-${rowIndex}`} name="appt" required defaultValue="23:00">
+                    <select id={`appt2-${rowIndex}`} name="appt" required defaultValue={row[3]}>
                         {timeOptionsUntil}
                     </select>
                 </td>

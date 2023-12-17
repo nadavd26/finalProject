@@ -43,15 +43,22 @@ function UploadScreen() {
 
   const handleEdit = () => {
     var numOfFile = 1
+    var file = null
+    if (selectedButton === "FirstFileButton") {
+      file = fileStates.FirstFileButton.file
+    }
     if (selectedButton === "SecondFileButton") {
       numOfFile = 2
+      file = fileStates.SecondFileButton.file
     }
     if (selectedButton === "ThirdFileButton") {
+      file = fileStates.ThirdFileButton.file
       numOfFile = 3
     }
     navigate("/edit", {
       state: {
-        numOfFile: [numOfFile]
+        numOfFile: [numOfFile],
+        file: file
       }
     });
   }
