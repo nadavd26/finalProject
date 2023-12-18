@@ -110,16 +110,12 @@ export default function TableRow({ row, rowErrors, rowIndex, onCellEdit, onRowDe
     return (
         <>
             <tr className="row100 body last-rows" id="table-row">
-                <td id="deleteRow" className='cell100 first-column static-position' style={{ textAlign: 'center', verticalAlign: 'middle' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                        <button className="border-0 p-0 no-outline" onClick={handleDeleteRow} id="deleteBtn">
-                            <img src={rowDeleteImage} alt="Delete Image" className="img-fluid" />
-                        </button>
-                        <button className="border-0 p-0 no-outline ml-2" onClick={handleDeleteRow} id="addBtn">
-                            <img src={rowAddImage} alt="Add Image" className="img-fluid" />
-                        </button>
-                    </div>
+                <td id="deleteRow" className='cell100 first-column static-position '>
+                    <button className="border-0 p-0 no-outline" onClick={handleDeleteRow} id="deleteBtn">
+                        <img src={rowDeleteImage} alt="Image" className="img-fluid" id="deleteImg" />
+                    </button>
                 </td>
+
                 <td id={`cell-${rowIndex}-${0}`} className={`cell100 second-column ${rowErrors[0] ? 'red' : ''}`} onBlur={(e) => handleOnBlur(0)} onFocus={(e) => handleFocus(0)}>
                     <select id={`selectDay-${rowIndex}`} value={row[0]} onChange={(e) => handleDayEdit(0, e.target.value)}>
                         {["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"].includes(row[0]) ? (

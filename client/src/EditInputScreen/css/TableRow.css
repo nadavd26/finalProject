@@ -30,15 +30,12 @@
 }
 
 #deleteBtn {
-    background-color: transparent;
-    width: 30% !important;
-    height: 100% !important;
+    width: 25px !important;
+    height: 25px !important;
+    visibility: visible;
+    background-color: transparent
 }
-#addBtn {
-    background-color: transparent;
-    width: 30% !important;
-    height: 100% !important;
-}
+
 .red {
     background-color: rgb(230, 96, 96) !important;
 }
