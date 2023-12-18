@@ -1,8 +1,8 @@
 import rowDeleteImage from '../Images/deleteRow.png'
+import rowAddImage from '../Images/addRow.png'
 import "../css/TableRow.css"; // Import your CSS file for styling
-import DayDropdown from './DayDropdown';
 
-export default function TableRow({ row, rowErrors, rowIndex, onCellEdit, onRowDelete}) {
+export default function TableRow({ row, rowErrors, rowIndex, onCellEdit, onRowDelete }) {
     const handleFocus = (index) => {
         document.getElementById(`cell-${rowIndex}-${index}`).classList.add("focused-cell");
     };
@@ -110,12 +110,16 @@ export default function TableRow({ row, rowErrors, rowIndex, onCellEdit, onRowDe
     return (
         <>
             <tr className="row100 body last-rows" id="table-row">
-                <td id="deleteRow" className='cell100 first-column static-position '>
-                    <button className="border-0 p-0 no-outline" onClick={handleDeleteRow} id="deleteBtn">
-                        <img src={rowDeleteImage} alt="Image" className="img-fluid" id="deleteImg" />
-                    </button>
+                <td id="deleteRow" className='cell100 first-column static-position' style={{ textAlign: 'center', verticalAlign: 'middle' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                        <button className="border-0 p-0 no-outline" onClick={handleDeleteRow} id="deleteBtn">
+                            <img src={rowDeleteImage} alt="Delete Image" className="img-fluid" />
+                        </button>
+                        <button className="border-0 p-0 no-outline ml-2" onClick={handleDeleteRow} id="addBtn">
+                            <img src={rowAddImage} alt="Add Image" className="img-fluid" />
+                        </button>
+                    </div>
                 </td>
-
                 <td id={`cell-${rowIndex}-${0}`} className={`cell100 second-column ${rowErrors[0] ? 'red' : ''}`} onBlur={(e) => handleOnBlur(0)} onFocus={(e) => handleFocus(0)}>
                     <select id={`selectDay-${rowIndex}`} value={row[0]} onChange={(e) => handleDayEdit(0, e.target.value)}>
                         {["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"].includes(row[0]) ? (
@@ -157,7 +161,7 @@ export default function TableRow({ row, rowErrors, rowIndex, onCellEdit, onRowDe
 
 
                 <td id={`cell-${rowIndex}-${2}`} className={`cell100 last-columns ${rowErrors[2] ? 'red' : ''}`} onBlur={(e) => handleOnBlur(2)} onFocus={(e) => handleFocus(2)}>
-                    <select id={`appt1-${rowIndex}`} name="appt" required value={row[2]}onChange={(e) => handleTimeEdit(2, e.target.value)}>
+                    <select id={`appt1-${rowIndex}`} name="appt" required value={row[2]} onChange={(e) => handleTimeEdit(2, e.target.value)}>
                         {arrayTimeOptionsFrom.includes(row[2]) ? (
                             <>
                                 {timeOptionsFrom}
@@ -177,7 +181,7 @@ export default function TableRow({ row, rowErrors, rowIndex, onCellEdit, onRowDe
                 <td id={`cell-${rowIndex}-${3}`} className={`cell100 last-columns ${rowErrors[3] ? 'red' : ''}`} onBlur={(e) => handleOnBlur(3)}
                     onFocus={(e) => handleFocus(3)}>
                     <select id={`appt2-${rowIndex}`} name="appt" required value={row[3]} onChange={(e) => handleTimeEdit(3, e.target.value)}>
-                    {arrayTimeOptionsUntil.includes(row[3]) ? (
+                        {arrayTimeOptionsUntil.includes(row[3]) ? (
                             <>
                                 {timeOptionsUntil}
                             </>
