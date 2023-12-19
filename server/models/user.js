@@ -27,6 +27,18 @@ const User = new Schema(
             type: String,
             required: true,
         },
+        table1: {
+            type: String,
+            default: "",
+        },
+        table2: {
+            type: String,
+            default: "",
+        },
+        table3: {
+            type: String,
+            default: "",
+        },
     },
     { autoIndex: false, autoCreate: false }
 );

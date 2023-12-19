@@ -7,7 +7,6 @@ const checkAuthorized = (req, res, next) => {
             const user = jwt.verify(token, process.env.SECRET_KEY);
             req.token = token;
             req.user = user;
-            // console.log(req.user.username, req.user._id);
             return next();
         } catch (err) {
             console.log(err.message);

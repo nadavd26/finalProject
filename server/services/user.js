@@ -40,5 +40,28 @@ const getUser = async (email, googleId) => {
     return newUser;
 }
 
-module.exports = { createUser, isUserInDBByEmail, getUser }
+const setTable = async (email, googleId, tableContent, tableNum) => {
+    table = 'table' + tableNum
+    await User.findOneAndUpdate({ email, googleId }, { $set: { [table]: tableContent } });
+}
+
+const getTable = async (email, googleId, tableNum) => {
+    table = 'table' + tableNum
+    const user = await User.findOne({ email, googleId });
+    console.log(user.table3)
+    if (tableNum == 1) {
+        return user.table1
+    }
+    else if (tableNum == 2) {
+        return user.table2
+    }
+    else if (tableNum == 3) {
+        return user.table3
+    }
+    else {
+        return ""
+    }
+}
+
+module.exports = { createUser, isUserInDBByEmail, getUser, setTable, getTable }
 
