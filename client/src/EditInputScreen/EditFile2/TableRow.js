@@ -1,8 +1,8 @@
 import "../css/TableRow.css"; // Import your CSS file for styling
-import DayCell from './DayCell';
-import FreeEditCell from './FreeEditCell';
-import TimeCell from './TimeCell';
-import RowActionCell from './RowActionCell';
+import DayCell from '../components/DayCell';
+import FreeEditCell from '../components/FreeEditCell';
+import TimeCell from '../components/TimeCell';
+import RowActionCell from '../components/RowActionCell';
 
 export default function TableRow({ row, rowErrors, rowIndex, onCellEdit, onRowDelete, onRowAdd }) {
     const handleDeleteRow = () => {

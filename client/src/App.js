@@ -10,7 +10,7 @@ import LoginScreen from './LoginScreen/LoginScreen';
 import UploadScreen from './UploadScreen/UploadScreen';
 import TableScreen from './TableScreen/TableScreen'
 import { UserContext } from './Context/UserContext'
-import EditFile from './EditInputScreen/EditFile';
+import EditFile2 from './EditInputScreen/EditFile2/EditFile2';
 const clientId = "697357189642-cv95irflcae6i8dm2nidpvokkqtpv62k.apps.googleusercontent.com"
 
 function App() {
@@ -112,7 +112,7 @@ function App() {
         />
         <Route
           path="/edit"
-          element={<EditFile />}
+          element={<EditFile2 />}
         />
         <Route
           path="/login"
