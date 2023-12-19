@@ -88,10 +88,6 @@
   z-index: 3 !important;
 }
 
-#edit-file .table tbody tr .second-column {
-}
-
-
 #edit-file .table100-body {
   max-height: 70vh;
   overflow: auto;
