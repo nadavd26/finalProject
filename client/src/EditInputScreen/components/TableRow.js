@@ -1,13 +1,16 @@
-import rowDeleteImage from '../Images/deleteRow.png'
-import rowAddImage from '../Images/addRow.png'
 import "../css/TableRow.css"; // Import your CSS file for styling
 import DayCell from './DayCell';
 import FreeEditCell from './FreeEditCell';
 import TimeCell from './TimeCell';
+import RowActionCell from './RowActionCell';
 
-export default function TableRow({ row, rowErrors, rowIndex, onCellEdit, onRowDelete }) {
+export default function TableRow({ row, rowErrors, rowIndex, onCellEdit, onRowDelete, onRowAdd }) {
     const handleDeleteRow = () => {
         onRowDelete(rowIndex)
+    }
+
+    const handleAddRow = () => {
+        onRowAdd(rowIndex)
     }
 
     function adjustTime(timeString, addHalfHour = true) {
@@ -35,11 +38,13 @@ export default function TableRow({ row, rowErrors, rowIndex, onCellEdit, onRowDe
     return (
         <>
             <tr className="row100 body last-rows" id="table-row">
-                <td id="deleteRow" className='cell100 first-column static-position '>
+                {/* <td id="deleteRow" className='cell100 first-column static-position '>
                     <button className="border-0 p-0 no-outline" onClick={handleDeleteRow} id="deleteBtn">
                         <img src={rowDeleteImage} alt="Image" className="img-fluid" id="deleteImg" />
                     </button>
-                </td>
+                </td> */}
+
+                <RowActionCell onRowDelete={handleDeleteRow} onRowAdd={handleAddRow}/>
 
                 <DayCell value={row[0]} rowIndex={rowIndex} coloumnIndex={0} isValid={rowErrors[0]} onEdit={onCellEdit} />
 

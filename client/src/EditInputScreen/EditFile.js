@@ -191,6 +191,23 @@ function EditFile() {
         setErrors((prevErrors) => [...prevErrors, newErrorRow]);
     };
 
+    const onRowAdd = (rowIndex) => {
+        const newEmptyRow = [content[rowIndex][0], content[rowIndex][1], "00:00", "24:00", ""];
+        const newErrorRow = [errors[rowIndex][0], errors[rowIndex][1], false, false, true];
+
+        setContent((prevContent) => {
+            const newContent = [...prevContent];
+            newContent.splice(rowIndex + 1, 0, newEmptyRow);
+            return newContent;
+        });
+
+        setErrors((prevErrors) => {
+            const newErrors = [...prevErrors];
+            newErrors.splice(rowIndex + 1, 0, newErrorRow);
+            return newErrors;
+        });
+    }
+
     const handleCellEdit = (rowIndex, columnIndex, value) => {
         const updatedContent = content.map((row, i) => {
             if (i === rowIndex) {
@@ -319,7 +336,7 @@ function EditFile() {
                 </div>
                 <div className="col-11"></div>
                 <Table content={content} onCellEdit={handleCellEdit} onRowDelete={deleteRow} errors={errors}
-                    isNumberOfWorkersValid={isNumberOfWorkersValid} isSkillValid={isSkillValid}></Table>
+                    isNumberOfWorkersValid={isNumberOfWorkersValid} isSkillValid={isSkillValid} onRowAdd={onRowAdd}></Table>
                 <div className="row"><br /></div>
                 <div className="d-flex justify-content-between mb-3 down-buttons">
                     <div className="col-3"></div>

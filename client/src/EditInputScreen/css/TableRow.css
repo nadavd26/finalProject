@@ -24,12 +24,12 @@
     box-shadow: none !important;
 }
 
-#deleteImg {
+.actionImage {
     width: 100% !important;
     height: 100% !important;
 }
 
-#deleteBtn {
+.actionButton {
     width: 25px !important;
     height: 25px !important;
     visibility: visible;
