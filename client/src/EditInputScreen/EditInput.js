@@ -30,7 +30,6 @@ export default function EditInput({ file, numOfFile, setEditInfo }) {
     }, [file]);
 
     if (error) {
-        // Handle or display the error here
         setEditInfo({inEdit : false, errorMsg : "Cannot parse this file"})
     }
 
