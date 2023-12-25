@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import './UploadScreen.css'
 import UploadFile from "./UploadFile";
 import { useNavigate } from 'react-router-dom'
+import EditInput from "../EditInputScreen/EditInput";
 
 function UploadScreen() {
   const [selectedButton, setSelectedButton] = useState("FirstFileButton");
@@ -11,6 +12,7 @@ function UploadScreen() {
     SecondFileButton: { file: null, isFileAdded: false },
     ThirdFileButton: { file: null, isFileAdded: false },
   });
+  const [inEdit, setInEdit] = useState(false)
   const navigate = useNavigate();
 
 
@@ -42,6 +44,23 @@ function UploadScreen() {
   }
 
   const handleEdit = () => {
+    // var numOfFile = 1
+    // var file = null
+    // if (selectedButton === "FirstFileButton") {
+    //   file = fileStates.FirstFileButton.file
+    // }
+    // if (selectedButton === "SecondFileButton") {
+    //   numOfFile = 2
+    //   file = fileStates.SecondFileButton.file
+    // }
+    // if (selectedButton === "ThirdFileButton") {
+    //   file = fileStates.ThirdFileButton.file
+    //   numOfFile = 3
+    // }
+    setInEdit(true)
+  }
+
+  function getFileAndNumber() {
     var numOfFile = 1
     var file = null
     if (selectedButton === "FirstFileButton") {
@@ -55,12 +74,8 @@ function UploadScreen() {
       file = fileStates.ThirdFileButton.file
       numOfFile = 3
     }
-    navigate("/edit", {
-      state: {
-        numOfFile: [numOfFile],
-        file: file
-      }
-    });
+
+    return {file: file, numOfFile : numOfFile}
   }
 
 
@@ -70,6 +85,7 @@ function UploadScreen() {
       : "btn btn-secondary col-2";
   };
   return (
+    !inEdit ? (
     <div id="upload_screen">
       <div className="container-fluid py-3">
         <div className="d-flex justify-content-between mb-3 top-buttons">
@@ -137,7 +153,7 @@ function UploadScreen() {
         </div>}
         <div className="col-4"></div>
       </div>
-    </div>
+    </div>) : <EditInput file={getFileAndNumber().file} numOfFile={getFileAndNumber().numOfFile} setInEdit={setInEdit}/>
   );
 }
 

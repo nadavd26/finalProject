@@ -7,12 +7,11 @@ import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom'
 import { csv_to_array, parseTime, isNumberOfWorkersValid, isSkillValid } from "../Utils";
 
-function EditFile() {
+export default function EditFile2({file, setInEdit}) {
     const location = useLocation();
     const navigate = useNavigate();
-    const { numOfFile, file } = location.state
-    const [content, setContent] = useState([["sunday", "", "00:00", "24:00", ""]])
-    const [errors, setErrors] = useState([[false, true, false, false, true]])
+    const [content, setContent] = useState([["", "", "", "", ""]])
+    const [errors, setErrors] = useState([[true, true, true, true, true]])
     const [showErrorModel, setShowErrorModel] = useState(false)
     const [showSuccessModel, setShowSuccessModel] = useState(false)
     const [showBackModal, setShowBackModal] = useState(false)
@@ -146,8 +145,8 @@ function EditFile() {
 
 
     const addRowHandler = () => {
-        const newRow = ["sunday", "", "00:00", "24:00", ""]
-        const newErrorRow = [false, true, false, false, true]
+        const newRow = ["", "", "", "", ""]
+        const newErrorRow = [true, true, true, true, true]
         setContent((prevContent) => [...prevContent, newRow]);
         setErrors((prevErrors) => [...prevErrors, newErrorRow]);
     };
@@ -264,7 +263,7 @@ function EditFile() {
         content.forEach((row) => {
             console.log(row.join(', '))
         })
-        navigate("/upload")
+        setInEdit(false)
     };
 
     const handleBack = () => {
@@ -272,7 +271,7 @@ function EditFile() {
     }
 
     const handleExit = () => {
-        navigate("/upload")
+        setInEdit(false)
     }
 
     return (
@@ -372,5 +371,3 @@ function EditFile() {
 
         </div>)
 }
-
-export default EditFile;
