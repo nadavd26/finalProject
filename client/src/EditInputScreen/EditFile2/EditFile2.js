@@ -7,7 +7,7 @@ import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom'
 import { csv_to_array, parseTime, isNumberOfWorkersValid, isSkillValid } from "../Utils";
 
-export default function EditFile2({csvArray, setInEdit}) {
+export default function EditFile2({csvArray, setEditInfo}) {
     const location = useLocation();
     const navigate = useNavigate();
     const [content, setContent] = useState([["", "", "", "", ""]])
@@ -15,7 +15,6 @@ export default function EditFile2({csvArray, setInEdit}) {
     const [showErrorModel, setShowErrorModel] = useState(false)
     const [showSuccessModel, setShowSuccessModel] = useState(false)
     const [showBackModal, setShowBackModal] = useState(false)
-    
 
     const initAndCheck = (table) => {
         let errorMsg = ""
@@ -24,7 +23,8 @@ export default function EditFile2({csvArray, setInEdit}) {
         for (let i = 0; i < table.length; i++) {
             if (table[i].length != 5) {
                 isValid = false
-                errorMsg += "line " + (i + 1) + " invalid line length (must be 5)" + "\n"
+                setEditInfo({inEdit : false, errorMsg : "The table must be 5 columns"})
+                return
             }
             table[i][0] = (table[i][0]).toLowerCase()
             const day = table[i][0]
@@ -125,12 +125,12 @@ export default function EditFile2({csvArray, setInEdit}) {
         setErrors(errorsFound)
     }
 
+
     useEffect(() => {
         if (csvArray.length > 0) {
             initAndCheck(csvArray);
         }
     }, [csvArray, setContent]);
-
 
     const addRowHandler = () => {
         const newRow = ["", "", "", "", ""]
@@ -251,7 +251,7 @@ export default function EditFile2({csvArray, setInEdit}) {
         content.forEach((row) => {
             console.log(row.join(', '))
         })
-        setInEdit(false)
+        setEditInfo({inEdit : false, errorMsg : ""})
     };
 
     const handleBack = () => {
@@ -259,7 +259,7 @@ export default function EditFile2({csvArray, setInEdit}) {
     }
 
     const handleExit = () => {
-        setInEdit(false)
+        setEditInfo({inEdit : false, errorMsg : ""})
     }
 
     return (

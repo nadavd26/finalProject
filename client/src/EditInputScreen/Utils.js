@@ -1,19 +1,24 @@
-export function csv_to_array(data, delimiter = ',', omitFirstRow = false){
-    const lines = data.split('\n');
-    const startFrom = omitFirstRow ? 1 : 0;
-    const result = [];
-    for (let i = startFrom; i < lines.length; i++) {
-        const line = lines[i].trim();
-        if (line.length === 0) {
-            continue;
+export function csvToArray(data, delimiter = ',', omitFirstRow = false) {
+    try {
+        const lines = data.split('\n');
+        const startFrom = omitFirstRow ? 1 : 0;
+        const result = [];
+        for (let i = startFrom; i < lines.length; i++) {
+            const line = lines[i].trim();
+            if (line.length === 0) {
+                continue; // Skip empty lines
+            }
+            const values = line.split(delimiter);
+            result.push(values);
         }
-        const values = line.split(delimiter);
-        result.push(values);
+        return result;
+    } catch (error) {
+        throw new Error(`Error converting CSV to array: ${error.message}`);
     }
-    return result;
-};
+}
 
 export function parseTime(inputTime) {
+    console.log("input time: " + inputTime)
     const trimmedTime = inputTime.trim();
     const timeComponents = trimmedTime.split(':');
     let hours, minutes;
