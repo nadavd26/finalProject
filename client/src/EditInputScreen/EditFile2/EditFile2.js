@@ -7,7 +7,7 @@ import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom'
 import { csv_to_array, parseTime, isNumberOfWorkersValid, isSkillValid } from "../Utils";
 
-export default function EditFile2({file, setInEdit}) {
+export default function EditFile2({csvArray, setInEdit}) {
     const location = useLocation();
     const navigate = useNavigate();
     const [content, setContent] = useState([["", "", "", "", ""]])
@@ -126,22 +126,10 @@ export default function EditFile2({file, setInEdit}) {
     }
 
     useEffect(() => {
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                const csv_data = e.target.result;
-                const csv_array = csv_to_array(csv_data, ',', false)
-                if (!csv_array) {
-                    console.log("problem")
-                } else {
-                    initAndCheck(csv_array);
-                }
-                console.log("data is:", csv_array);
-                // Log every line              
-            };
-            reader.readAsText(file);
+        if (csvArray.length > 0) {
+            initAndCheck(csvArray);
         }
-    }, [file, setContent]);
+    }, [csvArray, setContent]);
 
 
     const addRowHandler = () => {

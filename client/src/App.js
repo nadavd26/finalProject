@@ -111,10 +111,6 @@ function App() {
           element={user ? <UploadScreen /> : <Navigate replace to="/" />}
         />
         <Route
-          path="/edit"
-          element={<EditFile2 />}
-        />
-        <Route
           path="/login"
           element={<LoginScreen />}
         />
