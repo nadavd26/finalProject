@@ -27,18 +27,21 @@ const User = new Schema(
             type: String,
             required: true,
         },
-        table1: {
-            type: String,
-            default: "",
-        },
-        table2: {
-            type: String,
-            default: "",
-        },
-        table3: {
-            type: String,
-            default: "",
-        },
+        table1: [{
+            type: Schema.Types.ObjectId,
+            ref: "TableLine",
+            required: true,
+        }],
+        table2: [{
+            type: Schema.Types.ObjectId,
+            ref: "TableLine",
+            required: true,
+        }],
+        table3: [{
+            type: Schema.Types.ObjectId,
+            ref: "TableLine",
+            required: true,
+        }],
     },
     { autoIndex: false, autoCreate: false }
 );

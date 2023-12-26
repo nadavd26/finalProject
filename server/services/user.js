@@ -1,11 +1,12 @@
 const User = require("../models/user");
+const TableLine = require("../models/tableLine");
 
 const createUser = async (email, familyName, givenName, googleId, imageUrl, name) => {
     try {
         const existingUser = await User.findOne({ email });
         if (existingUser) throw new Error("User has already signed in once.");
         const user = new User({
-            email, familyName, givenName, googleId, imageUrl, name
+            email, familyName, givenName, googleId, imageUrl, name, table1: [], table2: [], table3: [],
         });
         return await user.save();
     } catch (err) {
@@ -41,26 +42,58 @@ const getUser = async (email, googleId) => {
 }
 
 const setTable = async (email, googleId, tableContent, tableNum) => {
-    table = 'table' + tableNum
-    await User.findOneAndUpdate({ email, googleId }, { $set: { [table]: tableContent } });
+    try {
+        if (!tableContent || !Array.isArray(tableContent)) {
+            throw new Error("Invalid table content");
+        }
+        // Removing existing lines
+        const tableField = `table${tableNum}`;
+        // Getting old TableLine IDs
+        const oldTableLineIds = (await User.findOne({ email, googleId }))[tableField];
+        // Removing existing lines from User document
+        await User.findOneAndUpdate({ email, googleId }, { $set: { [tableField]: [] } });
+        // Removing those lines from the TableLine doccument.
+        await TableLine.deleteMany({
+            _id: { $in: oldTableLineIds }
+        });
+        const tableLines = [];
+        // Creating TableLine objects and save them in the database
+        for (const lineData of tableContent) {
+            const tableLine = new TableLine({
+                day: lineData[0],
+                name: lineData[1],
+                startTime: lineData[2],
+                finishTime: lineData[3],
+                cost: lineData[4],
+            });
+            const savedLine = await tableLine.save();
+            tableLines.push(savedLine._id);
+        }
+        // Updating the user's table array with the created TableLine objects
+        await User.findOneAndUpdate(
+            { email, googleId },
+            { $addToSet: { [tableField]: { $each: tableLines } } }
+        );
+    } catch (err) {
+        throw err
+    }
 }
 
 const getTable = async (email, googleId, tableNum) => {
-    table = 'table' + tableNum
-    const user = await User.findOne({ email, googleId });
-    console.log(user.table3)
-    if (tableNum == 1) {
-        return user.table1
-    }
-    else if (tableNum == 2) {
-        return user.table2
-    }
-    else if (tableNum == 3) {
-        return user.table3
-    }
-    else {
-        return ""
-    }
+    if (tableNum != 1 && tableNum != 2 && tableNum != 3) //Checking for invalid table number.
+        return []
+    const tableField = `table${tableNum}`;
+    const user = await User.findOne({ email, googleId }).populate(tableField);
+    const tableContent = user[tableField] || [];
+    //Getting rid of the id and v fields and converting from json to simple array.
+    const formattedTable = tableContent.map(line => [
+        line.day,
+        line.name,
+        line.startTime,
+        line.finishTime,
+        line.cost.toString(),
+    ]);
+    return { [`table${tableNum}Content`]: formattedTable };
 }
 
 module.exports = { createUser, isUserInDBByEmail, getUser, setTable, getTable }

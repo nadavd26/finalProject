@@ -16,7 +16,7 @@ const createUser = async (req, res) => {
         if (user != null) {
             user = user.toObject();
             const token = jwt.sign(user, process.env.SECRET_KEY, {
-                expiresIn: "20m",
+                expiresIn: null,
             });
             res.status(200).send(token);
         }
@@ -68,8 +68,11 @@ const setTable = async (req, res) => {
 
 const getTable = async (req, res) => {
     try {
+        if (req.params.tableNum != 1 && req.params.tableNum != 2 && req.params.tableNum != 3) {
+            res.status(404).send("Invalid table number.")
+            return
+        }
         tableContent = await UserService.getTable(req.user.email, req.user.googleId, req.params.tableNum)
-        console.log(tableContent)
         if (tableContent != "")
             res.status(200).send(tableContent);
         else
