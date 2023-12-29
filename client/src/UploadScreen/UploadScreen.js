@@ -29,7 +29,6 @@ function UploadScreen() {
   };
 
   const handleFileAdded = (buttonId, file) => {
-    setShowSubmitAlert(false);
     setFileStates((prevFileStates) => ({
       ...prevFileStates,
       [buttonId]: { file, isFileAdded: true },
@@ -46,6 +45,9 @@ function UploadScreen() {
   const handleSubmit = () => {
     if (!(fileStates.FirstFileButton.isFileAdded && fileStates.SecondFileButton.isFileAdded && fileStates.ThirdFileButton.isFileAdded)) {
       setShowSubmitAlert(true);
+      setTimeout(() => {
+        setShowSubmitAlert(false);
+      }, 2500);
     } else {
       navigate("/table")
     }
@@ -140,15 +142,15 @@ function UploadScreen() {
         <div className="btn-container">
           <div className="d-flex justify-content-between mb-3 top-buttons">
             <div className="col-3"></div>
-            <button className="btn btn-success col-3" onClick={handleSubmit}>Upload File</button>
-            <button className="btn btn-secondary col-3" data-toggle="modal" data-target="#UploadScreenErrorModal" onClick={handleEdit}>Edit</button>
+            <button className="btn btn-success col-3" onClick={handleSubmit}>Generate Results</button>
+            <button className="btn btn-secondary col-3" data-toggle="modal" data-target="#UploadScreenErrorModal" onClick={handleEdit}>Upload/Edit File</button>
             <div className="col-3"></div>
           </div>
         </div>
         <div className="d-flex justify-content-between mb-3">
           <div className="col-4"></div>
           {showSubmitAlert && <div className="alert alert-danger col-4" role="alert">
-            Can't upload without all input files.
+            Can't Generate Results without all input files.
           </div>}
           <div className="col-4"></div>
         </div>
@@ -157,7 +159,7 @@ function UploadScreen() {
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content modal-danger"> {/* Add custom class modal-danger */}
               <div class="modal-header">
-                <h5 class="modal-title text-danger">Cannot Edit File</h5>
+                <h5 class="modal-title text-danger">Cannot Upload File</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
