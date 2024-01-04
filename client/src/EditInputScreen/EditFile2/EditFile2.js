@@ -5,9 +5,10 @@ import '../css/edit-file-table-main.css'
 import '../css/perfect-scrollbar.css'
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom'
+import { postInputTable } from "../../api/InputTableApi";
 import { csv_to_array, parseTime, isNumberOfWorkersValid, isSkillValid } from "../Utils";
 
-export default function EditFile2({csvArray, setEditInfo}) {
+export default function EditFile2({csvArray, setEditInfo, token}) {
     const location = useLocation();
     const navigate = useNavigate();
     const [content, setContent] = useState([["", "", "", "", ""]])
@@ -247,10 +248,11 @@ export default function EditFile2({csvArray, setEditInfo}) {
         setShowBackModal(false)
     }
 
-    const finishEdit = () => {
+    const finishEdit = async () => {
         content.forEach((row) => {
             console.log(row.join(', '))
         })
+        await postInputTable(2, content, token)
         setEditInfo({inEdit : false, errorMsg : ""})
     };
 

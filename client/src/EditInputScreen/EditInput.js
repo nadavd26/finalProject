@@ -1,10 +1,28 @@
 import EditFile2 from "./EditFile2/EditFile2";
 import { useEffect, useState } from "react";
 import { csvToArray } from "./Utils";
+import { getInputTable } from "../api/InputTableApi";
 
-export default function EditInput({ file, numOfFile, setEditInfo }) {
+export default function EditInput({ file, numOfFile, setEditInfo, token }) {
     const [csvArray, setCsvArray] = useState([]);
     const [error, setError] = useState(null);
+    useEffect(() => {
+        const fetchAndSetTable = async () => {
+            try {
+                const table = await getInputTable(numOfFile, token);
+                if (table) {
+                    setCsvArray(table);
+                }
+                console.log("table is : " + JSON.stringify(table))
+            } catch (error) {
+                setError(error);
+            }
+        };
+        // Call fetchAndSetTable on every render
+        if (!file) {
+            fetchAndSetTable()
+        }
+    }, [numOfFile, token]);
 
     useEffect(() => {
         if (file) {
@@ -26,6 +44,7 @@ export default function EditInput({ file, numOfFile, setEditInfo }) {
             };
 
             reader.readAsText(file);
+        } else {
         }
     }, [file]);
 
@@ -38,6 +57,6 @@ export default function EditInput({ file, numOfFile, setEditInfo }) {
     }
 
     if (numOfFile === 2) {
-        return <EditFile2 csvArray={csvArray} setEditInfo={setEditInfo} />;
+        return <EditFile2 csvArray={csvArray} setEditInfo={setEditInfo} token={token}/>;
     }
 }

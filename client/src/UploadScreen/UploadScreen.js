@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { useEffect } from "react";
 import EditInput from "../EditInputScreen/EditInput";
 
-function UploadScreen() {
+function UploadScreen({user}) {
   const [selectedButton, setSelectedButton] = useState("FirstFileButton");
   const [showSubmitAlert, setShowSubmitAlert] = useState(false);
   const [fileStates, setFileStates] = useState({
@@ -16,6 +16,7 @@ function UploadScreen() {
   const [editInfo, setEditInfo] = useState({inEdit : false, errorMsg : ""})
   const navigate = useNavigate();
 
+  // console.log("upload screen user: "  + JSON.stringify(user) + "token: " + user.token)
   useEffect(() => {
     if (editInfo.errorMsg !== "") {
       const modal = new window.bootstrap.Modal(document.getElementById('UploadScreenErrorModal'));
@@ -175,7 +176,7 @@ function UploadScreen() {
         </div>}
 
       </div>
-    ) : <EditInput file={getFileAndNumber().file} numOfFile={getFileAndNumber().numOfFile} setEditInfo={setEditInfo} />
+    ) : <EditInput file={getFileAndNumber().file} numOfFile={getFileAndNumber().numOfFile} setEditInfo={setEditInfo} token={user.token}/>
   );
 }
 
