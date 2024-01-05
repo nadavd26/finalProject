@@ -1,15 +1,27 @@
 import EditFile2 from "./EditFile2/EditFile2";
 import { useEffect, useState } from "react";
 import { csvToArray } from "./Utils";
-import { getInputTable } from "../api/InputTableApi";
+import { getInputTable, postInputTable } from "../api/InputTableApi";
 
-export default function EditInput({ file, numOfFile, setEditInfo, token }) {
+export default function EditInput({ file, numOfFile, setEditInfo, user, setUser, setCurrentFile }) {
+    const token = user.token
     const [csvArray, setCsvArray] = useState([]);
     const [error, setError] = useState(null);
     useEffect(() => {
-        const fetchAndSetTable = async () => {
+        const setTable = () => {
             try {
-                const table = await getInputTable(numOfFile, token);
+                var table = null
+                switch (numOfFile) {
+                    case 1:
+                        table = user.table1
+                        break
+                    case 2:
+                        table = user.table2
+                        break
+                    default:
+                        table = user.table3
+                        break                                
+                }
                 if (table) {
                     setCsvArray(table);
                 }
@@ -20,15 +32,14 @@ export default function EditInput({ file, numOfFile, setEditInfo, token }) {
         };
         // Call fetchAndSetTable on every render
         if (!file) {
-            fetchAndSetTable()
+            setTable()
         }
     }, [numOfFile, token]);
 
     useEffect(() => {
         if (file) {
             const reader = new FileReader();
-
-            reader.onload = function (e) {
+            reader.onload = async function (e) {
                 try {
                     const csv_data = e.target.result;
                     const csv_array = csvToArray(csv_data, ',', false);
@@ -41,6 +52,8 @@ export default function EditInput({ file, numOfFile, setEditInfo, token }) {
                 } catch (error) {
                     setError(error);
                 }
+
+                setCurrentFile(null) //cleaning input file
             };
 
             reader.readAsText(file);
@@ -57,6 +70,6 @@ export default function EditInput({ file, numOfFile, setEditInfo, token }) {
     }
 
     if (numOfFile === 2) {
-        return <EditFile2 csvArray={csvArray} setEditInfo={setEditInfo} token={token}/>;
+        return <EditFile2 csvArray={csvArray} setEditInfo={setEditInfo} user={user}  setUser={setUser}/>;
     }
 }

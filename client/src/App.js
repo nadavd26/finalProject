@@ -108,7 +108,7 @@ function App() {
         <Route exact path="/" element={<LoginScreen />} />
         <Route
           path="/upload"
-          element={user ? <UploadScreen user={user}/> : <Navigate replace to="/" />}
+          element={user ? <UploadScreen user={user} setUser={setUser}/> : <Navigate replace to="/" />}
         />
         <Route
           path="/login"

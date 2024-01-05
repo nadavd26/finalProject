@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import './UploadScreen.css'
 import UploadFile from "./UploadFile";
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from "react";
 import EditInput from "../EditInputScreen/EditInput";
 
-function UploadScreen({user}) {
+function UploadScreen({user, setUser}) {
   const [selectedButton, setSelectedButton] = useState("FirstFileButton");
   const [showSubmitAlert, setShowSubmitAlert] = useState(false);
   const [fileStates, setFileStates] = useState({
@@ -13,6 +13,8 @@ function UploadScreen({user}) {
     SecondFileButton: { file: null, isFileAdded: false },
     ThirdFileButton: { file: null, isFileAdded: false },
   });
+
+  const [currentFile, setCurrentFile] = useState(null)
   const [editInfo, setEditInfo] = useState({inEdit : false, errorMsg : ""})
   const navigate = useNavigate();
 
@@ -27,6 +29,21 @@ function UploadScreen({user}) {
 
   const handleButtonClick = (buttonId) => {
     setSelectedButton(buttonId);
+    var newFile = null
+    var numOfFile = 1
+    if (selectedButton === "FirstFileButton") {
+      newFile = fileStates.FirstFileButton.file
+    }
+    if (selectedButton === "SecondFileButton") {
+      numOfFile = 2
+      newFile = fileStates.SecondFileButton.file
+    }
+    if (selectedButton === "ThirdFileButton") {
+      newFile = fileStates.ThirdFileButton.file
+      numOfFile = 3
+    }
+
+    setCurrentFile(newFile)
   };
 
   const handleFileAdded = (buttonId, file) => {
@@ -34,6 +51,8 @@ function UploadScreen({user}) {
       ...prevFileStates,
       [buttonId]: { file, isFileAdded: true },
     }));
+    setEditInfo({inEdit : true, errorMsg : ""})
+    setCurrentFile(file)
   };
 
   const handleFileDelete = (buttonId) => {
@@ -44,7 +63,13 @@ function UploadScreen({user}) {
   };
 
   const handleSubmit = () => {
-    if (!(fileStates.FirstFileButton.isFileAdded && fileStates.SecondFileButton.isFileAdded && fileStates.ThirdFileButton.isFileAdded)) {
+    var flag = true
+    for (let i = 1; i <=3; i++) {
+      if (!user["table" + i] || user["table" + i] == []) {
+        flag = false
+      }
+    }
+    if (flag) {
       setShowSubmitAlert(true);
       setTimeout(() => {
         setShowSubmitAlert(false);
@@ -58,7 +83,7 @@ function UploadScreen({user}) {
     setEditInfo({inEdit : true, errorMsg : ""})
   }
 
-  function getFileAndNumber() {
+  function getFileNumber() {
     var numOfFile = 1
     var file = null
     if (selectedButton === "FirstFileButton") {
@@ -73,7 +98,7 @@ function UploadScreen({user}) {
       numOfFile = 3
     }
 
-    return { file: file, numOfFile: numOfFile }
+    return numOfFile
   }
 
 
@@ -119,33 +144,42 @@ function UploadScreen({user}) {
         {selectedButton === "FirstFileButton" && (
           <UploadFile
             id="uploadFile1"
-            fileState={fileStates.FirstFileButton}
+            file={currentFile}
             onFileAdded={(file) => handleFileAdded("FirstFileButton", file)}
             onFileDelete={() => handleFileDelete("FirstFileButton")}
+            user={user}
+            fileNum={1}
+            handleEdit={handleEdit}
           />
         )}
         {selectedButton === "SecondFileButton" && (
           <UploadFile
             id="uploadFile2"
-            fileState={fileStates.SecondFileButton}
+            file={currentFile}
             onFileAdded={(file) => handleFileAdded("SecondFileButton", file)}
             onFileDelete={() => handleFileDelete("SecondFileButton")}
+            user={user}
+            fileNum={2}
+            handleEdit={handleEdit}
           />
         )}
         {selectedButton === "ThirdFileButton" && (
           <UploadFile
             id="uploadFile3"
-            fileState={fileStates.ThirdFileButton}
+            file={currentFile}
             onFileAdded={(file) => handleFileAdded("ThirdFileButton", file)}
             onFileDelete={() => handleFileDelete("ThirdFileButton")}
+            user={user}
+            fileNum={3}
+            handleEdit={handleEdit}
           />
         )}
         <div className="btn-container">
           <div className="d-flex justify-content-between mb-3 top-buttons">
-            <div className="col-3"></div>
-            <button className="btn btn-success col-3" onClick={handleSubmit}>Generate Results</button>
-            <button className="btn btn-secondary col-3" data-toggle="modal" data-target="#UploadScreenErrorModal" onClick={handleEdit}>Upload/Edit File</button>
-            <div className="col-3"></div>
+            <div className="col-4"></div>
+            <button className="btn btn-success col-4" onClick={handleSubmit}>Generate Results</button>
+            {/* <button className="btn btn-secondary col-3" data-toggle="modal" data-target="#UploadScreenErrorModal" onClick={handleEdit}>Upload/Edit File</button> */}
+            <div className="col-4"></div>
           </div>
         </div>
         <div className="d-flex justify-content-between mb-3">
@@ -176,7 +210,7 @@ function UploadScreen({user}) {
         </div>}
 
       </div>
-    ) : <EditInput file={getFileAndNumber().file} numOfFile={getFileAndNumber().numOfFile} setEditInfo={setEditInfo} token={user.token}/>
+    ) : <EditInput file={currentFile} numOfFile={getFileNumber()} setEditInfo={setEditInfo} user={user} setUser={setUser} setCurrentFile={setCurrentFile}/>
   );
 }
 

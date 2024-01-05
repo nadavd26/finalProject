@@ -3,7 +3,7 @@ import DayCell from '../components/DayCell';
 import FreeEditCell from '../components/FreeEditCell';
 import TimeCell from '../components/TimeCell';
 import RowActionCell from '../components/RowActionCell';
-
+import { adjustTime } from "../Utils";
 export default function TableRow({ row, rowErrors, rowIndex, onCellEdit, onRowDelete, onRowAdd }) {
     const handleDeleteRow = () => {
         onRowDelete(rowIndex)
@@ -13,19 +13,7 @@ export default function TableRow({ row, rowErrors, rowIndex, onCellEdit, onRowDe
         onRowAdd(rowIndex)
     }
 
-    function adjustTime(timeString, addHalfHour = true) {
-        if (timeString === "23:30" && addHalfHour) {
-            return "24:00"
-        }
-        const [hours, minutes] = timeString.split(':').map(Number);
-        let totalMinutes = hours * 60 + minutes;
-        totalMinutes += addHalfHour ? 30 : -30;
-        totalMinutes = (totalMinutes + 1440) % 1440;
-        const newHours = Math.floor(totalMinutes / 60);
-        const newMinutes = totalMinutes % 60;
-        const resultTimeString = `${String(newHours).padStart(2, '0')}:${String(newMinutes).padStart(2, '0')}`;
-        return resultTimeString;
-    }
+    
 
     var minFromHour = "00:00";
     var maxFromHour = rowErrors[3] ? "23:30" : adjustTime(row[3], false)

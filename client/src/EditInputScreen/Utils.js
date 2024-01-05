@@ -52,3 +52,17 @@ export function isSkillValid(input) {
     const regex = /^(?=.*[a-zA-Z])[a-zA-Z0-9@'",.!? ]*$/;
     return regex.test(input);
 }
+
+export function adjustTime(timeString, addHalfHour = true) {
+    if (timeString === "23:30" && addHalfHour) {
+        return "24:00"
+    }
+    const [hours, minutes] = timeString.split(':').map(Number);
+    let totalMinutes = hours * 60 + minutes;
+    totalMinutes += addHalfHour ? 30 : -30;
+    totalMinutes = (totalMinutes + 1440) % 1440;
+    const newHours = Math.floor(totalMinutes / 60);
+    const newMinutes = totalMinutes % 60;
+    const resultTimeString = `${String(newHours).padStart(2, '0')}:${String(newMinutes).padStart(2, '0')}`;
+    return resultTimeString;
+}

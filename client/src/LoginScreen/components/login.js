@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useContext } from 'react';
 import { UserContext } from '../../Context/UserContext'
 import { serverGetToken } from '../../api/LoginApi';
+import { getInputTable } from '../../api/InputTableApi';
 const clientId = "697357189642-cv95irflcae6i8dm2nidpvokkqtpv62k.apps.googleusercontent.com"
 
 
@@ -18,6 +19,9 @@ function Login() {
         console.log("token is: " + token)
         const userInfo = res.profileObj
         userInfo["token"] = token
+        userInfo["table1"] = await getInputTable(1, token)
+        userInfo["table2"] = await getInputTable(2, token)
+        userInfo["table3"] = await getInputTable(3, token)
         setUser(userInfo)
         navigate("/upload")
     };

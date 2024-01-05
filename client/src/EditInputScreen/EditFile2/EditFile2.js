@@ -3,20 +3,16 @@ import Table from "./Table";
 import '../css/bootstrap.min.css'
 import '../css/edit-file-table-main.css'
 import '../css/perfect-scrollbar.css'
-import { useLocation } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom'
 import { postInputTable } from "../../api/InputTableApi";
 import { csv_to_array, parseTime, isNumberOfWorkersValid, isSkillValid } from "../Utils";
 
-export default function EditFile2({csvArray, setEditInfo, token}) {
-    const location = useLocation();
-    const navigate = useNavigate();
+export default function EditFile2({csvArray, setEditInfo, user, setUser}) {
     const [content, setContent] = useState([["", "", "", "", ""]])
     const [errors, setErrors] = useState([[true, true, true, true, true]])
     const [showErrorModel, setShowErrorModel] = useState(false)
     const [showSuccessModel, setShowSuccessModel] = useState(false)
     const [showBackModal, setShowBackModal] = useState(false)
-
+    const token = user.token
     const initAndCheck = (table) => {
         let errorMsg = ""
         let isValid = true
@@ -254,6 +250,9 @@ export default function EditFile2({csvArray, setEditInfo, token}) {
         })
         await postInputTable(2, content, token)
         setEditInfo({inEdit : false, errorMsg : ""})
+        var newUser = user
+        newUser.table2 = content
+        setUser(newUser)
     };
 
     const handleBack = () => {
