@@ -8,12 +8,6 @@ import EditInput from "../EditInputScreen/EditInput";
 function UploadScreen({user, setUser}) {
   const [selectedButton, setSelectedButton] = useState("FirstFileButton");
   const [showSubmitAlert, setShowSubmitAlert] = useState(false);
-  const [fileStates, setFileStates] = useState({
-    FirstFileButton: { file: null, isFileAdded: false },
-    SecondFileButton: { file: null, isFileAdded: false },
-    ThirdFileButton: { file: null, isFileAdded: false },
-  });
-
   const [currentFile, setCurrentFile] = useState(null)
   const [editInfo, setEditInfo] = useState({inEdit : false, errorMsg : ""})
   const navigate = useNavigate();
@@ -29,37 +23,14 @@ function UploadScreen({user, setUser}) {
 
   const handleButtonClick = (buttonId) => {
     setSelectedButton(buttonId);
-    var newFile = null
-    var numOfFile = 1
-    if (selectedButton === "FirstFileButton") {
-      newFile = fileStates.FirstFileButton.file
-    }
-    if (selectedButton === "SecondFileButton") {
-      numOfFile = 2
-      newFile = fileStates.SecondFileButton.file
-    }
-    if (selectedButton === "ThirdFileButton") {
-      newFile = fileStates.ThirdFileButton.file
-      numOfFile = 3
-    }
-
-    setCurrentFile(newFile)
   };
 
   const handleFileAdded = (buttonId, file) => {
-    setFileStates((prevFileStates) => ({
-      ...prevFileStates,
-      [buttonId]: { file, isFileAdded: true },
-    }));
     setEditInfo({inEdit : true, errorMsg : ""})
     setCurrentFile(file)
   };
 
   const handleFileDelete = (buttonId) => {
-    setFileStates((prevFileStates) => ({
-      ...prevFileStates,
-      [buttonId]: { file: null, isFileAdded: false },
-    }));
   };
 
   const handleSubmit = () => {
@@ -85,16 +56,10 @@ function UploadScreen({user, setUser}) {
 
   function getFileNumber() {
     var numOfFile = 1
-    var file = null
-    if (selectedButton === "FirstFileButton") {
-      file = fileStates.FirstFileButton.file
-    }
     if (selectedButton === "SecondFileButton") {
       numOfFile = 2
-      file = fileStates.SecondFileButton.file
     }
     if (selectedButton === "ThirdFileButton") {
-      file = fileStates.ThirdFileButton.file
       numOfFile = 3
     }
 
