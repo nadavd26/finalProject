@@ -20,6 +20,9 @@ export function csvToArray(data, delimiter = ',', omitFirstRow = false) {
 export function parseTime(inputTime) {
     console.log("input time: " + inputTime)
     const trimmedTime = inputTime.trim();
+    if (trimmedTime === "24:00") {
+        return trimmedTime
+    }
     const timeComponents = trimmedTime.split(':');
     let hours, minutes;
     if (timeComponents.length === 2) {
