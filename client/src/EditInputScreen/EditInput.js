@@ -1,7 +1,7 @@
 import EditFile2 from "./EditFile2/EditFile2";
 import { useEffect, useState } from "react";
 import { csvToArray } from "./Utils";
-import { getInputTable, postInputTable } from "../api/InputTableApi";
+import { getInputTable, postInputTable, sortTable } from "../api/InputTableApi";
 
 export default function EditInput({ file, numOfFile, setEditInfo, user, setUser, setCurrentFile }) {
     const token = user.token
@@ -43,12 +43,20 @@ export default function EditInput({ file, numOfFile, setEditInfo, user, setUser,
                 try {
                     const csv_data = e.target.result;
                     const csv_array = csvToArray(csv_data, ',', false);
-                    console.log("-----------------")
-                    csv_array.forEach(row => {
-                        console.log(row);
-                    });                    
+                    console.log("whatttttttttttttttttttttttttttttttttttttttttt")
+                    // csv_array.forEach(row => {
+                    //     console.log(row);
+                    // });
+                    // const sorted_table = await sortTable(numOfFile, csv_array, token)
+                    // console.log("sorted table is:")
+                    // console.log(sorted_table)
+                    // sortTable.forEach(row => {
+                    //     console.log(row);
+                    // });     
+                    // console.log("----------------sssssssssssssssssss-")               
+                    // setCsvArray(sorted_table);
                     setCsvArray(csv_array);
-                    console.log("-----------------")
+
                 } catch (error) {
                     setError(error);
                 }

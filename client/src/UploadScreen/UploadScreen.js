@@ -34,10 +34,10 @@ function UploadScreen({user, setUser}) {
   };
 
   const handleSubmit = () => {
-    var flag = true
+    var flag = false
     for (let i = 1; i <=3; i++) {
       if (!user["table" + i] || user["table" + i] == []) {
-        flag = false
+        flag = true
       }
     }
     if (flag) {

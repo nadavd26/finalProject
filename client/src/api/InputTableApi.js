@@ -34,3 +34,19 @@ export async function postInputTable(tableNum, table, token) {
 
     console.log(await res.text())
 }
+
+export async function sortTable(tableNum, table, token) {
+    const data = {content : JSON.stringify(table)}
+    const res = await fetch('http://localhost:12345/Table/sort/' + tableNum, {
+        'method': 'post',
+        'headers': {
+            'Content-Type': 'application/json',
+            'authorization': 'bearer ' + token
+        },
+        'body': JSON.stringify(data)
+    });
+
+    const body = await res.text()
+    const sortedTable = JSON.parse(body);
+    return sortedTable["content"]
+}

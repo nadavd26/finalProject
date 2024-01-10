@@ -5,6 +5,7 @@ import '../css/edit-file-table-main.css'
 import '../css/perfect-scrollbar.css'
 import { postInputTable } from "../../api/InputTableApi";
 import { csv_to_array, parseTime, isNumberOfWorkersValid, isSkillValid } from "../Utils";
+import { sortTable } from "../../api/InputTableApi";
 
 export default function EditFile2({csvArray, setEditInfo, user, setUser}) {
     const [content, setContent] = useState([["", "", "", "", ""]])
@@ -13,11 +14,39 @@ export default function EditFile2({csvArray, setEditInfo, user, setUser}) {
     const [showSuccessModel, setShowSuccessModel] = useState(false)
     const [showBackModal, setShowBackModal] = useState(false)
     const token = user.token
-    const initAndCheck = (table) => {
+    var errorLines = 0
+    const sortTableWithErrors = async (table) => {
+        const validTable = table.slice(errorLines, table.length)
+        const sortedTable = await sortTable(2, validTable, user.token)
+        const newTable = [...table.slice(0, errorLines), ...sortedTable]
+        return newTable
+    }
+    const initAndCheck = async (table) => {
+        const table_swap_lines = (i, j) => {
+            const tmp = table[i]
+            table[i] = table[j]
+            table[j] = tmp
+        }
         let errorMsg = ""
         let isValid = true
         const errorsFound = Array.from({ length: table.length }, () => Array(5).fill(false));
+        const errors_swap_lines = (i, j) => {
+            const tmp = errorsFound[i]
+            errorsFound[i] = errorsFound[j]
+            errorsFound[j] = tmp
+        }
+        const handleLineError = (i) => {
+            table_swap_lines(i, errorLines)
+            errors_swap_lines(i , errorLines)
+            errorLines = errorLines + 1
+        }
+
+        const handleError = (i, j) => {
+            isValid = false
+            errorsFound[i][j] = true
+        }
         for (let i = 0; i < table.length; i++) {
+            isValid = true
             if (table[i].length != 5) {
                 isValid = false
                 setEditInfo({inEdit : false, errorMsg : "The table must be 5 columns"})
@@ -26,16 +55,20 @@ export default function EditFile2({csvArray, setEditInfo, user, setUser}) {
             table[i][0] = (table[i][0]).toLowerCase()
             const day = table[i][0]
             if (day != "sunday" && day != "monday" && day != "tuesday" && day != "wednesday" && day != "thursday" && day != "friday" && day != "saturday") {
-                isValid = false
-                errorsFound[i][0] = true
+                // isValid = false
+                // swap_lines(i, errorLines)
+                // errorLines++
+                // errorsFound[i][0] = true
+                handleError(i, 0)
                 errorMsg += "line " + (i + 1) + " column 1 " + "invalid day" + "\n"
             }
 
             const skill = table[i][1]
             if (!isSkillValid(skill)) {
-                isValid = false
-                errorsFound[i][1] = true
-                errorMsg += "line " + (i + 1) + " column 2 " + "invalid skill" + "\n"
+                // isValid = false
+                // errorsFound[i][1] = true
+                // errorMsg += "line " + (i + 1) + " column 2 " + "invalid skill" + "\n"
+                handleError(i, 1)
             }
 
             let fromTimeValid = true
@@ -44,65 +77,74 @@ export default function EditFile2({csvArray, setEditInfo, user, setUser}) {
             const formatFrom = parseTime(from)
             if (!formatFrom) {
                 fromTimeValid = false
-                errorsFound[i][2] = true
-                isValid = false
-                errorMsg += "line " + (i + 1) + " column 3 " + "invalid from hour" + "\n"
+                // errorsFound[i][2] = true
+                // isValid = false
+                // errorMsg += "line " + (i + 1) + " column 3 " + "invalid from hour" + "\n"
+                handleError(i, 2)
             } else {
                 table[i][2] = formatFrom
             }
             if (fromTimeValid) {
                 if (formatFrom[4] != "0" || (formatFrom[3] != "0" && formatFrom[3] != "3")) {
-                    errorMsg += "line " + (i + 1) + " column 3 " + "time interval is 30 minutes" + "\n"
-                    isValid = false
-                    errorsFound[i][2] = true
+                    // errorMsg += "line " + (i + 1) + " column 3 " + "time interval is 30 minutes" + "\n"
+                    // isValid = false
+                    // errorsFound[i][2] = true
+                    handleError(i , 2)
                 }
 
                 if (formatFrom < "00:00") {
-                    errorMsg += "line " + (i + 1) + " column 3 " + "min from time is 00:00" + "\n"
-                    isValid = false
-                    errorsFound[i][2] = true
+                    // errorMsg += "line " + (i + 1) + " column 3 " + "min from time is 00:00" + "\n"
+                    // isValid = false
+                    // errorsFound[i][2] = true
+                    handleError(i, 2)
                 }
 
                 if (formatFrom > "23:30") {
-                    errorMsg += "line " + (i + 1) + " column 3 " + "max from time is 23:30" + "\n"
-                    isValid = false
-                    errorsFound[i][2] = true
+                    // errorMsg += "line " + (i + 1) + " column 3 " + "max from time is 23:30" + "\n"
+                    // isValid = false
+                    // errorsFound[i][2] = true
+                    handleError(i, 2)
                 }
             }
 
             const until = table[i][3]
             const formatUntil = parseTime(until)
             if (!formatUntil) {
-                isValid = false
+                // isValid = false
                 untilTimeValid = false
-                errorsFound[i][3] = true
-                errorMsg += "line " + (i + 1) + " column 4 " + "invalid until hour" + "\n"
+                // errorsFound[i][3] = true
+                // errorMsg += "line " + (i + 1) + " column 4 " + "invalid until hour" + "\n"
+                handleError(i, 3)
             } else {
                 table[i][3] = formatUntil
             }
 
             if (untilTimeValid) {
                 if (formatUntil[4] != "0" || (formatUntil[3] != "0" && formatUntil[3] != "3")) {
-                    errorMsg += "line " + (i + 1) + " column 4 " + "time interval is 30 minutes" + "\n"
-                    errorsFound[i][3] = true
+                    // errorMsg += "line " + (i + 1) + " column 4 " + "time interval is 30 minutes" + "\n"
+                    // errorsFound[i][3] = true
+                    handleError(i, 3)
                 }
 
                 if (formatUntil > "24:00") {
-                    errorMsg += "line " + (i + 1) + " column 4 " + "max until time is 24:00" + "\n"
-                    isValid = false
-                    errorsFound[i][3] = true
+                    // errorMsg += "line " + (i + 1) + " column 4 " + "max until time is 24:00" + "\n"
+                    // isValid = false
+                    // errorsFound[i][3] = true
+                    handleError(i, 3)
                 }
 
                 if (formatUntil < "00:30") {
-                    errorMsg += "line " + (i + 1) + " column 4 " + "min until time is 00:30" + "\n"
-                    isValid = false
-                    errorsFound[i][3] = true
+                    // errorMsg += "line " + (i + 1) + " column 4 " + "min until time is 00:30" + "\n"
+                    // isValid = false
+                    // errorsFound[i][3] = true
+                    handleError(i, 3)
                 }
 
                 if (fromTimeValid && formatFrom >= formatUntil) {
-                    errorMsg += "line " + (i + 1) + " column 3 and 4 " + "until time is before or equal from time" + "\n"
-                    isValid = false
-                    errorsFound[i][3] = true
+                    // errorMsg += "line " + (i + 1) + " column 3 and 4 " + "until time is before or equal from time" + "\n"
+                    // isValid = false
+                    // errorsFound[i][3] = true
+                    handleError(i, 3)
                     errorsFound[i][2] = true
                 }
             }
@@ -110,15 +152,27 @@ export default function EditFile2({csvArray, setEditInfo, user, setUser}) {
             const numOfWorkers = table[i][4]
             const modifiedNumOfWorkers = parseInt(numOfWorkers)
             if (!isNumberOfWorkersValid(modifiedNumOfWorkers)) {
-                isValid = false
-                errorsFound[i][4] = true
-                errorMsg += "line " + (i + 1) + " column 5 " + "invalid number of workers" + "\n"
+                // isValid = false
+                // errorsFound[i][4] = true
+                // errorMsg += "line " + (i + 1) + " column 5 " + "invalid number of workers" + "\n"
+                handleError(i, 4)
             } else {
                 table[i][4] = modifiedNumOfWorkers
             }
+
+            if (!isValid) {
+                handleLineError(i)
+            }
         }
 
-        setContent(table)
+        if (errorLines != table.length) {
+            const newTable = await sortTableWithErrors(table)
+            setContent(newTable)
+        } else {
+            setContent(table)
+        }
+        // const sorted_table = await sortTable(2, table, user.token)
+        // setContent(sorted_table)
         setErrors(errorsFound)
     }
 
@@ -200,7 +254,7 @@ export default function EditFile2({csvArray, setEditInfo, user, setUser}) {
     };
 
 
-    const handleSave = () => {
+    const handleSave = async () => {
         var valid = true
         if (content.length === 0) {
             valid = false
@@ -211,9 +265,11 @@ export default function EditFile2({csvArray, setEditInfo, user, setUser}) {
                     valid = false
                 }
             })
-        });
+        });    
         setShowErrorModel(!valid)
         setShowSuccessModel(valid)
+        const sorted_table = valid ? await sortTable(2, content, user.token) : content
+        setContent(sorted_table)
     };
 
     const deleteRow = (rowIndex) => {
