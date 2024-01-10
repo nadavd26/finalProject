@@ -8,7 +8,7 @@ const TableLine = new Schema(
             type: String,
             required: true,
         },
-        name: {
+        skill: {
             type: String,
             required: true,
         },
@@ -20,7 +20,7 @@ const TableLine = new Schema(
             type: String,
             required: true,
         },
-        cost: {
+        requiredNumOfWorkers : {
             type: Number,
             required: true,
         },

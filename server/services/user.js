@@ -61,10 +61,10 @@ const setTable = async (email, googleId, tableContent, tableNum) => {
         for (const lineData of tableContent) {
             const tableLine = new TableLine({
                 day: lineData[0],
-                name: lineData[1],
+                skill: lineData[1],
                 startTime: lineData[2],
                 finishTime: lineData[3],
-                cost: lineData[4],
+                requiredNumOfWorkers: lineData[4],
             });
             const savedLine = await tableLine.save();
             tableLines.push(savedLine._id);
@@ -88,11 +88,13 @@ const getTable = async (email, googleId, tableNum) => {
     //Getting rid of the id and v fields and converting from json to simple array.
     const formattedTable = tableContent.map(line => [
         line.day,
-        line.name,
+        line.skill,
         line.startTime,
         line.finishTime,
-        line.cost.toString(),
+        line.requiredNumOfWorkers.toString(),
     ]);
+    if (JSON.stringify(formattedTable) == JSON.stringify([]))
+        return []
     return { [`table${tableNum}Content`]: formattedTable };
 }
 

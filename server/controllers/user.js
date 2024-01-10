@@ -1,4 +1,6 @@
 const UserService = require("../services/user");
+const tableSorter = require("../services/tableSorting")
+const tableValidator = require("../services/tableValidator")
 const jwt = require("jsonwebtoken");
 
 const createUser = async (req, res) => {
@@ -15,9 +17,7 @@ const createUser = async (req, res) => {
         let user = await UserService.getUser(req.body.email, req.body.googleId)
         if (user != null) {
             user = user.toObject();
-            const token = jwt.sign(user, process.env.SECRET_KEY, {
-                expiresIn: null,
-            });
+            const token = jwt.sign(user, process.env.SECRET_KEY);
             res.status(200).send(token);
         }
     } catch (err) {
@@ -35,9 +35,7 @@ const login = async (req, res) => {
             let user = await UserService.getUser(req.body.email, req.body.googleId)
             if (user != null) {
                 user = user.toObject();
-                const token = jwt.sign(user, process.env.SECRET_KEY, {
-                    expiresIn: null,
-                });
+                const token = jwt.sign(user, process.env.SECRET_KEY);
                 res.status(200).send(token);
             }
         }
@@ -53,10 +51,12 @@ const login = async (req, res) => {
 
 const setTable = async (req, res) => {
     try {
+        content = JSON.parse(req.body.content)
+        console.log(content)
         if (req.params.tableNum != 1 && req.params.tableNum != 2 && req.params.tableNum != 3) {
             res.status(404).send("Invalid table number.")
         } else {
-            await UserService.setTable(req.user.email, req.user.googleId, req.body.content, req.params.tableNum)
+            await UserService.setTable(req.user.email, req.user.googleId, content, req.params.tableNum)
             res.sendStatus(200)
         }
     } catch (err) {
@@ -73,7 +73,7 @@ const getTable = async (req, res) => {
             return
         }
         tableContent = await UserService.getTable(req.user.email, req.user.googleId, req.params.tableNum)
-        if (tableContent != "")
+        if (JSON.stringify(tableContent) != JSON.stringify([]))
             res.status(200).send(tableContent);
         else
             res.status(404).send("Invalid table number or table number that was never set.")
@@ -83,4 +83,14 @@ const getTable = async (req, res) => {
         }
     }
 }
-module.exports = { login, createUser, setTable, getTable }
+
+const sortTable = (req, res) => {
+    table = JSON.parse(req.body.content)
+    if (!tableValidator.validateTable2(table))
+        res.status(404).send("Invalid table.")
+    else {
+        sortedTable = table.sort(tableSorter.customSort2)
+        res.status(200).send(sortedTable)
+    }
+}
+module.exports = { login, createUser, setTable, getTable, sortTable }
