@@ -21,7 +21,6 @@ export default function TableRow({ row, rowErrors, rowIndex, onCellEdit, onRowDe
     var maxUntilHour = "24:00";
 
 
-    console.log(row)
 
     return (
         <>
