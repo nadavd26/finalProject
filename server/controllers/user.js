@@ -52,12 +52,16 @@ const login = async (req, res) => {
 const setTable = async (req, res) => {
     try {
         content = JSON.parse(req.body.content)
-        console.log(content)
-        if (req.params.tableNum != 1 && req.params.tableNum != 2 && req.params.tableNum != 3) {
-            res.status(404).send("Invalid table number.")
-        } else {
-            await UserService.setTable(req.user.email, req.user.googleId, content, req.params.tableNum)
-            res.sendStatus(200)
+        if (!tableValidator.validateTable2(content))
+            res.status(404).send("Invalid table.")
+        else {
+            console.log(content)
+            if (req.params.tableNum != 1 && req.params.tableNum != 2 && req.params.tableNum != 3) {
+                res.status(404).send("Invalid table number.")
+            } else {
+                await UserService.setTable(req.user.email, req.user.googleId, content, req.params.tableNum)
+                res.sendStatus(200)
+            }
         }
     } catch (err) {
         if (err.name === "Error") {
@@ -86,11 +90,7 @@ const getTable = async (req, res) => {
 
 const sortTable = (req, res) => {
     table = JSON.parse(req.body.content)
-    if (!tableValidator.validateTable2(table))
-        res.status(404).send("Invalid table.")
-    else {
-        sortedTable = table.sort(tableSorter.customSort2)
-        res.status(200).send(sortedTable)
-    }
+    const sortedTable = table.sort(tableSorter.customSort2)
+    res.status(200).send({ content: sortedTable })
 }
 module.exports = { login, createUser, setTable, getTable, sortTable }
