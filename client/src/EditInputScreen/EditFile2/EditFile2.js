@@ -258,6 +258,20 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser }) {
     };
 
 
+    const calcOverlaps = (table) => {
+        let overlaps = []
+        for (let i = 0; i < table.length - 1; i++) {
+            if (table[i][0] == table[i+1][0] && table[i][1] == table[i+1][1] && table[i][3] > table[i+1][2]) {
+                if (overlaps[overlaps.length-1] != i+1) {
+                    overlaps.push(i+1)
+                }
+
+                overlaps.push(i+2)
+            }
+        }
+
+        return overlaps
+    }
     const handleSave = async () => {
         const errorModal = new window.bootstrap.Modal(document.getElementById('errModal'));
         const saveModal = new window.bootstrap.Modal(document.getElementById('saveModal'));
@@ -281,8 +295,9 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser }) {
         }
         const sortedTable = await sortTable(2, content, user.token);
         setContent(sortedTable)
-        if (sortedTable.length % 2 == 0) {
-            setErrorMsg("errorrrrrrr")
+        const overlaps = calcOverlaps(sortedTable)
+        if (overlaps != 0) {
+            setErrorMsg("detected overlaps in rows: \n" + JSON.stringify(overlaps))
             errorModal.show()
         } else {
             saveModal.show()
@@ -409,7 +424,7 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser }) {
                 </div>
             )}
             {true && (
-                <div class="modal fade show" id="errModal" tabindex="-1" role="dialog" aria-labelledby="saveModal" aria-hidden="true" onHide={handleErrorModalClose}>
+                <div class="modal fade show" id="errModal" tabindex="-1" role="dialog" aria-labelledby="saveModal" aria-hidden="true" onHide={handleErrorModalClose} style={{ whiteSpace: 'pre-line' }}>
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content modal-danger"> {/* Add custom class modal-danger */}
                             <div class="modal-header">

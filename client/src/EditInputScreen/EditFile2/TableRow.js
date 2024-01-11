@@ -31,7 +31,7 @@ export default function TableRow({ row, rowErrors, rowIndex, onCellEdit, onRowDe
                     </button>
                 </td> */}
 
-                <RowActionCell onRowDelete={handleDeleteRow} onRowAdd={handleAddRow}/>
+                <RowActionCell onRowDelete={handleDeleteRow} onRowAdd={handleAddRow} rowIndex={rowIndex}/>
 
                 <DayCell value={row[0]} rowIndex={rowIndex} coloumnIndex={0} isValid={rowErrors[0]} onEdit={onCellEdit} />
 
