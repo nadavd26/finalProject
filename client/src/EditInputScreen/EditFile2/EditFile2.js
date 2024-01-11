@@ -7,12 +7,16 @@ import { postInputTable } from "../../api/InputTableApi";
 import { csv_to_array, parseTime, isNumberOfWorkersValid, isSkillValid } from "../Utils";
 import { sortTable } from "../../api/InputTableApi";
 
-export default function EditFile2({csvArray, setEditInfo, user, setUser}) {
+export default function EditFile2({ csvArray, setEditInfo, user, setUser }) {
     const [content, setContent] = useState([["", "", "", "", ""]])
     const [errors, setErrors] = useState([[true, true, true, true, true]])
     const [showErrorModel, setShowErrorModel] = useState(false)
     const [showSuccessModel, setShowSuccessModel] = useState(false)
     const [showBackModal, setShowBackModal] = useState(false)
+    const defaultErrorMsg = "The table must contain at least one line.\n" +
+        "Skill contains only English characters (at least one), numbers, and some special characters.\n" +
+        "Required Number Of Workers is a non-negative integer."
+    const [errorMsg, setErrorMsg] = useState(defaultErrorMsg)
     const token = user.token
     var errorLines = 0
     const sortTableWithErrors = async (table) => {
@@ -37,7 +41,7 @@ export default function EditFile2({csvArray, setEditInfo, user, setUser}) {
         }
         const handleLineError = (i) => {
             table_swap_lines(i, errorLines)
-            errors_swap_lines(i , errorLines)
+            errors_swap_lines(i, errorLines)
             errorLines = errorLines + 1
         }
 
@@ -49,7 +53,7 @@ export default function EditFile2({csvArray, setEditInfo, user, setUser}) {
             isValid = true
             if (table[i].length != 5) {
                 isValid = false
-                setEditInfo({inEdit : false, errorMsg : "The table must be 5 columns"})
+                setEditInfo({ inEdit: false, errorMsg: "The table must be 5 columns" })
                 return
             }
             table[i][0] = (table[i][0]).toLowerCase()
@@ -89,7 +93,7 @@ export default function EditFile2({csvArray, setEditInfo, user, setUser}) {
                     // errorMsg += "line " + (i + 1) + " column 3 " + "time interval is 30 minutes" + "\n"
                     // isValid = false
                     // errorsFound[i][2] = true
-                    handleError(i , 2)
+                    handleError(i, 2)
                 }
 
                 if (formatFrom < "00:00") {
@@ -255,22 +259,62 @@ export default function EditFile2({csvArray, setEditInfo, user, setUser}) {
 
 
     const handleSave = async () => {
-        var valid = true
+        const errorModal = new window.bootstrap.Modal(document.getElementById('errModal'));
+        const saveModal = new window.bootstrap.Modal(document.getElementById('saveModal'));
+
+        var isValid = true;
         if (content.length === 0) {
-            valid = false
+            isValid = false;
         }
         errors.forEach((row) => {
             row.forEach((cell) => {
                 if (cell) {
-                    valid = false
+                    isValid = false;
                 }
-            })
-        });    
-        setShowErrorModel(!valid)
-        setShowSuccessModel(valid)
-        const sorted_table = valid ? await sortTable(2, content, user.token) : content
-        setContent(sorted_table)
+            });
+        });
+
+        if (!isValid) {
+            setErrorMsg(defaultErrorMsg)
+            errorModal.show()
+            return
+        }
+        const sortedTable = await sortTable(2, content, user.token);
+        setContent(sortedTable)
+        if (sortedTable.length % 2 == 0) {
+            setErrorMsg("errorrrrrrr")
+            errorModal.show()
+        } else {
+            saveModal.show()
+        }
+
+        
+
+        console.log('x', isValid, showSuccessModel)
+        // if (isValid) {
+        //     // Perform sorting operation
+
+        //     if (sortedTable.length % 2 === 1) {
+        //         // Update content state after sorting
+        //         setContent(sortedTable);
+    
+        //         // Show success modal
+        //         setShowSuccessModel(true);
+        //         setShowErrorModel(false);
+        //     } else {
+        //         // Show error modal
+        //         setShowSuccessModel(false);
+        //         setShowErrorModel(true);
+        //     }
+        // } else {
+        //     // Show error modal if the data is not valid
+        //     setShowSuccessModel(false);
+        //     setShowErrorModel(true);
+        // }
     };
+    
+    
+
 
     const deleteRow = (rowIndex) => {
         if (rowIndex >= 0 && rowIndex < content.length) {
@@ -305,7 +349,7 @@ export default function EditFile2({csvArray, setEditInfo, user, setUser}) {
             console.log(row.join(', '))
         })
         await postInputTable(2, content, token)
-        setEditInfo({inEdit : false, errorMsg : ""})
+        setEditInfo({ inEdit: false, errorMsg: "" })
         var newUser = user
         newUser.table2 = content
         setUser(newUser)
@@ -316,7 +360,7 @@ export default function EditFile2({csvArray, setEditInfo, user, setUser}) {
     }
 
     const handleExit = () => {
-        setEditInfo({inEdit : false, errorMsg : ""})
+        setEditInfo({ inEdit: false, errorMsg: "" })
     }
 
     return (
@@ -332,7 +376,7 @@ export default function EditFile2({csvArray, setEditInfo, user, setUser}) {
                 <div className="d-flex justify-content-between mb-3 down-buttons">
                     <div className="col-3"></div>
                     <button className="btn btn-success col-3" onClick={handleSave}
-                        data-toggle="modal" data-target="#saveModal">Save</button>
+                        data-toggle="modal" >Save</button>
                     <button className="btn btn-secondary col-3" onClick={addRowHandler} >Add Row</button>
                     <div className="col-3"></div>
                 </div>
@@ -364,8 +408,8 @@ export default function EditFile2({csvArray, setEditInfo, user, setUser}) {
                     </div>
                 </div>
             )}
-            {showErrorModel && (
-                <div class="modal fade show" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="saveModal" aria-hidden="true" onHide={handleErrorModalClose}>
+            {true && (
+                <div class="modal fade show" id="errModal" tabindex="-1" role="dialog" aria-labelledby="saveModal" aria-hidden="true" onHide={handleErrorModalClose}>
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content modal-danger"> {/* Add custom class modal-danger */}
                             <div class="modal-header">
@@ -375,9 +419,7 @@ export default function EditFile2({csvArray, setEditInfo, user, setUser}) {
                                 </button>
                             </div>
                             <div class="modal-body text-danger"> {/* Add text-danger for red text */}
-                                The table must contain at least one line.<br></br>
-                                Skill contains only English characters (at least one), numbers, and some special characters.<br></br>
-                                Required Number Of Workers is a non-negative integer.
+                                {errorMsg}
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Go Back</button>
@@ -386,7 +428,7 @@ export default function EditFile2({csvArray, setEditInfo, user, setUser}) {
                     </div>
                 </div>
             )}
-            {showSuccessModel && (
+            {true && (
                 <div class="modal fade show" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="saveModal" aria-hidden="true" onHide={handleSuccessModalClose}>
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content modal-success"> {/* Add custom class modal-success */}
