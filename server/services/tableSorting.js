@@ -6,9 +6,12 @@ const customSort2 = (a, b) => {
     if(daysCompare != 0)
         return daysCompare
     //The rest of the row items are simply compared as strings.
-    for (i = 1; i < 5; i++)
+    for (i = 1; i < 4; i++)
         if (a[i] != b[i])
             return a[i].localeCompare(b[i])
+    //The last parameter is a number.
+    if(a[4] != b[4])
+        return a[i] - b[i]
     //If nothing has been returned yet the row are the same.
     return 0
 }
