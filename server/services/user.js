@@ -53,7 +53,7 @@ const setTable = async (email, googleId, tableContent, tableNum) => {
         // Removing existing lines from User document
         await User.findOneAndUpdate({ email, googleId }, { $set: { [tableField]: [] } });
         // Removing those lines from the TableLine doccument.
-        await Tables.removeLinesByIds(tableNum, oldTableLineIds)
+        await Tables.removeLinesByIds(parseInt(tableNum), oldTableLineIds)
         /*await TableLine.deleteMany({
             _id: { $in: oldTableLineIds }
         });*/
@@ -75,7 +75,7 @@ const setTable = async (email, googleId, tableContent, tableNum) => {
             { email, googleId },
             { $addToSet: { [tableField]: { $each: tableLines } } }
         );*/
-        await Tables.updateTable(tableNum, tableContent, email, googleId)
+        await Tables.updateTable(parseInt(tableNum), tableContent, email, googleId)
     } catch (err) {
         throw err
     }
@@ -95,7 +95,7 @@ const getTable = async (email, googleId, tableNum) => {
         line.finishTime,
         line.requiredNumOfWorkers.toString(),
     ]);*/
-    const formattedTable = Tables.formatTable(tableNum, tableContent)
+    const formattedTable = Tables.formatTable(parseInt(tableNum), tableContent)
     if (JSON.stringify(formattedTable) == JSON.stringify([]))
         return []
     return { [`table${tableNum}Content`]: formattedTable };

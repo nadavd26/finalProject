@@ -1,6 +1,5 @@
 const UserService = require("../services/user");
 const TablesService = require("../services/tables")
-const tableValidator = require("../services/tableValidator")
 const jwt = require("jsonwebtoken");
 
 const createUser = async (req, res) => {
@@ -54,7 +53,7 @@ const setTable = async (req, res) => {
         content = JSON.parse(req.body.content)
         /*if (!tableValidator.validateTable2(content))
             res.status(404).send("Invalid table.")*/
-        if (!TablesService.validateTable(content, req.params.tableNum))
+        if (!TablesService.validateTable(content, parseInt(req.params.tableNum)))
             res.status(404).send("Invalid table.")
         else {
             console.log(content)
@@ -93,7 +92,7 @@ const getTable = async (req, res) => {
 const sortTable = (req, res) => {
     table = JSON.parse(req.body.content)
     //const sortedTable = table.sort(tableSorter.customSort2)
-    const sortedTable = TablesService.sortTable(table, req.params.tableNum)
+    const sortedTable = TablesService.sortTable(table, parseInt(req.params.tableNum))
     res.status(200).send({ content: sortedTable })
 }
 module.exports = { login, createUser, setTable, getTable, sortTable }

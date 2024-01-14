@@ -3,6 +3,7 @@ const TableLine2 = require("../models/tableLine2");
 const TableLine3 = require("../models/tableLine3");
 const tableSorter = require("../services/tableSorting")
 const tableValidator = require("../services/tableValidator")
+const User = require("../models/user");
 //The function gets a table number and tableLine id numbers and delete those tableLines.
 const removeLinesByIds = async (tableNum, tableLineIDsToDelete) => {
     try {
@@ -80,7 +81,7 @@ const updateTable = async (tableNum, tableContent, email, googleId) => {
                         skill: lineData[1],
                         startTime: lineData[2],
                         finishTime: lineData[3],
-                        requiredNumOfWorkers: lineData[4],
+                        cost: lineData[4],
                     });
                     const savedLine = await tableLine3.save();
                     tableLines3.push(savedLine._id);

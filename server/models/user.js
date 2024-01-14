@@ -29,17 +29,17 @@ const User = new Schema(
         },
         table1: [{
             type: Schema.Types.ObjectId,
-            ref: "TableLine",
+            ref: "TableLine1",
             required: true,
         }],
         table2: [{
             type: Schema.Types.ObjectId,
-            ref: "TableLine",
+            ref: "TableLine2",
             required: true,
         }],
         table3: [{
             type: Schema.Types.ObjectId,
-            ref: "TableLine",
+            ref: "TableLine3",
             required: true,
         }],
     },
