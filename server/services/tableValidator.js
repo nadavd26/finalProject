@@ -27,7 +27,18 @@ const isNoneNegativeNumber = (number) => {
     return num >= 0;
 }
 
-//This functions check that table is a valid table2.
+//This functions checks that table is a valid table1.
+const validateTable1 = (table) => {
+    for (line of table) {
+        if(line.length != 5)
+        return false;
+        if (!isNoneNegativeNumber(line[0]))
+            return false;
+    }
+    return true;
+}
+
+//This functions checks that table is a valid table2.
 const validateTable2 = (table) => {
     for (line of table) {
         if(line.length != 5)
@@ -42,4 +53,4 @@ const validateTable2 = (table) => {
     return true;
 }
 
-module.exports = {validateTable2}
+module.exports = {validateTable1, validateTable2}

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const TableLine = new Schema(
+const TableLine3 = new Schema(
     {
         day: {
             type: String,
@@ -20,7 +20,7 @@ const TableLine = new Schema(
             type: String,
             required: true,
         },
-        requiredNumOfWorkers : {
+        cost : {
             type: Number,
             required: true,
         },
@@ -28,4 +28,4 @@ const TableLine = new Schema(
     { autoIndex: false, autoCreate: false }
 );
 
-module.exports = mongoose.model("TableLine", TableLine);
+module.exports = mongoose.model("TableLine3", TableLine3);

@@ -1,4 +1,20 @@
 const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+//The function is used to sort the table 1 array.
+const customSort1 = (a, b) => {
+    //The skills are given the mos significance in the table 1 sorting.
+    for (i = 2; i < 5; i++)
+        if (a[i] != b[i])
+            return a[i].localeCompare(b[i])
+    //After the skills the names is most significant
+    if (a[1] != b[1])
+            return a[1].localeCompare(b[1])
+    //And lastley is the id
+    if(a[0] != b[0])
+        return a[0] - b[0]
+    //If nothing has been returned yet the row are the same.
+    return 0
+}
+
 //The function is used to sort the table 2 array.
 const customSort2 = (a, b) => {
     //In table 2 the first item of each row is a day.
@@ -30,4 +46,4 @@ const compareDays = (day1, day2) => {
     return index1 - index2;
 }
 
-module.exports = { customSort2 }
+module.exports = {customSort1, customSort2 }

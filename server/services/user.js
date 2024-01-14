@@ -1,5 +1,5 @@
 const User = require("../models/user");
-const TableLine = require("../models/tableLine");
+const Tables = require("./tables")
 
 const createUser = async (email, familyName, givenName, googleId, imageUrl, name) => {
     try {
@@ -53,10 +53,11 @@ const setTable = async (email, googleId, tableContent, tableNum) => {
         // Removing existing lines from User document
         await User.findOneAndUpdate({ email, googleId }, { $set: { [tableField]: [] } });
         // Removing those lines from the TableLine doccument.
-        await TableLine.deleteMany({
+        await Tables.removeLinesByIds(tableNum, oldTableLineIds)
+        /*await TableLine.deleteMany({
             _id: { $in: oldTableLineIds }
-        });
-        const tableLines = [];
+        });*/
+        /*const tableLines = [];
         // Creating TableLine objects and save them in the database
         for (const lineData of tableContent) {
             const tableLine = new TableLine({
@@ -73,7 +74,8 @@ const setTable = async (email, googleId, tableContent, tableNum) => {
         await User.findOneAndUpdate(
             { email, googleId },
             { $addToSet: { [tableField]: { $each: tableLines } } }
-        );
+        );*/
+        await Tables.updateTable(tableNum, tableContent, email, googleId)
     } catch (err) {
         throw err
     }
@@ -86,13 +88,14 @@ const getTable = async (email, googleId, tableNum) => {
     const user = await User.findOne({ email, googleId }).populate(tableField);
     const tableContent = user[tableField] || [];
     //Getting rid of the id and v fields and converting from json to simple array.
-    const formattedTable = tableContent.map(line => [
+    /*const formattedTable = tableContent.map(line => [
         line.day,
         line.skill,
         line.startTime,
         line.finishTime,
         line.requiredNumOfWorkers.toString(),
-    ]);
+    ]);*/
+    const formattedTable = Tables.formatTable(tableNum, tableContent)
     if (JSON.stringify(formattedTable) == JSON.stringify([]))
         return []
     return { [`table${tableNum}Content`]: formattedTable };
