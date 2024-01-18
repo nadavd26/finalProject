@@ -50,10 +50,29 @@ export function isNumberOfWorkersValid(numOfWorkers){
     return Number.isInteger(parsedValue) && parsedValue >= 0;
 };
 
-export function isSkillValid(input) {
-    console.log("input : " + input)
-    const regex = /^(?=.*[a-zA-Z])[a-zA-Z0-9@'",.!? ]*$/;
-    return regex.test(input);
+export function isSkillValid(name) {
+    // Check if the name contains only letters, spaces, apostrophes, and certain special characters
+    const isValid = /^[a-zA-Z\s'+\-#\/.]+$/u.test(name);
+    return isValid;
+}
+
+
+export function isIdValid(str) {
+    const num = Number(str);
+    const isInteger = Number.isInteger(num);
+    const hasNineDigits = str.length === 9;
+    return isInteger && num > 0 && hasNineDigits;
+}
+
+
+export function isContractValid(str) {
+    return true
+}
+
+export function isNameValid(name) {
+    // Check if the name contains only letters, spaces, and apostrophes
+    const isValid = /^[a-zA-Z\s']+$/u.test(name);
+    return isValid;
 }
 
 export function adjustTime(timeString, addHalfHour = true) {
