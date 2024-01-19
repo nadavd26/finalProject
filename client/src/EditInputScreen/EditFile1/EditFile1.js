@@ -122,8 +122,8 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser }) {
     };
 
     const onRowAdd = (rowIndex) => {
-        const newEmptyRow = [content[rowIndex][0], content[rowIndex][1], "00:00", "24:00", ""];
-        const newErrorRow = [errors[rowIndex][0], errors[rowIndex][1], false, false, true];
+        const newEmptyRow = ["", "", "", "", "", ""];
+        const newErrorRow = [true, true, true, false, false, true];
 
         setContent((prevContent) => {
             const newContent = [...prevContent];
