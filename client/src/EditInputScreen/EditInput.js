@@ -1,5 +1,6 @@
 import EditFile2 from "./EditFile2/EditFile2";
 import EditFile1 from "./EditFile1/EditFile1";
+import EditFile3 from "./EditFile3/EditFile3";
 import { useEffect, useState } from "react";
 import { csvToArray } from "./Utils";
 import { getInputTable, postInputTable, sortTable } from "../api/InputTableApi";
@@ -74,6 +75,7 @@ export default function EditInput({ file, numOfFile, setEditInfo, user, setUser,
         setEditInfo({inEdit : false, errorMsg : "Cannot parse this file"})
     }
 
+
     if (numOfFile === 1) {
         return <EditFile1 csvArray={csvArray} setEditInfo={setEditInfo} user={user}  setUser={setUser}/>;
     }
@@ -83,6 +85,6 @@ export default function EditInput({ file, numOfFile, setEditInfo, user, setUser,
     }
 
     if (numOfFile === 3) {
-        return null;
+        return <EditFile3 csvArray={csvArray} setEditInfo={setEditInfo} user={user}  setUser={setUser}/>;
     }
 }

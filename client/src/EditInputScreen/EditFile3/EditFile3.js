@@ -4,26 +4,24 @@ import '../css/bootstrap.min.css'
 import '../css/edit-file-table-main.css'
 import '../css/perfect-scrollbar.css'
 import { postInputTable } from "../../api/InputTableApi";
-import { csv_to_array, parseTime, isNumberOfWorkersValid, isSkillValid, isIdValid, isNameValid, isContractValid } from "../Utils";
+import { csv_to_array, parseTime, isCostValid, isSkillValid } from "../Utils";
 import { sortTable } from "../../api/InputTableApi";
 
-export default function EditFile1({ csvArray, setEditInfo, user, setUser }) {
-    const [content, setContent] = useState([["", "", "", "", "", ""]])
-    const [errors, setErrors] = useState([[true, true, true, false, false, true]])
+export default function EditFile3({ csvArray, setEditInfo, user, setUser }) {
+    const [content, setContent] = useState([["", "", "", "", ""]])
+    const [errors, setErrors] = useState([[true, true, true, true, true]])
     const [showErrorModel, setShowErrorModel] = useState(false)
     const [showSuccessModel, setShowSuccessModel] = useState(false)
     const [showBackModal, setShowBackModal] = useState(false)
     const defaultErrorMsg = "The table must contain at least one line.\n" +
-        "Id must contain only digits.\n " +
-        "Skills contain only letters, spaces, apostrophes, and certain special characters.\n" +
-        "Must have at least one skill.\n" +
-        "Contract is a non-negative integer."
+        "Skill contains only letters, spaces, apostrophes, and certain special characters.\n" +
+        "Cost is a non-negative integer."
     const [errorMsg, setErrorMsg] = useState(defaultErrorMsg)
     const token = user.token
     var errorLines = 0
     const sortTableWithErrors = async (table) => {
         const validTable = table.slice(errorLines, table.length)
-        const sortedTable = await sortTable(1, validTable, user.token)
+        const sortedTable = await sortTable(3, validTable, user.token)
         const newTable = [...table.slice(0, errorLines), ...sortedTable]
         return newTable
     }
@@ -35,7 +33,7 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser }) {
         }
         let errorMsg = ""
         let isValid = true
-        const errorsFound = Array.from({ length: table.length }, () => Array(6).fill(false));
+        const errorsFound = Array.from({ length: table.length }, () => Array(5).fill(false));
         const errors_swap_lines = (i, j) => {
             const tmp = errorsFound[i]
             errorsFound[i] = errorsFound[j]
@@ -53,43 +51,118 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser }) {
         }
         for (let i = 0; i < table.length; i++) {
             isValid = true
-            if (table[i].length != 6) {
+            if (table[i].length != 5) {
                 isValid = false
-                setEditInfo({ inEdit: false, errorMsg: "The table must be 6 columns" })
+                setEditInfo({ inEdit: false, errorMsg: "The table must be 5 columns" })
                 return
             }
-            const id = table[i][0]
-            if (!isIdValid(id)) {
+
+            const skill = table[i][0]
+            if (!isSkillValid(skill)) {
+                // isValid = false
+                // errorsFound[i][1] = true
+                // errorMsg += "line " + (i + 1) + " column 2 " + "invalid skill" + "\n"
                 handleError(i, 0)
-                errorMsg += "line " + (i + 1) + " column 1 " + "invalid day" + "\n"
-            } else {
-                table[i][0] = id
             }
 
-            const name = table[i][1]
-            if (!isNameValid(name)) {
+            table[i][1] = (table[i][1]).toLowerCase()
+            const day = table[i][1]
+            if (day != "sunday" && day != "monday" && day != "tuesday" && day != "wednesday" && day != "thursday" && day != "friday" && day != "saturday") {
+                // isValid = false
+                // swap_lines(i, errorLines)
+                // errorLines++
+                // errorsFound[i][0] = true
                 handleError(i, 1)
+                errorMsg += "line " + (i + 1) + " column 1 " + "invalid day" + "\n"
             }
 
-            const skill1 = table[i][2]
-            const skill2 = table[i][3]
-            const skill3 = table[i][4]
-
-            if (!isSkillValid(skill1)) {
+            let fromTimeValid = true
+            let untilTimeValid = true
+            const from = table[i][2]
+            const formatFrom = parseTime(from)
+            if (!formatFrom) {
+                fromTimeValid = false
+                // errorsFound[i][2] = true
+                // isValid = false
+                // errorMsg += "line " + (i + 1) + " column 3 " + "invalid from hour" + "\n"
                 handleError(i, 2)
+            } else {
+                table[i][2] = formatFrom
+            }
+            if (fromTimeValid) {
+                if (formatFrom[4] != "0" || (formatFrom[3] != "0" && formatFrom[3] != "3")) {
+                    // errorMsg += "line " + (i + 1) + " column 3 " + "time interval is 30 minutes" + "\n"
+                    // isValid = false
+                    // errorsFound[i][2] = true
+                    handleError(i, 2)
+                }
+
+                if (formatFrom < "00:00") {
+                    // errorMsg += "line " + (i + 1) + " column 3 " + "min from time is 00:00" + "\n"
+                    // isValid = false
+                    // errorsFound[i][2] = true
+                    handleError(i, 2)
+                }
+
+                if (formatFrom > "23:30") {
+                    // errorMsg += "line " + (i + 1) + " column 3 " + "max from time is 23:30" + "\n"
+                    // isValid = false
+                    // errorsFound[i][2] = true
+                    handleError(i, 2)
+                }
             }
 
-            if (!isSkillValid(skill2) && skill2 != "") {
+            const until = table[i][3]
+            const formatUntil = parseTime(until)
+            if (!formatUntil) {
+                // isValid = false
+                untilTimeValid = false
+                // errorsFound[i][3] = true
+                // errorMsg += "line " + (i + 1) + " column 4 " + "invalid until hour" + "\n"
                 handleError(i, 3)
+            } else {
+                table[i][3] = formatUntil
             }
 
-            if (!isSkillValid(skill3) && skill3 != "") {
+            if (untilTimeValid) {
+                if (formatUntil[4] != "0" || (formatUntil[3] != "0" && formatUntil[3] != "3")) {
+                    // errorMsg += "line " + (i + 1) + " column 4 " + "time interval is 30 minutes" + "\n"
+                    // errorsFound[i][3] = true
+                    handleError(i, 3)
+                }
+
+                if (formatUntil > "24:00") {
+                    // errorMsg += "line " + (i + 1) + " column 4 " + "max until time is 24:00" + "\n"
+                    // isValid = false
+                    // errorsFound[i][3] = true
+                    handleError(i, 3)
+                }
+
+                if (formatUntil < "00:30") {
+                    // errorMsg += "line " + (i + 1) + " column 4 " + "min until time is 00:30" + "\n"
+                    // isValid = false
+                    // errorsFound[i][3] = true
+                    handleError(i, 3)
+                }
+
+                if (fromTimeValid && formatFrom >= formatUntil) {
+                    // errorMsg += "line " + (i + 1) + " column 3 and 4 " + "until time is before or equal from time" + "\n"
+                    // isValid = false
+                    // errorsFound[i][3] = true
+                    handleError(i, 3)
+                    errorsFound[i][2] = true
+                }
+            }
+
+            const cost = table[i][4]
+            const modifiedCost = parseInt(cost)
+            if (!isCostValid(modifiedCost)) {
+                // isValid = false
+                // errorsFound[i][4] = true
+                // errorMsg += "line " + (i + 1) + " column 5 " + "invalid number of workers" + "\n"
                 handleError(i, 4)
-            }
-
-            const contract = table[i][5]
-            if (!isContractValid(contract)) {
-                handleError(i, 5)
+            } else {
+                table[i][4] = modifiedCost
             }
 
             if (!isValid) {
@@ -98,12 +171,13 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser }) {
         }
 
         if (errorLines != table.length) {
-            // const newTable = await sortTableWithErrors(table)
-            // setContent(newTable)
-            setContent(table)
+            const newTable = await sortTableWithErrors(table)
+            setContent(newTable)
         } else {
             setContent(table)
         }
+        // const sorted_table = await sortTable(2, table, user.token)
+        // setContent(sorted_table)
         setErrors(errorsFound)
     }
 
@@ -115,8 +189,8 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser }) {
     }, [csvArray, setContent]);
 
     const addRowHandler = () => {
-        const newRow = ["", "", "", "", "", ""]
-        const newErrorRow = [true, true, true, false, false, true]
+        const newRow = ["", "", "", "", ""]
+        const newErrorRow = [true, true, true, true, true]
         setContent((prevContent) => [...prevContent, newRow]);
         setErrors((prevErrors) => [...prevErrors, newErrorRow]);
     };
@@ -152,51 +226,32 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser }) {
             case 0:
                 updatedErrors = errors.map((row, i) => {
                     if (i === rowIndex) {
-                        return row.map((cell, j) => (j === columnIndex ? !isIdValid(updatedContent[i][j]) : cell));
-                    } else {
-                        return row;
-                    }
-                });
-                break; 
-
-            case 1:
-                updatedErrors = errors.map((row, i) => {
-                    if (i === rowIndex) {
-                        return row.map((cell, j) => (j === columnIndex ? !isNameValid(updatedContent[i][j]) : cell));
-                    } else {
-                        return row;
-                    }
-                });
-                break; 
-            case 2:
-                updatedErrors = errors.map((row, i) => {
-                    if (i === rowIndex) {
                         return row.map((cell, j) => (j === columnIndex ? !isSkillValid(updatedContent[i][j]) : cell));
                     } else {
                         return row;
                     }
                 });
-                break; 
-            case 3:
+                break; // Add break statement here
+
             case 4:
                 updatedErrors = errors.map((row, i) => {
                     if (i === rowIndex) {
-                        return row.map((cell, j) => (j === columnIndex ? updatedContent[i][j] != "" && !isSkillValid(updatedContent[i][j]) : cell));
+                        return row.map((cell, j) => (j === columnIndex ? !isCostValid(updatedContent[i][j]) : cell));
                     } else {
                         return row;
                     }
                 });
-                break; 
+                break; // Add break statement here
 
-            case 5:
+            default:
                 updatedErrors = errors.map((row, i) => {
                     if (i === rowIndex) {
-                        return row.map((cell, j) => (j === columnIndex ? !isContractValid(updatedContent[i][j]) : cell));
+                        return row.map((cell, j) => (j === columnIndex ? false : cell));
                     } else {
                         return row;
                     }
                 });
-                break; 
+                break; // Add break statement here
         }
 
         setContent(updatedContent);
@@ -207,12 +262,12 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser }) {
     const calcOverlaps = (table) => {
         let overlaps = []
         for (let i = 0; i < table.length - 1; i++) {
-            if (table[i][0] == table[i+1][0] && table[i][1] == table[i+1][1] && table[i][3] > table[i+1][2]) {
-                if (overlaps[overlaps.length-1] != i+1) {
-                    overlaps.push(i+1)
+            if (table[i][0] == table[i + 1][0] && table[i][1] == table[i + 1][1] && table[i][3] > table[i + 1][2]) {
+                if (overlaps[overlaps.length - 1] != i + 1) {
+                    overlaps.push(i + 1)
                 }
 
-                overlaps.push(i+2)
+                overlaps.push(i + 2)
             }
         }
 
@@ -238,20 +293,18 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser }) {
             setErrorMsg(defaultErrorMsg)
             errorModal.show()
             return
+        }
+        const sortedTable = await sortTable(3, content, user.token);
+        setContent(sortedTable)
+        const overlaps = calcOverlaps(sortedTable)
+        if (overlaps != 0) {
+            setErrorMsg("detected overlaps in rows: \n" + JSON.stringify(overlaps))
+            errorModal.show()
         } else {
             saveModal.show()
         }
-        // const sortedTable = await sortTable(1, content, user.token);
-        // setContent(sortedTable)
-        // const overlaps = calcOverlaps(sortedTable)
-        // if (overlaps != 0) {
-        //     setErrorMsg("detected overlaps in rows: \n" + JSON.stringify(overlaps))
-        //     errorModal.show()
-        // } else {
-        //     saveModal.show()
-        // }
 
-        
+
 
         console.log('x', isValid, showSuccessModel)
         // if (isValid) {
@@ -260,7 +313,7 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser }) {
         //     if (sortedTable.length % 2 === 1) {
         //         // Update content state after sorting
         //         setContent(sortedTable);
-    
+
         //         // Show success modal
         //         setShowSuccessModel(true);
         //         setShowErrorModel(false);
@@ -275,8 +328,8 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser }) {
         //     setShowErrorModel(true);
         // }
     };
-    
-    
+
+
 
 
     const deleteRow = (rowIndex) => {
@@ -311,10 +364,10 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser }) {
         content.forEach((row) => {
             console.log(row.join(', '))
         })
-        await postInputTable(1, content, token)
+        await postInputTable(3, content, token)
         setEditInfo({ inEdit: false, errorMsg: "" })
         var newUser = user
-        newUser.table1 = content
+        newUser.table2 = content
         setUser(newUser)
     };
 
@@ -333,8 +386,7 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser }) {
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#backModal" onClick={handleBack}>Back</button>
                 </div>
                 <div className="col-11"></div>
-                <Table content={content} onCellEdit={handleCellEdit} onRowDelete={deleteRow} errors={errors}
-                    isNumberOfWorkersValid={isNumberOfWorkersValid} isSkillValid={isSkillValid} onRowAdd={onRowAdd}></Table>
+                <Table content={content} onCellEdit={handleCellEdit} onRowDelete={deleteRow} errors={errors} onRowAdd={onRowAdd}></Table>
                 <div className="row"><br /></div>
                 <div className="d-flex justify-content-between mb-3 down-buttons">
                     <div className="col-3"></div>

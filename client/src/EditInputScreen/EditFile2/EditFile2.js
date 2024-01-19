@@ -14,7 +14,7 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser }) {
     const [showSuccessModel, setShowSuccessModel] = useState(false)
     const [showBackModal, setShowBackModal] = useState(false)
     const defaultErrorMsg = "The table must contain at least one line.\n" +
-        "Skill contains only English characters (at least one), numbers, and some special characters.\n" +
+        "Skill contains only letters, spaces, apostrophes, and certain special characters.\n" +
         "Required Number Of Workers is a non-negative integer."
     const [errorMsg, setErrorMsg] = useState(defaultErrorMsg)
     const token = user.token
@@ -261,12 +261,12 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser }) {
     const calcOverlaps = (table) => {
         let overlaps = []
         for (let i = 0; i < table.length - 1; i++) {
-            if (table[i][0] == table[i+1][0] && table[i][1] == table[i+1][1] && table[i][3] > table[i+1][2]) {
-                if (overlaps[overlaps.length-1] != i+1) {
-                    overlaps.push(i+1)
+            if (table[i][0] == table[i + 1][0] && table[i][1] == table[i + 1][1] && table[i][3] > table[i + 1][2]) {
+                if (overlaps[overlaps.length - 1] != i + 1) {
+                    overlaps.push(i + 1)
                 }
 
-                overlaps.push(i+2)
+                overlaps.push(i + 2)
             }
         }
 
@@ -303,7 +303,7 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser }) {
             saveModal.show()
         }
 
-        
+
 
         console.log('x', isValid, showSuccessModel)
         // if (isValid) {
@@ -312,7 +312,7 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser }) {
         //     if (sortedTable.length % 2 === 1) {
         //         // Update content state after sorting
         //         setContent(sortedTable);
-    
+
         //         // Show success modal
         //         setShowSuccessModel(true);
         //         setShowErrorModel(false);
@@ -327,8 +327,8 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser }) {
         //     setShowErrorModel(true);
         // }
     };
-    
-    
+
+
 
 
     const deleteRow = (rowIndex) => {
