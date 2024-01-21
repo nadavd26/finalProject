@@ -44,6 +44,7 @@ const updateTable = async (tableNum, tableContent, email, googleId) => {
                         skill1: lineData[2],
                         skill2: lineData[3],
                         skill3: lineData[4],
+                        contract: lineData[5],
                     });
                     const savedLine = await tableLine1.save();
                     tableLines1.push(savedLine._id);
@@ -77,8 +78,8 @@ const updateTable = async (tableNum, tableContent, email, googleId) => {
                 const tableLines3 = [];
                 for (const lineData of tableContent) {
                     const tableLine3 = new TableLine3({
-                        day: lineData[0],
-                        skill: lineData[1],
+                        skill: lineData[0],
+                        day: lineData[1],
                         startTime: lineData[2],
                         finishTime: lineData[3],
                         cost: lineData[4],
@@ -104,11 +105,12 @@ const formatTable = (tableNum, tableContent) => {
         switch (tableNum) {
             case 1:
                 return tableContent.map(line => [
-                    line.id.toString(),
+                    line.id,
                     line.name,
                     line.skill1,
                     line.skill2,
                     line.skill3,
+                    line.contract,
                 ]);
             case 2:
                 return tableContent.map(line => [
@@ -120,8 +122,8 @@ const formatTable = (tableNum, tableContent) => {
                 ]);
             case 3:
                 return tableContent.map(line => [
-                    line.day,
                     line.skill,
+                    line.day,
                     line.startTime,
                     line.finishTime,
                     line.cost.toString(),
@@ -137,11 +139,16 @@ const formatTable = (tableNum, tableContent) => {
 const sortTable = (table, tableNum) => {
     switch (tableNum) {
         case 1:
+            // Sorting each line's skills (which are the 3rd 4th and 5th items.).
+            for (i = 0; i < table.length; i++) {
+                table[i] = table[i].slice(0, 2).concat(table[i].slice(2, 5).sort(tableSorter.compareTable1Line)).concat(table[i].slice(5))
+            }
+            //Sorting the table itself.
             return table.sort(tableSorter.customSort1)
         case 2:
             return table.sort(tableSorter.customSort2)
         case 3:
-            return table.sort(tableSorter.customSort2) //Same sorting as in table 2.
+            return table.sort(tableSorter.customSort3)
         default:
             console.log("Invalid table number.")
     }
@@ -154,9 +161,9 @@ const validateTable = (table, tableNum) => {
         case 2:
             return tableValidator.validateTable2(table)
         case 3:
-            return tableValidator.validateTable2(table) //Same validation as table 2.
+            return tableValidator.validateTable3(table)
         default:
             console.log("Invalid table number.")
     }
 }
-module.exports = { removeLinesByIds, updateTable, formatTable, sortTable, validateTable}
+module.exports = { removeLinesByIds, updateTable, formatTable, sortTable, validateTable }

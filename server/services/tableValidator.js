@@ -7,7 +7,7 @@ const isDayOfWeek = (day) => {
 }
 
 //Checking that the string is actually a valid hour.
-const isValidHourFormat = (timeString)  =>{
+const isValidHourFormat = (timeString) => {
     const timeComponents = timeString.split(':');
     if (timeComponents.length !== 2) {
         return false; // Has to have exactly two components.
@@ -30,9 +30,7 @@ const isNoneNegativeNumber = (number) => {
 //This functions checks that table is a valid table1.
 const validateTable1 = (table) => {
     for (line of table) {
-        if(line.length != 5)
-        return false;
-        if (!isNoneNegativeNumber(line[0]))
+        if (line.length != 6)
             return false;
     }
     return true;
@@ -41,16 +39,31 @@ const validateTable1 = (table) => {
 //This functions checks that table is a valid table2.
 const validateTable2 = (table) => {
     for (line of table) {
-        if(line.length != 5)
-        return false;
+        if (line.length != 5)
+            return false;
         if (!isDayOfWeek(line[0]))
             return false;
         if (!(isValidHourFormat(line[2]) && isValidHourFormat(line[3])))
             return false;
-        if(!isNoneNegativeNumber(line[4]))
+        if (!isNoneNegativeNumber(line[4]))
             return false;
     }
     return true;
 }
 
-module.exports = {validateTable1, validateTable2}
+//This functions checks that table is a valid table3.
+const validateTable3 = (table) => {
+    for (line of table) {
+        if (line.length != 5)
+            return false;
+        if (!isDayOfWeek(line[1]))
+            return false;
+        if (!(isValidHourFormat(line[2]) && isValidHourFormat(line[3])))
+            return false;
+        if (!isNoneNegativeNumber(line[4]))
+            return false;
+    }
+    return true;
+}
+
+module.exports = { validateTable1, validateTable2, validateTable3}

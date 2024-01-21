@@ -4,11 +4,11 @@ const Schema = mongoose.Schema;
 
 const TableLine3 = new Schema(
     {
-        day: {
+        skill: {
             type: String,
             required: true,
         },
-        skill: {
+        day: {
             type: String,
             required: true,
         },

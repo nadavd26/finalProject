@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const TableLine1 = new Schema(
     {
         id: {
-            type: Number,
+            type: String,
             required: true,
         },
         name : {
@@ -21,6 +21,10 @@ const TableLine1 = new Schema(
             required: true,
         },
         skill3: {
+            type: String,
+            required: true,
+        },
+        contract: {
             type: String,
             required: true,
         },
