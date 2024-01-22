@@ -3,7 +3,7 @@ const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", 
 const customSort1 = (a, b) => {
      //Id is the most significant element in the sorting of table1.
     if(a[0] != b[0])
-        return a[0] - b[0]
+        return a[0].localeCompare(b[0])
     //after that the skills are given the most significance in the table 1 sorting.
     for (i = 2; i < 5; i++)
         if (a[i] != b[i])
