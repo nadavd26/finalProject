@@ -176,8 +176,6 @@ export default function EditFile3({ csvArray, setEditInfo, user, setUser, fromSe
         } else {
             setContent(table)
         }
-        // const sorted_table = await sortTable(2, table, user.token)
-        // setContent(sorted_table)
         setErrors(errorsFound)
     }
 
