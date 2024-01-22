@@ -14,7 +14,6 @@ const UploadFile = ({ file, onFileAdded, onFileDelete, user, fileNum, handleEdit
     };
 
     const table = user["table"+fileNum]
-    console.log(table)
     return (
         <>
           {(table && table.length !== 0) || file ? (

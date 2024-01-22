@@ -7,7 +7,7 @@ import { postInputTable } from "../../api/InputTableApi";
 import { csv_to_array, parseTime, isCostValid, isSkillValid } from "../Utils";
 import { sortTable } from "../../api/InputTableApi";
 
-export default function EditFile3({ csvArray, setEditInfo, user, setUser }) {
+export default function EditFile3({ csvArray, setEditInfo, user, setUser, fromServer }) {
     const [content, setContent] = useState([["", "", "", "", ""]])
     const [errors, setErrors] = useState([[true, true, true, true, true]])
     const [showErrorModel, setShowErrorModel] = useState(false)
@@ -183,8 +183,17 @@ export default function EditFile3({ csvArray, setEditInfo, user, setUser }) {
 
 
     useEffect(() => {
-        if (csvArray.length > 0) {
+        if (csvArray.length > 0 && fromServer == false) {
             initAndCheck(csvArray);
+        }
+
+        if (fromServer == true) {
+            setContent(csvArray)
+            const falseArray = Array.from({ length: csvArray.length }, () =>
+                Array.from({ length: csvArray[0].length }, () => false)
+            );
+
+            setErrors(falseArray)
         }
     }, [csvArray, setContent]);
 
@@ -306,7 +315,6 @@ export default function EditFile3({ csvArray, setEditInfo, user, setUser }) {
 
 
 
-        console.log('x', isValid, showSuccessModel)
         // if (isValid) {
         //     // Perform sorting operation
 
@@ -361,9 +369,6 @@ export default function EditFile3({ csvArray, setEditInfo, user, setUser }) {
     }
 
     const finishEdit = async () => {
-        content.forEach((row) => {
-            console.log(row.join(', '))
-        })
         await postInputTable(3, content, token)
         setEditInfo({ inEdit: false, errorMsg: "" })
         var newUser = user

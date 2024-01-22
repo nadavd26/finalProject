@@ -7,7 +7,7 @@ import { postInputTable } from "../../api/InputTableApi";
 import { csv_to_array, parseTime, isNumberOfWorkersValid, isSkillValid, isIdValid, isNameValid, isContractValid } from "../Utils";
 import { sortTable } from "../../api/InputTableApi";
 
-export default function EditFile1({ csvArray, setEditInfo, user, setUser }) {
+export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromServer }) {
     const [content, setContent] = useState([["", "", "", "", "", ""]])
     const [errors, setErrors] = useState([[true, true, true, false, false, true]])
     const [showErrorModel, setShowErrorModel] = useState(false)
@@ -16,6 +16,8 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser }) {
     const defaultErrorMsg = "The table must contain at least one line.\n" +
         "Id must contain only digits.\n " +
         "Skills contain only letters, spaces, apostrophes, and certain special characters.\n" +
+        "Duplicates between skills are not alowed.\n" +
+        "Skill cannot be empty if the next skill is not empty.\n" +
         "Must have at least one skill.\n" +
         "Contract is a non-negative integer."
     const [errorMsg, setErrorMsg] = useState(defaultErrorMsg)
@@ -119,8 +121,17 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser }) {
 
 
     useEffect(() => {
-        if (csvArray.length > 0) {
+        if (csvArray.length > 0 && fromServer == false) {
             initAndCheck(csvArray);
+        }
+
+        if (fromServer == true) {
+            setContent(csvArray)
+            const falseArray = Array.from({ length: csvArray.length }, () =>
+                Array.from({ length: csvArray[0].length }, () => false)
+            );
+
+            setErrors(falseArray)
         }
     }, [csvArray, setContent]);
 
@@ -191,28 +202,28 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser }) {
                         return row;
                     }
                 });
-                
+
                 if (value != "") {
                     if (value == skill2) {
                         updatedErrors[rowIndex][3] = true
                     }
-    
+
                     if (value == skill3) {
                         updatedErrors[rowIndex][4] = true
                     }
 
                     if (value != oldValue && oldValue == skill2) {
-                        updatedErrors[rowIndex][3] = !isSkillValid(skill2) && skill2 != ""
+                        updatedErrors[rowIndex][3] = (!isSkillValid(skill2) && skill2 != "") || (skill2 == "" && skill3 != "")
                     }
 
                     if (value != oldValue && oldValue == skill3) {
-                        updatedErrors[rowIndex][4] = (!isSkillValid(skill3) && skill3 != "") || skill3 == skill2
+                        updatedErrors[rowIndex][4] = (!isSkillValid(skill3) && skill3 != "") || ((skill3 == skill2) && (skill3 != ""))
                     }
                 } else {
-                    updatedErrors[rowIndex][3] = !isSkillValid(skill2) && skill2 != ""
+                    updatedErrors[rowIndex][3] = (!isSkillValid(skill2) && skill2 != "") || (skill3 != "" && skill2 == "")
                     updatedErrors[rowIndex][4] = !isSkillValid(skill3) && skill3 != ""
                 }
-                
+
                 break;
             case 3: //skill2
                 updatedErrors = errors.map((row, i) => {
@@ -237,7 +248,7 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser }) {
                     }
 
                     if (value != oldValue && oldValue == skill3) {
-                        updatedErrors[rowIndex][4] = (!isSkillValid(skill3) && skill3 != "") || skill3 == skill1
+                        updatedErrors[rowIndex][4] = (!isSkillValid(skill3) && skill3 != "") || (skill3 == skill1 && skill3 != "")
                     }
                 }
                 break;
@@ -283,12 +294,12 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser }) {
     const findDuplicatesId = (sortedTable) => {
         var dupliactes = []
         for (let i = 0; i < sortedTable.length - 1; i++) {
-            if (sortedTable[i][0] == sortedTable[i+1][0]) {
-                if (dupliactes[dupliactes.length - 1] != i) {
-                    dupliactes.push(i)
+            if (sortedTable[i][0] == sortedTable[i + 1][0]) {
+                if (dupliactes[dupliactes.length - 1] != i + 1) {
+                    dupliactes.push(i + 1)
                 }
 
-                dupliactes.push(i + 1)
+                dupliactes.push(i + 2)
             }
         }
 
@@ -316,19 +327,16 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser }) {
             errorModal.show()
             return
         } else {
-            saveModal.show()
+            const sortedTable = await sortTable(1, content, user.token);
+            setContent(sortedTable)
+            const duplicatesId = findDuplicatesId(sortedTable)
+            if (duplicatesId.length != 0) {
+                setErrorMsg("Dupliacted Id's in rows: " + JSON.stringify(duplicatesId))
+                errorModal.show()
+            } else {
+                saveModal.show()
+            }
         }
-
-        const sortedTable = await sortTable(1, content, user.token);
-        setContent(sortedTable)
-        const duplicatesId = findDuplicatesId(sortedTable)
-        if (duplicatesId.length != 0) {
-            setErrorMsg("Dupliacted Id's in rows: " + JSON.stringify(duplicatesId))
-            errorModal.show()
-        }
-
-        console.log('x', isValid, showSuccessModel)
-
     };
 
 
@@ -363,9 +371,6 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser }) {
     }
 
     const finishEdit = async () => {
-        content.forEach((row) => {
-            console.log(row.join(', '))
-        })
         await postInputTable(1, content, token)
         setEditInfo({ inEdit: false, errorMsg: "" })
         var newUser = user

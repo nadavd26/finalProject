@@ -7,6 +7,7 @@ import { getInputTable, postInputTable, sortTable } from "../api/InputTableApi";
 
 export default function EditInput({ file, numOfFile, setEditInfo, user, setUser, setCurrentFile }) {
     const token = user.token
+    const [fromServer, setFromServer] = useState(true)
     const [csvArray, setCsvArray] = useState([]);
     const [error, setError] = useState(null);
     useEffect(() => {
@@ -27,7 +28,6 @@ export default function EditInput({ file, numOfFile, setEditInfo, user, setUser,
                 if (table) {
                     setCsvArray(table);
                 }
-                console.log("table is : " + JSON.stringify(table))
             } catch (error) {
                 setError(error);
             }
@@ -40,23 +40,12 @@ export default function EditInput({ file, numOfFile, setEditInfo, user, setUser,
 
     useEffect(() => {
         if (file) {
+            setFromServer(false)
             const reader = new FileReader();
             reader.onload = async function (e) {
                 try {
                     const csv_data = e.target.result;
                     const csv_array = csvToArray(csv_data, ',', false);
-                    console.log("whatttttttttttttttttttttttttttttttttttttttttt")
-                    // csv_array.forEach(row => {
-                    //     console.log(row);
-                    // });
-                    // const sorted_table = await sortTable(numOfFile, csv_array, token)
-                    // console.log("sorted table is:")
-                    // console.log(sorted_table)
-                    // sortTable.forEach(row => {
-                    //     console.log(row);
-                    // });     
-                    // console.log("----------------sssssssssssssssssss-")               
-                    // setCsvArray(sorted_table);
                     setCsvArray(csv_array);
 
                 } catch (error) {
@@ -77,14 +66,14 @@ export default function EditInput({ file, numOfFile, setEditInfo, user, setUser,
 
 
     if (numOfFile === 1) {
-        return <EditFile1 csvArray={csvArray} setEditInfo={setEditInfo} user={user}  setUser={setUser}/>;
+        return <EditFile1 csvArray={csvArray} setEditInfo={setEditInfo} user={user}  setUser={setUser} fromServer={fromServer}/>;
     }
 
     if (numOfFile === 2) {
-        return <EditFile2 csvArray={csvArray} setEditInfo={setEditInfo} user={user}  setUser={setUser}/>;
+        return <EditFile2 csvArray={csvArray} setEditInfo={setEditInfo} user={user}  setUser={setUser} fromServer={fromServer}/>;
     }
 
     if (numOfFile === 3) {
-        return <EditFile3 csvArray={csvArray} setEditInfo={setEditInfo} user={user}  setUser={setUser}/>;
+        return <EditFile3 csvArray={csvArray} setEditInfo={setEditInfo} user={user}  setUser={setUser} fromServer={fromServer}/>;
     }
 }
