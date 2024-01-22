@@ -1,16 +1,16 @@
 const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 //The function is used to sort the table 1 array.
 const customSort1 = (a, b) => {
-    //The skills are given the mos significance in the table 1 sorting.
+     //Id is the most significant element in the sorting of table1.
+    if(a[0] != b[0])
+        return a[0] - b[0]
+    //after that the skills are given the most significance in the table 1 sorting.
     for (i = 2; i < 5; i++)
         if (a[i] != b[i])
             return a[i].localeCompare(b[i])
     //After the skills the names is most significant
     if (a[1] != b[1])
             return a[1].localeCompare(b[1])
-    //After that the id
-    if(a[0] != b[0])
-        return a[0] - b[0]
     //And lastley is the contract
     if (a[5] != b[5])
             return a[5].localeCompare(b[5])
