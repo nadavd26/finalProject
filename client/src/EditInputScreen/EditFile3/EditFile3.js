@@ -297,7 +297,7 @@ export default function EditFile3({ csvArray, setEditInfo, user, setUser }) {
         const sortedTable = await sortTable(3, content, user.token);
         setContent(sortedTable)
         const overlaps = calcOverlaps(sortedTable)
-        if (overlaps != 0) {
+        if (overlaps.length != 0) {
             setErrorMsg("detected overlaps in rows: \n" + JSON.stringify(overlaps))
             errorModal.show()
         } else {
@@ -367,7 +367,7 @@ export default function EditFile3({ csvArray, setEditInfo, user, setUser }) {
         await postInputTable(3, content, token)
         setEditInfo({ inEdit: false, errorMsg: "" })
         var newUser = user
-        newUser.table2 = content
+        newUser.table3 = content
         setUser(newUser)
     };
 

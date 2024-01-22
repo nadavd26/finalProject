@@ -79,12 +79,22 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser }) {
                 handleError(i, 2)
             }
 
-            if (!isSkillValid(skill2) && skill2 != "") {
+            if ((!isSkillValid(skill2) && skill2 != "") || (skill2 == skill1)) {
                 handleError(i, 3)
             }
 
-            if (!isSkillValid(skill3) && skill3 != "") {
+            if ((!isSkillValid(skill3) && skill3 != "") || (skill3 == skill2) || (skill3 == skill1)) {
                 handleError(i, 4)
+            }
+
+            if (skill3 != "") {
+                if (skill2 == "") {
+                    handleError(i, 3)
+                }
+
+                if (skill1 == "") {
+                    handleError(i, 2)
+                }
             }
 
             const contract = table[i][5]
@@ -98,8 +108,8 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser }) {
         }
 
         if (errorLines != table.length) {
-            // const newTable = await sortTableWithErrors(table)
-            // setContent(newTable)
+            const newTable = await sortTableWithErrors(table)
+            setContent(newTable)
             setContent(table)
         } else {
             setContent(table)
@@ -139,6 +149,7 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser }) {
     }
 
     const handleCellEdit = (rowIndex, columnIndex, value) => {
+        var oldValue = content[rowIndex][columnIndex]
         const updatedContent = content.map((row, i) => {
             if (i === rowIndex) {
                 return row.map((cell, j) => (j === columnIndex ? value : cell));
@@ -147,9 +158,13 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser }) {
             }
         });
 
+        const skill1 = updatedContent[rowIndex][2]
+        const skill2 = updatedContent[rowIndex][3]
+        const skill3 = updatedContent[rowIndex][4]
+
         var updatedErrors
         switch (columnIndex) {
-            case 0:
+            case 0: //id
                 updatedErrors = errors.map((row, i) => {
                     if (i === rowIndex) {
                         return row.map((cell, j) => (j === columnIndex ? !isIdValid(updatedContent[i][j]) : cell));
@@ -157,9 +172,9 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser }) {
                         return row;
                     }
                 });
-                break; 
+                break;
 
-            case 1:
+            case 1: //name
                 updatedErrors = errors.map((row, i) => {
                     if (i === rowIndex) {
                         return row.map((cell, j) => (j === columnIndex ? !isNameValid(updatedContent[i][j]) : cell));
@@ -167,8 +182,8 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser }) {
                         return row;
                     }
                 });
-                break; 
-            case 2:
+                break;
+            case 2: //skill1
                 updatedErrors = errors.map((row, i) => {
                     if (i === rowIndex) {
                         return row.map((cell, j) => (j === columnIndex ? !isSkillValid(updatedContent[i][j]) : cell));
@@ -176,9 +191,30 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser }) {
                         return row;
                     }
                 });
-                break; 
-            case 3:
-            case 4:
+                
+                if (value != "") {
+                    if (value == skill2) {
+                        updatedErrors[rowIndex][3] = true
+                    }
+    
+                    if (value == skill3) {
+                        updatedErrors[rowIndex][4] = true
+                    }
+
+                    if (value != oldValue && oldValue == skill2) {
+                        updatedErrors[rowIndex][3] = !isSkillValid(skill2) && skill2 != ""
+                    }
+
+                    if (value != oldValue && oldValue == skill3) {
+                        updatedErrors[rowIndex][4] = (!isSkillValid(skill3) && skill3 != "") || skill3 == skill2
+                    }
+                } else {
+                    updatedErrors[rowIndex][3] = !isSkillValid(skill2) && skill2 != ""
+                    updatedErrors[rowIndex][4] = !isSkillValid(skill3) && skill3 != ""
+                }
+                
+                break;
+            case 3: //skill2
                 updatedErrors = errors.map((row, i) => {
                     if (i === rowIndex) {
                         return row.map((cell, j) => (j === columnIndex ? updatedContent[i][j] != "" && !isSkillValid(updatedContent[i][j]) : cell));
@@ -186,7 +222,48 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser }) {
                         return row;
                     }
                 });
-                break; 
+
+                if (value == "") {
+                    if (skill3 != "") {
+                        updatedErrors[rowIndex][3] = true
+                    }
+                } else {
+                    if (value == skill1) { //duplicate skill
+                        updatedErrors[rowIndex][3] = true
+                    }
+
+                    if (value == skill3) { //duplicate skill
+                        updatedErrors[rowIndex][4] = true
+                    }
+
+                    if (value != oldValue && oldValue == skill3) {
+                        updatedErrors[rowIndex][4] = (!isSkillValid(skill3) && skill3 != "") || skill3 == skill1
+                    }
+                }
+                break;
+            case 4: //skill3
+                updatedErrors = errors.map((row, i) => {
+                    if (i === rowIndex) {
+                        return row.map((cell, j) => (j === columnIndex ? updatedContent[i][j] != "" && !isSkillValid(updatedContent[i][j]) : cell));
+                    } else {
+                        return row;
+                    }
+                });
+
+                if (value != "") {
+                    if (updatedContent[rowIndex][3] == "") {
+                        updatedErrors[rowIndex][3] = true
+                    }
+
+                    if (value == updatedContent[rowIndex][2] || value == updatedContent[rowIndex][3]) { //dupliacte skill
+                        updatedErrors[rowIndex][4] = true
+                    }
+                } else {
+                    if (updatedContent[rowIndex][3] == "") {
+                        updatedErrors[rowIndex][3] = false
+                    }
+                }
+                break;
 
             case 5:
                 updatedErrors = errors.map((row, i) => {
@@ -196,28 +273,28 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser }) {
                         return row;
                     }
                 });
-                break; 
+                break;
         }
 
         setContent(updatedContent);
         setErrors(updatedErrors)
     };
 
-
-    const calcOverlaps = (table) => {
-        let overlaps = []
-        for (let i = 0; i < table.length - 1; i++) {
-            if (table[i][0] == table[i+1][0] && table[i][1] == table[i+1][1] && table[i][3] > table[i+1][2]) {
-                if (overlaps[overlaps.length-1] != i+1) {
-                    overlaps.push(i+1)
+    const findDuplicatesId = (sortedTable) => {
+        var dupliactes = []
+        for (let i = 0; i < sortedTable.length - 1; i++) {
+            if (sortedTable[i][0] == sortedTable[i+1][0]) {
+                if (dupliactes[dupliactes.length - 1] != i) {
+                    dupliactes.push(i)
                 }
 
-                overlaps.push(i+2)
+                dupliactes.push(i + 1)
             }
         }
 
-        return overlaps
+        return dupliactes
     }
+
     const handleSave = async () => {
         const errorModal = new window.bootstrap.Modal(document.getElementById('errModal'));
         const saveModal = new window.bootstrap.Modal(document.getElementById('saveModal'));
@@ -241,42 +318,20 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser }) {
         } else {
             saveModal.show()
         }
-        // const sortedTable = await sortTable(1, content, user.token);
-        // setContent(sortedTable)
-        // const overlaps = calcOverlaps(sortedTable)
-        // if (overlaps != 0) {
-        //     setErrorMsg("detected overlaps in rows: \n" + JSON.stringify(overlaps))
-        //     errorModal.show()
-        // } else {
-        //     saveModal.show()
-        // }
 
-        
+        const sortedTable = await sortTable(1, content, user.token);
+        setContent(sortedTable)
+        const duplicatesId = findDuplicatesId(sortedTable)
+        if (duplicatesId.length != 0) {
+            setErrorMsg("Dupliacted Id's in rows: " + JSON.stringify(duplicatesId))
+            errorModal.show()
+        }
 
         console.log('x', isValid, showSuccessModel)
-        // if (isValid) {
-        //     // Perform sorting operation
 
-        //     if (sortedTable.length % 2 === 1) {
-        //         // Update content state after sorting
-        //         setContent(sortedTable);
-    
-        //         // Show success modal
-        //         setShowSuccessModel(true);
-        //         setShowErrorModel(false);
-        //     } else {
-        //         // Show error modal
-        //         setShowSuccessModel(false);
-        //         setShowErrorModel(true);
-        //     }
-        // } else {
-        //     // Show error modal if the data is not valid
-        //     setShowSuccessModel(false);
-        //     setShowErrorModel(true);
-        // }
     };
-    
-    
+
+
 
 
     const deleteRow = (rowIndex) => {
