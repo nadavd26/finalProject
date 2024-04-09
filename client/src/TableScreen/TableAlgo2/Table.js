@@ -1,8 +1,8 @@
 import React from 'react';
-import ShiftsRow from './ShiftsRow';
+import ShiftsRow from '../conponenets/ShiftsRow';
 
 //expecting json: [{"name":"name1", "shifts":[true, true, false, ...]}, {"name":"name2", "shifts":[true, true, false, ...]}, ....]
-function Table({ workersAndShifts }) {
+function TableAlgo2({ workersAndShifts }) {
     return (
         <div className="container-table100">
             <div className="wrap-table100">
@@ -79,4 +79,6 @@ function Table({ workersAndShifts }) {
     );
 }
 
-export default Table;
+
+
+export default TableAlgo2;
