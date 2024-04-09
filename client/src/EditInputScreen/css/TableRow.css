@@ -1,0 +1,45 @@
+/* TableRow.css */
+#table-row .focused-cell {
+    background-color: rgb(158, 241, 179) !important;
+    outline: none;
+}
+
+#table-row #deleteRow {
+    outline: none !important;
+    border-top: none;
+    border-left: none;
+    border-bottom: none;
+}
+
+#table-row #addRow {
+    outline: none !important;
+    border-top: none;
+    border-left: none;
+    border-bottom: none;
+    
+}
+
+#table-row .no-outline:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.actionImage {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.actionButton {
+    width: 25px !important;
+    height: 25px !important;
+    visibility: visible;
+    background-color: transparent
+}
+
+.red {
+    background-color: rgb(230, 96, 96) !important;
+}
+
+.optionInvisible {
+    display: none;
+}

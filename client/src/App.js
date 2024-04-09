@@ -1,16 +1,31 @@
-import './App.css';
-import LoginButton from './LoginScreen/components/login';
-import LogoutButton from './components/logout';
-import { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate
+} from "react-router-dom";
 import { gapi } from 'gapi-script';
 import LoginScreen from './LoginScreen/LoginScreen';
-import TableScreen from './TableScreen/TableScreen';
-
+import UploadScreen from './UploadScreen/UploadScreen';
+import TableScreen from './TableScreen/TableScreen'
+import { UserContext } from './Context/UserContext'
+import EditFile2 from './EditInputScreen/EditFile2/EditFile2';
 const clientId = "697357189642-cv95irflcae6i8dm2nidpvokkqtpv62k.apps.googleusercontent.com"
 
 function App() {
-  const booleanArray = new Array(48).fill(false);
+  useEffect(() => {
+    function start() {
+      gapi.client.init({
+        clientId: clientId,
+        scope: "",
+      })
+    }
 
+    gapi.load('client:auth2', start);
+  }, []);
+
+  const booleanArray = new Array(48).fill(false);
   // Set some elements to true
   booleanArray[0] = true;
   booleanArray[5] = true;
@@ -20,7 +35,6 @@ function App() {
   booleanArray[20] = true;
   booleanArray[25] = true;
   // ... continue adding more true values as needed
-  console.log(booleanArray);
   const booleanArray2 = new Array(48).fill(false);
   booleanArray2[13] = true;
   booleanArray2[14] = true;
@@ -86,23 +100,40 @@ function App() {
     { name: 'Aiden Reed', shifts: booleanArray2 },
   ];
 
-  useEffect(() => {
-    function start() {
-      gapi.client.init({
-        clientId: clientId,
-        scope: ""
-      })
-    };
-
-    gapi.load('client:auth2', start);
-  });
+  const [user, setUser] = useState(null);
 
   return (
-    <div className="App">
-      <LoginScreen />
-    </div>
+    <UserContext.Provider value={{ user, setUser }}>
+      <Routes>
+        <Route exact path="/" element={<LoginScreen />} />
+        <Route
+          path="/upload"
+          element={user ? <UploadScreen user={user} setUser={setUser}/> : <Navigate replace to="/" />}
+        />
+        <Route
+          path="/login"
+          element={<LoginScreen />}
+        />
+        <Route
+          path="/table"
+          element={user ?
+            <TableScreen
+              daysWorkersAndShifts={{
+                Sunday: workersAndShifts1,
+                Monday: workersAndShifts2,
+                Tuesday: workersAndShifts3,
+                Wednesday: workersAndShifts4,
+                Thursday: workersAndShifts5,
+                Friday: workersAndShifts6,
+                Saturday: workersAndShifts7,
+              }}
+            /> : <Navigate replace to="/" />
+          }
+        />
+        <Route path="*" element={<LoginScreen />} />
+      </Routes>
+    </UserContext.Provider>
   );
-
 }
 
 export default App;

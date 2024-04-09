@@ -190,3 +190,25 @@ p {
 .close {
   margin-left: 10px; /* Adjust the margin as needed for spacing between text and button */
 }
+
+.file-added {
+  display: block;
+  clear: both;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 600px;
+
+  #file-drag {
+    float: left;
+    clear: both;
+    width: 100%;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    background: #fff;
+    border-radius: 7px;
+    border: 3px solid #eee;
+    transition: all .2s ease;
+    user-select: none;
+
+  }
+}
