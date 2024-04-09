@@ -3,7 +3,7 @@ async function sleep(ms) {
 }
 
 export async function generateAlgo2Results() {
-    await sleep(2000);
+    await sleep(5000);
     const booleanArray = new Array(48).fill(false);
     // Set some elements to true
     booleanArray[0] = true;
@@ -72,4 +72,9 @@ export async function generateAlgo2Results() {
     }
 
     return daysWorkersAndShifts
+}
+
+export async function generateAlgo1Results() {
+    await sleep(5000);
+    return []
 }
