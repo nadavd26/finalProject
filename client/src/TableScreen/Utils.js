@@ -78,3 +78,27 @@ export async function generateAlgo1Results() {
     await sleep(5000);
     return []
 }
+
+export function getSkillSet(arr) {
+    const uniqueValues = new Set();
+    for (let i = 0; i < arr.length; i++) {
+        const element = arr[i][1];
+        uniqueValues.add(element);
+    }
+    
+    return Array.from(uniqueValues);
+}
+
+export function removeElementAtIndex(arr, index) {
+    if (index < 0 || index >= arr.length) {
+        throw new Error('Index is out of bounds');
+    }
+    
+    const newArray = arr.slice(0, index);
+    
+    return newArray.concat(arr.slice(index + 1));
+}
+
+export function removeElementFromArray(arr, element) {
+    return arr.filter(item => item !== element);
+}

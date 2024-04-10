@@ -5,7 +5,15 @@ export const useTableScreenState = () => {
         is1Generated: false,
         is2Generated: false,
         tableNum: 1,
+        currentDay: "Sunday"
     });
+
+    const setCurrentDay = (day) => {
+        setState(prevState => ({
+            ...prevState,
+            currentDay: day,
+        }));
+    };
 
     const setIs1Generated = (value) => {
         setState(prevState => ({
@@ -32,6 +40,7 @@ export const useTableScreenState = () => {
         get,
         setIs1Generated,
         setIs2Generated,
-        setTableNum
+        setTableNum,
+        setCurrentDay
     };
 };

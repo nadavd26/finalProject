@@ -9,6 +9,8 @@ import Loader from "./conponenets/Loader";
 import { useTableScreenState } from "./states/TableScreenState";
 import { useTableAlgo2State } from "./states/TableAlgo2State";
 import { useEditInfoState } from "./states/EditInfo";
+import { useTableAlgo1State } from "./states/TableAlgo1State";
+import SkillDropdown from "./conponenets/SkillDropdown";
 import * as utils from './Utils'
 // expecting json: {"Sunday" : [{"worker":"name1", "shifts":[true, true, false, ...]}, {"worker":"name2", "shifts":[true, true, false, ...]}, ....], ... , "Saturday" : ...}
 // every boolean array is 48 cells, starting from 7:00, ending at 23:30
@@ -16,13 +18,24 @@ import * as utils from './Utils'
 function TableScreen({ user, setUser }) {
     const tableScreenState = useTableScreenState();
     const algo2TableState = useTableAlgo2State();
+    const tableAlgo1State = useTableAlgo1State()
     const editInfoState = useEditInfoState()
 
-    function foo(day) {
+    function switchDay(day) {
+        if ((tableScreenState.get.tableNum == 1 && !tableScreenState.get.is1Generated) || (tableScreenState.get.tableNum == 2 && !tableScreenState.get.is2Generated)) {
+            return
+        }
+        tableScreenState.setCurrentDay(day)
         if (tableScreenState.get.is2Generated) {
-            algo2TableState.setCurrentDay(day)
             algo2TableState.setCurrentWorkersAndShifts((user.algo2Table)[day])
         }
+    }
+
+    function handlerSkillChange(skill) {
+        var skillList = user.skillList
+        var newSkillList = utils.removeElementFromArray(skillList, skill)
+        tableAlgo1State.setOtherSkills(newSkillList)
+        tableAlgo1State.setCurrentSkill(skill)
     }
 
     async function generateResults1() {
@@ -35,7 +48,7 @@ function TableScreen({ user, setUser }) {
         var newUser = user
         newUser.algo2Table = daysWorkersAndShifts
         setUser(newUser)
-        algo2TableState.setCurrentWorkersAndShifts((user.algo2Table)["Sunday"])
+        algo2TableState.setCurrentWorkersAndShifts((user.algo2Table)[tableScreenState.get.currentDay])
         tableScreenState.setIs2Generated(true)
     }
 
@@ -52,7 +65,7 @@ function TableScreen({ user, setUser }) {
             await generateResults2();
             return
         }
-        
+
         if (num == 1 && !tableScreenState.get.is2Generated) {
             return
         }
@@ -62,6 +75,11 @@ function TableScreen({ user, setUser }) {
 
     useEffect(() => {
         generateResults1();
+        var newUser = user
+        newUser.skillList = utils.getSkillSet(user.table2)
+        setUser(newUser)
+        tableAlgo1State.setCurrentSkill((newUser.skillList)[0])
+        tableAlgo1State.setOtherSkills((utils.removeElementAtIndex(newUser.skillList, 0)))
     }, []);
     return (
         !editInfoState.get.inEdit ? (
@@ -79,10 +97,13 @@ function TableScreen({ user, setUser }) {
                     {tableScreenState.get.tableNum === 2 ? (
                         <div>
                             <div className="row">
-                                <div className="col-5"></div>
-                                <Dropdown firstDay={algo2TableState.get.currentDay} dayHandler={foo}></Dropdown>
-                                <div className="col-5"></div>
+                                <div className="col-3"></div>
+                                <div className="col-6 text-center">
+                                    <Dropdown firstDay={tableScreenState.get.currentDay} dayHandler={switchDay}></Dropdown>
+                                </div>
+                                <div className="col-3"></div>
                             </div>
+
                             <br></br>
                             <br></br>
                             {tableScreenState.get.is2Generated ? (
@@ -97,8 +118,28 @@ function TableScreen({ user, setUser }) {
                     ) : (
                         <>
                             {!tableScreenState.get.is1Generated ? (
-                            <Loader speed={5} customText="Calculating..." />
-                            ) : (<div></div>)}
+                                <><div className="row">
+                                    <div className="col-3"></div>
+                                    <div className="col-6 text-center">
+                                        <Dropdown firstDay={tableScreenState.get.currentDay} dayHandler={switchDay}></Dropdown>
+                                    </div>
+                                    <div className="col-3"></div>
+                                </div>
+                                    <br></br><br></br><Loader speed={5} customText="Calculating..." /></>
+                            ) : (<div>
+                                <div className="row">
+                                    <div className="col-5"></div>
+                                    <div className="col-1 text-center">
+                                        <Dropdown firstDay={tableScreenState.get.currentDay} dayHandler={switchDay}></Dropdown>
+                                    </div>
+                                    <div className="col-1 text-center">
+                                        <SkillDropdown currentSkill={tableAlgo1State.get.currentSkill} skillList={tableAlgo1State.get.otherSkills} handlerSkill={handlerSkillChange} />
+                                    </div>
+                                    <div className="col-5"></div>
+                                </div>
+                                <br></br>
+                                <br></br>
+                            </div>)}
                         </>
                     )}
 
@@ -116,3 +157,4 @@ function TableScreen({ user, setUser }) {
 }
 
 export default TableScreen;
+
