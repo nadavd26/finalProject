@@ -12,9 +12,9 @@ function Table({content, isNumberOfWorkersValid, onCellEdit}) {
                                 <tr className="row100 body first-row">
                                     <th className="cell100 first-column blue col-2">Day</th>
                                     <th class="cell100  last-columns blue col-3">Skill</th>
-                                    <th class="cell100  last-columns blue col-3">From</th>
+                                    <th class="cell100  last-columns blue col-2">From</th>
                                     <th class="cell100  last-columns blue col-2">Until</th>
-                                    <th class="cell100  last-columns blue col-2">Assinged Number Of Workers</th>
+                                    <th class="cell100  last-columns blue col-3">Assinged Number Of Workers</th>
                                 </tr>
                                 <TableRows content={content} isNumberOfWorkersValid={isNumberOfWorkersValid} onCellEdit={onCellEdit}/>
                             </tbody>

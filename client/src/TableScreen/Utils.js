@@ -74,6 +74,22 @@ export async function generateAlgo2Results() {
     return daysWorkersAndShifts
 }
 
+function transformDataToMap(data) {
+    const resultMap = new Map();
+
+    data.forEach(entry => {
+        const key = entry[0] + '-' + entry[1]; // Combining day and skill to form the key
+        if (!resultMap.has(key)) {
+            resultMap.set(key, []);
+        }
+        resultMap.get(key).push(entry); 
+    });
+
+    return resultMap;
+}
+
+
+
 export async function generateAlgo1Results() {
     const scheduleData = [
         ["sunday", "cable technition", "8:00", "12:00", 150],
@@ -119,9 +135,14 @@ export async function generateAlgo1Results() {
         ["saturday", "TV technition", "14:00", "18:00", 130],
         ["saturday", "TV technition", "19:00", "23:00", 150]
     ];
-    
+    const transformedData = transformDataToMap(scheduleData);
+    // console.log("hiiiiii" + transformedData["TV technition"]["sunday"]);
     await sleep(2000);
-    return scheduleData
+    return transformedData
+}
+
+export function getKey(day, skill) {
+    return (day).toLowerCase()  + "-" + skill
 }
 
 export function getSkillSet(arr) {

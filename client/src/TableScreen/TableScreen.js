@@ -37,6 +37,10 @@ function TableScreen({ user, setUser }) {
         var newSkillList = utils.removeElementFromArray(skillList, skill)
         tableAlgo1State.setOtherSkills(newSkillList)
         tableAlgo1State.setCurrentSkill(skill)
+        const key =  utils.getKey(tableScreenState.get.currentDay, tableAlgo1State.get.currentSkill)
+        console.log("key " + key)
+        tableAlgo1State.setWorksPerShift(((user.algo1Table).get(key)))   
+        console.log("res " + ((user.algo1Table).get(key)))
     }
 
     function handleEdit() {
@@ -90,6 +94,7 @@ function TableScreen({ user, setUser }) {
         setUser(newUser)
         tableAlgo1State.setCurrentSkill((newUser.skillList)[0])
         tableAlgo1State.setOtherSkills((utils.removeElementAtIndex(newUser.skillList, 0)))
+        tableAlgo1State.setKey(utils.getKey(tableScreenState.get.currentDay, algo2TableState.get))
     }, []);
     return (
         !editInfoState.get.inEdit ? (
@@ -162,7 +167,7 @@ function TableScreen({ user, setUser }) {
                     </div>
                 </div>
             </div>
-        ) : <EditResFile1 initialTable={user.algo1Table} setInEdit={editInfoState.setInEdit} user={user} setUser={setUser}/>
+        ) : <EditResFile1 initialTable={(tableAlgo1State.get.worksPerShift)} setInEdit={editInfoState.setInEdit} user={user} setUser={setUser}/>
     );
 }
 
