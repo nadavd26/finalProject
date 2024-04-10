@@ -10,6 +10,7 @@ import { useTableScreenState } from "./states/TableScreenState";
 import { useTableAlgo2State } from "./states/TableAlgo2State";
 import { useEditInfoState } from "./states/EditInfo";
 import { useTableAlgo1State } from "./states/TableAlgo1State";
+import EditResFile1 from "./Edit/EditTable1/EditResFile1";
 import SkillDropdown from "./conponenets/SkillDropdown";
 import * as utils from './Utils'
 // expecting json: {"Sunday" : [{"worker":"name1", "shifts":[true, true, false, ...]}, {"worker":"name2", "shifts":[true, true, false, ...]}, ....], ... , "Saturday" : ...}
@@ -40,6 +41,9 @@ function TableScreen({ user, setUser }) {
 
     async function generateResults1() {
         const res = await utils.generateAlgo1Results()
+        var newUser = user
+        newUser.algo1Table = res
+        setUser(newUser)
         tableScreenState.setIs1Generated(true)
     }
 
@@ -152,7 +156,7 @@ function TableScreen({ user, setUser }) {
                     </div>
                 </div>
             </div>
-        ) : null
+        ) : <EditResFile1 initialTable={user.algo1Table} setInEdit={editInfoState.setInEdit} user={user} setUser={setUser}/>
     );
 }
 

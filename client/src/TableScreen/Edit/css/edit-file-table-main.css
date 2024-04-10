@@ -1,0 +1,124 @@
+#edit-file body,
+#edit-file html {
+  height: 100%;
+  font-family: sans-serif;
+}
+
+#edit-file {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-image: url('../../../../public/gradient-background-light-blue.jpg');
+  background-repeat: round;
+  height: 100vh;
+  width: 100vw;
+}
+
+#edit-file .container-table100 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+#edit-file .wrap-table100 {
+  width: 80%;
+}
+
+#edit-file .top-buttons {
+  max-height: 50px;
+}
+
+#edit-file .down-buttons {
+  max-height: 50px;
+}
+
+#edit-file .save-btn {
+  background-color: #cccccc !important;
+  border-color: #cccccc !important;
+  color: #222222 !important;
+}
+
+#edit-file .upload-image {
+  max-width: 100%;
+  max-height: 100%;
+  vertical-align: middle;
+}
+
+#edit-file th,
+#edit-file td {
+  font-weight: unset;
+  padding-right: 10px;
+}
+
+#edit-file .table100-body td {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+#edit-file table {
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+}
+
+#edit-file .table td {
+  border-left-width: 0 !important;
+  background-color: white;
+}
+
+#edit-file .static-position {
+  position: sticky;
+  position: -webkit-sticky;
+  left: 0;
+}
+
+#edit-file .table tbody tr .first-column {
+  white-space: pre-wrap !important;
+  width: 50px !important;
+  height: 50px !important;
+  border-left: 1px solid black !important;
+  border-right: 1px solid black !important;
+}
+
+#first-row-first-col {
+  z-index: 3 !important;
+}
+
+#edit-file .table100-body {
+  max-height: 70vh;
+  overflow: auto;
+}
+
+#edit-file .first-row {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+#edit-file .blue {
+  background-color: rgb(111, 126, 221);
+}
+
+#edit-file td.green {
+  background-color: rgba(131, 226, 145, 1);
+}
+
+#edit-file td.gray {
+  background-color: #dee2e6;
+}
+
+#edit-file td.dark-green {
+  background-color: rgb(25, 189, 66);
+}
+
+#edit-file #table {
+  margin: 0;
+}
+
+#first-col {
+  border-left-width: 1px !important;
+}
