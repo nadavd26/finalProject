@@ -113,3 +113,11 @@
   margin: 0;
 }
 
+#first-column {
+  border-left-width: 1px !important;
+}
+
+td#first-column.cell100.first-columns{
+  border-left-width: 1px !important;
+}
+

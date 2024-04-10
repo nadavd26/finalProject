@@ -6,7 +6,7 @@ export default function TableRow({ row, isNumberOfWorkersValid, rowIndex, onCell
     return (
         <>
             <tr className="row100 body last-rows" id="table-row">
-                <NonEditableCell value={row[0]} rowIndex={rowIndex} coloumnIndex={0}  />
+                <NonEditableCell value={row[0]} rowIndex={rowIndex} coloumnIndex={0}/>
                 <NonEditableCell value={row[1]} rowIndex={rowIndex} columnIndex={1} />
                 <NonEditableCell value={row[2]} rowIndex={rowIndex} columnIndex={2}  />
                 <NonEditableCell value={row[3]} rowIndex={rowIndex} columnIndex={3}  />

@@ -39,6 +39,12 @@ function TableScreen({ user, setUser }) {
         tableAlgo1State.setCurrentSkill(skill)
     }
 
+    function handleEdit() {
+        if ((tableScreenState.get.tableNum == 1 && !tableScreenState.get.is1Generated) || (tableScreenState.get.tableNum == 2 && !tableScreenState.get.is2Generated)) {
+            return
+        }
+        editInfoState.setInEdit(true)
+    }
     async function generateResults1() {
         const res = await utils.generateAlgo1Results()
         var newUser = user
@@ -151,7 +157,7 @@ function TableScreen({ user, setUser }) {
                     <div className="row"><br /></div>
                     <div className="d-flex justify-content-between mb-3 down-buttons">
                         <div className="col-4"></div>
-                        <button className="btn btn-secondary col-4" onClick={() => editInfoState.setInEdit(true)}>Edit</button>
+                        <button className="btn btn-secondary col-4" onClick={() => handleEdit()}>Edit</button>
                         <div className="col-4"></div>
                     </div>
                 </div>
