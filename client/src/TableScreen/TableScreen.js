@@ -73,7 +73,7 @@ function TableScreen({ user, setUser }) {
         const res = await utils.generateAlgo2Results()
         var newUser = user
         newUser.algo2Table = res
-        const ui = utils.generateAlgoGraphicResults(res)
+        const ui = utils.generateAlgoGraphicResults(res, user.table1)
         newUser.algo2Graphic = ui
         setUser(newUser)
         algo2TableState.setCurrentWorkersAndShifts((user.algo2Graphic)[tableScreenState.get.currentDay])
