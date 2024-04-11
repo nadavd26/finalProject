@@ -288,6 +288,14 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
         if (content.length === 0) {
             isValid = false;
         }
+
+        for(let i=0; i < content.length; i++) {
+            for (let j = 0; j <= 4; j++) {
+                const cell = document.getElementById(`cell-${(i)}-${j}`)
+                cell.classList.remove("pink")
+            }
+        }
+        
         errors.forEach((row) => {
             row.forEach((cell) => {
                 if (cell) {
@@ -305,6 +313,12 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
         setContent(sortedTable)
         const overlaps = calcOverlaps(sortedTable)
         if (overlaps != 0) {
+            overlaps.forEach(row =>{
+                for (let j = 0; j <= 4; j++) {
+                    const cell = document.getElementById(`cell-${(row-1)}-${j}`)
+                    cell.classList.add("pink")
+                }})
+            
             setErrorMsg("detected overlaps in rows: \n" + JSON.stringify(overlaps))
             errorModal.show()
         } else {
