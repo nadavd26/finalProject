@@ -37,7 +37,7 @@ function TableScreen({ user, setUser }) {
         var newSkillList = utils.removeElementFromArray(skillList, skill)
         tableAlgo1State.setOtherSkills(newSkillList)
         tableAlgo1State.setCurrentSkill(skill)
-        const key =  utils.getKey(tableScreenState.get.currentDay, tableAlgo1State.get.currentSkill)
+        const key =  utils.getKey(tableScreenState.get.currentDay, skill)
         console.log("key " + key)
         tableAlgo1State.setWorksPerShift(((user.algo1Table).get(key)))   
         console.log("res " + ((user.algo1Table).get(key)))
