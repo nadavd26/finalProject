@@ -3,15 +3,16 @@ import Table from "./Table";
 import '../css/bootstrap.min.css'
 import '../css/edit-file-table-main.css'
 import '../css/perfect-scrollbar.css'
+import * as utils from '../../Utils'
 
-export default function EditResFile1({ initialTable, setInEdit, user, setUser}) {
+export default function EditResFile1({ initialTable, setInEdit, user, setUser, currentDay, currentSkill, setWorksPerShift}) {
     const [content, setContent] = useState([["", "", "", "", ""]])
     const [showBackModal, setShowBackModal] = useState(false)
     const defaultErrorMsg = "Assigned Number Of Workers is a non-negative integer."
     const [errorMsg, setErrorMsg] = useState(defaultErrorMsg)
     const token = user.token
 
-
+    console.log("key isssssssssss : " + currentDay + "******" + currentSkill)
     function isNumberOfWorkersValid(numOfWorkers) {
         if (numOfWorkers === "") {
             return false
@@ -75,10 +76,13 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser}) 
     }
 
     const finishEdit = async () => {
-        setInEdit(false)
         var newUser = user
-        newUser.algo1Table = content
+        const map = user.algo1Table
+        map.set(utils.getKey(currentDay, currentSkill), content)
+        newUser.algo1Table = map
+        setWorksPerShift(content)
         setUser(newUser)
+        setInEdit(false)
     };
 
     const handleBack = () => {

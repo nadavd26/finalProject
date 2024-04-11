@@ -30,6 +30,11 @@ function TableScreen({ user, setUser }) {
         if (tableScreenState.get.is2Generated) {
             algo2TableState.setCurrentWorkersAndShifts((user.algo2Table)[day])
         }
+
+        if (tableScreenState.get.is1Generated) {
+            const key = utils.getKey(day, tableAlgo1State.get.currentSkill)
+            tableAlgo1State.setWorksPerShift(((user.algo1Table).get(key)))
+        }
     }
 
     function handlerSkillChange(skill) {
@@ -37,9 +42,9 @@ function TableScreen({ user, setUser }) {
         var newSkillList = utils.removeElementFromArray(skillList, skill)
         tableAlgo1State.setOtherSkills(newSkillList)
         tableAlgo1State.setCurrentSkill(skill)
-        const key =  utils.getKey(tableScreenState.get.currentDay, skill)
+        const key = utils.getKey(tableScreenState.get.currentDay, skill)
         console.log("key " + key)
-        tableAlgo1State.setWorksPerShift(((user.algo1Table).get(key)))   
+        tableAlgo1State.setWorksPerShift(((user.algo1Table).get(key)))
         console.log("res " + ((user.algo1Table).get(key)))
     }
 
@@ -53,6 +58,13 @@ function TableScreen({ user, setUser }) {
         const res = await utils.generateAlgo1Results()
         var newUser = user
         newUser.algo1Table = res
+        newUser.skillList = utils.getSkillSet(user.table2)
+        const startSkill = (newUser.skillList)[0]
+        tableAlgo1State.setCurrentSkill(startSkill)
+        tableAlgo1State.setOtherSkills((utils.removeElementAtIndex(newUser.skillList, 0)))
+        const key = utils.getKey("sunday", startSkill)
+        tableAlgo1State.setKey(key)
+        tableAlgo1State.setWorksPerShift((user.algo1Table).get(key))
         setUser(newUser)
         tableScreenState.setIs1Generated(true)
     }
@@ -89,12 +101,6 @@ function TableScreen({ user, setUser }) {
 
     useEffect(() => {
         generateResults1();
-        var newUser = user
-        newUser.skillList = utils.getSkillSet(user.table2)
-        setUser(newUser)
-        tableAlgo1State.setCurrentSkill((newUser.skillList)[0])
-        tableAlgo1State.setOtherSkills((utils.removeElementAtIndex(newUser.skillList, 0)))
-        tableAlgo1State.setKey(utils.getKey(tableScreenState.get.currentDay, algo2TableState.get))
     }, []);
     return (
         !editInfoState.get.inEdit ? (
@@ -167,7 +173,8 @@ function TableScreen({ user, setUser }) {
                     </div>
                 </div>
             </div>
-        ) : <EditResFile1 initialTable={(tableAlgo1State.get.worksPerShift)} setInEdit={editInfoState.setInEdit} user={user} setUser={setUser}/>
+        ) : <EditResFile1 initialTable={(tableAlgo1State.get.worksPerShift)} currentDay={tableScreenState.get.currentDay} currentSkill={tableAlgo1State.get.currentSkill} setWorksPerShift={tableAlgo1State.setWorksPerShift}
+            setInEdit={editInfoState.setInEdit} user={user} setUser={setUser} />
     );
 }
 

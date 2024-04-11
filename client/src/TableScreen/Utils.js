@@ -78,7 +78,7 @@ function transformDataToMap(data) {
     const resultMap = new Map();
 
     data.forEach(entry => {
-        const key = entry[0] + '-' + entry[1]; // Combining day and skill to form the key
+        const key = getKey(entry[0], entry[1]); // Combining day and skill to form the key
         if (!resultMap.has(key)) {
             resultMap.set(key, []);
         }
@@ -142,7 +142,7 @@ export async function generateAlgo1Results() {
 }
 
 export function getKey(day, skill) {
-    return (day).toLowerCase()  + "-" + skill
+    return (day).toLowerCase()  + "*" + skill
 }
 
 export function getSkillSet(arr) {
