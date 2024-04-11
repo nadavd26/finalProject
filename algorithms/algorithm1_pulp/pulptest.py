@@ -1,13 +1,12 @@
-import gdown
-import pandas as pd
 import pulp
-import sys
 
+# Converts any hour in format 'hh:mm' to a number between 0 and 47, every half an hour is +1.
 def hour_to_index(hour):
     hours, minutes = map(int, hour.split(':'))
     return (hours * 2 + (minutes == 30))
 
-
+# Converts any range of hours in format 'hh:mm' to an array in size 48 (half an hour time interval).
+# Filled with 1 if the hour bigger than the start or equal to it, and smaller than the end. else 0.
 def hours_to_array(start_hour, end_hour):
     start_hours, start_minutes = map(int, start_hour.split(':'))
     end_hours, end_minutes = map(int, end_hour.split(':'))
@@ -21,20 +20,6 @@ def hours_to_array(start_hour, end_hour):
     hours_array = [1 if start <= i < end else 0 for i in range(48)]
 
     return hours_array
-
-
-
-
-
-# url = "https://drive.google.com/uc?id=15BPH7-3GGWBfXPJQ3stkT6SHQECbT-pt"
-# output = "reqs.csv"
-# gdown.download(url, output, quiet=False)
-
-# df = pd.read_csv("reqs.csv", index_col=0)
-
-# df = df.fillna(0).applymap(lambda x: 1 if x == "X" else x)
-
-# a = df.drop(index=["Wage rate per 9h shift ($)"], columns=["Workers Required"]).values
 
 shifts = [
     ["sunday", "cable technition", "08:00", "12:00", 150],
@@ -1110,44 +1095,48 @@ reqs += [
     ["saturday", "TV technition", "23:00", "23:30", 61],
     ["saturday", "TV technition", "23:30", "00:00", 36]
 ]
+# Dont print msgs
+pulp.LpSolverDefault.msg = 0
 
 skills = []
+# Get distinct skills in skills array
 for item in reqs:
     if item[1] not in skills:
         skills.append(item[1])
+
 days = []
+# Get distinct days in days array
 for item in reqs:
     if item[0] not in days:
         days.append(item[0])
+
+# Create maps for day and skill
 day_mapping = {day: index for index, day in enumerate(days)}
 skill_mapping = {tech: index for index, tech in enumerate(skills)}
 
+# Init array of shifts per skill and day
 shifts_array = [[[] for _ in range(len(skill_mapping))] for _ in range(len(day_mapping))]
 
-# Fill in the 3D array with the corresponding values
+# Fill in the 3D shifts array with the corresponding values
 for shift in shifts:
     day_index = day_mapping.get(shift[0], -1)
-    # print("day index: " + str(day_index))
     skill_index = skill_mapping.get(shift[1], -1)
     if(skill_index == -1 or day_index == -1):
-        continue
-    # print("skill index: " + str(skill_index))
+        raise ValueError("Error filling the shifts array")
+
     hours = hours_to_array(shift[2], shift[3])
     cost = shift[4]
+    # Per each shift, append the hours and the cost of it, to the relevent day and skill.
     shifts_array[day_index][skill_index].append((hours, cost))
-
-# for day in shifts_array:
-#     for skill in day:
-#         for shift in skill:
-#             print("shift: " + str(shift))
 
 requests_array = [[[0 for _ in range(48)] for _ in range(len(skill_mapping))] for _ in range(len(day_mapping))]
 
+# Per each day and skill, update the requested employees.
 for req in reqs:
     day_index = day_mapping.get(req[0], -1)
     skill_index = skill_mapping.get(req[1], -1)
     if(skill_index == -1 or day_index == -1):
-        continue
+        raise ValueError("Error filling the requests array")
     start = hour_to_index(req[2])
     end = hour_to_index(req[3])
     if(end == 0):
@@ -1155,18 +1144,18 @@ for req in reqs:
     for i in range(start, end):
         requests_array[day_index][skill_index][i] = req[4]
 
+# Per each day and skill, solve the problem using pulp.
 for day in range(len(day_mapping)):
     for skill in range(len(skill_mapping)):
         num_shifts = len(shifts_array[day][skill])
         time_intervals = 48
+        # Requests for this day and skill
         d = requests_array[day][skill]
+        # For each time interval, the shifts that happens in this interval.
         a = [[shifts_array[day][skill][j][0][i] for j in range(num_shifts)]for i in range(time_intervals)]
+        
+        # Removing requests that no shift happens in this interval.
         is_shift_in_interval = False
-        # print("------------------------------------------")
-        # for k in range(48):
-        #     print(requests_array[day][skill][k], end=" ")
-        # print()
-        # print("------------------------------------------")
         for i in range(time_intervals):
             for j in range(num_shifts):
                 if(a[i][j]):
@@ -1175,63 +1164,29 @@ for day in range(len(day_mapping)):
             if(is_shift_in_interval == False):
                 requests_array[day][skill][i] = 0
             is_shift_in_interval = False
-        # print("------------------------------------------")
-        # for k in range(48):
-        #     print(requests_array[day][skill][k], end=" ")
-        # print()
-        # print("------------------------------------------")
+
+        # Array of costs per shift
         w = [shifts_array[day][skill][i][1] for i in range(num_shifts)]
+
+        # The dictionary of output(not below 0, integers)
         y = pulp.LpVariable.dicts("num_workers", list(range(num_shifts)), lowBound=0, cat="Integer")
+
+        # Creating the problem, the target is to minimize the sum.
         prob = pulp.LpProblem("scheduling_workers", pulp.LpMinimize)
+        # Adding the sum I want to minimize.
         prob += pulp.lpSum([w[j] * y[j] for j in range(num_shifts)])
+
+        # The constraints
         for t in range(time_intervals):
-            prob += pulp.lpSum([a[t][j] * y[j] for j in range(num_shifts)]) >= d[t]        
+            prob += pulp.lpSum([a[t][j] * y[j] for j in range(num_shifts)]) >= d[t]
+
+        # Solve        
         prob.solve()
-        print("Status:", pulp.LpStatus[prob.status])
+
+        print(f"Status for day {days[day]} for skill {skills[skill]}:", pulp.LpStatus[prob.status])
 
         for shift in range(num_shifts):
             print(
                 f"The number of workers needed for shift {shift} is {int(y[shift].value())} workers"
             )
-
-
-
-
-
-# for i in range(len(day_mapping)):
-#     for j in range(len(skill_mapping)):
-#         for k in range(48):
-#             print(requests_array[i][j][k], end=" ")
-#         print()
-#     print()
-
-# number of shifts
-# n = a.shape[1]
-# print("number of shifts: " + str(n))
-
-# # number of time windows
-# T = a.shape[0]
-
-# print("number of time windows: " + str(T))
-
-# # number of workers required per time window
-# d = df["Workers Required"].values
-# print(d)
-# w = df.loc["Wage rate per 9h shift ($)", :].values.astype(int)
-# print(w)
-# y = pulp.LpVariable.dicts("num_workers", list(range(n)), lowBound=0, cat="Integer")
-
-# prob = pulp.LpProblem("scheduling_workers", pulp.LpMinimize)
-
-# prob += pulp.lpSum([w[j] * y[j] for j in range(n)])
-
-# for t in range(T):
-#     prob += pulp.lpSum([a[t, j] * y[j] for j in range(n)]) >= d[t]
-
-# prob.solve()
-# print("Status:", pulp.LpStatus[prob.status])
-
-# for shift in range(n):
-#     print(
-#         f"The number of workers needed for shift {shift} is {int(y[shift].value())} workers"
-#     )
+        print("")
