@@ -28,7 +28,7 @@ function TableScreen({ user, setUser }) {
         }
         tableScreenState.setCurrentDay(day)
         if (tableScreenState.get.is2Generated) {
-            algo2TableState.setCurrentWorkersAndShifts((user.algo2Table)[day])
+            algo2TableState.setCurrentWorkersAndShifts((user.algo2Graphic)[day])
         }
 
         if (tableScreenState.get.is1Generated) {
@@ -70,11 +70,13 @@ function TableScreen({ user, setUser }) {
     }
 
     async function generateResults2() {
-        const daysWorkersAndShifts = await utils.generateAlgo2Results()
+        const res = await utils.generateAlgo2Results()
         var newUser = user
-        newUser.algo2Table = daysWorkersAndShifts
+        newUser.algo2Table = res
+        const ui = utils.generateAlgoGraphicResults(res)
+        newUser.algo2Graphic = ui
         setUser(newUser)
-        algo2TableState.setCurrentWorkersAndShifts((user.algo2Table)[tableScreenState.get.currentDay])
+        algo2TableState.setCurrentWorkersAndShifts((user.algo2Graphic)[tableScreenState.get.currentDay])
         tableScreenState.setIs2Generated(true)
     }
 
