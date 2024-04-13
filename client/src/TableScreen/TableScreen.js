@@ -117,7 +117,8 @@ function TableScreen({ user, setUser }) {
             setUser={setUser}
         />
     ) : (
-        <EditResFile2 />
+        <EditResFile2 initialTable={(user.algo2Table)[tableScreenState.get.currentDay]} 
+        currentDay={tableScreenState.get.currentDay} setInEdit={editInfoState.setInEdit} user={user} setUser={setUser}/>
     );
 
 
