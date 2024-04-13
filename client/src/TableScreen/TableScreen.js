@@ -13,6 +13,7 @@ import { useTableAlgo1State } from "./states/TableAlgo1State";
 import EditResFile1 from "./Edit/EditTable1/EditResFile1";
 import SkillDropdown from "./conponenets/SkillDropdown";
 import * as utils from './Utils'
+import EditResFile2 from "./Edit/EditTable2/EditResFile2";
 // expecting json: {"Sunday" : [{"worker":"name1", "shifts":[true, true, false, ...]}, {"worker":"name2", "shifts":[true, true, false, ...]}, ....], ... , "Saturday" : ...}
 // every boolean array is 48 cells, starting from 7:00, ending at 23:30
 
@@ -104,6 +105,22 @@ function TableScreen({ user, setUser }) {
     useEffect(() => {
         generateResults1();
     }, []);
+
+    const editComponent = tableScreenState.get.tableNum === 1 ? (
+        <EditResFile1 
+            initialTable={tableAlgo1State.get.worksPerShift}
+            currentDay={tableScreenState.get.currentDay}
+            currentSkill={tableAlgo1State.get.currentSkill}
+            setWorksPerShift={tableAlgo1State.setWorksPerShift}
+            setInEdit={editInfoState.setInEdit}
+            user={user}
+            setUser={setUser}
+        />
+    ) : (
+        <EditResFile2 />
+    );
+
+
     return (
         !editInfoState.get.inEdit ? (
             <div id="table-screen">
@@ -175,8 +192,7 @@ function TableScreen({ user, setUser }) {
                     </div>
                 </div>
             </div>
-        ) : <EditResFile1 initialTable={(tableAlgo1State.get.worksPerShift)} currentDay={tableScreenState.get.currentDay} currentSkill={tableAlgo1State.get.currentSkill} setWorksPerShift={tableAlgo1State.setWorksPerShift}
-            setInEdit={editInfoState.setInEdit} user={user} setUser={setUser} />
+        ) : <>{editComponent}</>
     );
 }
 

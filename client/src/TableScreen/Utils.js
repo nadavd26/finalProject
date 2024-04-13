@@ -78,13 +78,13 @@ export async function generateAlgo2Results(table) {
     //empty means no one was selected
     const scheduleData = duplicateLines(table)
     console.log("scheduleData : " + scheduleData)
-    const scheduleDataSunday = scheduleData.filter(item => item[1].toLowerCase() === "sunday");
-    const scheduleDataMonday = scheduleData.filter(item => item[1].toLowerCase() === "monday");
-    const scheduleDataTuesday = scheduleData.filter(item => item[1].toLowerCase() === "tuesday");
-    const scheduleDataWednesday = scheduleData.filter(item => item[1].toLowerCase() === "wednesday");
-    const scheduleDataThursday = scheduleData.filter(item => item[1].toLowerCase() === "thursday");
-    const scheduleDataFriday = scheduleData.filter(item => item[1].toLowerCase() === "friday");
-    const scheduleDataSaturday = scheduleData.filter(item => item[1].toLowerCase() === "saturday");
+    const scheduleDataSunday = scheduleData.filter(item => item[0].toLowerCase() === "sunday");
+    const scheduleDataMonday = scheduleData.filter(item => item[0].toLowerCase() === "monday");
+    const scheduleDataTuesday = scheduleData.filter(item => item[0].toLowerCase() === "tuesday");
+    const scheduleDataWednesday = scheduleData.filter(item => item[0].toLowerCase() === "wednesday");
+    const scheduleDataThursday = scheduleData.filter(item => item[0].toLowerCase() === "thursday");
+    const scheduleDataFriday = scheduleData.filter(item => item[0].toLowerCase() === "friday");
+    const scheduleDataSaturday = scheduleData.filter(item => item[0].toLowerCase() === "saturday");
 
 
     const data = {
@@ -124,7 +124,7 @@ function transformDataToMap(data) {
         if (!resultMap.has(key)) {
             resultMap.set(key, []);
         }
-        resultMap.get(key).push(entry);
+        resultMap.get(key).push([entry[1], entry[0], entry[2], entry[3], entry[4]]);
     });
 
     return resultMap;
@@ -151,7 +151,6 @@ export async function generateAlgo1Results(table) {
         scheduleData[i][4] = i % 10
     }
 
-    console.log("schedule data algo  1 : " + scheduleData)
     const transformedData = transformDataToMap(scheduleData);
     // console.log("hiiiiii" + transformedData["TV technition"]["sunday"]);
     await sleep(2000);
