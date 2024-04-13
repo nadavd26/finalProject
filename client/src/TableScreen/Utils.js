@@ -66,61 +66,25 @@ function generateShifts(scheduleData, workerTable) {
 }
 
 
-export async function generateAlgo2Results() {
-    //empty means no one was selected
-    const scheduleDataa = [
-        ["sunday", "cable technition", "8:00", "12:00", 3],
-        ["sunday", "cable technition", "13:00", "17:00", 9],
-        ["monday", "cable technition", "9:00", "13:00", 4],
-        ["monday", "cable technition", "14:00", "18:00", 5],
-        ["tuesday", "cable technition", "10:00", "14:00", 2],
-        ["tuesday", "cable technition", "15:00", "19:00", 6],
-        ["wednesday", "cable technition", "11:00", "15:00", 7],
-        ["wednesday", "cable technition", "16:00", "20:00", 1],
-        ["thursday", "cable technition", "12:00", "16:00", 10],
-        ["thursday", "cable technition", "17:00", "21:00", 8],
-        ["friday", "cable technition", "13:00", "17:00", 3],
-        ["friday", "cable technition", "18:00", "22:00", 9],
-        ["saturday", "cable technition", "14:00", "18:00", 6],
-        ["saturday", "cable technition", "19:00", "23:00", 2],
-        ["sunday", "WIFI technition", "8:00", "12:00", 5],
-        ["sunday", "WIFI technition", "13:00", "17:00", 8],
-        ["monday", "WIFI technition", "9:00", "13:00", 1],
-        ["monday", "WIFI technition", "14:00", "18:00", 4],
-        ["tuesday", "WIFI technition", "10:00", "14:00", 7],
-        ["tuesday", "WIFI technition", "15:00", "19:00", 3],
-        ["Wednesday", "WIFI technition", "11:00", "15:00", 9],
-        ["wednesday", "WIFI technition", "16:00", "20:00", 6],
-        ["thursday", "WIFI technition", "12:00", "16:00", 8],
-        ["thursday", "WIFI technition", "17:00", "21:00", 2],
-        ["friday", "WIFI technition", "13:00", "17:00", 10],
-        ["friday", "WIFI technition", "18:00", "22:00", 5],
-        ["saturday", "WIFI technition", "14:00", "18:00", 7],
-        ["saturday", "WIFI technition", "19:00", "23:00", 1],
-        ["sunday", "TV technition", "8:00", "12:00", 4],
-        ["sunday", "TV technition", "13:00", "17:00", 6],
-        ["monday", "TV technition", "9:00", "13:00", 8],
-        ["monday", "TV technition", "14:00", "18:00", 2],
-        ["tuesday", "TV technition", "10:00", "14:00", 3],
-        ["tuesday", "TV technition", "15:00", "19:00", 5],
-        ["wednesday", "TV technition", "11:00", "15:00", 9],
-        ["wednesday", "TV technition", "16:00", "20:00", 7],
-        ["thursday", "TV technition", "12:00", "16:00", 1],
-        ["thursday", "TV technition", "17:00", "21:00", 10],
-        ["friday", "TV technition", "13:00", "17:00", 6],
-        ["friday", "TV technition", "18:00", "22:00", 4],
-        ["saturday", "TV technition", "14:00", "18:00", 2],
-        ["saturday", "TV technition", "19:00", "23:00", 8]
-    ];
+function mapToString(map) {
+    let str = '';
+    map.forEach((value, key) => {
+        str += `${key}: ${value}\n`; // Assuming key and value are strings
+    });
+    return str;
+}
 
-    const scheduleData = duplicateLines(scheduleDataa)
-    const scheduleDataSunday = scheduleData.filter(item => item[0].toLowerCase() === "sunday");
-    const scheduleDataMonday = scheduleData.filter(item => item[0].toLowerCase() === "monday");
-    const scheduleDataTuesday = scheduleData.filter(item => item[0].toLowerCase() === "tuesday");
-    const scheduleDataWednesday = scheduleData.filter(item => item[0].toLowerCase() === "wednesday");
-    const scheduleDataThursday = scheduleData.filter(item => item[0].toLowerCase() === "thursday");
-    const scheduleDataFriday = scheduleData.filter(item => item[0].toLowerCase() === "friday");
-    const scheduleDataSaturday = scheduleData.filter(item => item[0].toLowerCase() === "saturday");
+export async function generateAlgo2Results(table) {
+    //empty means no one was selected
+    const scheduleData = duplicateLines(table)
+    console.log("scheduleData : " + scheduleData)
+    const scheduleDataSunday = scheduleData.filter(item => item[1].toLowerCase() === "sunday");
+    const scheduleDataMonday = scheduleData.filter(item => item[1].toLowerCase() === "monday");
+    const scheduleDataTuesday = scheduleData.filter(item => item[1].toLowerCase() === "tuesday");
+    const scheduleDataWednesday = scheduleData.filter(item => item[1].toLowerCase() === "wednesday");
+    const scheduleDataThursday = scheduleData.filter(item => item[1].toLowerCase() === "thursday");
+    const scheduleDataFriday = scheduleData.filter(item => item[1].toLowerCase() === "friday");
+    const scheduleDataSaturday = scheduleData.filter(item => item[1].toLowerCase() === "saturday");
 
 
     const data = {
@@ -132,7 +96,10 @@ export async function generateAlgo2Results() {
         Friday: scheduleDataFriday,
         Saturday: scheduleDataSaturday
     }
+    console.log("data : " + JSON.stringify(data))
+
     return data
+
 }
 
 export function generateAlgoGraphicResults(data, workerTable) {
@@ -153,7 +120,7 @@ function transformDataToMap(data) {
     const resultMap = new Map();
 
     data.forEach(entry => {
-        const key = getKey(entry[0], entry[1]); // Combining day and skill to form the key
+        const key = getKey(entry[1], entry[0]); // Combining day and skill to form the key
         if (!resultMap.has(key)) {
             resultMap.set(key, []);
         }
@@ -163,64 +130,28 @@ function transformDataToMap(data) {
     return resultMap;
 }
 
-function duplicateLines(scheduleData) {
+function duplicateLines(table) {
     const duplicatedData = [];
-    // var j = 0;
-    scheduleData.forEach(([day, technician, start, end, count]) => {
-        for (let i = 0; i < count; i++) {
-            // j++
-            duplicatedData.push([day, technician, start, end, ""]);
+    table.forEach((value, key) => {
+        for (let i = 0; i < value.length; i++) {
+            for (let j = 0; j < value[i][4]; j++) {
+                duplicatedData.push([value[i][0], value[i][1], value[i][2], value[i][3], ""]);
+            }
         }
+
     });
     return duplicatedData;
 }
 
-export async function generateAlgo1Results() {
-    const scheduleData = [
-        ["sunday", "cable technition", "8:00", "12:00", 15],
-        ["sunday", "cable technition", "13:00", "17:00", 12],
-        ["monday", "cable technition", "9:00", "13:00", 18],
-        ["monday", "cable technition", "14:00", "18:00", 9],
-        ["tuesday", "cable technition", "10:00", "14:00", 20],
-        ["tuesday", "cable technition", "15:00", "19:00", 7],
-        ["wednesday", "cable technition", "11:00", "15:00", 16],
-        ["wednesday", "cable technition", "16:00", "20:00", 11],
-        ["thursday", "cable technition", "12:00", "16:00", 13],
-        ["thursday", "cable technition", "17:00", "21:00", 8],
-        ["friday", "cable technition", "13:00", "17:00", 10],
-        ["friday", "cable technition", "18:00", "22:00", 6],
-        ["saturday", "cable technition", "14:00", "18:00", 14],
-        ["saturday", "cable technition", "19:00", "23:00", 5],
-        ["sunday", "WIFI technition", "8:00", "12:00", 9],
-        ["sunday", "WIFI technition", "13:00", "17:00", 6],
-        ["monday", "WIFI technition", "9:00", "13:00", 11],
-        ["monday", "WIFI technition", "14:00", "18:00", 8],
-        ["tuesday", "WIFI technition", "10:00", "14:00", 13],
-        ["tuesday", "WIFI technition", "15:00", "19:00", 10],
-        ["Wednesday", "WIFI technition", "11:00", "15:00", 12],
-        ["wednesday", "WIFI technition", "16:00", "20:00", 7],
-        ["thursday", "WIFI technition", "12:00", "16:00", 15],
-        ["thursday", "WIFI technition", "17:00", "21:00", 11],
-        ["friday", "WIFI technition", "13:00", "17:00", 14],
-        ["friday", "WIFI technition", "18:00", "22:00", 9],
-        ["saturday", "WIFI technition", "14:00", "18:00", 16],
-        ["saturday", "WIFI technition", "19:00", "23:00", 12],
-        ["sunday", "TV technition", "8:00", "12:00", 7],
-        ["sunday", "TV technition", "13:00", "17:00", 5],
-        ["monday", "TV technition", "9:00", "13:00", 9],
-        ["monday", "TV technition", "14:00", "18:00", 6],
-        ["tuesday", "TV technition", "10:00", "14:00", 8],
-        ["tuesday", "TV technition", "15:00", "19:00", 10],
-        ["wednesday", "TV technition", "11:00", "15:00", 7],
-        ["wednesday", "TV technition", "16:00", "20:00", 12],
-        ["thursday", "TV technition", "12:00", "16:00", 11],
-        ["thursday", "TV technition", "17:00", "21:00", 14],
-        ["friday", "TV technition", "13:00", "17:00", 10],
-        ["friday", "TV technition", "18:00", "22:00", 16],
-        ["saturday", "TV technition", "14:00", "18:00", 13],
-        ["saturday", "TV technition", "19:00", "23:00", 15]
-    ];
 
+
+export async function generateAlgo1Results(table) {
+    const scheduleData = table
+    for (let i = 0; i < scheduleData.length; i++) {
+        scheduleData[i][4] = i % 10
+    }
+
+    console.log("schedule data algo  1 : " + scheduleData)
     const transformedData = transformDataToMap(scheduleData);
     // console.log("hiiiiii" + transformedData["TV technition"]["sunday"]);
     await sleep(2000);
