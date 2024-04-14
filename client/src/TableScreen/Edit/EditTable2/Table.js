@@ -10,11 +10,12 @@ function Table({content, onCellEdit,  color, workerMap}) {
                         <table className="table table-hover table-striped" id="table">
                             <tbody>
                                 <tr className="row100 body first-row">
-                                    <th className="cell100 first-column blue col-2">Day</th>
+                                    <th className="cell100 first-column blue col-1">Action</th>
+                                    <th class="cell100  last-columns blue col-2">Day</th>
                                     <th class="cell100  last-columns blue col-2">Skill</th>
                                     <th class="cell100  last-columns blue col-2">From</th>
                                     <th class="cell100  last-columns blue col-2">Until</th>
-                                    <th class="cell100  last-columns blue col-4">Assigned Worker</th>
+                                    <th class="cell100  last-columns blue col-3">Assigned Worker</th>
                                 </tr>
                                 <TableRows content={content} onCellEdit={onCellEdit} color={color} workerMap={workerMap}/>
                             </tbody>

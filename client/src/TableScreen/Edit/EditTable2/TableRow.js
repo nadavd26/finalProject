@@ -2,6 +2,7 @@ import "../css/TableRow.css"; // Import your CSS file for styling
 import FreeEditCell from '../components/FreeEditCell';
 import NonEditableCell from "../components/NonEditableCell";
 import WorkerDropdown from "../components/WorkerDropdown";
+import ActionCell from "../components/ActionCell";
 export default function TableRow({ row, rowIndex, onCellEdit, color, workerMap}) {
     function generateWorkerList() {
         // Extract the skill from the row data
@@ -42,10 +43,11 @@ export default function TableRow({ row, rowIndex, onCellEdit, color, workerMap})
     return (
         <>
             <tr className="row100 body last-rows" id="table-row">
-                <NonEditableCell value={row[0]} rowIndex={rowIndex} coloumnIndex={0}/>
-                <NonEditableCell value={row[1]} rowIndex={rowIndex} columnIndex={1} />
-                <NonEditableCell value={row[2]} rowIndex={rowIndex} columnIndex={2}  />
-                <NonEditableCell value={row[3]} rowIndex={rowIndex} columnIndex={3}  />
+                <ActionCell rowIndex={rowIndex} color={color}></ActionCell>
+                <NonEditableCell value={row[0]} rowIndex={rowIndex} coloumnIndex={0} color={color}/>
+                <NonEditableCell value={row[1]} rowIndex={rowIndex} columnIndex={1} color={color}/>
+                <NonEditableCell value={row[2]} rowIndex={rowIndex} columnIndex={2}  color={color}/>
+                <NonEditableCell value={row[3]} rowIndex={rowIndex} columnIndex={3}  color={color}/>
                 <WorkerDropdown value={row[4]} rowIndex={rowIndex} columnIndex={4} color={color} onEdit={onCellEdit} workerList={generateWorkerList()}/>
             </tr >
         </>
