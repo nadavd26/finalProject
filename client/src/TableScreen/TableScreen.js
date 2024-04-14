@@ -76,6 +76,10 @@ function TableScreen({ user, setUser }) {
         newUser.algo2Table = res
         const ui = utils.generateAlgoGraphicResults(res, user.table1)
         newUser.algo2Graphic = ui
+        var shifts = utils.generateAlgoShifts(res)
+        console.log("shifts")
+        console.log(shifts)
+        algo2TableState.setShiftsInfo(shifts)
         setUser(newUser)
         algo2TableState.setCurrentWorkersAndShifts((user.algo2Graphic)[tableScreenState.get.currentDay])
         tableScreenState.setIs2Generated(true)
@@ -104,6 +108,9 @@ function TableScreen({ user, setUser }) {
 
     useEffect(() => {
         generateResults1();
+        var workerMap = utils.generateWorkerMap(user.table1)
+        console.log("worker map : " +workerMap)
+        tableScreenState.setWorkerMap(workerMap)
     }, []);
 
     const editComponent = tableScreenState.get.tableNum === 1 ? (
@@ -118,7 +125,7 @@ function TableScreen({ user, setUser }) {
         />
     ) : (
         <EditResFile2 initialTable={(user.algo2Table)[tableScreenState.get.currentDay]} 
-        currentDay={tableScreenState.get.currentDay} setInEdit={editInfoState.setInEdit} user={user} setUser={setUser}/>
+        currentDay={tableScreenState.get.currentDay} setInEdit={editInfoState.setInEdit} user={user} setUser={setUser} workerMap={tableScreenState.get.workerMap} shiftsInfo={(algo2TableState.get.shiftInfo)[tableScreenState.get.currentDay]}/>
     );
 
 

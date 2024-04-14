@@ -5,26 +5,48 @@ import '../css/edit-file-table-main.css'
 import '../css/perfect-scrollbar.css'
 import * as utils from '../../Utils'
 
-export default function EditResFile2({ initialTable, setInEdit, user, setUser, currentDay, currentSkill, setWorksPerShift}) {
+export default function EditResFile2({ initialTable, setInEdit, user, setUser, currentDay, workerMap, shiftsInfo}) {
     const [content, setContent] = useState([["", "", "", "", ""]])
+    const [colors, setColors] = useState(["white"])
     const [showBackModal, setShowBackModal] = useState(false)
     const defaultErrorMsg = "Assigned Number Of Workers is a non-negative integer."
     const [errorMsg, setErrorMsg] = useState(defaultErrorMsg)
     const token = user.token
 
-    console.log("key isssssssssss : " + currentDay + "******" + currentSkill)
-    function isNumberOfWorkersValid(numOfWorkers) {
-        if (numOfWorkers === "") {
-            return false
-        }
-        const parsedValue = Number(numOfWorkers);
-        return Number.isInteger(parsedValue) && parsedValue >= 0;
-    };
-
+    console.log("worker List ")
+    console.log(workerMap)
+    console.log("shifts info ")
+    console.log(shiftsInfo)
     useEffect(() => {
         setContent(initialTable)
     }, []);
 
+    const calcOverlaps = (table) => {
+        let overlaps = []
+        for (let i = 0; i < table.length - 1; i++) {
+            if (table[i][0] == table[i + 1][0] && table[i][1] == table[i + 1][1] && table[i][3] > table[i + 1][2]) {
+                if (overlaps[overlaps.length - 1] != i + 1) {
+                    overlaps.push(i + 1)
+                }
+
+                overlaps.push(i + 2)
+            }
+        }
+
+        return overlaps
+    }
+
+    function generate(table) {
+        let colors = []
+        for (let i = 0; i < table.length - 1; i++) {
+            if (table[i][0] == table[i + 1][0] && table[i][4] == table[i + 1][4] && table[i][3] > table[i + 1][2]) {
+                colors[i] = "red"
+                colors[i+1] = "red"
+            } else {
+                colors.push("white")
+            } 
+        }
+    }
     const handleCellEdit = (rowIndex, columnIndex, value) => {
         const updatedContent = content.map((row, i) => {
             if (i === rowIndex) {
@@ -47,9 +69,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, c
             isValid = false;
         }
         content.forEach((row) => {
-            if(!(isNumberOfWorkersValid(row[4]))) {
-                isValid = false
-            }
+            
         });
 
         if (!isValid) {
@@ -77,10 +97,6 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, c
 
     const finishEdit = async () => {
         var newUser = user
-        const map = user.algo1Table
-        map.set(utils.getKey(currentDay, currentSkill), content)
-        newUser.algo1Table = map
-        setWorksPerShift(content)
         setUser(newUser)
         setInEdit(false)
     };
@@ -100,7 +116,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, c
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#backModal" onClick={handleBack}>Back</button>
                 </div>
                 <div className="col-11"></div>
-                <Table content={content} onCellEdit={handleCellEdit} isNumberOfWorkersValid={isNumberOfWorkersValid}></Table>
+                <Table content={content} onCellEdit={handleCellEdit}></Table>
                 <div className="row"><br /></div>
                 <div className="d-flex justify-content-between mb-3 down-buttons">
                     <div className="col-3"></div>

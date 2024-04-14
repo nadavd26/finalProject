@@ -23,25 +23,14 @@ function generateShiftArray(shifts) {
 
 function generateShifts(scheduleData, workerTable) {
     const workersAndShifts = [];
-    // Extract all worker IDs from workerTable
-    // Extract all worker IDs from workerTable
     const existingWorkers = workerTable.map(entry => entry[1] + "\n" + entry[0]);
-
-    // Extract all worker IDs from scheduleData
     const scheduleWorkerIDs = scheduleData.map(entry => entry[4]);
-
-    // Filter scheduleData to only include worker IDs not in existingWorkers
     const newWorkers = existingWorkers.filter(workerID => !scheduleWorkerIDs.includes(workerID));
-    // For each new worker, create an array filled with false for each half-hour slot
     newWorkers.forEach(worker => {
         const shifts = new Array(48).fill(false);
         workersAndShifts.push({ name: worker, shifts });
     });
-
-    // Filter out entries where the last column (worker ID) is empty
     const filteredData = scheduleData.filter(entry => entry[4].trim() !== '');
-
-    // Group the filtered schedule data by worker ID
     const groupedData = filteredData.reduce((acc, [day, skill, start, end, workerID]) => {
         if (!acc[workerID]) {
             acc[workerID] = [];
@@ -49,8 +38,6 @@ function generateShifts(scheduleData, workerTable) {
         acc[workerID].push({ day, start, end });
         return acc;
     }, {});
-
-    // Generate Boolean arrays for each worker's shifts
     for (const workerID in groupedData) {
         const shifts = new Array(48).fill(false); // Initialize with false for each half-hour slot
         groupedData[workerID].forEach(({ start, end }) => {
@@ -65,19 +52,125 @@ function generateShifts(scheduleData, workerTable) {
     return workersAndShifts;
 }
 
+export function generateWorkerMap(table) {
+    const workerMap = new Map();
 
+    for (let i = 0; i < table.length; i++) {
+        const row = table[i];
+        const id = row[0]; 
+        const name = row[1];
+        const skill1 = row[2];
+        const skill2 = row[3];
+        const skill3 = row[4];
+
+        // Add skill1
+        if (skill1 && skill1 != "") {
+            if (!workerMap.has(skill1)) {
+                workerMap.set(skill1, []);
+            }
+            workerMap.get(skill1).push({ id, name });
+        }
+
+        // Add skill2
+        if (skill2 && skill2 != "") {
+            if (!workerMap.has(skill2)) {
+                workerMap.set(skill2, []);
+            }
+            workerMap.get(skill2).push({ id, name });
+        }
+
+        // Add skill3
+        if (skill3 && skill3 != "") {
+            if (!workerMap.has(skill3)) {
+                workerMap.set(skill3, []);
+            }
+            workerMap.get(skill3).push({ id, name });
+        }
+    }
+
+    // console.log("worker map : " + mapToString(workerMap))
+    return workerMap;
+}
 function mapToString(map) {
     let str = '';
     map.forEach((value, key) => {
-        str += `${key}: ${value}\n`; // Assuming key and value are strings
+        str += `${key}: ${JSON.stringify(value)}\n`; // Assuming key and value are strings
     });
     return str;
 }
 
+export function generateShiftList(table) {
+    // console.log("Input table:");
+    // console.log(table);
+
+    const shifts = {};
+    let currentShiftId = null;
+    let currentShiftStartIndex = null;
+
+    for (let i = 0; i < table.length; i++) {
+        const row = table[i];
+        const skill = row[0];
+        const day = row[1];
+        const from = row[2];
+        const until = row[3];
+        const shiftId = row[5];
+
+        // If a new shift starts
+        if (shiftId !== currentShiftId) {
+            // If there was a previous shift, update its end index
+            if (currentShiftId !== null) {
+                shifts[currentShiftId].end = i - 1;
+            }
+
+            // Start a new shift
+            currentShiftId = shiftId;
+            currentShiftStartIndex = i;
+
+            // Initialize the shift object
+            shifts[currentShiftId] = { start: currentShiftStartIndex, end: null, overlaps: [] };
+        }
+
+        // Update the end index of the current shift
+        shifts[currentShiftId].end = i;
+
+        // Check for overlaps with previous shifts
+        for (const otherShiftId in shifts) {
+            if (otherShiftId !== currentShiftId) {
+                const otherShift = shifts[otherShiftId];
+                // Check if shifts are overlapping
+                if (from < table[otherShift.end][3] && until > table[otherShift.start][2]) {
+                    // There is an overlap
+                    const overlapId = parseInt(otherShiftId); // Convert otherShiftId to integer
+                    // Check if the overlap is not already recorded
+                    if (!shifts[currentShiftId].overlaps.includes(overlapId)) {
+                        shifts[currentShiftId].overlaps.push(overlapId);
+                    }
+                    // Check if the other shift does not already record the current shift as an overlap
+                    if (!otherShift.overlaps.includes(currentShiftId)) {
+                        otherShift.overlaps.push(parseInt(currentShiftId)); // Convert currentShiftId to integer
+                    }
+                }
+            }
+        }
+    }
+
+    // Update the end index of the last shift
+    if (currentShiftId !== null) {
+        shifts[currentShiftId].end = table.length - 1;
+    }
+
+    // console.log("Shift list:");
+    // console.log(shifts);
+
+    return shifts;
+}
+
+
+
+
 export async function generateAlgo2Results(table) {
-    //empty means no one was selected
     const scheduleData = duplicateLines(table)
-    console.log("scheduleData : " + scheduleData)
+    // console.log("scheduleData : " + scheduleData)
     const scheduleDataSunday = scheduleData.filter(item => item[0].toLowerCase() === "sunday");
     const scheduleDataMonday = scheduleData.filter(item => item[0].toLowerCase() === "monday");
     const scheduleDataTuesday = scheduleData.filter(item => item[0].toLowerCase() === "tuesday");
@@ -96,10 +189,25 @@ export async function generateAlgo2Results(table) {
         Friday: scheduleDataFriday,
         Saturday: scheduleDataSaturday
     }
-    console.log("data : " + JSON.stringify(data))
+
+    // console.log("data : " + JSON.stringify(data))
 
     return data
 
+}
+
+export function generateAlgoShifts(data) {
+    const shifts = {
+        Sunday: generateShiftList(data.Sunday),
+        Monday: generateShiftList(data.Monday),
+        Tuesday: generateShiftList(data.Tuesday),
+        Wednesday: generateShiftList(data.Wednesday),
+        Thursday: generateShiftList(data.Thursday),
+        Friday: generateShiftList(data.Friday),
+        Saturday: generateShiftList(data.Saturday)
+    }
+
+    return shifts
 }
 
 export function generateAlgoGraphicResults(data, workerTable) {
@@ -132,14 +240,18 @@ function transformDataToMap(data) {
 
 function duplicateLines(table) {
     const duplicatedData = [];
+    var shiftsId = 0 
     table.forEach((value, key) => {
         for (let i = 0; i < value.length; i++) {
             for (let j = 0; j < value[i][4]; j++) {
-                duplicatedData.push([value[i][0], value[i][1], value[i][2], value[i][3], ""]);
+                duplicatedData.push([value[i][0], value[i][1], value[i][2], value[i][3], "", shiftsId]);
             }
+
+            shiftsId++
         }
 
     });
+    // console.log("dupliacte lines111 " + duplicatedData)
     return duplicatedData;
 }
 
@@ -148,7 +260,7 @@ function duplicateLines(table) {
 export async function generateAlgo1Results(table) {
     const scheduleData = table
     for (let i = 0; i < scheduleData.length; i++) {
-        scheduleData[i][4] = i % 10
+        scheduleData[i][4] = (2*i+5) % 10
     }
 
     const transformedData = transformDataToMap(scheduleData);

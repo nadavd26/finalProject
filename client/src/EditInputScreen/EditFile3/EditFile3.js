@@ -269,7 +269,7 @@ export default function EditFile3({ csvArray, setEditInfo, user, setUser, fromSe
     const calcOverlaps = (table) => {
         let overlaps = []
         for (let i = 0; i < table.length - 1; i++) {
-            if (table[i][0] == table[i + 1][0] && table[i][1] == table[i + 1][1] && table[i][3] > table[i + 1][2]) {
+            if (table[i][0] == table[i + 1][0] && table[i][1] == table[i + 1][1] && table[i][2] == table[i + 1][2] && table[i][3] == table[i + 1][3]) {
                 if (overlaps[overlaps.length - 1] != i + 1) {
                     overlaps.push(i + 1)
                 }

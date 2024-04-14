@@ -3,14 +3,7 @@ import { useState } from 'react';
 export const useTableAlgo2State = () => {
     const defaultBooleanArray = new Array(48).fill(false);
     const worksAndShiftsUntilLoaded = new Array(10).fill({ name: '\n\n', shifts: defaultBooleanArray });
-    const [get, setState] = useState({currentWorkersAndShifts : worksAndShiftsUntilLoaded});
-
-    const setCurrentDay = (day) => {
-        setState(prevState => ({
-            ...prevState,
-            currentDay: day,
-        }));
-    };
+    const [get, setState] = useState({currentWorkersAndShifts : worksAndShiftsUntilLoaded, shiftInfo : []});
 
     const setCurrentWorkersAndShifts = (value) => {
         setState(prevState => ({
@@ -19,5 +12,12 @@ export const useTableAlgo2State = () => {
         }));
     };
 
-    return { get,setCurrentWorkersAndShifts };
+    const setShiftsInfo = (value) => {
+        setState(prevState => ({
+            ...prevState,
+            shiftInfo: value,
+        }));
+    };
+
+    return { get,setCurrentWorkersAndShifts, setShiftsInfo };
 };

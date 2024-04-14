@@ -5,13 +5,21 @@ export const useTableScreenState = () => {
         is1Generated: false,
         is2Generated: false,
         tableNum: 1,
-        currentDay: "Sunday"
+        currentDay: "Sunday",
+        workerMap: new Map()
     });
 
     const setCurrentDay = (day) => {
         setState(prevState => ({
             ...prevState,
-            currentDay: day,
+            currentDay: day
+        }));
+    };
+
+    const setWorkerMap = (map) => {
+        setState(prevState => ({
+            ...prevState,
+            workerMap: map
         }));
     };
 
@@ -41,6 +49,7 @@ export const useTableScreenState = () => {
         setIs1Generated,
         setIs2Generated,
         setTableNum,
-        setCurrentDay
+        setCurrentDay,
+        setWorkerMap
     };
 };
