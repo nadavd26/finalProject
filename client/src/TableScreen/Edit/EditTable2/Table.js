@@ -1,7 +1,7 @@
 import React from 'react';
 import TableRows from './TableRows';
 //first row : [{name : , validate : function}, ....]
-function Table({content, onCellEdit,  color, workerMap}) {
+function Table({content, onCellEdit,  colors, workerMap, shiftsPerWorker, shiftsInfo}) {
     return (
         <div className="container-table100">
             <div className="wrap-table100">
@@ -17,7 +17,7 @@ function Table({content, onCellEdit,  color, workerMap}) {
                                     <th class="cell100  last-columns blue col-2">Until</th>
                                     <th class="cell100  last-columns blue col-3">Assigned Worker</th>
                                 </tr>
-                                <TableRows content={content} onCellEdit={onCellEdit} color={color} workerMap={workerMap}/>
+                                <TableRows content={content} onCellEdit={onCellEdit} colors={colors} workerMap={workerMap} shiftsPerWorker={shiftsPerWorker} shiftsInfo={shiftsInfo}/>
                             </tbody>
                         </table>
                     </div>

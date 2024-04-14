@@ -207,6 +207,10 @@ function generateShiftList(table) {
     return shifts;
 }
 
+export function checkOverlap(start1, end1, start2, end2) {
+    return (start1 < end2 && end1 > start2);
+}
+
 export function generateShiftsPerWorker(data) {
     const shifts = {
         Sunday: generateWorkerShiftList(data.Sunday),
@@ -321,12 +325,13 @@ function transformDataToMap(data) {
 }
 
 function duplicateLines(table) {
+    var olivia = "Olivia\n12"
     const duplicatedData = [];
     var shiftsId = 0 
     table.forEach((value, key) => {
         for (let i = 0; i < value.length; i++) {
             for (let j = 0; j < value[i][4]; j++) {
-                duplicatedData.push([value[i][0], value[i][1], value[i][2], value[i][3], "Olivia\n12", shiftsId]);
+                duplicatedData.push([value[i][0], value[i][1], value[i][2], value[i][3], "", shiftsId]);
             }
 
             shiftsId++

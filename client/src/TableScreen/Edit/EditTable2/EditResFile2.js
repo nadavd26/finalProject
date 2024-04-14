@@ -12,15 +12,17 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, c
     const defaultErrorMsg = "Assigned Number Of Workers is a non-negative integer."
     const [errorMsg, setErrorMsg] = useState(defaultErrorMsg)
     const token = user.token
-    const [shiftsPerWorkersState, setShiftsPerWorkersState] = useState(shiftsPerWorkers)
+    const [stateShiftsPerWorker, setStateShiftsPerWorkers] = useState(shiftsPerWorkers)
     console.log("worker List ")
     console.log(workerMap)
     console.log("shifts info ")
     console.log(shiftsInfo)
     console.log("shiftsPerWorkers")
-    console.log(shiftsPerWorkers)
+    console.log(JSON.stringify(shiftsPerWorkers))
     useEffect(() => {
         setContent(initialTable)
+        var newColors = Array.from({ length: initialTable.length }, () => "white")
+        setColors(newColors)
     }, []);
 
     const handleCellEdit = (rowIndex, columnIndex, value) => {
@@ -92,7 +94,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, c
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#backModal" onClick={handleBack}>Back</button>
                 </div>
                 <div className="col-11"></div>
-                <Table content={content} onCellEdit={handleCellEdit} color={"red"} workerMap={workerMap}></Table>
+                <Table content={content} onCellEdit={handleCellEdit} colors={colors} workerMap={workerMap} shiftsPerWorker={stateShiftsPerWorker} shiftsInfo={shiftsInfo}></Table>
                 <div className="row"><br /></div>
                 <div className="d-flex justify-content-between mb-3 down-buttons">
                     <div className="col-3"></div>

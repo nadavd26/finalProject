@@ -3,7 +3,8 @@ import FreeEditCell from '../components/FreeEditCell';
 import NonEditableCell from "../components/NonEditableCell";
 import WorkerDropdown from "../components/WorkerDropdown";
 import ActionCell from "../components/ActionCell";
-export default function TableRow({ row, rowIndex, onCellEdit, color, workerMap}) {
+import * as utils from '../../Utils'
+export default function TableRow({ row, rowIndex, onCellEdit, color, workerMap, shiftsPerWorker, shiftsInfo, content}) {
     function generateWorkerList() {
         // Extract the skill from the row data
         const skill = row[1];
@@ -26,7 +27,7 @@ export default function TableRow({ row, rowIndex, onCellEdit, color, workerMap})
                     transformedWorkerList.push({
                         id: worker.id, // Assuming the worker object has an id property
                         name: worker.name, // Assuming the worker object has a name property
-                        color: worker.color // Assuming the worker object has a color property
+                        color: getColor(id, name)
                     });
                 }
             }
@@ -36,6 +37,28 @@ export default function TableRow({ row, rowIndex, onCellEdit, color, workerMap})
             // If the skill does not exist in the workerMap, return an empty list
             return [];
         }
+    }
+
+    function getColor(id, name) {
+        // console.log("shiftsPerWorker")
+        // console.log(shiftsPerWorker)
+        const key = utils.getWorkerShiftListKey(id, name)
+        const shiftSet = shiftsPerWorker[key]
+        // console.log("shiftSet")
+        // console.log(shiftSet)
+        if (!shiftSet) {
+            return "white"
+        }
+
+        shiftSet.forEach(shiftId => {
+            const shiftInfoEntry = shiftsInfo[shiftId]
+            const shift = content[shiftInfoEntry.start]
+            if (utils.checkOverlap(shift[2], shift[3], row[2], row[3])) {
+                return "red"
+            }
+        });
+
+        return "white"
     }
     
     
