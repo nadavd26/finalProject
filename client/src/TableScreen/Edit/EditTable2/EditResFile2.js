@@ -5,7 +5,7 @@ import '../css/edit-file-table-main.css'
 import '../css/perfect-scrollbar.css'
 import * as utils from '../../Utils'
 
-export default function EditResFile2({ initialTable, setInEdit, user, setUser, currentDay, workerMap, shiftsInfo}) {
+export default function EditResFile2({ initialTable, setInEdit, user, setUser, currentDay, workerMap, shiftsInfo, shiftsPerWorkers}) {
     const [content, setContent] = useState([["", "", "", "", ""]])
     const [colors, setColors] = useState(["white"])
     const [showBackModal, setShowBackModal] = useState(false)
@@ -17,36 +17,12 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, c
     console.log(workerMap)
     console.log("shifts info ")
     console.log(shiftsInfo)
+    console.log("shiftsPerWorkers")
+    console.log(shiftsPerWorkers)
     useEffect(() => {
         setContent(initialTable)
     }, []);
 
-    const calcOverlaps = (table) => {
-        let overlaps = []
-        for (let i = 0; i < table.length - 1; i++) {
-            if (table[i][0] == table[i + 1][0] && table[i][1] == table[i + 1][1] && table[i][3] > table[i + 1][2]) {
-                if (overlaps[overlaps.length - 1] != i + 1) {
-                    overlaps.push(i + 1)
-                }
-
-                overlaps.push(i + 2)
-            }
-        }
-
-        return overlaps
-    }
-
-    function generate(table) {
-        let colors = []
-        for (let i = 0; i < table.length - 1; i++) {
-            if (table[i][0] == table[i + 1][0] && table[i][4] == table[i + 1][4] && table[i][3] > table[i + 1][2]) {
-                colors[i] = "red"
-                colors[i+1] = "red"
-            } else {
-                colors.push("white")
-            } 
-        }
-    }
     const handleCellEdit = (rowIndex, columnIndex, value) => {
         const updatedContent = content.map((row, i) => {
             if (i === rowIndex) {

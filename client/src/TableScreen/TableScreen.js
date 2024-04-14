@@ -44,9 +44,9 @@ function TableScreen({ user, setUser }) {
         tableAlgo1State.setOtherSkills(newSkillList)
         tableAlgo1State.setCurrentSkill(skill)
         const key = utils.getKey(tableScreenState.get.currentDay, skill)
-        console.log("key " + key)
+        // console.log("key " + key)
         tableAlgo1State.setWorksPerShift(((user.algo1Table).get(key)))
-        console.log("res " + ((user.algo1Table).get(key)))
+        // console.log("res " + ((user.algo1Table).get(key)))
     }
 
     function handleEdit() {
@@ -77,9 +77,11 @@ function TableScreen({ user, setUser }) {
         const ui = utils.generateAlgoGraphicResults(res, user.table1)
         newUser.algo2Graphic = ui
         var shifts = utils.generateAlgoShifts(res)
-        console.log("shifts")
-        console.log(shifts)
+        // console.log("shifts")
+        // console.log(shifts)
         algo2TableState.setShiftsInfo(shifts)
+        var shiftsPerWorkers = utils.generateShiftsPerWorker(res)
+        algo2TableState.setShiftsPerWorkers(shiftsPerWorkers)
         setUser(newUser)
         algo2TableState.setCurrentWorkersAndShifts((user.algo2Graphic)[tableScreenState.get.currentDay])
         tableScreenState.setIs2Generated(true)
@@ -109,7 +111,7 @@ function TableScreen({ user, setUser }) {
     useEffect(() => {
         generateResults1();
         var workerMap = utils.generateWorkerMap(user.table1)
-        console.log("worker map : " +workerMap)
+        // console.log("worker map : " +workerMap)
         tableScreenState.setWorkerMap(workerMap)
     }, []);
 
@@ -125,7 +127,8 @@ function TableScreen({ user, setUser }) {
         />
     ) : (
         <EditResFile2 initialTable={(user.algo2Table)[tableScreenState.get.currentDay]} 
-        currentDay={tableScreenState.get.currentDay} setInEdit={editInfoState.setInEdit} user={user} setUser={setUser} workerMap={tableScreenState.get.workerMap} shiftsInfo={(algo2TableState.get.shiftInfo)[tableScreenState.get.currentDay]}/>
+        currentDay={tableScreenState.get.currentDay} setInEdit={editInfoState.setInEdit} user={user} setUser={setUser} workerMap={tableScreenState.get.workerMap} 
+        shiftsInfo={(algo2TableState.get.shiftInfo)[tableScreenState.get.currentDay]} shiftsPerWorkers={(algo2TableState.get.shiftsPerWorkers)[tableScreenState.get.currentDay]}/>
     );
 
 
