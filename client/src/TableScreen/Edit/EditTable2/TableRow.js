@@ -44,10 +44,10 @@ export default function TableRow({ row, rowIndex, onCellEdit, color, workerMap})
         <>
             <tr className="row100 body last-rows" id="table-row">
                 <ActionCell rowIndex={rowIndex} color={color}></ActionCell>
-                <NonEditableCell value={row[0]} rowIndex={rowIndex} coloumnIndex={0} color={color}/>
-                <NonEditableCell value={row[1]} rowIndex={rowIndex} columnIndex={1} color={color}/>
-                <NonEditableCell value={row[2]} rowIndex={rowIndex} columnIndex={2}  color={color}/>
-                <NonEditableCell value={row[3]} rowIndex={rowIndex} columnIndex={3}  color={color}/>
+                <NonEditableCell value={row[0]} rowIndex={rowIndex} coloumnIndex={0} color={color} additionalClass={"no-left"}/>
+                <NonEditableCell value={row[1]} rowIndex={rowIndex} columnIndex={1} color={color} additionalClass={"no-left"}/>
+                <NonEditableCell value={row[2]} rowIndex={rowIndex} columnIndex={2}  color={color} additionalClass={"no-left"}/>
+                <NonEditableCell value={row[3]} rowIndex={rowIndex} columnIndex={3}  color={color} additionalClass={"no-left"}/>
                 <WorkerDropdown value={row[4]} rowIndex={rowIndex} columnIndex={4} color={color} onEdit={onCellEdit} workerList={generateWorkerList()}/>
             </tr >
         </>

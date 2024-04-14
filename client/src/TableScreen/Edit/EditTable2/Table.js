@@ -10,7 +10,7 @@ function Table({content, onCellEdit,  color, workerMap}) {
                         <table className="table table-hover table-striped" id="table">
                             <tbody>
                                 <tr className="row100 body first-row">
-                                    <th className="cell100 first-column blue col-1">Action</th>
+                                <th className="cell100 col-1 first-column blue static-position" id="first-row-first-col"></th>
                                     <th class="cell100  last-columns blue col-2">Day</th>
                                     <th class="cell100  last-columns blue col-2">Skill</th>
                                     <th class="cell100  last-columns blue col-2">From</th>

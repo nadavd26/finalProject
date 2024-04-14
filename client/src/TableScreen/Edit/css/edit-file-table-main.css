@@ -122,3 +122,7 @@
 #first-col {
   border-left-width: 1px !important;
 }
+
+td#first-column.cell100.first-columns.no-left {
+  border-left-width: 0px !important;
+}
