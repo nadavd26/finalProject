@@ -25,6 +25,14 @@ def hours_to_array(start_hour, end_hour):
 
     return hours_array
 
+
+# Arguments:
+# Reqs is a 2d array filled with the employees required for a day, a skill, and range of hours.
+# Example: ["sunday", "cable technition", "00:00", "00:30", 50].
+# 
+# Shifts is a 2d array filled with the the cost of the shift, the day, the skill,
+# And range of hours the shift is happening at.
+# Example ["sunday", "cable technition", "08:00", "12:00", 150].
 shifts = [
     ["sunday", "cable technition", "08:00", "12:00", 150],
     ["sunday", "cable technition", "13:00", "17:00", 120],
