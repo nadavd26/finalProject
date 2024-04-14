@@ -1,6 +1,8 @@
 import pulp
 import numpy as np
 import matplotlib.pyplot as plt
+import random
+import plotly.graph_objs as go
 
 # Converts any hour in format 'hh:mm' to a number between 0 and 47, every half an hour is +1.
 def hour_to_index(hour):
@@ -1192,38 +1194,3 @@ for day in range(len(day_mapping)):
                 f"The number of workers needed for shift {shift} is {int(y[shift].value())} workers"
             )
         print("")
-
-# Initialize array with 48 values for x
-x = []
-
-# Generate times with half-hour intervals
-hour = 0
-minute = 0
-for _ in range(48):
-    x.append(f"{hour:02d}:{minute:02d}")
-    minute += 30
-    if minute >= 60:
-        hour += 1
-        minute = 0
-
-# Generate random arrays of length 48 for y_data
-y_data = [np.random.randint(0, 100, size=48) for _ in range(4)]
-
-# Plot bars in a stack manner
-bottom = np.zeros(len(x))
-for y in y_data:
-    plt.bar(x, y, bottom=bottom)
-    bottom += y
-
-plt.xlabel("Time")
-plt.ylabel("Num Of Employees")
-plt.legend(["Shift {}".format(i+1) for i in range(len(y_data))])
-plt.title("Employee Count by Shifts")
-# Add a horizontal line for each bar
-plt.xticks(rotation='vertical')
-
-
-# Show the plot
-mng = plt.get_current_fig_manager()
-mng.resize(*mng.window.maxsize())
-plt.show()
