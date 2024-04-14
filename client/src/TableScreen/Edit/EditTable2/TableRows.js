@@ -1,6 +1,6 @@
 import TableRow from "./TableRow";
 //first row : [{name : , validate : function}, ....]
-export default function TableRows({ content, isNumberOfWorkersValid, onCellEdit}) {
+export default function TableRows({ content, isNumberOfWorkersValid, onCellEdit,  color, workerMap}) {
     return (
         content.map((rowMap, index) => (
             <TableRow
@@ -8,6 +8,8 @@ export default function TableRows({ content, isNumberOfWorkersValid, onCellEdit}
                 row={rowMap}
                 isNumberOfWorkersValid={isNumberOfWorkersValid}
                 onCellEdit={onCellEdit}
+                color={color}
+                workerMap={workerMap}
             />
         ))
     );

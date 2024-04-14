@@ -326,7 +326,7 @@ function duplicateLines(table) {
     table.forEach((value, key) => {
         for (let i = 0; i < value.length; i++) {
             for (let j = 0; j < value[i][4]; j++) {
-                duplicatedData.push([value[i][0], value[i][1], value[i][2], value[i][3], "Olivia\n10", shiftsId]);
+                duplicatedData.push([value[i][0], value[i][1], value[i][2], value[i][3], "Olivia\n12", shiftsId]);
             }
 
             shiftsId++

@@ -1,14 +1,23 @@
-function WorkerDropdown(workerList) {
-    //workerList list of (id, name, color)
-    return <select>
-            <option value={days[0].toLowerCase()}>{days[0]}</option>
-            <option value={days[1].toLowerCase()}>{days[1]}</option>
-            <option value={days[2].toLowerCase()}>{days[2]}</option>
-            <option value={days[3].toLowerCase()}>{days[3]}</option>
-            <option value={days[4].toLowerCase()}>{days[4]}</option>
-            <option value={days[5].toLowerCase()}>{days[5]}</option>
-            <option value={days[6].toLowerCase()}>{days[6]}</option>
-        </select>
-}
+import React from 'react';
 
-export default WorkerDropdown
+export default function WorkerDropdown({ value, rowIndex, coloumnIndex, workerList, onEdit, color }) {
+    if (value == "") {
+        value = "not selected"
+    }
+    const handleOnBlur = () => {
+        document.getElementById(`cell-${rowIndex}-${coloumnIndex}`).classList.remove("focused-cell");
+    }
+
+    const handleFocus = () => {
+        document.getElementById(`cell-${rowIndex}-${coloumnIndex}`).classList.add("focused-cell");
+    };
+    return <td id={`cell-${rowIndex}-${coloumnIndex}`} className={`cell100 last-columns ${color}`} onBlur={handleOnBlur}
+        onFocus={handleFocus}>
+        <select id={`selectWorker-${rowIndex}`} value={value} onChange={(e) => onEdit(rowIndex, coloumnIndex, e.target.value)}>
+            <option value={value} hidden>{value}</option>
+            {workerList.map((worker, index) => (
+                <option key={index} value={worker.name + "\n" + worker.id} className={worker.color}>{worker.name + "\n" + worker.id}</option>
+            ))}
+        </select>
+    </td>
+}
