@@ -392,7 +392,7 @@ export async function generateAlgo1Results(table) {
 
     const transformedData = transformDataToMap(scheduleData);
     // console.log("hiiiiii" + transformedData["TV technition"]["sunday"]);
-    await sleep(2000);
+    await sleep(100);
     return transformedData
 }
 

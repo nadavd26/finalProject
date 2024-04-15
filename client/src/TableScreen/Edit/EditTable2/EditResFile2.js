@@ -5,15 +5,16 @@ import '../css/edit-file-table-main.css'
 import '../css/perfect-scrollbar.css'
 import * as utils from '../../Utils'
 
-export default function EditResFile2({ initialTable, setInEdit, user, setUser, currentDay, workerMap, shiftsInfo, shiftsPerWorkers }) {
-    const [contentSunday, setContentSunday] = useState({ table: ["", "", "", "", ""], colors: [], shiftsPerWorkers: {} })
-    const [contentMonday, setContentMonday] = useState({ table: ["", "", "", "", ""], colors: [], shiftsPerWorkers: {} })
-    const [contentTuesday, setContentTuesday] = useState({ table: ["", "", "", "", ""], colors: [], shiftsPerWorkers: {} })
-    const [contentWednesday, setContentWednesday] = useState({ table: ["", "", "", "", ""], colors: [], shiftsPerWorkers: {} })
-    const [contentThursday, setContentThursday] = useState({ table: ["", "", "", "", ""], colors: [], shiftsPerWorkers: {} })
-    const [contentFriday, setContentFriday] = useState({ table: ["", "", "", "", ""], colors: [], shiftsPerWorkers: {} })
-    const [contentSaturday, setContentSaturday] = useState({ table: ["", "", "", "", ""], colors: [], shiftsPerWorkers: {} })
+export default function EditResFile2({ initialTable, setInEdit, user, setUser, workerMap, shiftsInfo, shiftsPerWorkers }) {
     const [showBackModal, setShowBackModal] = useState(false)
+    const [renderInfo, setRenderInfo] = useState({ table: [["", "", "", "", "", ""]], colors: [], shiftsPerWorkers: {} })
+    // Initialize an array to hold state objects
+    const stateArray = [];
+
+    // Create states and push them into the array
+
+    // Use stateArray to access the states
+
     const defaultErrorMsg = "Assigned Number Of Workers is a non-negative integer."
     const [errorMsg, setErrorMsg] = useState(defaultErrorMsg)
     const token = user.token
@@ -25,26 +26,123 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, c
     console.log("shiftsPerWorkers")
     console.log(JSON.stringify(shiftsPerWorkers))
     useEffect(() => {
-        setContentSunday({ table: initialTable.Sunday, colors: Array.from({ length: initialTable.Sunday.length }, () => "white"), shiftsPerWorkers : shiftsPerWorkers.Sunday })
-        setContentMonday({ table: initialTable.Monday, colors: Array.from({ length: initialTable.Monday.length }, () => "white"), shiftsPerWorkers : shiftsPerWorkers.Monday })
-        setContentTuesday({ table: initialTable.Tuesday, colors: Array.from({ length: initialTable.Tuesday.length }, () => "white"), shiftsPerWorkers : shiftsPerWorkers.Tuesday })
-        setContentWednesday({ table: initialTable.Wednesday, colors: Array.from({ length: initialTable.Wednesday.length }, () => "white"), shiftsPerWorkers : shiftsPerWorkers.Wednesday })
-        setContentThursday({ table: initialTable.Thursday, colors: Array.from({ length: initialTable.Thursday.length }, () => "white"), shiftsPerWorkers : shiftsPerWorkers.Thursday })
-        setContentFriday({ table: initialTable.Friday, colors: Array.from({ length: initialTable.Friday.length }, () => "white"), shiftsPerWorkers : shiftsPerWorkers.Friday })
-        setContentSaturday({ table: initialTable.Saturday, colors: Array.from({ length: initialTable.Saturday.length }, () => "white"), shiftsPerWorkers : shiftsPerWorkers.Saturday })
+        const newTable = initialTable.Sunday.concat(
+            initialTable.Monday,
+            initialTable.Tuesday,
+            initialTable.Wednesday,
+            initialTable.Thursday,
+            initialTable.Friday,
+            initialTable.Saturday
+        );
+        var newColors = Array.from({ length: initialTable.Sunday.length + initialTable.Monday.length + initialTable.Tuesday.length +  
+            initialTable.Wednesday.length + initialTable.Thursday.length + initialTable.Friday.length + initialTable.Saturday.length}, () => "white")
+        setRenderInfo({table: newTable, colors: newColors, shiftsPerWorkers: shiftsPerWorkers})
     }, []);
 
-    const handleCellEdit = (rowIndex, columnIndex, value) => {
-        // const updatedContent = content.map((row, i) => {
-        //     if (i === rowIndex) {
-        //         return row.map((cell, j) => (j === columnIndex ? value : cell));
-        //     } else {
-        //         return row;
-        //     }
-        // });
+    function getColor(id, name, day, row) {
+        const shiftSet = utils.getShiftsForWorker((renderInfo.shiftsPerWorkers)[day], id, name)
+        shiftSet.forEach(shiftId => {
+            const shiftInfoEntry = shiftsInfo[day][shiftId]
+            console.log("shiftInfoEntry")
+            console.log(shiftInfoEntry)
+            const shift = ((renderInfo.table))[(shiftInfoEntry.start) + firstIndex(day)]
+            if (utils.checkOverlap(shift[2], shift[3], row[2], row[3])) {
+                return "red"
+            }
+        });
 
-        // setContent(updatedContent);
-    };
+        return "white"
+    }
+
+    function firstIndex(day) {
+        var sum = 0;
+        if (day === "Sunday") {
+            return sum;
+        }    
+        sum += initialTable.Sunday.length;  
+        if (day === "Monday") {
+            return sum;
+        }
+        sum += initialTable.Monday.length;   
+        if (day === "Tuesday") {
+            return sum;
+        }    
+        sum += initialTable.Tuesday.length;    
+        if (day === "Wednesday") {
+            return sum;
+        }    
+        sum += initialTable.Wednesday.length;   
+        if (day === "Thursday") {
+            return sum;
+        }    
+        sum += initialTable.Thursday.length;    
+        if (day === "Friday") {
+            return sum;
+        }    
+        sum += initialTable.Friday.length;    
+        if (day === "Saturday") {
+            return sum;
+        }
+    }
+
+    function capitalizeFirstLetter(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+    
+    function generateWorkerList(rowIndex, day) {
+        const row = (renderInfo.table)[rowIndex]
+        const skill = row[1];
+        if (workerMap.has(skill)) {
+            const workerList = workerMap.get(skill);
+            const unavaliableWorkers = []
+            const start = shiftsInfo[day][row[5]].start + firstIndex(day)
+            const end = shiftsInfo[day][row[5]].end + firstIndex(day)
+            for (let i = start; i <= end; i++) {
+                const nameId = ((renderInfo.table))[i][4]
+                const [name, id] = (nameId).split("\n")
+                unavaliableWorkers.push({ name: name, id: id })
+            }
+            const filteredWorkerList = workerList.filter(worker => {
+                return !unavaliableWorkers.some(unavailable => {
+                    return unavailable.id === worker.id;
+                });
+            });
+            const transformedWorkerList = [];
+            const [name, id] = row[4].split("\n");
+            // console.log("filteredWorkerList")
+            // console.log(filteredWorkerList)
+            for (let i = 0; i < filteredWorkerList.length; i++) {
+                const worker = filteredWorkerList[i]
+                transformedWorkerList.push({
+                    id: worker.id, // Assuming the worker object has an id property
+                    name: worker.name, // Assuming the worker object has a name property
+                    color: getColor(worker.id, worker.name, day, row)
+                });
+            }
+            return transformedWorkerList; // Return the transformed worker list
+        } else {
+            // If the skill does not exist in the workerMap, return an empty list
+            return [];
+        }
+    }
+
+    function handleCellEdit(newWorker, rowIndex) {
+        const row = (renderInfo.table)[rowIndex]
+        const day = capitalizeFirstLetter(row[0])
+        var newTable = renderInfo.table
+        var newColors = renderInfo.colors
+        const [newName, newId, newColor] = newWorker.split(",")
+        const [oldName, oldId] = (row[4]).split("\n")
+        var newShiftPerWorkersDay = utils.addShiftToWorker((renderInfo.shiftsPerWorkers)[day], newId, newName, row[5])
+        utils.removeShiftFromWorker(newShiftPerWorkersDay, oldId, oldName, row[5])
+        var newShiftPerWorkers = renderInfo.shiftsPerWorkers
+        newShiftPerWorkers[day] = newShiftPerWorkersDay
+        console.log("newShiftPerWorkers")
+        console.log(newShiftPerWorkers)
+        newTable[rowIndex][4] = newName + "\n" + newId
+        newColors[rowIndex] = newColor
+        setRenderInfo({ table: newTable, colors: newColors, shiftsPerWorkers: newShiftPerWorkers })
+    }
 
 
     const handleSave = async () => {
@@ -103,9 +201,8 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, c
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#backModal" onClick={handleBack}>Back</button>
                 </div>
                 <div className="col-11"></div>
-                <Table content={[contentSunday, contentMonday, contentTuesday, contentWednesday, contentThursday, contentFriday, contentSaturday]}
-                    setContent={[setContentSunday, setContentMonday, setContentTuesday, setContentWednesday, setContentThursday, setContentFriday, setContentSaturday]}
-                    workerMap={workerMap} shiftsPerWorker={stateShiftsPerWorker} shiftsInfo={shiftsInfo}></Table>
+                <Table content={renderInfo.table} colors={renderInfo.colors} shiftsPerWorker={renderInfo.shiftsPerWorkers}
+                    workerMap={workerMap} shiftsInfo={shiftsInfo} onCellEdit={handleCellEdit} generateWorkerList={generateWorkerList}></Table>
                 <div className="row"><br /></div>
                 <div className="d-flex justify-content-between mb-3 down-buttons">
                     <div className="col-3"></div>

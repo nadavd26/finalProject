@@ -1,6 +1,8 @@
 import React from 'react';
 
-export default function WorkerDropdown({ value, rowIndex, coloumnIndex, workerList, onEdit, color }) {
+export default function WorkerDropdown({ value, rowIndex, coloumnIndex, workerList, onCellEdit, color }) {
+    // console.log("row " + rowIndex + " re-rendered")
+
     if (value == "") {
         value = "not selected";
     }
@@ -14,7 +16,7 @@ export default function WorkerDropdown({ value, rowIndex, coloumnIndex, workerLi
 
     return (
         <td id={`cell-${rowIndex}-${coloumnIndex}`} className={`cell100 last-columns ${color}`} onBlur={handleOnBlur} onFocus={handleFocus}>
-            <select id={`selectWorker-${rowIndex}`} value={value} onChange={(e) => onEdit(e.target.value)}>
+            <select id={`selectWorker-${rowIndex}`} value={value} onChange={(e) => onCellEdit(e.target.value, rowIndex)}>
                 <option value={value} hidden>{value}</option>
                 {workerList.map((worker, index) => (
                     <option key={index} value={worker.name + "," +worker.id + "," + worker.color} style={{ backgroundColor: worker.color }}>
