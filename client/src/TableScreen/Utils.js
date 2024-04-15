@@ -251,6 +251,46 @@ export function getWorkerShiftListKey(id, name) {
     return name +"\n" +id
 }
 
+export function getShiftsForWorker(workerShiftMap, id, name) {
+    const key = getWorkerShiftListKey(id, name);
+    if (workerShiftMap.hasOwnProperty(key)) {
+        return workerShiftMap[key];
+    } else {
+        return new Set();
+    }
+}
+
+
+export function addShiftToWorker(workerShiftMap, id, name, shiftId) {
+    const key = getWorkerShiftListKey(id, name);
+
+    if (!workerShiftMap.hasOwnProperty(key)) {
+        workerShiftMap[key] = new Set();
+    }
+
+    workerShiftMap[key].add(shiftId);
+
+    return workerShiftMap;
+}
+
+export function removeShiftFromWorker(workerShiftMap, id, name, shiftId) {
+    const key = getWorkerShiftListKey(id, name);
+
+    if (workerShiftMap.hasOwnProperty(key)) {
+        const shiftSet = workerShiftMap[key];
+
+        if (shiftSet.has(shiftId)) {
+            shiftSet.delete(shiftId);
+
+            if (shiftSet.size === 0) {
+                delete workerShiftMap[key];
+            }
+        }
+    }
+}
+
+
+
 
 
 

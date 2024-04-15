@@ -6,15 +6,13 @@ import '../css/perfect-scrollbar.css'
 import * as utils from '../../Utils'
 
 export default function EditResFile2({ initialTable, setInEdit, user, setUser, currentDay, workerMap, shiftsInfo, shiftsPerWorkers }) {
-    const [contentSunday, setContentSunday] = useState(["", "", "", "", ""])
-    const [contentMonday, setContentMonday] = useState(["", "", "", "", ""])
-    const [contentTuesday, setContentTuesday] = useState(["", "", "", "", ""])
-    const [contentWednesday, setContentWednesday] = useState(["", "", "", "", ""])
-    const [contentThursday, setContentThursday] = useState(["", "", "", "", ""])
-    const [contentFriday, setContentFriday] = useState(["", "", "", "", ""])
-    const [contentSaturday, setContentSaturday] = useState(["", "", "", "", ""])
-
-    const [colors, setColors] = useState(["white"])
+    const [contentSunday, setContentSunday] = useState({ table: ["", "", "", "", ""], colors: [], shiftsPerWorkers: {} })
+    const [contentMonday, setContentMonday] = useState({ table: ["", "", "", "", ""], colors: [], shiftsPerWorkers: {} })
+    const [contentTuesday, setContentTuesday] = useState({ table: ["", "", "", "", ""], colors: [], shiftsPerWorkers: {} })
+    const [contentWednesday, setContentWednesday] = useState({ table: ["", "", "", "", ""], colors: [], shiftsPerWorkers: {} })
+    const [contentThursday, setContentThursday] = useState({ table: ["", "", "", "", ""], colors: [], shiftsPerWorkers: {} })
+    const [contentFriday, setContentFriday] = useState({ table: ["", "", "", "", ""], colors: [], shiftsPerWorkers: {} })
+    const [contentSaturday, setContentSaturday] = useState({ table: ["", "", "", "", ""], colors: [], shiftsPerWorkers: {} })
     const [showBackModal, setShowBackModal] = useState(false)
     const defaultErrorMsg = "Assigned Number Of Workers is a non-negative integer."
     const [errorMsg, setErrorMsg] = useState(defaultErrorMsg)
@@ -27,15 +25,13 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, c
     console.log("shiftsPerWorkers")
     console.log(JSON.stringify(shiftsPerWorkers))
     useEffect(() => {
-        setContentSunday(initialTable.Sunday)
-        setContentMonday(initialTable.Monday)
-        setContentTuesday(initialTable.Tuesday)
-        setContentWednesday(initialTable.Wednesday)
-        setContentThursday(initialTable.Thursday)
-        setContentFriday(initialTable.Friday)
-        setContentSaturday(initialTable.Saturday)
-        var newColors = Array.from({ length: initialTable.length }, () => "white")
-        setColors(newColors)
+        setContentSunday({ table: initialTable.Sunday, colors: Array.from({ length: initialTable.Sunday.length }, () => "white"), shiftsPerWorkers : shiftsPerWorkers.Sunday })
+        setContentMonday({ table: initialTable.Monday, colors: Array.from({ length: initialTable.Monday.length }, () => "white"), shiftsPerWorkers : shiftsPerWorkers.Monday })
+        setContentTuesday({ table: initialTable.Tuesday, colors: Array.from({ length: initialTable.Tuesday.length }, () => "white"), shiftsPerWorkers : shiftsPerWorkers.Tuesday })
+        setContentWednesday({ table: initialTable.Wednesday, colors: Array.from({ length: initialTable.Wednesday.length }, () => "white"), shiftsPerWorkers : shiftsPerWorkers.Wednesday })
+        setContentThursday({ table: initialTable.Thursday, colors: Array.from({ length: initialTable.Thursday.length }, () => "white"), shiftsPerWorkers : shiftsPerWorkers.Thursday })
+        setContentFriday({ table: initialTable.Friday, colors: Array.from({ length: initialTable.Friday.length }, () => "white"), shiftsPerWorkers : shiftsPerWorkers.Friday })
+        setContentSaturday({ table: initialTable.Saturday, colors: Array.from({ length: initialTable.Saturday.length }, () => "white"), shiftsPerWorkers : shiftsPerWorkers.Saturday })
     }, []);
 
     const handleCellEdit = (rowIndex, columnIndex, value) => {
@@ -107,7 +103,9 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, c
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#backModal" onClick={handleBack}>Back</button>
                 </div>
                 <div className="col-11"></div>
-                <Table content={[contentSunday, contentMonday, contentTuesday, contentWednesday, contentThursday, contentFriday, contentSaturday]} onCellEdit={handleCellEdit} colors={colors} workerMap={workerMap} shiftsPerWorker={stateShiftsPerWorker} shiftsInfo={shiftsInfo}></Table>
+                <Table content={[contentSunday, contentMonday, contentTuesday, contentWednesday, contentThursday, contentFriday, contentSaturday]}
+                    setContent={[setContentSunday, setContentMonday, setContentTuesday, setContentWednesday, setContentThursday, setContentFriday, setContentSaturday]}
+                    workerMap={workerMap} shiftsPerWorker={stateShiftsPerWorker} shiftsInfo={shiftsInfo}></Table>
                 <div className="row"><br /></div>
                 <div className="d-flex justify-content-between mb-3 down-buttons">
                     <div className="col-3"></div>

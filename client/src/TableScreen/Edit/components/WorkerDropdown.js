@@ -14,10 +14,10 @@ export default function WorkerDropdown({ value, rowIndex, coloumnIndex, workerLi
 
     return (
         <td id={`cell-${rowIndex}-${coloumnIndex}`} className={`cell100 last-columns ${color}`} onBlur={handleOnBlur} onFocus={handleFocus}>
-            <select id={`selectWorker-${rowIndex}`} value={value} onChange={(e) => onEdit(rowIndex, coloumnIndex, e.target.value)}>
+            <select id={`selectWorker-${rowIndex}`} value={value} onChange={(e) => onEdit(e.target.value)}>
                 <option value={value} hidden>{value}</option>
                 {workerList.map((worker, index) => (
-                    <option key={index} value={worker.name + "\n" + worker.id} style={{ backgroundColor: worker.color }}>
+                    <option key={index} value={worker.name + "," +worker.id + "," + worker.color} style={{ backgroundColor: worker.color }}>
                         {worker.name + "\n" + worker.id}
                     </option>
                 ))}
