@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import random
 import plotly.graph_objs as go
+from histogram_maker import make_a_graph
 
 # Converts any hour in format 'hh:mm' to a number between 0 and 47, every half an hour is +1.
 def hour_to_index(hour):
@@ -74,8 +75,12 @@ shifts = [
     ["saturday", "cable technition", "19:00", "23:00", 50],
     ["saturday", "WIFI technition", "14:00", "18:00", 160],
     ["saturday", "WIFI technition", "19:00", "23:00", 120],
-    ["saturday", "TV technition", "14:00", "18:00", 130],
-    ["saturday", "TV technition", "19:00", "23:00", 150]
+    ["saturday", "TV technition", "14:00", "23:00", 130],
+    ["saturday", "TV technition", "19:00", "23:30", 150],
+    ["saturday", "TV technition", "01:00", "13:00", 10000],
+    ["saturday", "TV technition", "00:00", "09:00", 90],
+    ["saturday", "TV technition", "10:00", "14:00", 50],
+    ["saturday", "TV technition", "23:30", "24:00", 40]
 ]
 
 reqs = [
@@ -1103,7 +1108,7 @@ reqs += [
     ["saturday", "TV technition", "21:00", "21:30", 68],
     ["saturday", "TV technition", "21:30", "22:00", 44],
     ["saturday", "TV technition", "22:00", "22:30", 90],
-    ["saturday", "TV technition", "22:30", "23:00", 15],   
+    ["saturday", "TV technition", "22:30", "23:00", 15],
     ["saturday", "TV technition", "23:00", "23:30", 61],
     ["saturday", "TV technition", "23:30", "00:00", 36]
 ]
@@ -1202,3 +1207,61 @@ for day in range(len(day_mapping)):
                 f"The number of workers needed for shift {shift} is {int(y[shift].value())} workers"
             )
         print("")
+shift1 = ["14:00", "23:00", int(y[0].value())]
+shift2 = ["19:00", "23:30", int(y[1].value())]
+shift3 = ["01:00", "13:00", int(y[2].value())]
+shift4 = ["00:00", "09:00", int(y[3].value())]
+shift5 = ["10:00", "14:00", int(y[4].value())]
+shift6 = ["23:30", "24:00", int(y[5].value())]
+shifts = [shift1,shift2,shift3,shift4,shift5,shift6]
+reqs = [
+    ["00:00", "00:30", 56],
+    ["00:30", "01:00", 22],
+    ["01:00", "01:30", 68],
+    ["01:30", "02:00", 30],
+    ["02:00", "02:30", 74],
+    ["02:30", "03:00", 18],
+    ["03:00", "03:30", 63],
+    ["03:30", "04:00", 26],
+    ["04:00", "04:30", 79],
+    ["04:30", "05:00", 32],
+    ["05:00", "05:30", 86],
+    ["05:30", "06:00", 15],
+    ["06:00", "06:30", 70],
+    ["06:30", "07:00", 38],
+    ["07:00", "07:30", 81],
+    ["07:30", "08:00", 23],
+    ["08:00", "08:30", 75],
+    ["08:30", "09:00", 40],
+    ["09:00", "09:30", 92],
+    ["09:30", "10:00", 16],
+    ["10:00", "10:30", 60],
+    ["10:30", "11:00", 28],
+    ["11:00", "11:30", 74],
+    ["11:30", "12:00", 35],
+    ["12:00", "12:30", 89],
+    ["12:30", "13:00", 20],
+    ["13:00", "13:30", 66],
+    ["13:30", "14:00", 42],
+    ["14:00", "14:30", 78],
+    ["14:30", "15:00", 25],
+    ["15:00", "15:30", 72],
+    ["15:30", "16:00", 48],
+    ["16:00", "16:30", 84],
+    ["16:30", "17:00", 11],
+    ["17:00", "17:30", 57],
+    ["17:30", "18:00", 30],
+    ["18:00", "18:30", 76],
+    ["18:30", "19:00", 19],
+    ["19:00", "19:30", 63],
+    ["19:30", "20:00", 37],
+    ["20:00", "20:30", 80],
+    ["20:30", "21:00", 22],
+    ["21:00", "21:30", 68],
+    ["21:30", "22:00", 44],
+    ["22:00", "22:30", 90],
+    ["22:30", "23:00", 15],   
+    ["23:00", "23:30", 61],
+    ["23:30", "00:00", 36]
+]
+make_a_graph(reqs,shifts)
