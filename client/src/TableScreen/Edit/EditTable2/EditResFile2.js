@@ -5,8 +5,15 @@ import '../css/edit-file-table-main.css'
 import '../css/perfect-scrollbar.css'
 import * as utils from '../../Utils'
 
-export default function EditResFile2({ initialTable, setInEdit, user, setUser, currentDay, workerMap, shiftsInfo, shiftsPerWorkers}) {
-    const [content, setContent] = useState([["", "", "", "", ""]])
+export default function EditResFile2({ initialTable, setInEdit, user, setUser, currentDay, workerMap, shiftsInfo, shiftsPerWorkers }) {
+    const [contentSunday, setContentSunday] = useState(["", "", "", "", ""])
+    const [contentMonday, setContentMonday] = useState(["", "", "", "", ""])
+    const [contentTuesday, setContentTuesday] = useState(["", "", "", "", ""])
+    const [contentWednesday, setContentWednesday] = useState(["", "", "", "", ""])
+    const [contentThursday, setContentThursday] = useState(["", "", "", "", ""])
+    const [contentFriday, setContentFriday] = useState(["", "", "", "", ""])
+    const [contentSaturday, setContentSaturday] = useState(["", "", "", "", ""])
+
     const [colors, setColors] = useState(["white"])
     const [showBackModal, setShowBackModal] = useState(false)
     const defaultErrorMsg = "Assigned Number Of Workers is a non-negative integer."
@@ -20,21 +27,27 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, c
     console.log("shiftsPerWorkers")
     console.log(JSON.stringify(shiftsPerWorkers))
     useEffect(() => {
-        setContent(initialTable)
+        setContentSunday(initialTable.Sunday)
+        setContentMonday(initialTable.Monday)
+        setContentTuesday(initialTable.Tuesday)
+        setContentWednesday(initialTable.Wednesday)
+        setContentThursday(initialTable.Thursday)
+        setContentFriday(initialTable.Friday)
+        setContentSaturday(initialTable.Saturday)
         var newColors = Array.from({ length: initialTable.length }, () => "white")
         setColors(newColors)
     }, []);
 
     const handleCellEdit = (rowIndex, columnIndex, value) => {
-        const updatedContent = content.map((row, i) => {
-            if (i === rowIndex) {
-                return row.map((cell, j) => (j === columnIndex ? value : cell));
-            } else {
-                return row;
-            }
-        });
+        // const updatedContent = content.map((row, i) => {
+        //     if (i === rowIndex) {
+        //         return row.map((cell, j) => (j === columnIndex ? value : cell));
+        //     } else {
+        //         return row;
+        //     }
+        // });
 
-        setContent(updatedContent);
+        // setContent(updatedContent);
     };
 
 
@@ -43,12 +56,12 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, c
         const saveModal = new window.bootstrap.Modal(document.getElementById('saveModal'));
 
         var isValid = true;
-        if (content.length === 0) {
-            isValid = false;
-        }
-        content.forEach((row) => {
-            
-        });
+        // if (content.length === 0) {
+        //     isValid = false;
+        // }
+        // content.forEach((row) => {
+
+        // });
 
         if (!isValid) {
             setErrorMsg(defaultErrorMsg)
@@ -94,7 +107,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, c
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#backModal" onClick={handleBack}>Back</button>
                 </div>
                 <div className="col-11"></div>
-                <Table content={content} onCellEdit={handleCellEdit} colors={colors} workerMap={workerMap} shiftsPerWorker={stateShiftsPerWorker} shiftsInfo={shiftsInfo}></Table>
+                <Table content={[contentSunday, contentMonday, contentTuesday, contentWednesday, contentThursday, contentFriday, contentSaturday]} onCellEdit={handleCellEdit} colors={colors} workerMap={workerMap} shiftsPerWorker={stateShiftsPerWorker} shiftsInfo={shiftsInfo}></Table>
                 <div className="row"><br /></div>
                 <div className="d-flex justify-content-between mb-3 down-buttons">
                     <div className="col-3"></div>

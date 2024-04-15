@@ -17,7 +17,13 @@ function Table({content, onCellEdit,  colors, workerMap, shiftsPerWorker, shifts
                                     <th class="cell100  last-columns blue col-2">Until</th>
                                     <th class="cell100  last-columns blue col-3">Assigned Worker</th>
                                 </tr>
-                                <TableRows content={content} onCellEdit={onCellEdit} colors={colors} workerMap={workerMap} shiftsPerWorker={shiftsPerWorker} shiftsInfo={shiftsInfo}/>
+                                <TableRows content={content[0]} onCellEdit={onCellEdit} colors={colors} workerMap={workerMap} shiftsPerWorker={shiftsPerWorker} shiftsInfo={shiftsInfo}/>
+                                <TableRows content={content[1]} onCellEdit={onCellEdit} colors={colors} workerMap={workerMap} shiftsPerWorker={shiftsPerWorker} shiftsInfo={shiftsInfo}/>
+                                <TableRows content={content[2]} onCellEdit={onCellEdit} colors={colors} workerMap={workerMap} shiftsPerWorker={shiftsPerWorker} shiftsInfo={shiftsInfo}/>
+                                <TableRows content={content[3]} onCellEdit={onCellEdit} colors={colors} workerMap={workerMap} shiftsPerWorker={shiftsPerWorker} shiftsInfo={shiftsInfo}/>
+                                <TableRows content={content[4]} onCellEdit={onCellEdit} colors={colors} workerMap={workerMap} shiftsPerWorker={shiftsPerWorker} shiftsInfo={shiftsInfo}/>
+                                <TableRows content={content[5]} onCellEdit={onCellEdit} colors={colors} workerMap={workerMap} shiftsPerWorker={shiftsPerWorker} shiftsInfo={shiftsInfo}/>
+                                <TableRows content={content[6]} onCellEdit={onCellEdit} colors={colors} workerMap={workerMap} shiftsPerWorker={shiftsPerWorker} shiftsInfo={shiftsInfo}/>
                             </tbody>
                         </table>
                     </div>

@@ -126,9 +126,9 @@ function TableScreen({ user, setUser }) {
             setUser={setUser}
         />
     ) : (
-        <EditResFile2 initialTable={(user.algo2Table)[tableScreenState.get.currentDay]} 
+        <EditResFile2 initialTable={(user.algo2Table)} 
         currentDay={tableScreenState.get.currentDay} setInEdit={editInfoState.setInEdit} user={user} setUser={setUser} workerMap={tableScreenState.get.workerMap} 
-        shiftsInfo={(algo2TableState.get.shiftInfo)[tableScreenState.get.currentDay]} shiftsPerWorkers={(algo2TableState.get.shiftsPerWorkers)[tableScreenState.get.currentDay]}/>
+        shiftsInfo={(algo2TableState.get.shiftInfo)} shiftsPerWorkers={(algo2TableState.get.shiftsPerWorkers)}/>
     );
 
 
