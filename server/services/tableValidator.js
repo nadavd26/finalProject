@@ -30,7 +30,7 @@ const isNoneNegativeNumber = (number) => {
 //This functions checks that table is a valid table1.
 const validateTable1 = (table) => {
     for (line of table) {
-        if (line.length != 6)
+        if (line.length != 6 || line[0] == '' || line[1] == '' || line[2] == '' || line[5] == '')
             return false;
     }
     return true;
@@ -47,6 +47,8 @@ const validateTable2 = (table) => {
             return false;
         if (!isNoneNegativeNumber(line[4]))
             return false;
+        if(line[0] == '' || line[1] == '' || line[2] == '' || line[3] == '' || line[4] == '')
+            return false
     }
     return true;
 }
@@ -62,6 +64,8 @@ const validateTable3 = (table) => {
             return false;
         if (!isNoneNegativeNumber(line[4]))
             return false;
+        if(line[0] == '' || line[1] == '' || line[2] == '' || line[3] == '' || line[4] == '')
+            return false
     }
     return true;
 }

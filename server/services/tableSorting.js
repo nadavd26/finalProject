@@ -37,18 +37,18 @@ const customSort2 = (a, b) => {
 
 //The function is used to sort the table 3 array.
 const customSort3 = (a, b) => {
-    //In table 3 the first item of each row is a skill.
-    if (a[0] != b[0])
-            return a[0].localeCompare(b[0])
-    //The second one is days.
+    //First we sort by day.
     daysCompare = compareDays(a[1], b[1])
     if(daysCompare != 0)
         return daysCompare
-    //The rest of the row items but the last one are simply compared as strings.
+    //Then by 'from' an 'until'.
     for (i = 2; i < 4; i++)
         if (a[i] != b[i])
             return a[i].localeCompare(b[i])
-    //The last parameter is a number.
+    //Then by skill.
+    if (a[0] != b[0])
+            return a[0].localeCompare(b[0])
+    //And at the end by cost.
     if(a[4] != b[4])
         return a[i] - b[i]
     //If nothing has been returned yet the row are the same.
