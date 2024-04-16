@@ -19,7 +19,7 @@ const isValidHourFormat = (timeString) => {
         return false; // Not valid integers for hours and minutes
     }
 
-    return hours >= 0 && hours <= 23 && minutes >= 0 && minutes <= 59;
+    return hours >= 0 && hours <= 24 && minutes >= 0 && minutes <= 59;
 }
 
 const isNoneNegativeNumber = (number) => {
