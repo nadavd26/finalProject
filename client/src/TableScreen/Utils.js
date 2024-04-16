@@ -229,7 +229,6 @@ function generateWorkerShiftList(table) {
     const workerShiftMap = {}; // Use an object to map worker name+id to a Set of shiftIds
     for (let i = 0; i < table.length; i++) {
         const row = table[i];
-        const shiftId = row[5];
         const key = row[4]
         if (key === "") {
             continue;
@@ -241,7 +240,7 @@ function generateWorkerShiftList(table) {
             workerShiftMap[key] = new Set();
         }
         // Add shiftId to the Set associated with the key
-        workerShiftMap[key].add(shiftId);
+        workerShiftMap[key].add(i);
     }
 
     return workerShiftMap;
@@ -261,26 +260,26 @@ export function getShiftsForWorker(workerShiftMap, id, name) {
 }
 
 
-export function addShiftToWorker(workerShiftMap, id, name, shiftId) {
+export function addShiftToWorker(workerShiftMap, id, name, rowIndex) {
     const key = getWorkerShiftListKey(id, name);
 
     if (!workerShiftMap.hasOwnProperty(key)) {
         workerShiftMap[key] = new Set();
     }
 
-    workerShiftMap[key].add(shiftId);
+    workerShiftMap[key].add(rowIndex);
 
     return workerShiftMap;
 }
 
-export function removeShiftFromWorker(workerShiftMap, id, name, shiftId) {
+export function removeShiftFromWorker(workerShiftMap, id, name, rowIndex) {
     const key = getWorkerShiftListKey(id, name);
 
     if (workerShiftMap.hasOwnProperty(key)) {
         const shiftSet = workerShiftMap[key];
 
-        if (shiftSet.has(shiftId)) {
-            shiftSet.delete(shiftId);
+        if (shiftSet.has(rowIndex)) {
+            shiftSet.delete(rowIndex);
 
             if (shiftSet.size === 0) {
                 delete workerShiftMap[key];
@@ -387,7 +386,8 @@ function duplicateLines(table) {
 export async function generateAlgo1Results(table) {
     const scheduleData = table
     for (let i = 0; i < scheduleData.length; i++) {
-        scheduleData[i][4] = (2*i+5) % 10
+        // scheduleData[i][4] = (2*i+5) % 10
+        scheduleData[i][4] = 1
     }
 
     const transformedData = transformDataToMap(scheduleData);

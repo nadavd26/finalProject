@@ -5,7 +5,7 @@ import WorkerDropdown from "../components/WorkerDropdown";
 import ActionCell from "../components/ActionCell";
 import * as utils from '../../Utils'
 import { useState } from "react";
-export default function TableRow({rowIndex,row,color,workerMap,shiftsInfo, generateWorkerList, onCellEdit}) {
+export default function TableRow({rowIndex,row,color,generateWorkerList, onCellEdit}) {
     //TODO make useMemo
     function capitalizeFirstLetter(str) {
         return str.charAt(0).toUpperCase() + str.slice(1);
