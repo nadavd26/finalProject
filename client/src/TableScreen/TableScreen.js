@@ -57,6 +57,8 @@ function TableScreen({ user, setUser }) {
     }
     async function generateResults1() {
         const res = await utils.generateAlgo1Results(user.table3)
+        console.log("res")
+        console.log(res)
         var newUser = user
         newUser.algo1Table = res
         newUser.skillList = utils.getSkillSet(user.table2)
@@ -71,7 +73,9 @@ function TableScreen({ user, setUser }) {
     }
 
     async function generateResults2() {
-        const res = await utils.generateAlgo2Results(user.algo1Table)
+        const res = await utils.generateAlgo2Results(user.table3)
+        console.log("res")
+        console.log(res)
         var newUser = user
         newUser.algo2Table = res
         const ui = utils.generateAlgoGraphicResults(res, user.table1)

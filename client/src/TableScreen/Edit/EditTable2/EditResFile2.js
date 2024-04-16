@@ -43,13 +43,11 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
     function getColor(id, name, day, row) {
         const shiftSet = utils.getShiftsForWorker((renderInfo.shiftsPerWorkers)[day], id, name);
 
-        for (const shiftId of shiftSet) {
-            const shiftInfoEntry = shiftsInfo[day][shiftId];
-            const shift = renderInfo.table[shiftInfoEntry.start + firstIndex(day)];
+        for (const relativeIndex of shiftSet) {
+            const absuluteIndex = getAbsuluteIndex(relativeIndex, day)
+            const shiftRow = (renderInfo.table)[absuluteIndex];
 
-            console.log("row : " + row + " shift : " + shift);
-            if (utils.checkOverlap(shift[2], shift[3], row[2], row[3])) {
-                console.log("overlap");
+            if (utils.checkOverlap(shiftRow[2], shiftRow[3], row[2], row[3])) {
                 return "red"; // Return "red" if there's an overlap
             }
         }
@@ -101,8 +99,8 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
         if (workerMap.has(skill)) {
             const workerList = workerMap.get(skill);
             const unavaliableWorkers = []
-            const start = shiftsInfo[day][row[5]].start + firstIndex(day)
-            const end = shiftsInfo[day][row[5]].end + firstIndex(day)
+            const start = (shiftsInfo[day][row[5]]).start + firstIndex(day)
+            const end = (shiftsInfo[day][row[5]]).end + firstIndex(day)
             for (let i = start; i <= end; i++) {
                 const nameId = ((renderInfo.table))[i][4]
                 const [name, id] = (nameId).split("\n")
@@ -169,18 +167,8 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
             }
         }
 
-        console.log("renderInfo.colors")
-        console.log(renderInfo.colors)
-        console.log("oldColor")
-        console.log(oldColor)
         if (oldColor == "red") {//removing the overlaps of the old worker
-            console.log("newShiftPerWorkersDay")
-            console.log(newShiftPerWorkersDay)
-            console.log("oldId, oldName")
-            console.log(oldId, oldName)
             const shiftsOfOldWorker = utils.getShiftsForWorker(newShiftPerWorkersDay, oldId, oldName)
-            console.log("shiftsOfOldWorker")
-            console.log(shiftsOfOldWorker)
             for (const relativeIndex of shiftsOfOldWorker) {
                 // console.log("relativeIndex")
                 // console.log(relativeIndex)

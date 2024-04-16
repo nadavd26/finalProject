@@ -18,10 +18,10 @@ export default function WorkerDropdown({ value, rowIndex, coloumnIndex, workerLi
 
     return (
         <td id={`cell-${rowIndex}-${coloumnIndex}`} className={`cell100 last-columns ${color}`} onBlur={handleOnBlur} onFocus={handleFocus}>
-            <select id={`selectWorker-${rowIndex}`} value={value} onChange={(e) => onCellEdit(e.target.value, rowIndex)}>
-                <option value={value} hidden>{shownValue}</option>
+            <select id={`selectWorker-${rowIndex}`} value={value} onChange={(e) => onCellEdit(e.target.value, rowIndex)}  style={{ backgroundColor: value != "" ? "lightblue" : "transparent" }}>
+                <option value={value} hidden style={{ backgroundColor: "transparent" }}>{shownValue}</option>
                 {value !== "" && (
-                    <option key={0} value={""}>
+                    <option key={0} value={""} style={{ backgroundColor: "transparent" }}>
                         not selected
                     </option>
                 )}

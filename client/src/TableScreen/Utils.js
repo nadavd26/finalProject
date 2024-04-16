@@ -294,7 +294,12 @@ export function removeShiftFromWorker(workerShiftMap, id, name, rowIndex) {
 
 
 export async function generateAlgo2Results(table) {
-    const scheduleData = duplicateLines(table)
+    const scheduleDataa = table
+    for (let i = 0; i < scheduleDataa.length; i++) {
+        // scheduleData[i][4] = (2*i+5) % 10
+        scheduleDataa[i][4] = 1
+    }
+    const scheduleData = duplicateLines(scheduleDataa)
     // console.log("scheduleData : " + scheduleData)
     const scheduleDataSunday = scheduleData.filter(item => item[0].toLowerCase() === "sunday");
     const scheduleDataMonday = scheduleData.filter(item => item[0].toLowerCase() === "monday");
@@ -304,7 +309,8 @@ export async function generateAlgo2Results(table) {
     const scheduleDataFriday = scheduleData.filter(item => item[0].toLowerCase() === "friday");
     const scheduleDataSaturday = scheduleData.filter(item => item[0].toLowerCase() === "saturday");
 
-
+    console.log("scheduleDataSunday")
+    console.log(scheduleDataSunday)
     const data = {
         Sunday: scheduleDataSunday,
         Monday: scheduleDataMonday,
@@ -364,19 +370,30 @@ function transformDataToMap(data) {
 }
 
 function duplicateLines(table) {
+    console.log("table")
+    console.log(table)
     var olivia = "Olivia\n12"
     const duplicatedData = [];
-    var shiftsId = 0 
-    table.forEach((value, key) => {
-        for (let i = 0; i < value.length; i++) {
-            for (let j = 0; j < value[i][4]; j++) {
-                duplicatedData.push([value[i][0], value[i][1], value[i][2], value[i][3], "", shiftsId]);
-            }
-
-            shiftsId++
+    var shiftsId = 0
+    for (let i = 0; i < table.length; i++) {
+        for (let j = 0; j < table[i][4]; j++) {
+            duplicatedData.push([table[i][1], table[i][0], table[i][2], table[i][3], "", shiftsId]);
         }
 
-    });
+        shiftsId++
+    }
+    console.log("duplicatedData") 
+    console.log(duplicatedData) 
+    // table.forEach((value, key) => {
+    //     for (let i = 0; i < value.length; i++) {
+    //         for (let j = 0; j < value[i][4]; j++) {
+    //             duplicatedData.push([value[i][0], value[i][1], value[i][2], value[i][3], "", shiftsId]);
+    //         }
+
+    //         shiftsId++
+    //     }
+
+    // });
     // console.log("dupliacte lines111 " + duplicatedData)
     return duplicatedData;
 }
