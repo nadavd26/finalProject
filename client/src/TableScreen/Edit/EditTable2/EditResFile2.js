@@ -4,16 +4,15 @@ import '../css/bootstrap.min.css'
 import '../css/edit-file-table-main.css'
 import '../css/perfect-scrollbar.css'
 import * as utils from '../../Utils'
+import overlapImg from '../Images/overlap.png'
+import contractImg from '../Images/contract.png'
+import infoImg from '../Images/info.png'
 
 export default function EditResFile2({ initialTable, setInEdit, user, setUser, workerMap, shiftsInfo, shiftsPerWorkers }) {
     const [showBackModal, setShowBackModal] = useState(false)
     const [renderInfo, setRenderInfo] = useState({ table: [["", "", "", "", "", ""]], colors: [], shiftsPerWorkers: {} })
-    // Initialize an array to hold state objects
-    const stateArray = [];
-
-    // Create states and push them into the array
-
-    // Use stateArray to access the states
+    const [overlapInfo, setOverlapInfo] = useState("")
+    const [contractInfo, setContractInfo] = useState("")
 
     const defaultErrorMsg = "Assigned Number Of Workers is a non-negative integer."
     const [errorMsg, setErrorMsg] = useState(defaultErrorMsg)
@@ -89,6 +88,36 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
 
     function capitalizeFirstLetter(str) {
         return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    function getLineInfo(absuluteIndex) {
+        var overlapsLineNumbers = []
+        const row = (renderInfo.table)[absuluteIndex]
+        const day = capitalizeFirstLetter(row[0])
+        const worker = row[4]
+        if (renderInfo.colors[absuluteIndex] != "white") {
+            const shiftsId = row[5]
+            const shiftEntry = shiftsInfo[day][shiftsId]
+            const overlaps = shiftEntry.overlaps
+            for (const overlapId of overlaps) {
+                if (overlapId == shiftsId) {
+                    continue //same shift does not count as overlap
+                }
+                var overlapEntry = shiftsInfo[day][overlapId]
+                var start = getAbsuluteIndex(overlapEntry.start, day)
+                var end = getAbsuluteIndex(overlapEntry.end, day)
+                for (let i = start; i <= end; i++) {
+                    if ((renderInfo.table)[i][4] == worker) {
+                        overlapsLineNumbers.push(i + 1) //numbers start from 1, not from 0
+                    }
+                }
+            }
+        }
+
+        setOverlapInfo("Overlapping shifts of this shift (" + (absuluteIndex+1) + ") at indexes: " + overlapsLineNumbers.join(", "))
+        const infoModal = new window.bootstrap.Modal(document.getElementById('infoModal'));
+        infoModal.show()
+
     }
 
     function generateWorkerList(rowIndex, day) {
@@ -259,7 +288,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
                 </div>
                 <div className="col-11"></div>
                 <Table content={renderInfo.table} colors={renderInfo.colors} shiftsPerWorker={renderInfo.shiftsPerWorkers}
-                    workerMap={workerMap} shiftsInfo={shiftsInfo} onCellEdit={handleCellEdit} generateWorkerList={generateWorkerList}></Table>
+                    workerMap={workerMap} shiftsInfo={shiftsInfo} onCellEdit={handleCellEdit} generateWorkerList={generateWorkerList} getLineInfo={getLineInfo}></Table>
                 <div className="row"><br /></div>
                 <div className="d-flex justify-content-between mb-3 down-buttons">
                     <div className="col-3"></div>
@@ -268,6 +297,46 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
                     <div className="col-3"></div>
                 </div>
             </div>
+
+            <div className="modal fade" id="infoModal" tabIndex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true">
+                <div className="modal-dialog modal-lg modal-dialog-side" role="document">
+                    <div className="modal-content" style={{ backgroundColor: "white" }}>
+                        <div className="modal-header">
+                            <img src={infoImg} className="img-fluid mr-2" alt="Image 3" style={{ width: "auto", height: "40px" }} />
+                            <h4 className="modal-title" id="largeModalLabel">Row Error Info</h4>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div className="modal-body">
+                            <div className="row">
+                                <div className="col-md-1">
+                                    <img src={overlapImg} className="img-fluid mb-3" alt="Image 1" style={{ width: "auto", height: "40px" }} />
+                                </div>
+                                <div className="col-md-11">
+                                    <h5>{overlapInfo}</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="modal-body">
+                            <div className="row">
+                                <div className="col-md-1">
+                                    <img src={contractImg} className="img-fluid mb-3" alt="Image 2" style={{ width: "auto", height: "40px" }} />
+                                </div>
+                                <div className="col-md-11">
+                                    <h5>{contractInfo}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
             {showBackModal && (
                 <div class="modal fade show" id="backModal" tabindex="-1" role="dialog" aria-labelledby="backModal" aria-hidden="true" onHide={handleBackModalClose}>
                     <div class="modal-dialog modal-dialog-centered" role="document">

@@ -1,6 +1,6 @@
 import TableRow from "./TableRow";
 //first row : [{name : , validate : function}, ....]
-export default function TableRows({content, onCellEdit, colors, workerMap, shiftsPerWorker, shiftsInfo, generateWorkerList}) {
+export default function TableRows({content, onCellEdit, colors, workerMap, shiftsPerWorker, shiftsInfo, generateWorkerList, getLineInfo}) {
     return (
         content.map((rowMap, index) => (
             <TableRow
@@ -11,6 +11,7 @@ export default function TableRows({content, onCellEdit, colors, workerMap, shift
                 shiftsInfo={shiftsInfo}
                 generateWorkerList={generateWorkerList}
                 onCellEdit={onCellEdit}
+                getLineInfo={getLineInfo}
             />
         ))
     );

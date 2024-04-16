@@ -5,7 +5,7 @@ import WorkerDropdown from "../components/WorkerDropdown";
 import ActionCell from "../components/ActionCell";
 import * as utils from '../../Utils'
 import { useState } from "react";
-export default function TableRow({rowIndex,row,color,generateWorkerList, onCellEdit}) {
+export default function TableRow({rowIndex,row,color,generateWorkerList, onCellEdit, getLineInfo}) {
     //TODO make useMemo
     function capitalizeFirstLetter(str) {
         return str.charAt(0).toUpperCase() + str.slice(1);
@@ -13,7 +13,7 @@ export default function TableRow({rowIndex,row,color,generateWorkerList, onCellE
     return (
         <>
             <tr className="row100 body last-rows" id="table-row">
-                <ActionCell rowIndex={rowIndex} color={color}></ActionCell>
+                <ActionCell rowIndex={rowIndex} color={color} getLineInfo={getLineInfo}></ActionCell>
                 <NonEditableCell value={row[0]} rowIndex={rowIndex} coloumnIndex={0} color={color} additionalClass={"no-left"} />
                 <NonEditableCell value={row[1]} rowIndex={rowIndex} columnIndex={1} color={color} additionalClass={"no-left"} />
                 <NonEditableCell value={row[2]} rowIndex={rowIndex} columnIndex={2} color={color} additionalClass={"no-left"} />
