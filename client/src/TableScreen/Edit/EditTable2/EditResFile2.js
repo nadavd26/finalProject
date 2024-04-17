@@ -14,7 +14,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
     const [overlapInfo, setOverlapInfo] = useState("")
     const [contractInfo, setContractInfo] = useState("")
 
-    const defaultErrorMsg = "Assigned Number Of Workers is a non-negative integer."
+    const defaultErrorMsg = "There are workers who work in 2 diffrent shifts at the same time."
     const [errorMsg, setErrorMsg] = useState(defaultErrorMsg)
     const token = user.token
     console.log("user.algo2Table")
@@ -245,12 +245,11 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
         console.log("renderInfo.shiftsPerWorkers")
         console.log(renderInfo.shiftsPerWorkers)
         var isValid = true;
-        // if (content.length === 0) {
-        //     isValid = false;
-        // }
-        // content.forEach((row) => {
-
-        // });
+        for (const color of renderInfo.colors) {
+            if (color == "red") {
+                isValid = false
+            }
+        }
 
         if (!isValid) {
             setErrorMsg(defaultErrorMsg)

@@ -11,11 +11,12 @@ function Table({content,colors,shiftsPerWorker,workerMap,shiftsInfo,onCellEdit, 
                             <tbody>
                                 <tr className="row100 body first-row">
                                 <th className="cell100 col-1 first-column blue static-position" id="first-row-first-col"></th>
-                                    <th class="cell100  last-columns blue col-2">Day</th>
+                                    <th class="cell100  last-columns blue col-1">Day</th>
                                     <th class="cell100  last-columns blue col-2">Skill</th>
                                     <th class="cell100  last-columns blue col-2">From</th>
                                     <th class="cell100  last-columns blue col-2">Until</th>
                                     <th class="cell100  last-columns blue col-3">Assigned Worker</th>
+                                    <th class="cell100  last-columns blue col-1">Shift Number</th>
                                 </tr>
                                 <TableRows content={content} onCellEdit={onCellEdit} colors={colors} workerMap={workerMap} shiftsPerWorker={shiftsPerWorker} shiftsInfo={shiftsInfo} generateWorkerList={generateWorkerList} getLineInfo={getLineInfo}/>
                             </tbody>

@@ -1,17 +1,16 @@
-export default function NonEditableCell({ value, rowIndex, shiftIndex ,columnIndex, color, additionalClass }) {
+export default function ShiftIdCell({ value, rowIndex, columnIndex, color, additionalClass }) {
     // Define the styles outside of the JSX
     const cellStyle = columnIndex === 0  ? { borderLeftWidth: '1px' } : { borderLeftWidth: '0px' };
     var finalColor = color ? color : "white"
     if (color == "red") {
-        if (shiftIndex % 2 == 0) {
+        if (value % 2 == 0) {
             finalColor = "pink"
         }
     } else {
-        if (shiftIndex % 2 == 1) {
+        if (value % 2 == 1) {
             finalColor = "gray"
         }
     }
-
     return (
         <td
             id={(columnIndex == undefined || columnIndex == 0) ? 'first-column' : ''}
@@ -19,7 +18,7 @@ export default function NonEditableCell({ value, rowIndex, shiftIndex ,columnInd
             style={cellStyle} // Apply the style object here
             contentEditable="false"
         >
-            {value}
+            <h4>{value}</h4>
         </td>
     );
 }

@@ -1,8 +1,17 @@
 import React from 'react';
 
-export default function WorkerDropdown({ value, rowIndex, coloumnIndex, workerList, onCellEdit, color }) {
+export default function WorkerDropdown({ value, rowIndex, coloumnIndex, workerList, onCellEdit, color, shiftIndex }) {
     // console.log("row " + rowIndex + " re-rendered")
-
+    var finalColor = color ? color : "white"
+    if (color == "red") {
+        if (shiftIndex % 2 == 0) {
+            finalColor = "pink"
+        }
+    } else {
+        if (shiftIndex % 2 == 1) {
+            finalColor = "gray"
+        }
+    }
     var startIndex = value == "" ? 0 : 1
     var shownValue = value
     if (value == "") {
@@ -17,7 +26,7 @@ export default function WorkerDropdown({ value, rowIndex, coloumnIndex, workerLi
     };
 
     return (
-        <td id={`cell-${rowIndex}-${coloumnIndex}`} className={`cell100 last-columns ${color}`} onBlur={handleOnBlur} onFocus={handleFocus}>
+        <td id={`cell-${rowIndex}-${coloumnIndex}`} className={`cell100 last-columns ${finalColor}`} onBlur={handleOnBlur} onFocus={handleFocus}>
             <select id={`selectWorker-${rowIndex}`} value={value} onChange={(e) => onCellEdit(e.target.value, rowIndex)}  style={{ backgroundColor: value != "" ? "lightblue" : "transparent" }}>
                 <option value={value} hidden style={{ backgroundColor: "transparent" }}>{shownValue}</option>
                 {value !== "" && (
