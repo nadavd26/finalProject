@@ -75,12 +75,15 @@ shifts = [
     ["saturday", "cable technition", "19:00", "23:00", 50],
     ["saturday", "WIFI technition", "14:00", "18:00", 160],
     ["saturday", "WIFI technition", "19:00", "23:00", 120],
-    ["saturday", "TV technition", "14:00", "23:00", 130],
+    ["saturday", "TV technition", "19:00", "23:00", 130],
     ["saturday", "TV technition", "19:00", "23:30", 150],
     ["saturday", "TV technition", "01:00", "13:00", 10000],
     ["saturday", "TV technition", "00:00", "09:00", 90],
     ["saturday", "TV technition", "10:00", "14:00", 50],
-    ["saturday", "TV technition", "23:30", "24:00", 40]
+    ["saturday", "TV technition", "23:30", "24:00", 40],
+    ["saturday", "TV technition", "14:00", "19:00", 70],
+    ["saturday", "TV technition", "14:00", "16:30", 40],
+    ["saturday", "TV technition", "16:00", "19:00", 40]
 ]
 
 reqs = [
@@ -1091,16 +1094,16 @@ reqs += [
     ["saturday", "TV technition", "12:30", "13:00", 20],
     ["saturday", "TV technition", "13:00", "13:30", 66],
     ["saturday", "TV technition", "13:30", "14:00", 42],
-    ["saturday", "TV technition", "14:00", "14:30", 78],
-    ["saturday", "TV technition", "14:30", "15:00", 25],
-    ["saturday", "TV technition", "15:00", "15:30", 72],
-    ["saturday", "TV technition", "15:30", "16:00", 48],
-    ["saturday", "TV technition", "16:00", "16:30", 84],
-    ["saturday", "TV technition", "16:30", "17:00", 11],
-    ["saturday", "TV technition", "17:00", "17:30", 57],
-    ["saturday", "TV technition", "17:30", "18:00", 30],
-    ["saturday", "TV technition", "18:00", "18:30", 76],
-    ["saturday", "TV technition", "18:30", "19:00", 19],
+    ["saturday", "TV technition", "14:00", "14:30", 80],
+    ["saturday", "TV technition", "14:30", "15:00", 80],
+    ["saturday", "TV technition", "15:00", "15:30", 80],
+    ["saturday", "TV technition", "15:30", "16:00", 80],
+    ["saturday", "TV technition", "16:00", "16:30", 120],
+    ["saturday", "TV technition", "16:30", "17:00", 80],
+    ["saturday", "TV technition", "17:00", "17:30", 80],
+    ["saturday", "TV technition", "17:30", "18:00", 80],
+    ["saturday", "TV technition", "18:00", "18:30", 80],
+    ["saturday", "TV technition", "18:30", "19:00", 80],
     ["saturday", "TV technition", "19:00", "19:30", 63],
     ["saturday", "TV technition", "19:30", "20:00", 37],
     ["saturday", "TV technition", "20:00", "20:30", 80],
@@ -1207,13 +1210,16 @@ for day in range(len(day_mapping)):
                 f"The number of workers needed for shift {shift} is {int(y[shift].value())} workers"
             )
         print("")
-shift1 = ["14:00", "23:00", int(y[0].value())]
+shift1 = ["19:00", "23:00", int(y[0].value())]
 shift2 = ["19:00", "23:30", int(y[1].value())]
 shift3 = ["01:00", "13:00", int(y[2].value())]
 shift4 = ["00:00", "09:00", int(y[3].value())]
 shift5 = ["10:00", "14:00", int(y[4].value())]
 shift6 = ["23:30", "24:00", int(y[5].value())]
-shifts = [shift1,shift2,shift3,shift4,shift5,shift6]
+shift7 = ["14:00", "19:00", int(y[6].value())]
+shift8 = ["14:00", "16:30", int(y[7].value())]
+shift9 = ["16:00", "19:00", int(y[8].value())]
+shifts = [shift1,shift2,shift3,shift4,shift5,shift6,shift7,shift8,shift9]
 reqs = [
     ["00:00", "00:30", 56],
     ["00:30", "01:00", 22],
@@ -1243,16 +1249,16 @@ reqs = [
     ["12:30", "13:00", 20],
     ["13:00", "13:30", 66],
     ["13:30", "14:00", 42],
-    ["14:00", "14:30", 78],
-    ["14:30", "15:00", 25],
-    ["15:00", "15:30", 72],
-    ["15:30", "16:00", 48],
-    ["16:00", "16:30", 84],
-    ["16:30", "17:00", 11],
-    ["17:00", "17:30", 57],
-    ["17:30", "18:00", 30],
-    ["18:00", "18:30", 76],
-    ["18:30", "19:00", 19],
+    ["14:00", "14:30", 80],
+    ["14:30", "15:00", 80],
+    ["15:00", "15:30", 80],
+    ["15:30", "16:00", 80],
+    ["16:00", "16:30", 120],
+    ["16:30", "17:00", 80],
+    ["17:00", "17:30", 80],
+    ["17:30", "18:00", 80],
+    ["18:00", "18:30", 80],
+    ["18:30", "19:00", 80],
     ["19:00", "19:30", 63],
     ["19:30", "20:00", 37],
     ["20:00", "20:30", 80],

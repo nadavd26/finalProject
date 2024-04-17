@@ -87,11 +87,12 @@ def make_a_graph(reqs,shifts):
     max_in_range = -1.0
     for i, y in enumerate(y_data):
         for j, num in enumerate(y):
+            k = j/2.0
+            kplus = k + 0.25
+            min_in_range = min(min_in_range, k)
+            max_in_range = max(max_in_range, k)
             for _ in range(num):
-                k = j/2.0
-                a[i].append(k + 0.25)
-                min_in_range = min(min_in_range, k)
-                max_in_range = max(max_in_range, k)
+                a[i].append(kplus)
         fig.add_trace(go.Histogram(x=a[i], xbins=dict(start=min(a[i])-0.25, end=max(a[i])+0.25, size=0.5),
             hovertemplate="%{customdata}, %{y}",
             customdata=x_values_string[int(min(a[i])*2):],
@@ -155,6 +156,7 @@ def make_a_graph(reqs,shifts):
 
     # Save the plot as HTML file
     fig.write_html('plot.html', include_plotlyjs='cdn', config={'displayModeBar': False, 'scrollZoom': False})
+
 
 # reqs = [
 #     # ["00:00", "00:30", 50],
