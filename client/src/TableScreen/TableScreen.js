@@ -50,7 +50,7 @@ function TableScreen({ user, setUser }) {
     }
 
     function handleEdit() {
-        if ((tableScreenState.get.tableNum == 1 && !tableScreenState.get.is1Generated) || (tableScreenState.get.tableNum == 2 && !tableScreenState.get.is2Generated)) {
+        if ((tableScreenState.get.tableNum == 1 && !tableScreenState.get.is1Generated) || (tableScreenState.get.tableNum == 2 && !tableScreenState.get.is2Generated) || (!tableAlgo1State.get.worksPerShift)) {
             return
         }
         editInfoState.setInEdit(true)
@@ -67,7 +67,14 @@ function TableScreen({ user, setUser }) {
         tableAlgo1State.setOtherSkills((utils.removeElementAtIndex(newUser.skillList, 0)))
         const key = utils.getKey("sunday", startSkill)
         tableAlgo1State.setKey(key)
-        tableAlgo1State.setWorksPerShift((user.algo1Table).get(key))
+        console.log("key")
+        console.log(key)
+        console.log("user.algo1Table")
+        console.log(user.algo1Table)
+        var newWorkersPerShift = res.get(key)
+        console.log("newWorkersPerShift")
+        console.log(newWorkersPerShift)
+        tableAlgo1State.setWorksPerShift(newWorkersPerShift)
         setUser(newUser)
         tableScreenState.setIs1Generated(true)
     }

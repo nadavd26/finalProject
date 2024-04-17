@@ -114,7 +114,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
             }
         }
 
-        setOverlapInfo("Overlapping shifts of this shift (" + (absuluteIndex+1) + ") at indexes: " + overlapsLineNumbers.join(", "))
+        setOverlapInfo("Overlapping shifts of this shift (index " + (absuluteIndex+1) + ") at indexes: " + overlapsLineNumbers.join(", "))
         const infoModal = new window.bootstrap.Modal(document.getElementById('infoModal'));
         infoModal.show()
 

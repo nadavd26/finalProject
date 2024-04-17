@@ -141,6 +141,16 @@ function mapToString(map) {
     return str;
 }
 
+export function generateDayList(table) {
+    const daysSet = new Set();
+    for (let i = 0; i < table.length; i++) {
+        daysSet.add(table[i][0]); // Assuming column 1 is at index 0
+    }
+    const uniqueDays = [...daysSet];
+    return uniqueDays;
+}
+
+
 function generateShiftList(table) {
     // console.log("Input table:");
     // console.log(table);
@@ -297,7 +307,7 @@ export async function generateAlgo2Results(table) {
     const scheduleDataa = table
     for (let i = 0; i < scheduleDataa.length; i++) {
         // scheduleData[i][4] = (2*i+5) % 10
-        scheduleDataa[i][4] = 1
+        scheduleDataa[i][4] = 2
     }
     const scheduleData = duplicateLines(scheduleDataa)
     // console.log("scheduleData : " + scheduleData)
