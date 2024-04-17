@@ -8,35 +8,42 @@ import overlapImg from '../Images/overlap.png'
 import contractImg from '../Images/contract.png'
 import infoImg from '../Images/info.png'
 
-export default function EditResFile2({ initialTable, setInEdit, user, setUser, workerMap, shiftsInfo, shiftsPerWorkers }) {
+export default function EditResFile2({ initialTable, setInEdit, user, setUser, workerMap, shiftsInfo, shiftsPerWorkers, setShiftsPerWorkers }) {
     const [showBackModal, setShowBackModal] = useState(false)
-    const [renderInfo, setRenderInfo] = useState({ table: [["", "", "", "", "", ""]], colors: [], shiftsPerWorkers: {} })
+    const [renderInfo, setRenderInfo] = useState({ table: [["", "", "", "", "", ""]], colors: [], shiftsPerWorkers: {}, isGenerated: false })
     const [overlapInfo, setOverlapInfo] = useState("")
     const [contractInfo, setContractInfo] = useState("")
 
     const defaultErrorMsg = "Assigned Number Of Workers is a non-negative integer."
     const [errorMsg, setErrorMsg] = useState(defaultErrorMsg)
     const token = user.token
+    console.log("user.algo2Table")
+    console.log(user.algo2Table)
     console.log("worker List ")
     console.log(workerMap)
     console.log("shifts info ")
     console.log(shiftsInfo)
     console.log("shiftsPerWorkers")
-    console.log(JSON.stringify(renderInfo.shiftsPerWorkers))
+    console.log(shiftsPerWorkers)
     useEffect(() => {
-        const newTable = initialTable.Sunday.concat(
-            initialTable.Monday,
-            initialTable.Tuesday,
-            initialTable.Wednesday,
-            initialTable.Thursday,
-            initialTable.Friday,
-            initialTable.Saturday
-        );
+        const newTable = [
+            ...initialTable.Sunday,
+            ...initialTable.Monday,
+            ...initialTable.Tuesday,
+            ...initialTable.Wednesday,
+            ...initialTable.Thursday,
+            ...initialTable.Friday,
+            ...initialTable.Saturday
+        ];
+
+        console.log("newTable")
+        console.log(newTable)
+
         var newColors = Array.from({
             length: initialTable.Sunday.length + initialTable.Monday.length + initialTable.Tuesday.length +
                 initialTable.Wednesday.length + initialTable.Thursday.length + initialTable.Friday.length + initialTable.Saturday.length
         }, () => "white")
-        setRenderInfo({ table: newTable, colors: newColors, shiftsPerWorkers: shiftsPerWorkers })
+        setRenderInfo({ table: newTable, colors: newColors, shiftsPerWorkers: shiftsPerWorkers, isGenerated: true })
     }, []);
 
     function getColor(id, name, day, row) {
@@ -114,7 +121,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
             }
         }
 
-        setOverlapInfo("Overlapping shifts of this shift (index " + (absuluteIndex+1) + ") at indexes: " + overlapsLineNumbers.join(", "))
+        setOverlapInfo("Overlapping shifts of this shift (index " + (absuluteIndex + 1) + ") at indexes: " + overlapsLineNumbers.join(", "))
         const infoModal = new window.bootstrap.Modal(document.getElementById('infoModal'));
         infoModal.show()
 
@@ -152,9 +159,10 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
                     color: getColor(worker.id, worker.name, day, row)
                 });
             }
-
-            console.log("transformedWorkerList")
-            console.log(transformedWorkerList)
+            if (rowIndex == 2) {
+                console.log("transformedWorkerList")
+                console.log(transformedWorkerList)
+            }
             return transformedWorkerList; // Return the transformed worker list
         } else {
             // If the skill does not exist in the workerMap, return an empty list
@@ -227,14 +235,15 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
         }
         console.log("newShiftPerWorkers")
         console.log(newShiftPerWorkers)
-        setRenderInfo({ table: newTable, colors: newColors, shiftsPerWorkers: newShiftPerWorkers })
+        setRenderInfo({ table: newTable, colors: newColors, shiftsPerWorkers: newShiftPerWorkers, isGenerated: true })
     }
 
 
     const handleSave = async () => {
         const errorModal = new window.bootstrap.Modal(document.getElementById('errModal'));
         const saveModal = new window.bootstrap.Modal(document.getElementById('saveModal'));
-
+        console.log("renderInfo.shiftsPerWorkers")
+        console.log(renderInfo.shiftsPerWorkers)
         var isValid = true;
         // if (content.length === 0) {
         //     isValid = false;
@@ -268,11 +277,15 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
 
     const finishEdit = async () => {
         var newUser = user
+        newUser.algo2Table = initialTable
+        setShiftsPerWorkers(renderInfo.shiftsPerWorkers)
         setUser(newUser)
         setInEdit(false)
     };
 
     const handleBack = () => {
+        console.log("initialTable")
+        console.log(initialTable)
         setShowBackModal(true)
     }
 
@@ -287,8 +300,8 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#backModal" onClick={handleBack}>Back</button>
                 </div>
                 <div className="col-11"></div>
-                <Table content={renderInfo.table} colors={renderInfo.colors} shiftsPerWorker={renderInfo.shiftsPerWorkers}
-                    workerMap={workerMap} shiftsInfo={shiftsInfo} onCellEdit={handleCellEdit} generateWorkerList={generateWorkerList} getLineInfo={getLineInfo}></Table>
+                {renderInfo.isGenerated && (<Table content={renderInfo.table} colors={renderInfo.colors} shiftsPerWorker={renderInfo.shiftsPerWorkers}
+                    workerMap={workerMap} shiftsInfo={shiftsInfo} onCellEdit={handleCellEdit} generateWorkerList={generateWorkerList} getLineInfo={getLineInfo}></Table>)}
                 <div className="row"><br /></div>
                 <div className="d-flex justify-content-between mb-3 down-buttons">
                     <div className="col-3"></div>

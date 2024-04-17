@@ -22,7 +22,8 @@ function TableScreen({ user, setUser }) {
     const algo2TableState = useTableAlgo2State();
     const tableAlgo1State = useTableAlgo1State()
     const editInfoState = useEditInfoState()
-
+    console.log("user.algo2Table table scveen")
+    console.log(user.algo2Table)
     function switchDay(day) {
         if ((tableScreenState.get.tableNum == 1 && !tableScreenState.get.is1Generated) || (tableScreenState.get.tableNum == 2 && !tableScreenState.get.is2Generated)) {
             return
@@ -50,7 +51,7 @@ function TableScreen({ user, setUser }) {
     }
 
     function handleEdit() {
-        if ((tableScreenState.get.tableNum == 1 && !tableScreenState.get.is1Generated) || (tableScreenState.get.tableNum == 2 && !tableScreenState.get.is2Generated) || (!tableAlgo1State.get.worksPerShift)) {
+        if ((tableScreenState.get.tableNum == 1 && !tableScreenState.get.is1Generated) || (tableScreenState.get.tableNum == 2 && !tableScreenState.get.is2Generated) || (tableScreenState.get.tableNum == 1 && !tableAlgo1State.get.worksPerShift)) {
             return
         }
         editInfoState.setInEdit(true)
@@ -126,8 +127,39 @@ function TableScreen({ user, setUser }) {
         tableScreenState.setWorkerMap(workerMap)
     }, []);
 
+    function setsToArrays(obj) {
+        const newObj = {};
+        for (const key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                newObj[key] = {};
+                for (const innerKey in obj[key]) {
+                    if (obj[key].hasOwnProperty(innerKey)) {
+                        newObj[key][innerKey] = Array.from(obj[key][innerKey] instanceof Set ? obj[key][innerKey] : []);
+                    }
+                }
+            }
+        }
+        return newObj;
+    }
+
+    function arraysToSets(obj) {
+        const newObj = {};
+        for (const key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                newObj[key] = {};
+                for (const innerKey in obj[key]) {
+                    if (obj[key].hasOwnProperty(innerKey)) {
+                        newObj[key][innerKey] = new Set(obj[key][innerKey]);
+                    }
+                }
+            }
+        }
+        return newObj;
+    }
+
+    //i want to pass a deep copy to EditResFile2 and because json.parse does not parse sets, i need to convert them to array, parse and then convert back to sets 
     const editComponent = tableScreenState.get.tableNum === 1 ? (
-        <EditResFile1 
+        <EditResFile1
             initialTable={tableAlgo1State.get.worksPerShift}
             currentDay={tableScreenState.get.currentDay}
             currentSkill={tableAlgo1State.get.currentSkill}
@@ -137,12 +169,16 @@ function TableScreen({ user, setUser }) {
             setUser={setUser}
         />
     ) : (
-        <EditResFile2 initialTable={(user.algo2Table)} 
-        currentDay={tableScreenState.get.currentDay} setInEdit={editInfoState.setInEdit} user={user} setUser={setUser} workerMap={tableScreenState.get.workerMap} 
-        shiftsInfo={(algo2TableState.get.shiftInfo)} shiftsPerWorkers={(algo2TableState.get.shiftsPerWorkers)}/>
+        <EditResFile2 initialTable={JSON.parse(JSON.stringify(user.algo2Table))}
+            currentDay={tableScreenState.get.currentDay} setInEdit={editInfoState.setInEdit} user={user} setUser={setUser} workerMap={tableScreenState.get.workerMap}
+            shiftsInfo={(algo2TableState.get.shiftInfo)} shiftsPerWorkers={arraysToSets(JSON.parse(JSON.stringify(setsToArrays(algo2TableState.get.shiftsPerWorkers))))} setShiftsPerWorkers={algo2TableState.setShiftsPerWorkers} />
     );
 
+    console.log("JSON.parse(JSON.stringify(algo2TableState.get.shiftsPerWorkers))")
+    console.log(JSON.parse(JSON.stringify(algo2TableState.get.shiftsPerWorkers)))
 
+    console.log("algo2TableState.get.shiftsPerWorkers")
+    console.log(algo2TableState.get.shiftsPerWorkers)
     return (
         !editInfoState.get.inEdit ? (
             <div id="table-screen">

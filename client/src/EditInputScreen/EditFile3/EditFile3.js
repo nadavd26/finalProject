@@ -310,7 +310,8 @@ export default function EditFile3({ csvArray, setEditInfo, user, setUser, fromSe
             errorModal.show()
             return
         }
-        const sortedTable = await sortTable(3, content, user.token);
+        // const sortedTable = await sortTable(3, content, user.token);
+        const sortedTable = content
         setContent(sortedTable)
         const overlaps = calcOverlaps(sortedTable)
         if (overlaps.length != 0) {
