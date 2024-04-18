@@ -21,9 +21,9 @@ function generateShiftArray(shifts) {
 }
 
 
-function generateShifts(scheduleData, workerTable) {
-        // console.log("scheduleData")
-        // console.log(scheduleData)
+function generateShifts(scheduleData, workerTable, existingWorkers) {
+    // console.log("scheduleData")
+    // console.log(scheduleData)
     const workersAndShifts = [];
     const timeIndexMap = {
         "07:00": 0, "07:30": 1, "08:00": 2, "08:30": 3, "09:00": 4, "09:30": 5,
@@ -35,25 +35,25 @@ function generateShifts(scheduleData, workerTable) {
         "01:00": 36, "01:30": 37, "02:00": 38, "02:30": 39, "03:00": 40, "03:30": 41,
         "04:00": 42, "04:30": 43, "05:00": 44, "05:30": 45, "06:00": 46, "06:30": 47
     };
-    
+
     // Extract existing workers from the worker table
-    const existingWorkers = workerTable.map(entry => entry[1] + "\n" + entry[0]);
-    
+
+
     // Extract worker IDs from the schedule data
     const scheduleWorkerIDs = scheduleData.map(entry => entry[4]);
-    
+
     // Filter out new workers who are not in the existing workers list
     const newWorkers = existingWorkers.filter(workerID => !scheduleWorkerIDs.includes(workerID));
-    
+
     // Initialize shifts for new workers
+    const shiftsFalse = new Array(48).fill(false);
     newWorkers.forEach(worker => {
-        const shifts = new Array(48).fill(false);
-        workersAndShifts.push({ name: worker, shifts });
+        workersAndShifts.push({ name: worker, shifts: shiftsFalse });
     });
-    
+
     // Initialize a map to store unique shifts for each worker
     const workerShiftsMap = new Map();
-    
+
     // Process each entry in the schedule data
     scheduleData.forEach(([day, skill, start, end, workerID, shiftId]) => {
         if (workerID == "") {
@@ -65,27 +65,34 @@ function generateShifts(scheduleData, workerTable) {
         if (endIndex == -1) { //timeIndexMap[end] == 07:00, we need to go back to 06:30
             endIndex = 47
         }
+        let shifts = workerShiftsMap.get(workerID);
+        if (!shifts) {
+            shifts = new Array(48).fill(false);
+            workerShiftsMap.set(workerID, shifts);
+        }
         if (endIndex > startIndex) {
-            // Get the shifts array for the worker from the map
-            let shifts = workerShiftsMap.get(workerID);
-            
-            // If the worker's shifts array is not yet initialized, create a new one
-            if (!shifts) {
-                shifts = new Array(48).fill(false);
-                workerShiftsMap.set(workerID, shifts);
-            }
-            
             for (let i = startIndex; i <= endIndex; i++) {
+                shifts[i] = true;
+            }
+
+        }
+
+        if (startIndex > endIndex) { //00:00 to 23:00 for example
+            for (let i = startIndex; i <= 47; i++) {
+                shifts[i] = true;
+            }
+
+            for (let i = 0; i <= endIndex; i++) {
                 shifts[i] = true;
             }
         }
     });
-    
+
+
     // Convert the worker shifts map to an array of objects and add to the result
     workerShiftsMap.forEach((shifts, workerID) => {
         workersAndShifts.push({ name: workerID, shifts });
     });
-    
     return workersAndShifts;
 }
 
@@ -99,7 +106,7 @@ export function generateWorkerMap(table) {
 
     for (let i = 0; i < table.length; i++) {
         const row = table[i];
-        const id = row[0]; 
+        const id = row[0];
         const name = row[1];
         const skill1 = row[2];
         const skill2 = row[3];
@@ -257,7 +264,7 @@ function generateWorkerShiftList(table) {
 }
 
 export function getWorkerShiftListKey(id, name) {
-    return name +"\n" +id
+    return name + "\n" + id
 }
 
 export function getShiftsForWorker(workerShiftMap, id, name) {
@@ -304,6 +311,7 @@ export function removeShiftFromWorker(workerShiftMap, id, name, rowIndex) {
 
 
 export async function generateAlgo2Results(table) {
+    await sleep(10)
     const scheduleDataa = table
     for (let i = 0; i < scheduleDataa.length; i++) {
         // scheduleData[i][4] = (2*i+5) % 10
@@ -352,14 +360,15 @@ export function generateAlgoShifts(data) {
 }
 
 export function generateAlgoGraphicResults(data, workerTable) {
+    const existingWorkers = workerTable.map(entry => entry[1] + "\n" + entry[0]);
     const daysWorkersAndShifts = {
-        Sunday: generateShifts(data.Sunday, workerTable),
-        Monday: generateShifts(data.Monday, workerTable),
-        Tuesday: generateShifts(data.Tuesday, workerTable),
-        Wednesday: generateShifts(data.Wednesday, workerTable),
-        Thursday: generateShifts(data.Thursday, workerTable),
-        Friday: generateShifts(data.Friday, workerTable),
-        Saturday: generateShifts(data.Saturday, workerTable)
+        Sunday: generateShifts(data.Sunday, workerTable, existingWorkers),
+        Monday: generateShifts(data.Monday, workerTable, existingWorkers),
+        Tuesday: generateShifts(data.Tuesday, workerTable, existingWorkers),
+        Wednesday: generateShifts(data.Wednesday, workerTable, existingWorkers),
+        Thursday: generateShifts(data.Thursday, workerTable, existingWorkers),
+        Friday: generateShifts(data.Friday, workerTable, existingWorkers),
+        Saturday: generateShifts(data.Saturday, workerTable, existingWorkers)
     }
 
     return daysWorkersAndShifts
@@ -392,8 +401,8 @@ function duplicateLines(table) {
 
         shiftsId++
     }
-    console.log("duplicatedData") 
-    console.log(duplicatedData) 
+    console.log("duplicatedData")
+    console.log(duplicatedData)
     // table.forEach((value, key) => {
     //     for (let i = 0; i < value.length; i++) {
     //         for (let j = 0; j < value[i][4]; j++) {
@@ -419,7 +428,7 @@ export async function generateAlgo1Results(table) {
 
     const transformedData = transformDataToMap(scheduleData);
     // console.log("hiiiiii" + transformedData["TV technition"]["sunday"]);
-    await sleep(100);
+    await sleep(10);
     return transformedData
 }
 

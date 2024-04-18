@@ -26,7 +26,7 @@ export default function WorkerDropdown({ value, rowIndex, coloumnIndex, workerLi
     };
 
     return (
-        <td id={`cell-${rowIndex}-${coloumnIndex}`} className={`cell100 last-columns ${finalColor}`} onBlur={handleOnBlur} onFocus={handleFocus}>
+        <td id={`cell-${rowIndex}-${coloumnIndex}`} className={`cell100 last-columns ${color}`} onBlur={handleOnBlur} onFocus={handleFocus}>
             <select id={`selectWorker-${rowIndex}`} value={value} onChange={(e) => onCellEdit(e.target.value, rowIndex)}  style={{ backgroundColor: value != "" ? "lightblue" : "transparent" }}>
                 <option value={value} hidden style={{ backgroundColor: "transparent" }}>{shownValue}</option>
                 {value !== "" && (

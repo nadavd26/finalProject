@@ -15,7 +15,7 @@ export default function NonEditableCell({ value, rowIndex, shiftIndex ,columnInd
     return (
         <td
             id={(columnIndex == undefined || columnIndex == 0) ? 'first-column' : ''}
-            className={`cell100 ${(columnIndex == 0  || columnIndex == undefined)? 'first-columns' : 'last-columns'} ${finalColor} ${additionalClass}`}
+            className={`cell100 ${(columnIndex == 0  || columnIndex == undefined)? 'first-columns' : 'last-columns'} ${color} ${additionalClass}`}
             style={cellStyle} // Apply the style object here
             contentEditable="false"
         >

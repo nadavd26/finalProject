@@ -22,8 +22,6 @@ function TableScreen({ user, setUser }) {
     const algo2TableState = useTableAlgo2State();
     const tableAlgo1State = useTableAlgo1State()
     const editInfoState = useEditInfoState()
-    console.log("user.algo2Table table scveen")
-    console.log(user.algo2Table)
     function switchDay(day) {
         if ((tableScreenState.get.tableNum == 1 && !tableScreenState.get.is1Generated) || (tableScreenState.get.tableNum == 2 && !tableScreenState.get.is2Generated)) {
             return
@@ -58,8 +56,6 @@ function TableScreen({ user, setUser }) {
     }
     async function generateResults1() {
         const res = await utils.generateAlgo1Results(user.table3)
-        console.log("res")
-        console.log(res)
         var newUser = user
         newUser.algo1Table = res
         newUser.skillList = utils.getSkillSet(user.table2)
@@ -68,22 +64,16 @@ function TableScreen({ user, setUser }) {
         tableAlgo1State.setOtherSkills((utils.removeElementAtIndex(newUser.skillList, 0)))
         const key = utils.getKey("sunday", startSkill)
         tableAlgo1State.setKey(key)
-        console.log("key")
-        console.log(key)
-        console.log("user.algo1Table")
-        console.log(user.algo1Table)
         var newWorkersPerShift = res.get(key)
-        console.log("newWorkersPerShift")
-        console.log(newWorkersPerShift)
         tableAlgo1State.setWorksPerShift(newWorkersPerShift)
         setUser(newUser)
         tableScreenState.setIs1Generated(true)
     }
 
-    async function generateResults2() {
-        const res = await utils.generateAlgo2Results(user.table3)
+    async function generateResults2(algo2table) {
+        const res = algo2table ? algo2table : await utils.generateAlgo2Results(user.table3)
         console.log("res")
-        console.log(res)
+        console.log(JSON.stringify(res))
         var newUser = user
         newUser.algo2Table = res
         const ui = utils.generateAlgoGraphicResults(res, user.table1)
@@ -94,6 +84,8 @@ function TableScreen({ user, setUser }) {
         algo2TableState.setShiftsInfo(shifts)
         var shiftsPerWorkers = utils.generateShiftsPerWorker(res)
         algo2TableState.setShiftsPerWorkers(shiftsPerWorkers)
+        console.log("ui")
+        console.log(JSON.stringify(ui))
         setUser(newUser)
         algo2TableState.setCurrentWorkersAndShifts((user.algo2Graphic)[tableScreenState.get.currentDay])
         tableScreenState.setIs2Generated(true)
@@ -157,6 +149,14 @@ function TableScreen({ user, setUser }) {
         return newObj;
     }
 
+    function table1finishEditCallback() {
+        tableScreenState.setIs2Generated(false)
+    }
+
+    async function table2finishEditCallback() {
+        await generateResults2(user.algo2Table)
+    }
+
     //i want to pass a deep copy to EditResFile2 and because json.parse does not parse sets, i need to convert them to array, parse and then convert back to sets 
     const editComponent = tableScreenState.get.tableNum === 1 ? (
         <EditResFile1
@@ -167,18 +167,14 @@ function TableScreen({ user, setUser }) {
             setInEdit={editInfoState.setInEdit}
             user={user}
             setUser={setUser}
+            finishCallback={table1finishEditCallback}
         />
     ) : (
         <EditResFile2 initialTable={JSON.parse(JSON.stringify(user.algo2Table))}
             currentDay={tableScreenState.get.currentDay} setInEdit={editInfoState.setInEdit} user={user} setUser={setUser} workerMap={tableScreenState.get.workerMap}
-            shiftsInfo={(algo2TableState.get.shiftInfo)} shiftsPerWorkers={arraysToSets(JSON.parse(JSON.stringify(setsToArrays(algo2TableState.get.shiftsPerWorkers))))} setShiftsPerWorkers={algo2TableState.setShiftsPerWorkers} />
+            shiftsInfo={(algo2TableState.get.shiftInfo)} shiftsPerWorkers={arraysToSets(JSON.parse(JSON.stringify(setsToArrays(algo2TableState.get.shiftsPerWorkers))))} setShiftsPerWorkers={algo2TableState.setShiftsPerWorkers} finishCallback={table2finishEditCallback}/>
     );
 
-    console.log("JSON.parse(JSON.stringify(algo2TableState.get.shiftsPerWorkers))")
-    console.log(JSON.parse(JSON.stringify(algo2TableState.get.shiftsPerWorkers)))
-
-    console.log("algo2TableState.get.shiftsPerWorkers")
-    console.log(algo2TableState.get.shiftsPerWorkers)
     return (
         !editInfoState.get.inEdit ? (
             <div id="table-screen">

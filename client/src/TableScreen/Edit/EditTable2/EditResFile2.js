@@ -8,7 +8,7 @@ import overlapImg from '../Images/overlap.png'
 import contractImg from '../Images/contract.png'
 import infoImg from '../Images/info.png'
 
-export default function EditResFile2({ initialTable, setInEdit, user, setUser, workerMap, shiftsInfo, shiftsPerWorkers, setShiftsPerWorkers }) {
+export default function EditResFile2({ initialTable, setInEdit, user, setUser, workerMap, shiftsInfo, shiftsPerWorkers, setShiftsPerWorkers, finishCallback }) {
     const [showBackModal, setShowBackModal] = useState(false)
     const [renderInfo, setRenderInfo] = useState({ table: [["", "", "", "", "", ""]], colors: [], shiftsPerWorkers: {}, isGenerated: false })
     const [overlapInfo, setOverlapInfo] = useState("")
@@ -17,14 +17,6 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
     const defaultErrorMsg = "There are workers who work in 2 diffrent shifts at the same time."
     const [errorMsg, setErrorMsg] = useState(defaultErrorMsg)
     const token = user.token
-    console.log("user.algo2Table")
-    console.log(user.algo2Table)
-    console.log("worker List ")
-    console.log(workerMap)
-    console.log("shifts info ")
-    console.log(shiftsInfo)
-    console.log("shiftsPerWorkers")
-    console.log(shiftsPerWorkers)
     useEffect(() => {
         const newTable = [
             ...initialTable.Sunday,
@@ -36,8 +28,6 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
             ...initialTable.Saturday
         ];
 
-        console.log("newTable")
-        console.log(newTable)
 
         var newColors = Array.from({
             length: initialTable.Sunday.length + initialTable.Monday.length + initialTable.Tuesday.length +
@@ -159,10 +149,6 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
                     color: getColor(worker.id, worker.name, day, row)
                 });
             }
-            if (rowIndex == 2) {
-                console.log("transformedWorkerList")
-                console.log(transformedWorkerList)
-            }
             return transformedWorkerList; // Return the transformed worker list
         } else {
             // If the skill does not exist in the workerMap, return an empty list
@@ -233,8 +219,6 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
                 }
             }
         }
-        console.log("newShiftPerWorkers")
-        console.log(newShiftPerWorkers)
         setRenderInfo({ table: newTable, colors: newColors, shiftsPerWorkers: newShiftPerWorkers, isGenerated: true })
     }
 
@@ -242,8 +226,6 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
     const handleSave = async () => {
         const errorModal = new window.bootstrap.Modal(document.getElementById('errModal'));
         const saveModal = new window.bootstrap.Modal(document.getElementById('saveModal'));
-        console.log("renderInfo.shiftsPerWorkers")
-        console.log(renderInfo.shiftsPerWorkers)
         var isValid = true;
         for (const color of renderInfo.colors) {
             if (color == "red") {
@@ -280,11 +262,10 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
         setShiftsPerWorkers(renderInfo.shiftsPerWorkers)
         setUser(newUser)
         setInEdit(false)
+        finishCallback()
     };
 
     const handleBack = () => {
-        console.log("initialTable")
-        console.log(initialTable)
         setShowBackModal(true)
     }
 

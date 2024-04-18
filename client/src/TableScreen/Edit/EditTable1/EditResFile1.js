@@ -5,7 +5,7 @@ import '../css/edit-file-table-main.css'
 import '../css/perfect-scrollbar.css'
 import * as utils from '../../Utils'
 
-export default function EditResFile1({ initialTable, setInEdit, user, setUser, currentDay, currentSkill, setWorksPerShift}) {
+export default function EditResFile1({ initialTable, setInEdit, user, setUser, currentDay, currentSkill, setWorksPerShift, finishCallback}) {
     const [content, setContent] = useState([["", "", "", "", ""]])
     const [showBackModal, setShowBackModal] = useState(false)
     const defaultErrorMsg = "Assigned Number Of Workers is a non-negative integer."
@@ -83,6 +83,7 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
         setWorksPerShift(content)
         setUser(newUser)
         setInEdit(false)
+        finishCallback()
     };
 
     const handleBack = () => {
