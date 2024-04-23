@@ -123,6 +123,18 @@
   border-left-width: 1px !important;
 }
 
-td#first-column.cell100.first-columns.no-left {
-  border-left-width: 0px !important;
+.cell-content {
+  position: relative;
+  max-height: 25px;
+  vertical-align: bottom;
 }
+
+
+img.img-fluid.actionImage {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 25px !important;
+}
+
+

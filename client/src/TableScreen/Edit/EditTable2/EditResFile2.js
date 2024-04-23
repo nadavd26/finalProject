@@ -151,6 +151,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
                     color: getColor(worker.id, worker.name, day, row)
                 });
             }
+            transformedWorkerList.sort((a, b) => a.id.localeCompare(b.id));
             return transformedWorkerList; // Return the transformed worker list
         } else {
             // If the skill does not exist in the workerMap, return an empty list

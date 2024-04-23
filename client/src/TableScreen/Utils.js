@@ -26,15 +26,16 @@ function generateShifts(scheduleData, workerTable, existingWorkers) {
     // console.log(scheduleData)
     const workersAndShifts = [];
     const timeIndexMap = {
-        "07:00": 0, "07:30": 1, "08:00": 2, "08:30": 3, "09:00": 4, "09:30": 5,
-        "10:00": 6, "10:30": 7, "11:00": 8, "11:30": 9, "12:00": 10, "12:30": 11,
-        "13:00": 12, "13:30": 13, "14:00": 14, "14:30": 15, "15:00": 16, "15:30": 17,
-        "16:00": 18, "16:30": 19, "17:00": 20, "17:30": 21, "18:00": 22, "18:30": 23,
-        "19:00": 24, "19:30": 25, "20:00": 26, "20:30": 27, "21:00": 28, "21:30": 29,
-        "22:00": 30, "22:30": 31, "23:00": 32, "23:30": 33, "00:00": 34, "00:30": 35,
-        "01:00": 36, "01:30": 37, "02:00": 38, "02:30": 39, "03:00": 40, "03:30": 41,
-        "04:00": 42, "04:30": 43, "05:00": 44, "05:30": 45, "06:00": 46, "06:30": 47
+        "00:00": 0, "00:30": 1, "01:00": 2, "01:30": 3, "02:00": 4, "02:30": 5,
+        "03:00": 6, "03:30": 7, "04:00": 8, "04:30": 9, "05:00": 10, "05:30": 11,
+        "06:00": 12, "06:30": 13, "07:00": 14, "07:30": 15, "08:00": 16, "08:30": 17,
+        "09:00": 18, "09:30": 19, "10:00": 20, "10:30": 21, "11:00": 22, "11:30": 23,
+        "12:00": 24, "12:30": 25, "13:00": 26, "13:30": 27, "14:00": 28, "14:30": 29,
+        "15:00": 30, "15:30": 31, "16:00": 32, "16:30": 33, "17:00": 34, "17:30": 35,
+        "18:00": 36, "18:30": 37, "19:00": 38, "19:30": 39, "20:00": 40, "20:30": 41,
+        "21:00": 42, "21:30": 43, "22:00": 44, "22:30": 45, "23:00": 46, "23:30": 47
     };
+
 
     // Extract existing workers from the worker table
 
@@ -62,30 +63,23 @@ function generateShifts(scheduleData, workerTable, existingWorkers) {
         // Adjust start and end times to half-hour slots
         const startIndex = timeIndexMap[start]
         var endIndex = timeIndexMap[end] - 1
-        if (endIndex == -1) { //timeIndexMap[end] == 07:00, we need to go back to 06:30
-            endIndex = 47
-        }
         let shifts = workerShiftsMap.get(workerID);
         if (!shifts) {
             shifts = new Array(48).fill(false);
             workerShiftsMap.set(workerID, shifts);
         }
-        if (endIndex > startIndex) {
-            for (let i = startIndex; i <= endIndex; i++) {
-                shifts[i] = true;
-            }
-
+        for (let i = startIndex; i <= endIndex; i++) {
+            shifts[i] = true;
         }
+        // if (startIndex > endIndex) { //00:00 to 23:00 for example
+        //     for (let i = startIndex; i <= 47; i++) {
+        //         shifts[i] = true;
+        //     }
 
-        if (startIndex > endIndex) { //00:00 to 23:00 for example
-            for (let i = startIndex; i <= 47; i++) {
-                shifts[i] = true;
-            }
-
-            for (let i = 0; i <= endIndex; i++) {
-                shifts[i] = true;
-            }
-        }
+        //     for (let i = 0; i <= endIndex; i++) {
+        //         shifts[i] = true;
+        //     }
+        // }
     });
 
 
