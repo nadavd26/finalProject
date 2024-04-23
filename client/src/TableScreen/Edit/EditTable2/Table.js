@@ -32,7 +32,10 @@ const TableRow = ({rowIndex,row,color,generateWorkerList, onCellEdit, getLineInf
 };
 
 function arePropsEqual(oldProps, newProps) {
-    return !(newProps.shouldRender)
+    if (newProps.shouldRender) {
+        return false
+    }
+    return true
 }
 
 const MemorizedTableRow = React.memo(TableRow, arePropsEqual)

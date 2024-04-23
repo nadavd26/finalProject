@@ -10,7 +10,7 @@ import infoImg from '../Images/info.png'
 
 export default function EditResFile2({ initialTable, setInEdit, user, setUser, workerMap, shiftsInfo, shiftsPerWorkers, setShiftsPerWorkers, finishCallback }) {
     const [showBackModal, setShowBackModal] = useState(false)
-    const [renderInfo, setRenderInfo] = useState({ table: [["", "", "", "", "", ""]], colors: [], shiftsPerWorkers: {}, isGenerated: false, rowsToRender: [] })
+    const [renderInfo, setRenderInfo] = useState({ table: [["", "", "", "", "", ""]], colors: [], shiftsPerWorkers: {}, isGenerated: false, rowsToRender: {} })
     const [overlapInfo, setOverlapInfo] = useState("")
     const [contractInfo, setContractInfo] = useState("")
     console.log("shiftsInfo")
@@ -34,8 +34,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
             length: initialTable.Sunday.length + initialTable.Monday.length + initialTable.Tuesday.length +
                 initialTable.Wednesday.length + initialTable.Thursday.length + initialTable.Friday.length + initialTable.Saturday.length
         }, () => "white")
-        var newRowsToRender = Array.from({length : newColors.length}, () => false)
-        setRenderInfo({ table: newTable, colors: newColors, shiftsPerWorkers: shiftsPerWorkers, isGenerated: true, rowsToRender: newRowsToRender })
+        setRenderInfo({ table: newTable, colors: newColors, shiftsPerWorkers: shiftsPerWorkers, isGenerated: true, rowsToRender: {} })
     }, []);
 
     function getColor(id, name, day, row) {
@@ -173,7 +172,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
         var newTable = renderInfo.table
         const oldColor = (renderInfo.colors)[rowIndex]
         var newColors = renderInfo.colors
-        var newRowsToRender = Array.from({length : renderInfo.rowsToRender.length}, () => false)
+        var newRowsToRender = {}
         const [newName = "", newId = "", newColor = "white"] = newWorker.split(",")
         const [oldName, oldId] = (row[4]).split("\n")
         var newShiftPerWorkersDay = newName != "" ? utils.addShiftToWorker((renderInfo.shiftsPerWorkers)[day], newId, newName, getRelativeIndex(rowIndex, day)) : (renderInfo.shiftsPerWorkers)[day]
