@@ -19,7 +19,7 @@ const TableRow = ({rowIndex,row,color,generateWorkerList, onCellEdit, getLineInf
     return (
         <>
             <tr className="row100 body last-rows" id="table-row">
-            <NonEditableCell value={rowIndex} rowIndex={rowIndex} coloumnIndex={0} color={color} shiftIndex={row[5]}/>
+            <NonEditableCell value={rowIndex+1} rowIndex={rowIndex} coloumnIndex={0} color={color} shiftIndex={row[5]}/>
                 <NonEditableCell value={row[0]} rowIndex={rowIndex} coloumnIndex={0} color={color} additionalClass={"no-left second"} shiftIndex={row[5]}/>
                 <NonEditableCell value={row[1]} rowIndex={rowIndex} columnIndex={1} color={color} additionalClass={"no-left"} shiftIndex={row[5]}/>
                 <NonEditableCell value={row[2]} rowIndex={rowIndex} columnIndex={2} color={color} additionalClass={"no-left"} shiftIndex={row[5]}/>
