@@ -10,10 +10,13 @@ import infoImg from '../Images/info.png'
 
 export default function EditResFile2({ initialTable, setInEdit, user, setUser, workerMap, shiftsInfo, shiftsPerWorkers, setShiftsPerWorkers, finishCallback }) {
     const [showBackModal, setShowBackModal] = useState(false)
-    const [renderInfo, setRenderInfo] = useState({ table: [["", "", "", "", "", ""]], colors: [], shiftsPerWorkers: {}, isGenerated: false })
+    const [renderInfo, setRenderInfo] = useState({ table: [["", "", "", "", "", ""]], colors: [], shiftsPerWorkers: {}, isGenerated: false, rowsToRender: [] })
     const [overlapInfo, setOverlapInfo] = useState("")
     const [contractInfo, setContractInfo] = useState("")
-
+    console.log("shiftsInfo")
+    console.log(shiftsInfo)
+    console.log("workerMap")
+    console.log(workerMap)
     const defaultErrorMsg = "There are workers who work in 2 diffrent shifts at the same time."
     const [errorMsg, setErrorMsg] = useState(defaultErrorMsg)
     const token = user.token
@@ -27,13 +30,12 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
             ...initialTable.Friday,
             ...initialTable.Saturday
         ];
-
-
         var newColors = Array.from({
             length: initialTable.Sunday.length + initialTable.Monday.length + initialTable.Tuesday.length +
                 initialTable.Wednesday.length + initialTable.Thursday.length + initialTable.Friday.length + initialTable.Saturday.length
         }, () => "white")
-        setRenderInfo({ table: newTable, colors: newColors, shiftsPerWorkers: shiftsPerWorkers, isGenerated: true })
+        var newRowsToRender = Array.from({length : newColors.length}, () => false)
+        setRenderInfo({ table: newTable, colors: newColors, shiftsPerWorkers: shiftsPerWorkers, isGenerated: true, rowsToRender: newRowsToRender })
     }, []);
 
     function getColor(id, name, day, row) {
@@ -170,6 +172,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
         var newTable = renderInfo.table
         const oldColor = (renderInfo.colors)[rowIndex]
         var newColors = renderInfo.colors
+        var newRowsToRender = Array.from({length : renderInfo.rowsToRender.length}, () => false)
         const [newName = "", newId = "", newColor = "white"] = newWorker.split(",")
         const [oldName, oldId] = (row[4]).split("\n")
         var newShiftPerWorkersDay = newName != "" ? utils.addShiftToWorker((renderInfo.shiftsPerWorkers)[day], newId, newName, getRelativeIndex(rowIndex, day)) : (renderInfo.shiftsPerWorkers)[day]
@@ -219,7 +222,31 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
                 }
             }
         }
-        setRenderInfo({ table: newTable, colors: newColors, shiftsPerWorkers: newShiftPerWorkers, isGenerated: true })
+
+        //deciding which rows of shifts at the same day to render again
+        var shiftsInfoDay = (shiftsInfo[day])
+        var overlaps = (shiftsInfoDay[row[5]]).overlaps
+        for (const shiftId of overlaps) {
+            const start = getAbsuluteIndex((shiftsInfoDay[shiftId]).start, day)
+            const end = getAbsuluteIndex((shiftsInfoDay[shiftId]).end, day)
+            const skill = (newTable[start][1])
+            const workersOfShiftSkill = workerMap.get(skill)
+            var renderShift = false
+            for (let i = 0; i < workersOfShiftSkill.length; i++) {
+                if (workersOfShiftSkill[i].id == newId || workersOfShiftSkill[i].id == oldId) {//the new worker or the old worker has this skill - workerList of this shift can change
+                    renderShift = true
+                } 
+            }
+            if (renderShift) { //rendering all the rows of this shift
+                for (let i = start; i <= end; i++) {
+                    //re-render only if shift skill is equal to one of the worker`s skills
+                    newRowsToRender[i] = true
+                }
+            }
+        }
+        //rendering copies of the same shift
+        //rendering overlapping rows of this row
+        setRenderInfo({ table: newTable, colors: newColors, shiftsPerWorkers: newShiftPerWorkers, isGenerated: true, rowsToRender: newRowsToRender })
     }
 
 
@@ -280,7 +307,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#backModal" onClick={handleBack}>Back</button>
                 </div>
                 <div className="col-11"></div>
-                {renderInfo.isGenerated && (<Table content={renderInfo.table} colors={renderInfo.colors} shiftsPerWorker={renderInfo.shiftsPerWorkers}
+                {renderInfo.isGenerated && (<Table content={renderInfo.table} colors={renderInfo.colors} rowsToRender={renderInfo.rowsToRender} shiftsPerWorker={renderInfo.shiftsPerWorkers}
                     workerMap={workerMap} shiftsInfo={shiftsInfo} onCellEdit={handleCellEdit} generateWorkerList={generateWorkerList} getLineInfo={getLineInfo}></Table>)}
                 <div className="row"><br /></div>
                 <div className="d-flex justify-content-between mb-3 down-buttons">

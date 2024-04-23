@@ -4,9 +4,11 @@ import NonEditableCell from "../components/NonEditableCell";
 import ShiftIdCell from "../components/ShiftIdCell";
 import WorkerDropdown from "../components/WorkerDropdown";
 import ActionCell from "../components/ActionCell";
-import * as utils from '../../Utils'
+import { memo } from 'react';
 import { useState } from "react";
-export default function TableRow({rowIndex,row,color,generateWorkerList, onCellEdit, getLineInfo}) {
+import React from "react";
+const TableRow = ({rowIndex,row,color,generateWorkerList, onCellEdit, getLineInfo}) => {
+    console.log("render row num " + (rowIndex+1))
     //TODO make useMemo
     function capitalizeFirstLetter(str) {
         return str.charAt(0).toUpperCase() + str.slice(1);
@@ -25,4 +27,7 @@ export default function TableRow({rowIndex,row,color,generateWorkerList, onCellE
         </>
     );
 
-}
+};
+
+const MemorizedTableRow = React.memo(TableRow)
+export default MemorizedTableRow
