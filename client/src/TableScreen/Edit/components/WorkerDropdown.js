@@ -49,7 +49,7 @@ export default function WorkerDropdown({ value, rowIndex, coloumnIndex, workerLi
                     onClick={() => getLineInfo(rowIndex)}
                     style={{ ...buttonStyle}} // Apply button style dynamically and add margin
                 >
-                    <img src={info} alt="Info Icon" className="img-fluid actionImage" />
+                    <img src={info} alt="Info Icon" className="img-fluid actionImage worker-dropdown" />
                 </button>
             </div>
         </td>
