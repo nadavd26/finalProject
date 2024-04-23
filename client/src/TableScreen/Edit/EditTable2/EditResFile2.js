@@ -224,6 +224,8 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
         }
 
         //deciding which rows of shifts at the same day to render again
+        var oldWorkerHasSkill = {}
+        var newWorkerHasSkill = {}
         var shiftsInfoDay = (shiftsInfo[day])
         var overlaps = (shiftsInfoDay[row[5]]).overlaps
         for (const shiftId of overlaps) {
@@ -231,11 +233,24 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
             const end = getAbsuluteIndex((shiftsInfoDay[shiftId]).end, day)
             const skill = (newTable[start][1])
             const workersOfShiftSkill = workerMap.get(skill)
-            var renderShift = false
-            for (let i = 0; i < workersOfShiftSkill.length; i++) {
-                if (workersOfShiftSkill[i].id == newId || workersOfShiftSkill[i].id == oldId) {//the new worker or the old worker has this skill - workerList of this shift can change
-                    renderShift = true
-                } 
+            var renderShift = oldWorkerHasSkill[skill] || newWorkerHasSkill[skill]
+            if (!renderShift) { //skill is not memorized or the workers dont have the skilll
+                for (let i = 0; i < workersOfShiftSkill.length; i++) {
+                    if (workersOfShiftSkill[i].id == newId) {//the new worker or the old worker has this skill - workerList of this shift can change
+                        newWorkerHasSkill[skill] = true //memorization
+                        renderShift = true
+                    }
+                    
+                    if (workersOfShiftSkill[i].id == oldId) {//the new worker or the old worker has this skill - workerList of this shift can change
+                        oldWorkerHasSkill[skill] = true //memorization
+                        renderShift = true
+                    } 
+                }
+            } else {
+                console.log("oldWorkerHasSkill")
+                console.log(oldWorkerHasSkill)
+                console.log("newWorkerHasSkill")
+                console.log(newWorkerHasSkill)
             }
             if (renderShift) { //rendering all the rows of this shift
                 for (let i = start; i <= end; i++) {
