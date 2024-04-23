@@ -12,7 +12,7 @@ function TableAlgo2({ workersAndShifts }) {
                             <tbody>
                                 <tr className="row100 body first-row">
                                     <th className="cell100 first-column first-column-body blue static-position"></th>
-                                    <th className="cell100 last-columns blue">00:00</th>
+                                    <th className="cell100 last-columns blue" style={{ textAlign: 'center', verticalAlign: 'middle' }}>00:00</th>
                                     <th className="cell100 last-columns blue">00:30</th>
                                     <th className="cell100 last-columns blue">01:00</th>
                                     <th className="cell100 last-columns blue">01:30</th>

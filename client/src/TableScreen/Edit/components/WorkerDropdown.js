@@ -1,7 +1,8 @@
 import React from 'react';
+import Select from 'react-select';
 import info from '../Images/info.png';
+
 export default function WorkerDropdown({ value, rowIndex, coloumnIndex, workerList, onCellEdit, color, shiftIndex, getLineInfo }) {
-    // console.log("row " + rowIndex + " re-rendered")
     const buttonStyle = {
         visibility: color === 'white' ? 'hidden' : 'visible'
     };
@@ -20,39 +21,55 @@ export default function WorkerDropdown({ value, rowIndex, coloumnIndex, workerLi
     if (value == "") {
         shownValue = "not selected";
     }
-    const handleOnBlur = () => {
-        document.getElementById(`cell-${rowIndex}-${coloumnIndex}`).classList.remove("focused-cell");
-    }
 
-    const handleFocus = () => {
-        document.getElementById(`cell-${rowIndex}-${coloumnIndex}`).classList.add("focused-cell");
+    // Add a hidden first option
+    const hiddenOption = { label: "Hidden Option", value: "", isHidden: true };
+    const optionsWithHidden = [hiddenOption, ...workerList.map(worker => ({ label: `${worker.name}\n${worker.id}`, value: `${worker.name},${worker.id},${worker.color}`, color: worker.color }))];
+
+    const customStyles = {
+        option: (provided, state) => {
+            let backgroundColor = state.isSelected ? 'lightblue' : state.data.color;
+            if (state.isFocused) {
+                backgroundColor = state.data.color === 'red' ? '#f35C84' : 'lightblue'; // Change background color to darker pink for red options, lightblue otherwise
+            }
+            return {
+                ...provided,
+                backgroundColor: backgroundColor,
+                color: 'black', // Set text color to black for all options
+                display: state.data.isHidden ? 'none' : 'block', // Hide the hidden option
+            };
+        },
+        control: (provided) => ({
+            ...provided,
+            width: '100%', // Set width to a fixed value (adjust as needed)
+        }),
     };
 
     return (
-        <td id={`cell-${rowIndex}-${coloumnIndex}`} className={`cell100 last-columns worker-dropdown ${color}`} onBlur={handleOnBlur} onFocus={handleFocus}>
-            <div className="cell-content">
-                <select id={`selectWorker-${rowIndex}`} value={value} onChange={(e) => onCellEdit(e.target.value, rowIndex)} style={{ backgroundColor: value !== "" ? "lightblue" : "transparent" }}>
-                    <option value={value} hidden style={{ backgroundColor: "transparent" }}>{shownValue}</option>
-                    {value !== "" && (
-                        <option key={0} value={""} style={{ backgroundColor: "transparent" }}>
-                            not selected
-                        </option>
-                    )}
-                    {workerList.map((worker, index) => (
-                        <option key={startIndex + index} value={worker.name + "," + worker.id + "," + worker.color} style={{ backgroundColor: worker.color }}>
-                            {worker.name + "\n" + worker.id}
-                        </option>
-                    ))}
-                </select>
+        <td id={`cell-${rowIndex}-${coloumnIndex}`} className={`cell100 last-columns worker-dropdown ${color}`}>
+            <div className="cell-content" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div className='selection'>
+                    <Select
+                        id={`selectWorker-${rowIndex}`}
+                        value={{ label: shownValue, value }}
+                        onChange={(selectedOption) => onCellEdit(selectedOption ? selectedOption.value : "", rowIndex)} // Handle null value for clearing
+                        options={optionsWithHidden} // Use the options array with the hidden first option
+                        styles={customStyles} // Apply custom styles
+                        isClearable // Make the Select component clearable
+                        menuPosition="fixed" // Ensure menu is positioned fixed to the bottom of the select input
+                        menuShouldBlockScroll={true}
+                        // closeMenuOnScroll={true}
+                    />
+                </div>
                 <button
                     className="border-0 p-0 no-outline actionButton"
                     onClick={() => getLineInfo(rowIndex)}
-                    style={{ ...buttonStyle}} // Apply button style dynamically and add margin
+                    style={buttonStyle} // Apply button style dynamically and add margin
                 >
                     <img src={info} alt="Info Icon" className="img-fluid actionImage worker-dropdown" />
                 </button>
             </div>
         </td>
     );
-    
+
 }

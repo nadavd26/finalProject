@@ -20,7 +20,7 @@ const TableRow = ({rowIndex,row,color,generateWorkerList, onCellEdit, getLineInf
         <>
             <tr className="row100 body last-rows" id="table-row">
             <NonEditableCell value={rowIndex+1} rowIndex={rowIndex} coloumnIndex={0} color={color} shiftIndex={row[5]}/>
-                <NonEditableCell value={row[0]} rowIndex={rowIndex} coloumnIndex={0} color={color} additionalClass={"no-left second"} shiftIndex={row[5]}/>
+                <NonEditableCell value={capitalizeFirstLetter(row[0])} rowIndex={rowIndex} coloumnIndex={0} color={color} additionalClass={"no-left second"} shiftIndex={row[5]}/>
                 <NonEditableCell value={row[1]} rowIndex={rowIndex} columnIndex={1} color={color} additionalClass={"no-left"} shiftIndex={row[5]}/>
                 <NonEditableCell value={row[2]} rowIndex={rowIndex} columnIndex={2} color={color} additionalClass={"no-left"} shiftIndex={row[5]}/>
                 <NonEditableCell value={row[3]} rowIndex={rowIndex} columnIndex={3} color={color} additionalClass={"no-left"} shiftIndex={row[5]}/>
