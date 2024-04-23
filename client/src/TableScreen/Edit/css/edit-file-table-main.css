@@ -137,4 +137,8 @@ img.img-fluid.actionImage.worker-dropdown {
   width: 25px !important;
 }
 
+td#first-column.cell100.first-columns.no-left.second {
+  border-left-width: 0px !important;
+}
+
 
