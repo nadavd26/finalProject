@@ -3,8 +3,11 @@ import DayCell from '../components/DayCell';
 import FreeEditCell from '../components/FreeEditCell';
 import TimeCell from '../components/TimeCell';
 import RowActionCell from '../components/RowActionCell';
+import React from "react";
 import { adjustTime } from "../Utils";
-export default function TableRow({ row, rowErrors, rowIndex, onCellEdit, onRowDelete, onRowAdd }) {
+const TableRow = ({ row, rowErrors, rowIndex, onCellEdit, onRowDelete, onRowAdd, shouldRender }) => {
+    console.log("render row num " + (rowIndex+1))
+
     const handleDeleteRow = () => {
         onRowDelete(rowIndex)
     }
@@ -49,3 +52,13 @@ export default function TableRow({ row, rowErrors, rowIndex, onCellEdit, onRowDe
         </>
     );
 }
+
+function arePropsEqual(oldProps, newProps) {
+    if (newProps.shouldRender) {
+        return false
+    }
+    return true
+}
+
+const TableRowMemo = React.memo(TableRow, arePropsEqual)
+export default TableRowMemo

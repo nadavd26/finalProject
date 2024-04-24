@@ -12,6 +12,7 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
     const [errors, setErrors] = useState([[true, true, true, false, false, true]])
     const [showErrorModel, setShowErrorModel] = useState(false)
     const [showSuccessModel, setShowSuccessModel] = useState(false)
+    const [rowsToRender, setRowsToRender] = useState({})
     const [showBackModal, setShowBackModal] = useState(false)
     const defaultErrorMsg = "The table must contain at least one line.\n" +
         "Id must contain only digits.\n " +
@@ -138,6 +139,13 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
     const addRowHandler = () => {
         const newRow = ["", "", "", "", "", ""]
         const newErrorRow = [true, true, true, false, false, true]
+        var newRowsToRender = {}
+        for (let i = 0; i < content.length; i++) {
+            console.log("render all")
+            newRowsToRender[i] = true
+        }
+
+        setRowsToRender(newRowsToRender)
         setContent((prevContent) => [...prevContent, newRow]);
         setErrors((prevErrors) => [...prevErrors, newErrorRow]);
     };
@@ -146,6 +154,13 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
         const newEmptyRow = ["", "", "", "", "", ""];
         const newErrorRow = [true, true, true, false, false, true];
 
+        var newRowsToRender = {}
+        for (let i = 0; i < content.length; i++) {
+            console.log("render all")
+            newRowsToRender[i] = true
+        }
+
+        setRowsToRender(newRowsToRender)
         setContent((prevContent) => {
             const newContent = [...prevContent];
             newContent.splice(rowIndex + 1, 0, newEmptyRow);
@@ -287,6 +302,9 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
                 break;
         }
 
+        var newRowsToRender = {}
+        newRowsToRender[rowIndex] = true
+        setRowsToRender(newRowsToRender)
         setContent(updatedContent);
         setErrors(updatedErrors)
     };
@@ -328,6 +346,12 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
             return
         } else {
             const sortedTable = await sortTable(1, content, user.token);
+            var newRowsToRender = {}
+            for (let i = 0; i < content.length; i++) {
+                newRowsToRender[i] = true
+            }
+
+            setRowsToRender(newRowsToRender)
             setContent(sortedTable)
             const duplicatesId = findDuplicatesId(sortedTable)
             if (duplicatesId.length != 0) {
@@ -355,6 +379,13 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
                 newErrors.splice(rowIndex, 1);
                 return newErrors;
             })
+
+            var newRowsToRender = {}
+            for (let i = 0; i < content.length; i++) {
+                newRowsToRender[i] = true
+            }
+
+            setRowsToRender(newRowsToRender)
         };
     }
 
@@ -394,7 +425,7 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
                 </div>
                 <div className="col-11"></div>
                 <Table content={content} onCellEdit={handleCellEdit} onRowDelete={deleteRow} errors={errors}
-                    isNumberOfWorkersValid={isNumberOfWorkersValid} isSkillValid={isSkillValid} onRowAdd={onRowAdd}></Table>
+                    isNumberOfWorkersValid={isNumberOfWorkersValid} isSkillValid={isSkillValid} onRowAdd={onRowAdd} rowsToRender={rowsToRender}></Table>
                 <div className="row"><br /></div>
                 <div className="d-flex justify-content-between mb-3 down-buttons">
                     <div className="col-3"></div>

@@ -52,7 +52,6 @@
 #table-screen th,
 #table-screen td {
   font-weight: unset;
-  padding-right: 10px;
 }
 
 #table-screen .table100-body td {
@@ -111,5 +110,13 @@
 
 #table-screen #table {
   margin: 0;
+}
+
+#first-column {
+  border-left-width: 1px !important;
+}
+
+td#first-column.cell100.first-columns{
+  border-left-width: 1px !important;
 }
 

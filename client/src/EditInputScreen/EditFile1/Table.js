@@ -1,7 +1,22 @@
 import React from 'react';
-import TableRows from './TableRows';
+import TableRowMemo from './TableRow'
+const TableRows = ({ content, errors, onCellEdit,  onRowDelete, onRowAdd, rowsToRender}) => {
+    return (
+        content.map((rowMap, index) => (
+            <TableRowMemo
+                rowIndex={index}
+                row={rowMap}
+                rowErrors={errors[index]}
+                onRowDelete={onRowDelete}
+                onCellEdit={onCellEdit}
+                onRowAdd={onRowAdd}
+                shouldRender={rowsToRender[index]}
+            />
+        ))
+    );
+}
 //first row : [{name : , validate : function}, ....]
-function Table({content, errors, onCellEdit, onRowDelete, onRowAdd}) {
+function Table({content, errors, onCellEdit, onRowDelete, onRowAdd, rowsToRender}) {
     return (
         <div className="container-table100">
             <div className="wrap-table100">
@@ -18,7 +33,7 @@ function Table({content, errors, onCellEdit, onRowDelete, onRowAdd}) {
                                     <th class="cell100  last-columns blue col-2">Skill3</th>
                                     <th class="cell100  last-columns blue col-1">Contract</th>
                                 </tr>
-                                <TableRows content={content} errors={errors} onCellEdit={onCellEdit} onRowDelete={onRowDelete}  onRowAdd={onRowAdd}/>
+                                <TableRows content={content} errors={errors} onCellEdit={onCellEdit} onRowDelete={onRowDelete}  onRowAdd={onRowAdd} rowsToRender={rowsToRender}/>
                             </tbody>
                         </table>
                     </div>

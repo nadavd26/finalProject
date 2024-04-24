@@ -26,7 +26,7 @@ function Dropdown({ firstDay, dayHandler }) {
         default:
             otherDays = [];
     }
-    return <div className="dropdown col-2 d-flex justify-content-center">
+    return <div className="dropdown">
         <button className="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {firstDay}
         </button>

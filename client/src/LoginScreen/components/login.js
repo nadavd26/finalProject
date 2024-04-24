@@ -22,6 +22,8 @@ function Login() {
         userInfo["table1"] = await getInputTable(1, token)
         userInfo["table2"] = await getInputTable(2, token)
         userInfo["table3"] = await getInputTable(3, token)
+        userInfo["algo1Table"] = []
+        userInfo["algo2Table"] = [] 
         setUser(userInfo)
         navigate("/upload")
     };
