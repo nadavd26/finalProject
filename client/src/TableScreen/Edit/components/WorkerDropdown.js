@@ -69,7 +69,21 @@ export default function WorkerDropdown({ value, rowIndex, coloumnIndex, workerLi
         },
         control: (provided) => ({
             ...provided,
+            backgroundColor: value == "" ? 'white' : 'lightblue',
+            border: '1px solid black', // Add border to the control
             width: '80%', // Set width to a fixed value (adjust as needed)
+        }),
+        dropdownIndicator: (provided) => ({
+            ...provided,
+            color: 'black', // Change color of the dropdown indicator to black
+        }),
+        clearIndicator: (provided) => ({
+            ...provided,
+            color: 'black', // Change color of the clear indicator (x) to black
+        }),
+        indicatorSeparator: (provided) => ({
+            ...provided,
+            backgroundColor: 'black', // Change color of the vertical line to black
         }),
     };
 

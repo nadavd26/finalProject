@@ -308,8 +308,8 @@ export async function generateAlgo2Results(table) {
     await sleep(10)
     const scheduleDataa = table
     for (let i = 0; i < scheduleDataa.length; i++) {
-        scheduleDataa[i][4] = (2*i+5) % 10
-        // scheduleDataa[i][4] = 2
+        // scheduleDataa[i][4] = (2*i+5) % 10
+        scheduleDataa[i][4] = 2
     }
     const scheduleData = duplicateLines(scheduleDataa)
     // console.log("scheduleData : " + scheduleData)
