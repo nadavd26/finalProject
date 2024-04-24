@@ -134,9 +134,8 @@ img.img-fluid.actionImage.worker-dropdown {
   position: absolute !important;
   top: 0 !important;
   left: 0 !important;
-  aspect-ratio: 1/1 !important; /* Ensure equal width and height */
-  width: 10% !important; /* Set width to 10% of the parent element's width */
-  height: 100% !important; /* Set height to 100% of the parent element's height */
+  object-fit: contain !important;
+  width: 8% !important; /* Set width to 10% of the parent element's width */
 }
 
 

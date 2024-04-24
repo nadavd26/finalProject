@@ -13,6 +13,7 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
     const [showErrorModel, setShowErrorModel] = useState(false)
     const [showSuccessModel, setShowSuccessModel] = useState(false)
     const [showBackModal, setShowBackModal] = useState(false)
+    const [rowsToRender, setRowsToRender] = useState({})
     const defaultErrorMsg = "The table must contain at least one line.\n" +
         "Skill contains only letters, spaces, apostrophes, and certain special characters.\n" +
         "Required Number Of Workers is a non-negative integer."
@@ -198,6 +199,13 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
     const addRowHandler = () => {
         const newRow = ["", "", "", "", ""]
         const newErrorRow = [true, true, true, true, true]
+        var newRowsToRender = {}
+        for (let i = 0; i < content.length; i++) {
+            console.log("render all")
+            newRowsToRender[i] = true
+        }
+
+        setRowsToRender(newRowsToRender)
         setContent((prevContent) => [...prevContent, newRow]);
         setErrors((prevErrors) => [...prevErrors, newErrorRow]);
     };
@@ -205,7 +213,13 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
     const onRowAdd = (rowIndex) => {
         const newEmptyRow = [content[rowIndex][0], content[rowIndex][1], "00:00", "24:00", ""];
         const newErrorRow = [errors[rowIndex][0], errors[rowIndex][1], false, false, true];
+        var newRowsToRender = {}
+        for (let i = 0; i < content.length; i++) {
+            console.log("render all")
+            newRowsToRender[i] = true
+        }
 
+        setRowsToRender(newRowsToRender)
         setContent((prevContent) => {
             const newContent = [...prevContent];
             newContent.splice(rowIndex + 1, 0, newEmptyRow);
@@ -260,7 +274,9 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
                 });
                 break; // Add break statement here
         }
-
+        var newRowsToRender = {}
+        newRowsToRender[rowIndex] = true
+        setRowsToRender(newRowsToRender)
         setContent(updatedContent);
         setErrors(updatedErrors)
     };
@@ -289,13 +305,13 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
             isValid = false;
         }
 
-        for(let i=0; i < content.length; i++) {
+        for (let i = 0; i < content.length; i++) {
             for (let j = 0; j <= 4; j++) {
                 const cell = document.getElementById(`cell-${(i)}-${j}`)
                 cell.classList.remove("pink")
             }
         }
-        
+
         errors.forEach((row) => {
             row.forEach((cell) => {
                 if (cell) {
@@ -310,15 +326,22 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
             return
         }
         const sortedTable = await sortTable(2, content, user.token);
+        var newRowsToRender = {}
+        for (let i = 0; i < content.length; i++) {
+            newRowsToRender[i] = true
+        }
+
+        setRowsToRender(newRowsToRender)
         setContent(sortedTable)
         const overlaps = calcOverlaps(sortedTable)
         if (overlaps != 0) {
-            overlaps.forEach(row =>{
+            overlaps.forEach(row => {
                 for (let j = 0; j <= 4; j++) {
-                    const cell = document.getElementById(`cell-${(row-1)}-${j}`)
+                    const cell = document.getElementById(`cell-${(row - 1)}-${j}`)
                     cell.classList.add("pink")
-                }})
-            
+                }
+            })
+
             setErrorMsg("detected overlaps in rows: \n" + JSON.stringify(overlaps))
             errorModal.show()
         } else {
@@ -342,6 +365,13 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
                 newErrors.splice(rowIndex, 1);
                 return newErrors;
             })
+
+            var newRowsToRender = {}
+            for (let i = 0; i < content.length; i++) {
+                newRowsToRender[i] = true
+            }
+
+            setRowsToRender(newRowsToRender)
         };
     }
 
@@ -381,7 +411,7 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
                 </div>
                 <div className="col-11"></div>
                 <Table content={content} onCellEdit={handleCellEdit} onRowDelete={deleteRow} errors={errors}
-                    isNumberOfWorkersValid={isNumberOfWorkersValid} isSkillValid={isSkillValid} onRowAdd={onRowAdd}></Table>
+                    isNumberOfWorkersValid={isNumberOfWorkersValid} isSkillValid={isSkillValid} onRowAdd={onRowAdd} rowsToRender={rowsToRender}></Table>
                 <div className="row"><br /></div>
                 <div className="d-flex justify-content-between mb-3 down-buttons">
                     <div className="col-3"></div>

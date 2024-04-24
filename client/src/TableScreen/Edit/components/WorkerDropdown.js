@@ -21,7 +21,15 @@ export default function WorkerDropdown({ value, rowIndex, coloumnIndex, workerLi
     if (value == "") {
         shownValue = "not selected";
     }
+    // function concatenateArray10Times(arr) {
+    //     let result = [];
+    //     for (let i = 0; i < 100; i++) {
+    //         result = result.concat(arr);
+    //     }
+    //     return result;
+    // }
 
+    // workerList = concatenateArray10Times(workerList)
     // Add a hidden first option
     const hiddenOption = { label: "Hidden Option", value: "", isHidden: true };
     const optionsWithHidden = [hiddenOption, ...workerList.map(worker => ({ label: `${worker.name}\n${worker.id}`, value: `${worker.name},${worker.id},${worker.color}`, color: worker.color }))];
