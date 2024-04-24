@@ -31,8 +31,28 @@ export default function WorkerDropdown({ value, rowIndex, coloumnIndex, workerLi
 
     // workerList = concatenateArray10Times(workerList)
     // Add a hidden first option
+    let options = [];
+    if (workerList.length > 0) {
+        options = workerList.map(worker => ({
+            label: `${worker.name}\n${worker.id}`,
+            value: `${worker.name},${worker.id},${worker.color}`,
+            color: worker.color
+        }));
+    } else {
+        // Add a non-clickable option when workerList is empty
+        options = [{
+            label: "Not enough workers",
+            value: "",
+            isDisabled: true,
+            color: 'lightgray' // Set color to light gray
+        }];
+    }
+
+    // Add a hidden first option
     const hiddenOption = { label: "Hidden Option", value: "", isHidden: true };
-    const optionsWithHidden = [hiddenOption, ...workerList.map(worker => ({ label: `${worker.name}\n${worker.id}`, value: `${worker.name},${worker.id},${worker.color}`, color: worker.color }))];
+    const optionsWithHidden = [hiddenOption, ...options];
+    // const hiddenOption = { label: "Hidden Option", value: "", isHidden: true };
+    // const optionsWithHidden = [hiddenOption, ...workerList.map(worker => ({ label: `${worker.name}\n${worker.id}`, value: `${worker.name},${worker.id},${worker.color}`, color: worker.color }))];
 
     const customStyles = {
         option: (provided, state) => {
@@ -49,14 +69,14 @@ export default function WorkerDropdown({ value, rowIndex, coloumnIndex, workerLi
         },
         control: (provided) => ({
             ...provided,
-            width: '100%', // Set width to a fixed value (adjust as needed)
+            width: '80%', // Set width to a fixed value (adjust as needed)
         }),
     };
 
     return (
         <td id={`cell-${rowIndex}-${coloumnIndex}`} className={`cell100 last-columns worker-dropdown ${color}`}>
             <div className="cell-content" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <div className='selection'>
+                <div className='selection' style={{width: '75%'}}>
                     <Select
                         id={`selectWorker-${rowIndex}`}
                         value={{ label: shownValue, value }}
