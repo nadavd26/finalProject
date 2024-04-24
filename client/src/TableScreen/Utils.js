@@ -382,6 +382,10 @@ function transformDataToMap(data) {
     return resultMap;
 }
 
+export function generateReqSkillDayMap(table2) {
+    return transformDataToMap(table2)
+}
+
 function duplicateLines(table) {
     console.log("table")
     console.log(table)
@@ -426,8 +430,13 @@ export async function generateAlgo1Results(table) {
     return transformedData
 }
 
-export function getKey(day, skill) {
-    return (day).toLowerCase() + "*" + skill
+export function getKey(day, skill, req) {
+    if (!req) {
+        return (day).toLowerCase() + "*" + skill
+    }
+
+    return skill + "*" + (day).toLowerCase()
+
 }
 
 export function getSkillSet(arr) {

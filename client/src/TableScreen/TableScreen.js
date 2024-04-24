@@ -22,6 +22,7 @@ function TableScreen({ user, setUser }) {
     const algo2TableState = useTableAlgo2State();
     const tableAlgo1State = useTableAlgo1State()
     const editInfoState = useEditInfoState()
+    console.log(tableAlgo1State.get.req)
     function switchDay(day) {
         if ((tableScreenState.get.tableNum == 1 && !tableScreenState.get.is1Generated) || (tableScreenState.get.tableNum == 2 && !tableScreenState.get.is2Generated)) {
             return
@@ -33,7 +34,9 @@ function TableScreen({ user, setUser }) {
 
         if (tableScreenState.get.is1Generated) {
             const key = utils.getKey(day, tableAlgo1State.get.currentSkill)
+            const key1 = utils.getKey(day, tableAlgo1State.get.currentSkill, true)
             tableAlgo1State.setWorksPerShift(((user.algo1Table).get(key)))
+            tableAlgo1State.setReq(((user.daySkillReqMap).get(key1)))
         }
     }
 
@@ -43,8 +46,10 @@ function TableScreen({ user, setUser }) {
         tableAlgo1State.setOtherSkills(newSkillList)
         tableAlgo1State.setCurrentSkill(skill)
         const key = utils.getKey(tableScreenState.get.currentDay, skill)
+        const key1 = utils.getKey(tableScreenState.get.currentDay, skill, true)
         // console.log("key " + key)
         tableAlgo1State.setWorksPerShift(((user.algo1Table).get(key)))
+        tableAlgo1State.setReq(((user.daySkillReqMap).get(key1)))
         // console.log("res " + ((user.algo1Table).get(key)))
     }
 
@@ -56,15 +61,26 @@ function TableScreen({ user, setUser }) {
     }
     async function generateResults1() {
         const res = await utils.generateAlgo1Results(user.table3)
+        console.log("res")
+        console.log(res)
+        const newDaySkillReqMap = utils.generateReqSkillDayMap(user.table2)
         var newUser = user
         newUser.algo1Table = res
+        newUser.daySkillReqMap = newDaySkillReqMap
         newUser.skillList = utils.getSkillSet(user.table2)
         const startSkill = (newUser.skillList)[0]
         tableAlgo1State.setCurrentSkill(startSkill)
         tableAlgo1State.setOtherSkills((utils.removeElementAtIndex(newUser.skillList, 0)))
         const key = utils.getKey("sunday", startSkill)
+        const key1 = utils.getKey("sunday", startSkill, true)
         tableAlgo1State.setKey(key)
         var newWorkersPerShift = res.get(key)
+        var newReq = newDaySkillReqMap.get(key1)
+        console.log("newDaySkillReqMap")
+        console.log(newDaySkillReqMap)
+        console.log("newReq")
+        console.log(newReq)
+        tableAlgo1State.setReq(newReq)
         tableAlgo1State.setWorksPerShift(newWorkersPerShift)
         setUser(newUser)
         tableScreenState.setIs1Generated(true)
@@ -209,7 +225,7 @@ function TableScreen({ user, setUser }) {
                                 </>
                             )}
                         </div>
-                    ) : (
+                    ) : ( //current table table 1
                         <>
                             {!tableScreenState.get.is1Generated ? (
                                 <><div className="row">
@@ -221,7 +237,7 @@ function TableScreen({ user, setUser }) {
                                 </div>
                                     <br></br><br></br><Loader speed={5} customText="Calculating..." /></>
                             ) : (<div>
-                                <div className="row">
+                                <div className="row"> 
                                     <div className="col-5"></div>
                                     <div className="col-1 text-center">
                                         <Dropdown firstDay={tableScreenState.get.currentDay} dayHandler={switchDay}></Dropdown>
@@ -229,7 +245,7 @@ function TableScreen({ user, setUser }) {
                                     <div className="col-1 text-center">
                                         <SkillDropdown currentSkill={tableAlgo1State.get.currentSkill} skillList={tableAlgo1State.get.otherSkills} handlerSkill={handlerSkillChange} />
                                     </div>
-                                    <div className="col-5"></div>
+                                    <div className="col-5">{"" + tableAlgo1State.get.req}</div>
                                 </div>
                                 <br></br>
                                 <br></br>

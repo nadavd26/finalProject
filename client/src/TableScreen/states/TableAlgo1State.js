@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 export const useTableAlgo1State = () => {
-    const [get, setState] = useState({ currentSkill: "", otherSkills: [], worksPerShift: null, key: ""});
+    const [get, setState] = useState({ currentSkill: "", otherSkills: [], worksPerShift: null, req: null ,key: ""});
 
     const setCurrentSkill = (skill) => {
         setState(prevState => ({
@@ -24,6 +24,13 @@ export const useTableAlgo1State = () => {
         }));
     };
 
+    const setReq = (arr) => {
+        setState(prevState => ({
+            ...prevState,
+            req: arr,
+        }));
+    };
+
     const setKey = (arr) => {
         setState(prevState => ({
             ...prevState,
@@ -31,5 +38,5 @@ export const useTableAlgo1State = () => {
         }));
     };
 
-    return { get, setCurrentSkill, setOtherSkills, setWorksPerShift, setKey};
+    return { get, setCurrentSkill, setOtherSkills, setWorksPerShift, setKey, setReq};
 };
