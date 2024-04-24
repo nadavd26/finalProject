@@ -18,11 +18,9 @@ const TableLine1 = new Schema(
         },
         skill2: {
             type: String,
-            required: true,
         },
         skill3: {
             type: String,
-            required: true,
         },
         contract: {
             type: String,
