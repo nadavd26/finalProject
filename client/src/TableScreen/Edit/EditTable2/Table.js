@@ -41,7 +41,26 @@ function arePropsEqual(oldProps, newProps) {
 
 const MemorizedTableRow = React.memo(TableRow, arePropsEqual)
 //first row : [{name : , validate : function}, ....]
-function Table({ content, colors, shiftsPerWorker, workerMap, shiftsInfo, onCellEdit, generateWorkerList, getLineInfo, rowsToRender }) {
+function Table({ content, start,pageSize ,colors, shiftsPerWorker, workerMap, shiftsInfo, onCellEdit, generateWorkerList, getLineInfo, rowsToRender }) {
+    console.log("render table" + start)
+    const renderedRows = [];
+    var end = Math.min(pageSize + start - 1, content.length - 1)
+    for (let i = start; i <= end; i++) {
+        console.log("hi")
+        renderedRows.push(
+            <MemorizedTableRow
+                rowIndex={i}
+                row={content[i]}
+                color={colors[i]}
+                workerMap={workerMap}
+                shiftsInfo={shiftsInfo}
+                generateWorkerList={generateWorkerList}
+                onCellEdit={onCellEdit}
+                getLineInfo={getLineInfo}
+                shouldRender={rowsToRender[i]}
+            />
+        );
+    }
     return (
         <div className="container-table100">
             <div className="wrap-table100">
@@ -58,22 +77,7 @@ function Table({ content, colors, shiftsPerWorker, workerMap, shiftsInfo, onCell
                                     <th class="cell100  last-columns blue col-3">Assigned Worker</th>
                                     <th class="cell100  last-columns blue col-2">Shift Number</th>
                                 </tr>
-
-                                {content.map((row, index) => (
-                                    <>
-                                    <MemorizedTableRow
-                                        rowIndex={index}
-                                        row={row}
-                                        color={colors[index]}
-                                        workerMap={workerMap}
-                                        shiftsInfo={shiftsInfo}
-                                        generateWorkerList={generateWorkerList}
-                                        onCellEdit={onCellEdit}
-                                        getLineInfo={getLineInfo}
-                                        shouldRender={rowsToRender[index]}
-                                    />
-                                    </>
-                                ))}
+                                {renderedRows}
                             </tbody>
                         </table>
                     </div>

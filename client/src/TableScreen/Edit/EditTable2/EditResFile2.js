@@ -9,6 +9,9 @@ import contractImg from '../Images/contract.png'
 import infoImg from '../Images/info.png'
 
 export default function EditResFile2({ initialTable, setInEdit, user, setUser, workerMap, shiftsInfo, shiftsPerWorkers, setShiftsPerWorkers, finishCallback }) {
+    const [currentIndex, setCurrentIndex] = useState(0)
+    const [searchedIndex, setSearchedIndex] = useState(currentIndex)
+    var page_size = 50
     const [showBackModal, setShowBackModal] = useState(false)
     const [renderInfo, setRenderInfo] = useState({ table: [["", "", "", "", "", ""]], colors: [], shiftsPerWorkers: {}, isGenerated: false, rowsToRender: {} })
     const [overlapInfo, setOverlapInfo] = useState("")
@@ -240,11 +243,11 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
                         newWorkerHasSkill[skill] = true //memorization
                         renderShift = true
                     }
-                    
+
                     if (workersOfShiftSkill[i].id == oldId) {//the new worker or the old worker has this skill - workerList of this shift can change
                         oldWorkerHasSkill[skill] = true //memorization
                         renderShift = true
-                    } 
+                    }
                 }
             } else {
                 console.log("oldWorkerHasSkill")
@@ -315,6 +318,109 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
         setInEdit(false)
     }
 
+    const nextPage = () => {
+        var newCurrentIndex = currentIndex
+        var length = renderInfo.table.length
+        newCurrentIndex = newCurrentIndex + page_size
+        var newRowsToRender = {}
+        var end = Math.min(page_size + newCurrentIndex - 1, length - 1)
+        for (let i = newCurrentIndex; i <= end; i++) {
+            newRowsToRender[i] = true
+        }
+        setRenderInfo(prevRenderInfo => ({
+            ...prevRenderInfo,
+            rowsToRender: newRowsToRender
+        }));
+        setCurrentIndex(newCurrentIndex)
+    }
+
+    const prevPage = () => {
+        var oldCurrentIndex = currentIndex
+        var newCurrentIndex = oldCurrentIndex - page_size
+        var newRowsToRender = {}
+        for (let i = newCurrentIndex; i < oldCurrentIndex; i++) {
+            newRowsToRender[i] = true
+        }
+
+        setRenderInfo(prevRenderInfo => ({
+            ...prevRenderInfo,
+            rowsToRender: newRowsToRender
+        }));
+        setCurrentIndex(newCurrentIndex)
+    }
+
+    const firstPage = () => {
+        var oldCurrentIndex = currentIndex
+        var newCurrentIndex = 0
+        var length = renderInfo.table.length
+        var end = Math.min(page_size + newCurrentIndex - 1, length - 1)
+        var newRowsToRender = {}
+        for (let i = newCurrentIndex; i <= end; i++) {
+            newRowsToRender[i] = true
+        }
+
+        setRenderInfo(prevRenderInfo => ({
+            ...prevRenderInfo,
+            rowsToRender: newRowsToRender
+        }));
+        setCurrentIndex(newCurrentIndex)
+    }
+
+
+    const lastPage = () => {
+        var length = renderInfo.table.length
+        var newCurrentIndex = Math.floor(length / page_size) * page_size
+        if (newCurrentIndex == length) {
+            newCurrentIndex = newCurrentIndex - page_size
+        }
+        var newRowsToRender = {}
+        for (let i = newCurrentIndex; i < length; i++) {
+            newRowsToRender[i] = true
+        }
+        setRenderInfo(prevRenderInfo => ({
+            ...prevRenderInfo,
+            rowsToRender: newRowsToRender
+        }));
+        setCurrentIndex(newCurrentIndex)
+    }
+
+    const changeCurrentIndex = () => {
+        var indexNum = parseInt(searchedIndex)
+        indexNum = indexNum - 1
+        var length = renderInfo.table.length
+
+        if (indexNum < 0 || indexNum >= renderInfo.table.length) {
+            return
+        }
+
+        var newCurrentIndex = Math.floor(indexNum / page_size) * page_size
+        var end = Math.min(page_size + newCurrentIndex - 1, length - 1)
+        var newRowsToRender = {}
+        for (let i = newCurrentIndex; i <= end; i++) {
+            newRowsToRender[i] = true
+        }
+
+        setRenderInfo(prevRenderInfo => ({
+            ...prevRenderInfo,
+            rowsToRender: newRowsToRender
+        }));
+        setCurrentIndex(newCurrentIndex)
+    }
+
+    function handleInputChange(e) {
+        const inputValue = e.target.value;
+        const regex = /^[0-9]*$/; // Regular expression to match only digits (0-9)
+
+        if (false) {
+            // If the input value contains non-numeric characters, prevent the default behavior
+            e.preventDefault();
+        } else {
+            setSearchedIndex(e.target.value)
+        }
+    }
+
+
+
     return (
         <div id="edit-file">
             <div className="container-fluid py-3">
@@ -322,16 +428,50 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#backModal" onClick={handleBack}>Back</button>
                 </div>
                 <div className="col-11"></div>
-                {renderInfo.isGenerated && (<Table content={renderInfo.table} colors={renderInfo.colors} rowsToRender={renderInfo.rowsToRender} shiftsPerWorker={renderInfo.shiftsPerWorkers}
+                {renderInfo.isGenerated && (<Table content={renderInfo.table} start={currentIndex} pageSize={page_size} colors={renderInfo.colors} rowsToRender={renderInfo.rowsToRender} shiftsPerWorker={renderInfo.shiftsPerWorkers}
                     workerMap={workerMap} shiftsInfo={shiftsInfo} onCellEdit={handleCellEdit} generateWorkerList={generateWorkerList} getLineInfo={getLineInfo}></Table>)}
-                <div className="row"><br /></div>
+                <div className="row"><br></br></div>
+                <div className="row">
+                    <div className="col-2"></div>
+                    <div className="col-8" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <button onClick={firstPage} disabled={currentIndex == 0}>first page</button>
+                        <button onClick={prevPage} disabled={currentIndex == 0}>prev page</button>
+                        <div style={{ position: 'relative', display: 'inline-block' }}>
+                            <input
+                                name="searchIndex"
+                                type="number"
+                                onChange={handleInputChange}
+                                style={{ paddingRight: '30px' }} // Adjust padding to accommodate the button
+                            />
+                            <button
+                                style={{
+                                    position: 'absolute',
+                                    top: 0,
+                                    right: 0,
+                                    width: '30px', // Adjust button width as needed
+                                    height: '100%', // Make button height same as input field
+                                }}
+                                onClick={changeCurrentIndex}
+                            >
+                            </button>
+                        </div>
+                        <button onClick={nextPage} disabled={currentIndex + page_size >= renderInfo.table.length}>next page</button>
+                        <button onClick={lastPage} disabled={currentIndex + page_size >= renderInfo.table.length}>last page</button>
+                    </div>
+                    <div className="col-2"></div>
+                </div>
+                <div className="row"><br></br></div>
                 <div className="d-flex justify-content-between mb-3 down-buttons">
                     <div className="col-3"></div>
                     <button className="btn btn-success col-3" onClick={handleSave}
                         data-toggle="modal" >Save</button>
-                    <div className="col-3"></div>
+                    <div className="col-3">
+
+                    </div>
                 </div>
             </div>
+
+
 
             <div className="modal fade" id="infoModal" tabIndex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-lg modal-dialog-side" role="document">

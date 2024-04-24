@@ -144,4 +144,13 @@ td#first-column.cell100.first-columns.no-left.second {
   border-left-width: 0px !important;
 }
 
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
 
