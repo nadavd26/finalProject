@@ -1132,7 +1132,7 @@ for item in reqs:
 
 # Create maps for day and skill
 day_mapping = {day: index for index, day in enumerate(days)}
-skill_mapping = {tech: index for index, tech in enumerate(skills)}
+skill_mapping = {skill: index for index, skill in enumerate(skills)}
 
 # Init array of shifts per skill and day
 shifts_array = [[[] for _ in range(len(skill_mapping))] for _ in range(len(day_mapping))]
