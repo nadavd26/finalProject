@@ -90,18 +90,19 @@ export default function WorkerDropdown({ value, rowIndex, coloumnIndex, workerLi
     return (
         <td id={`cell-${rowIndex}-${coloumnIndex}`} className={`cell100 last-columns worker-dropdown ${color}`}>
             <div className="cell-content" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <div className='selection' style={{width: '75%'}}>
+                <div className='selection' style={{ width: '75%' }}>
                     <Select
                         id={`selectWorker-${rowIndex}`}
-                        value={{ label: shownValue, value }}
+                        value={value === "" ? { label: "not selected", value: "" } : { label: shownValue, value }}
                         onChange={(selectedOption) => onCellEdit(selectedOption ? selectedOption.value : "", rowIndex)} // Handle null value for clearing
                         options={optionsWithHidden} // Use the options array with the hidden first option
                         styles={customStyles} // Apply custom styles
                         isClearable // Make the Select component clearable
                         menuPosition="fixed" // Ensure menu is positioned fixed to the bottom of the select input
                         menuShouldBlockScroll={true}
-                        // closeMenuOnScroll={true}
+                    // closeMenuOnScroll={true}
                     />
+
                 </div>
                 <button
                     className="border-0 p-0 no-outline actionButton"

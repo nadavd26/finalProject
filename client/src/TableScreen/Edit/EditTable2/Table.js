@@ -41,23 +41,25 @@ function arePropsEqual(oldProps, newProps) {
 
 const MemorizedTableRow = React.memo(TableRow, arePropsEqual)
 //first row : [{name : , validate : function}, ....]
-function Table({ content, start,pageSize ,colors, shiftsPerWorker, workerMap, shiftsInfo, onCellEdit, generateWorkerList, getLineInfo, rowsToRender }) {
+function Table({ linesFiltered, content, start,pageSize ,colors, shiftsPerWorker, workerMap, shiftsInfo, onCellEdit, generateWorkerList, getLineInfo, rowsToRender }) {
     console.log("render table" + start)
+    console.log("linesFiltered")
+    console.log(linesFiltered)
     const renderedRows = [];
-    var end = Math.min(pageSize + start - 1, content.length - 1)
+    var end = Math.min(pageSize + start - 1, linesFiltered.length - 1)
     for (let i = start; i <= end; i++) {
-        console.log("hi")
+        const originalIndex = linesFiltered[i]
         renderedRows.push(
             <MemorizedTableRow
-                rowIndex={i}
-                row={content[i]}
-                color={colors[i]}
+                rowIndex={originalIndex}
+                row={content[originalIndex]}
+                color={colors[originalIndex]}
                 workerMap={workerMap}
                 shiftsInfo={shiftsInfo}
                 generateWorkerList={generateWorkerList}
                 onCellEdit={onCellEdit}
                 getLineInfo={getLineInfo}
-                shouldRender={rowsToRender[i]}
+                shouldRender={rowsToRender[originalIndex]}
             />
         );
     }

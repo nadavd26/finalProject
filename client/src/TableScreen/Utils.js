@@ -236,6 +236,15 @@ export function generateShiftsPerWorker(data) {
     return shifts
 }
 
+export function generateWorkerList(table1) {
+    var workerList = []
+    for (let i = 0; i < table1.length; i++) {
+        workerList.push(table1[i][1] + "\n" + table1[i][0])
+    }
+
+    return workerList
+}
+
 function generateWorkerShiftList(table) {
     const workerShiftMap = {}; // Use an object to map worker name+id to a Set of shiftIds
     for (let i = 0; i < table.length; i++) {
@@ -300,6 +309,24 @@ export function removeShiftFromWorker(workerShiftMap, id, name, rowIndex) {
 }
 
 
+export function binarySearch(arr, target) {
+    let left = 0;
+    let right = arr.length - 1;
+
+    while (left <= right) {
+        const mid = Math.floor((left + right) / 2);
+
+        if (arr[mid] === target) {
+            return mid; // Found the target
+        } else if (arr[mid] < target) {
+            left = mid + 1; // Search the right half
+        } else {
+            right = mid - 1; // Search the left half
+        }
+    }
+
+    return -1; // Target not found
+}
 
 
 
@@ -309,7 +336,7 @@ export async function generateAlgo2Results(table) {
     const scheduleDataa = table
     for (let i = 0; i < scheduleDataa.length; i++) {
         // scheduleDataa[i][4] = (2*i+5) % 10
-        scheduleDataa[i][4] = 2
+        scheduleDataa[i][4] = 20
     }
     const scheduleData = duplicateLines(scheduleDataa)
     // console.log("scheduleData : " + scheduleData)

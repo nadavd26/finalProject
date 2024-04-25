@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Table from "./Table";
 import '../css/bootstrap.min.css'
 import '../css/edit-file-table-main.css'
@@ -7,13 +7,30 @@ import * as utils from '../../Utils'
 import overlapImg from '../Images/overlap.png'
 import contractImg from '../Images/contract.png'
 import infoImg from '../Images/info.png'
+import SearchDropdown from "../components/SearchDropdown";
 
 export default function EditResFile2({ initialTable, setInEdit, user, setUser, workerMap, shiftsInfo, shiftsPerWorkers, setShiftsPerWorkers, finishCallback }) {
     const [currentIndex, setCurrentIndex] = useState(0)
     const [searchedIndex, setSearchedIndex] = useState(currentIndex)
-    var page_size = 50
+    var page_size = 10
     const [showBackModal, setShowBackModal] = useState(false)
     const [renderInfo, setRenderInfo] = useState({ table: [["", "", "", "", "", ""]], colors: [], shiftsPerWorkers: {}, isGenerated: false, rowsToRender: {} })
+    const [daySearch, setDaySearch] = useState({ value: "", shownValue: "Day" });
+    const [skillSearch, setSkillSearch] = useState({ value: "", shownValue: "Skill" });
+    const [fromSearch, setFromSearch] = useState({ value: "", shownValue: "From" });
+    const [untilSearch, setUntilSearch] = useState({ value: "", shownValue: "Until" });
+    const [assignedSearch, setAssignedSearch] = useState({ value: "", shownValue: "Worker" });
+    const [shiftIndexSearch, setShiftIndexSearch] = useState({ value: "", shownValue: "Shift Number" });
+
+    const [options, setOptions] = useState({
+        day: { options: [], shownOptions: [] },
+        skill: { options: [], shownOptions: [] },
+        from: { options: [], shownOptions: [] },
+        until: { options: [], shownOptions: [] },
+        assigned: { options: [], shownOptions: [] },
+        shiftIndex: { options: [], shownOptions: [] }
+    });
+    const [linesFiltered, setLinesFiltered] = useState([])
     const [overlapInfo, setOverlapInfo] = useState("")
     const [contractInfo, setContractInfo] = useState("")
     console.log("shiftsInfo")
@@ -37,8 +54,121 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
             length: initialTable.Sunday.length + initialTable.Monday.length + initialTable.Tuesday.length +
                 initialTable.Wednesday.length + initialTable.Thursday.length + initialTable.Friday.length + initialTable.Saturday.length
         }, () => "white")
+
+        var newOptions = options
+        newOptions.day = getDayOptions()
+        newOptions.skill = getSkillOptions()
+        newOptions.assigned = getWorkerList()
+        newOptions.shiftIndex = getShiftList(newTable)
+        newOptions.from = getFromTimeList()
+        newOptions.until = getUntilTimeList()
+
+        setLinesFiltered(Array.from({ length: newTable.length }, (_, index) => index))
+        // setLinesFiltered(
+        //     Array.from({ length: newTable.length }, (_, index) => index)
+        //         .filter(index => index % 2 === 0)
+        // );
+        // setLinesFiltered(Array.from({ length: newTable.length/2 }, (_, index) => index))
         setRenderInfo({ table: newTable, colors: newColors, shiftsPerWorkers: shiftsPerWorkers, isGenerated: true, rowsToRender: {} })
+
+        setOptions(newOptions)
     }, []);
+
+    const getDayOptions = () => {
+        return { options: ["", "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"], shownOptions: ["Day", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"] }
+    }
+
+    const getSkillOptions = () => {
+        const skillList = user.skillList
+        var res = { options: ["", ...skillList], shownOptions: ["Skill", ...skillList] }
+        return res
+    }
+
+    const getWorkerList = () => {
+        const workerList = utils.generateWorkerList(user.table1)
+        var res = { options: ["", ...workerList], shownOptions: ["Worker", ...workerList] }
+        return res
+    }
+
+    const getShiftList = (newTable) => {
+        const uniqueShiftsShown = new Set();
+        for (let i = 0; i < newTable.length; i++) {
+            const shift = newTable[i][5];
+            uniqueShiftsShown.add(shift + 1);
+        }
+    
+        const shifts = Array.from(uniqueShiftsShown)
+        var res = { options: ["", ...(shifts)], shownOptions: ["Shift Number", ...(shifts)] };
+        console.log("res");
+        console.log(res); // Log the result
+        return res;
+    };
+
+    const getFromTimeList = () => {
+        const fromTimeList = [
+            "00:00", "00:30",
+            "01:00", "01:30",
+            "02:00", "02:30",
+            "03:00", "03:30",
+            "04:00", "04:30",
+            "05:00", "05:30",
+            "06:00", "06:30",
+            "07:00", "07:30",
+            "08:00", "08:30",
+            "09:00", "09:30",
+            "10:00", "10:30",
+            "11:00", "11:30",
+            "12:00", "12:30",
+            "13:00", "13:30",
+            "14:00", "14:30",
+            "15:00", "15:30",
+            "16:00", "16:30",
+            "17:00", "17:30",
+            "18:00", "18:30",
+            "19:00", "19:30",
+            "20:00", "20:30",
+            "21:00", "21:30",
+            "22:00", "22:30",
+            "23:00", "23:30"
+        ];
+
+        const res = { options: ["", ...fromTimeList], shownOptions: ["From", ...fromTimeList] }
+        return res
+
+    }
+
+    const getUntilTimeList = () => {
+        const UntilTimeList = [
+            "00:30",
+            "01:00", "01:30",
+            "02:00", "02:30",
+            "03:00", "03:30",
+            "04:00", "04:30",
+            "05:00", "05:30",
+            "06:00", "06:30",
+            "07:00", "07:30",
+            "08:00", "08:30",
+            "09:00", "09:30",
+            "10:00", "10:30",
+            "11:00", "11:30",
+            "12:00", "12:30",
+            "13:00", "13:30",
+            "14:00", "14:30",
+            "15:00", "15:30",
+            "16:00", "16:30",
+            "17:00", "17:30",
+            "18:00", "18:30",
+            "19:00", "19:30",
+            "20:00", "20:30",
+            "21:00", "21:30",
+            "22:00", "22:30",
+            "23:00", "23:30", "24:00"
+        ];
+
+        const res = { options: ["", ...UntilTimeList], shownOptions: ["Until", ...UntilTimeList] }
+        return res
+
+    }
 
     function getColor(id, name, day, row) {
         const shiftSet = utils.getShiftsForWorker((renderInfo.shiftsPerWorkers)[day], id, name);
@@ -262,6 +392,18 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
                 }
             }
         }
+
+        // var length = linesFiltered.length
+        // var newRowsToRender = {}
+        // var endOfPage = Math.min(page_size + currentIndex - 1, length - 1)
+        // for (let i = currentIndex; i<= endOfPage; i++) {
+        //     let absuluteIndex = linesFiltered[i]
+        //     let rowChcked = renderInfo.table[absuluteIndex]
+        //     if (rowChcked[0] != day || !(utils.checkOverlap(rowChcked[2], rowChcked[3], row[2], row[3]))) {
+        //         continue
+        //     }
+
+        // }
         //rendering copies of the same shift
         //rendering overlapping rows of this row
         setRenderInfo({ table: newTable, colors: newColors, shiftsPerWorkers: newShiftPerWorkers, isGenerated: true, rowsToRender: newRowsToRender })
@@ -320,12 +462,12 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
 
     const nextPage = () => {
         var newCurrentIndex = currentIndex
-        var length = renderInfo.table.length
+        var length = linesFiltered.length
         newCurrentIndex = newCurrentIndex + page_size
         var newRowsToRender = {}
         var end = Math.min(page_size + newCurrentIndex - 1, length - 1)
         for (let i = newCurrentIndex; i <= end; i++) {
-            newRowsToRender[i] = true
+            newRowsToRender[linesFiltered[i]] = true
         }
         setRenderInfo(prevRenderInfo => ({
             ...prevRenderInfo,
@@ -339,7 +481,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
         var newCurrentIndex = oldCurrentIndex - page_size
         var newRowsToRender = {}
         for (let i = newCurrentIndex; i < oldCurrentIndex; i++) {
-            newRowsToRender[i] = true
+            newRowsToRender[linesFiltered[i]] = true
         }
 
         setRenderInfo(prevRenderInfo => ({
@@ -352,11 +494,11 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
     const firstPage = () => {
         var oldCurrentIndex = currentIndex
         var newCurrentIndex = 0
-        var length = renderInfo.table.length
+        var length = linesFiltered.length
         var end = Math.min(page_size + newCurrentIndex - 1, length - 1)
         var newRowsToRender = {}
         for (let i = newCurrentIndex; i <= end; i++) {
-            newRowsToRender[i] = true
+            newRowsToRender[linesFiltered[i]] = true
         }
 
         setRenderInfo(prevRenderInfo => ({
@@ -368,14 +510,14 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
 
 
     const lastPage = () => {
-        var length = renderInfo.table.length
+        var length = linesFiltered.length
         var newCurrentIndex = Math.floor(length / page_size) * page_size
         if (newCurrentIndex == length) {
             newCurrentIndex = newCurrentIndex - page_size
         }
         var newRowsToRender = {}
         for (let i = newCurrentIndex; i < length; i++) {
-            newRowsToRender[i] = true
+            newRowsToRender[linesFiltered[i]] = true
         }
         setRenderInfo(prevRenderInfo => ({
             ...prevRenderInfo,
@@ -385,9 +527,10 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
     }
 
     const changeCurrentIndex = () => {
-        var indexNum = parseInt(searchedIndex)
-        indexNum = indexNum - 1
-        var length = renderInfo.table.length
+        var num = parseInt(searchedIndex)
+        num = num - 1
+        var indexNum = utils.binarySearch(linesFiltered, num)
+        var length = linesFiltered.length
 
         if (indexNum < 0 || indexNum >= renderInfo.table.length) {
             return
@@ -397,7 +540,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
         var end = Math.min(page_size + newCurrentIndex - 1, length - 1)
         var newRowsToRender = {}
         for (let i = newCurrentIndex; i <= end; i++) {
-            newRowsToRender[i] = true
+            newRowsToRender[linesFiltered[i]] = true
         }
 
         setRenderInfo(prevRenderInfo => ({
@@ -408,17 +551,82 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
     }
 
     function handleInputChange(e) {
-        const inputValue = e.target.value;
-        const regex = /^[0-9]*$/; // Regular expression to match only digits (0-9)
-
-        if (false) {
-            // If the input value contains non-numeric characters, prevent the default behavior
-            e.preventDefault();
-        } else {
-            setSearchedIndex(e.target.value)
-        }
+        setSearchedIndex(e.target.value)
     }
 
+
+    const changeSelectedDay = (newDayIndex) => {
+        var newDaySearch = { value: (options.day.options)[newDayIndex], shownValue: (options.day.shownOptions)[newDayIndex] }
+        setDaySearch(newDaySearch)
+    }
+
+    const changeSelectedSkill = (newSkillIndex) => {
+        var newSkillSearch = { value: (options.skill.options)[newSkillIndex], shownValue: (options.skill.shownOptions)[newSkillIndex] }
+        setSkillSearch(newSkillSearch)
+    }
+
+    const changeSelectedWorker = (newWorkerIndex) => {
+        var newAssignedSearch = { value: (options.assigned.options)[newWorkerIndex], shownValue: (options.assigned.shownOptions)[newWorkerIndex] }
+        setAssignedSearch(newAssignedSearch)
+    }
+
+    const changeSelectedShift = (newShiftIndex) => {
+        var newShiftIndexSearch = { value: (options.shiftIndex.options)[newShiftIndex], shownValue: (options.shiftIndex.shownOptions)[newShiftIndex] }
+        setShiftIndexSearch(newShiftIndexSearch)
+    }
+
+    const changeSelectedFrom = (newFromIndex) => {
+        var newSearch = { value: (options.from.options)[newFromIndex], shownValue: (options.from.shownOptions)[newFromIndex] }
+        setFromSearch(newSearch)
+    }
+
+    const changeSelectedUntil = (newUntilIndex) => {
+        var newSearch = { value: (options.until.options)[newUntilIndex], shownValue: (options.until.shownOptions)[newUntilIndex] }
+        setUntilSearch(newSearch)
+    }
+
+    const filterTable = () => {
+        var newLinesFiltered = []
+        var newRowsToRender = {}
+        const table = renderInfo.table
+        for (let i = 0; i < table.length; i++) {
+            var goodLine = true
+            const [day, skill, from, until, assigned, shiftIndex] = table[i]
+
+            if (daySearch.value != "" && daySearch.value != day) {
+                goodLine = false
+            }
+            if (skillSearch.value != "" && skillSearch.value != skill) {
+                goodLine = false
+            }
+            if (fromSearch.value != "" && fromSearch.value != from) {
+                goodLine = false
+            }
+            if (untilSearch.value != "" && untilSearch.value != until) {
+                goodLine = false
+            }
+            if (assignedSearch.value != "" && assignedSearch.value != assigned) {
+                goodLine = false
+            }
+            if (shiftIndexSearch.value != "" && shiftIndexSearch.value - 1 != shiftIndex) {
+                goodLine = false
+            }
+
+            if (goodLine) {
+                console.log("day, skill, from, until, assigned, shiftIndex")
+                console.log(day, skill, from, until, assigned, shiftIndex)
+                newLinesFiltered.push(i)
+                newRowsToRender[i] = true
+            }
+        }
+
+        setCurrentIndex(0)
+        setLinesFiltered(newLinesFiltered)
+        setRenderInfo(prevRenderInfo => ({
+            ...prevRenderInfo,
+            rowsToRender: newRowsToRender
+        }));
+    }
 
 
     return (
@@ -428,8 +636,18 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#backModal" onClick={handleBack}>Back</button>
                 </div>
                 <div className="col-11"></div>
-                {renderInfo.isGenerated && (<Table content={renderInfo.table} start={currentIndex} pageSize={page_size} colors={renderInfo.colors} rowsToRender={renderInfo.rowsToRender} shiftsPerWorker={renderInfo.shiftsPerWorkers}
+                {renderInfo.isGenerated && (<Table linesFiltered={linesFiltered} content={renderInfo.table} start={currentIndex} pageSize={page_size} colors={renderInfo.colors} rowsToRender={renderInfo.rowsToRender} shiftsPerWorker={renderInfo.shiftsPerWorkers}
                     workerMap={workerMap} shiftsInfo={shiftsInfo} onCellEdit={handleCellEdit} generateWorkerList={generateWorkerList} getLineInfo={getLineInfo}></Table>)}
+                <div className="row"><br></br></div>
+                <div className="row">
+                    <div className="col-2"><SearchDropdown value={daySearch.value} shownValue={daySearch.shownValue} options={options.day.options} shownOptions={options.day.shownOptions} onSelect={changeSelectedDay} /></div>
+                    <div className="col-1"><SearchDropdown value={skillSearch.value} shownValue={skillSearch.shownValue} options={options.skill.options} shownOptions={options.skill.shownOptions} onSelect={changeSelectedSkill} /></div>
+                    <div className="col-2"><SearchDropdown value={fromSearch.value} shownValue={fromSearch.shownValue} options={options.from.options} shownOptions={options.from.shownOptions} onSelect={changeSelectedFrom} /></div>
+                    <div className="col-1"><SearchDropdown value={untilSearch.value} shownValue={untilSearch.shownValue} options={options.until.options} shownOptions={options.until.shownOptions} onSelect={changeSelectedUntil} /></div>
+                    <div className="col-3"><SearchDropdown value={assignedSearch.value} shownValue={assignedSearch.shownValue} options={options.assigned.options} shownOptions={options.assigned.shownOptions} onSelect={changeSelectedWorker} /></div>
+                    <div className="col-2"><SearchDropdown value={shiftIndexSearch.value} shownValue={shiftIndexSearch.shownValue} options={options.shiftIndex.options} shownOptions={options.shiftIndex.shownOptions} onSelect={changeSelectedShift} /></div>
+                    <div className="col-1"><button onClick={filterTable}>Search</button></div>
+                </div>
                 <div className="row"><br></br></div>
                 <div className="row">
                     <div className="col-2"></div>
@@ -455,8 +673,8 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
                             >
                             </button>
                         </div>
-                        <button onClick={nextPage} disabled={currentIndex + page_size >= renderInfo.table.length}>next page</button>
-                        <button onClick={lastPage} disabled={currentIndex + page_size >= renderInfo.table.length}>last page</button>
+                        <button onClick={nextPage} disabled={currentIndex + page_size >= linesFiltered.length}>next page</button>
+                        <button onClick={lastPage} disabled={currentIndex + page_size >= linesFiltered.length}>last page</button>
                     </div>
                     <div className="col-2"></div>
                 </div>
