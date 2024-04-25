@@ -37,6 +37,10 @@ const SearchDropdown = ({ value, shownValue, options, shownOptions, onSelect }) 
             ...provided,
             display: state.data.value === 0 ? 'none' : 'block', // Hide the first option
         }),
+        clearIndicator: (provided) => ({
+            ...provided,
+            padding: '4px' // Adjust the padding of the clear indicator button
+        })
     };
 
     return (
