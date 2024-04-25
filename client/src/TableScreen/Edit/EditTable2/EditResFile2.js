@@ -7,12 +7,17 @@ import * as utils from '../../Utils'
 import overlapImg from '../Images/overlap.png'
 import contractImg from '../Images/contract.png'
 import infoImg from '../Images/info.png'
+import right from '../Images/right.png'
+import left from '../Images/left.png'
+import search from '../Images/search.webp'
+import start from '../Images/start.png'
+import end from '../Images/end.png'
 import SearchDropdown from "../components/SearchDropdown";
 
 export default function EditResFile2({ initialTable, setInEdit, user, setUser, workerMap, shiftsInfo, shiftsPerWorkers, setShiftsPerWorkers, finishCallback }) {
     const [currentIndex, setCurrentIndex] = useState(0)
     const [searchedIndex, setSearchedIndex] = useState(currentIndex)
-    var page_size = 10
+    var page_size = 11
     const [showBackModal, setShowBackModal] = useState(false)
     const [renderInfo, setRenderInfo] = useState({ table: [["", "", "", "", "", ""]], colors: [], shiftsPerWorkers: {}, isGenerated: false, rowsToRender: {} })
     const [daySearch, setDaySearch] = useState({ value: "", shownValue: "Day" });
@@ -75,18 +80,18 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
     }, []);
 
     const getDayOptions = () => {
-        return { options: ["", "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"], shownOptions: ["Day", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"] }
+        return { options: ["", "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"], shownOptions: ["Any", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"] }
     }
 
     const getSkillOptions = () => {
         const skillList = user.skillList
-        var res = { options: ["", ...skillList], shownOptions: ["Skill", ...skillList] }
+        var res = { options: ["", ...skillList], shownOptions: ["Any", ...skillList] }
         return res
     }
 
     const getWorkerList = () => {
         const workerList = utils.generateWorkerList(user.table1)
-        var res = { options: ["", ...workerList], shownOptions: ["Worker", ...workerList] }
+        var res = { options: ["", "+", "-", ...workerList], shownOptions: ["Any", "Any Assigned Shift", "Any Unassigned Shift", ...workerList] }
         return res
     }
 
@@ -96,9 +101,9 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
             const shift = newTable[i][5];
             uniqueShiftsShown.add(shift + 1);
         }
-    
+
         const shifts = Array.from(uniqueShiftsShown)
-        var res = { options: ["", ...(shifts)], shownOptions: ["Shift Number", ...(shifts)] };
+        var res = { options: ["", ...(shifts)], shownOptions: ["Any", ...(shifts)] };
         console.log("res");
         console.log(res); // Log the result
         return res;
@@ -132,7 +137,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
             "23:00", "23:30"
         ];
 
-        const res = { options: ["", ...fromTimeList], shownOptions: ["From", ...fromTimeList] }
+        const res = { options: ["", ...fromTimeList], shownOptions: ["Any", ...fromTimeList] }
         return res
 
     }
@@ -165,7 +170,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
             "23:00", "23:30", "24:00"
         ];
 
-        const res = { options: ["", ...UntilTimeList], shownOptions: ["Until", ...UntilTimeList] }
+        const res = { options: ["", ...UntilTimeList], shownOptions: ["Any", ...UntilTimeList] }
         return res
 
     }
@@ -605,7 +610,15 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
             if (untilSearch.value != "" && untilSearch.value != until) {
                 goodLine = false
             }
-            if (assignedSearch.value != "" && assignedSearch.value != assigned) {
+            if (assignedSearch.value != "" && assignedSearch.value != "+" && assignedSearch.value != "-" && assignedSearch.value != assigned) {
+                goodLine = false
+            }
+
+            if (assignedSearch.value == "+" && assigned == "") {
+                goodLine = false
+            }
+
+            if (assignedSearch.value == "-" && assigned != "") {
                 goodLine = false
             }
             if (shiftIndexSearch.value != "" && shiftIndexSearch.value - 1 != shiftIndex) {
@@ -628,6 +641,71 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
         }));
     }
 
+    const searchDayElement = () => {
+        return (<SearchDropdown value={daySearch.value} shownValue={daySearch.shownValue} options={options.day.options} shownOptions={options.day.shownOptions} onSelect={changeSelectedDay} />)
+    }
+
+    const searchSkillElement = () => {
+        return (<SearchDropdown value={skillSearch.value} shownValue={skillSearch.shownValue} options={options.skill.options} shownOptions={options.skill.shownOptions} onSelect={changeSelectedSkill} />)
+    }
+
+    const searchFromElement = () => {
+        return (<SearchDropdown value={fromSearch.value} shownValue={fromSearch.shownValue} options={options.from.options} shownOptions={options.from.shownOptions} onSelect={changeSelectedFrom} />)
+    }
+
+    const searchUntilElement = () => {
+        return (<SearchDropdown value={untilSearch.value} shownValue={untilSearch.shownValue} options={options.until.options} shownOptions={options.until.shownOptions} onSelect={changeSelectedUntil} />)
+    }
+    const searchAssignedElement = () => {
+        return (<SearchDropdown value={assignedSearch.value} shownValue={assignedSearch.shownValue} options={options.assigned.options} shownOptions={options.assigned.shownOptions} onSelect={changeSelectedWorker} />)
+    }
+
+    const searchShiftIndexElement = () => {
+        return (<SearchDropdown value={shiftIndexSearch.value} shownValue={shiftIndexSearch.shownValue} options={options.shiftIndex.options} shownOptions={options.shiftIndex.shownOptions} onSelect={changeSelectedShift} />)
+    }
+
+    const indexSearchElement = () => {
+        return (
+            <div style={{ position: 'relative', display: 'inline-block' }}>
+                <input
+                    name="searchIndex"
+                    type="number"
+                    onChange={handleInputChange}
+                    style={{
+                        paddingRight: '30px', // Adjust padding to accommodate the button
+                        height: '38px', // Match the height of the button
+                        boxSizing: 'border-box', // Ensure padding is included in the height calculation
+                        verticalAlign: 'middle', // Align input vertically with the button
+                        maxWidth: 'calc(100% - 0px)' // Limit the width to accommodate the button
+                    }}
+                />
+                <button
+                    style={{
+                        position: 'absolute',
+                        top: '50%', // Position button at 50% from the top
+                        transform: 'translateY(-50%)', // Translate button up by 50% of its own height
+                        right: 10,
+                        width: '30px', // Adjust button width as needed
+                        height: '30px', // Make button height same as input field
+                        border: '1px solid transparent', // Set border to transparent
+                        background: 'white', // Add background style
+                        padding: 0, // Remove padding
+                        display: 'flex', // Use flexbox to center content
+                        alignItems: 'center', // Center vertically
+                        justifyContent: 'center' // Center horizontally
+                    }}
+                    onClick={changeCurrentIndex}
+                >
+                    <img src={search} alt="Search" style={{ maxWidth: '100%', maxHeight: '100%' }} />
+                </button>
+            </div>
+        );
+    };
+
+
+
+
+
 
     return (
         <div id="edit-file">
@@ -636,46 +714,30 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#backModal" onClick={handleBack}>Back</button>
                 </div>
                 <div className="col-11"></div>
-                {renderInfo.isGenerated && (<Table linesFiltered={linesFiltered} content={renderInfo.table} start={currentIndex} pageSize={page_size} colors={renderInfo.colors} rowsToRender={renderInfo.rowsToRender} shiftsPerWorker={renderInfo.shiftsPerWorkers}
-                    workerMap={workerMap} shiftsInfo={shiftsInfo} onCellEdit={handleCellEdit} generateWorkerList={generateWorkerList} getLineInfo={getLineInfo}></Table>)}
-                <div className="row"><br></br></div>
-                <div className="row">
-                    <div className="col-2"><SearchDropdown value={daySearch.value} shownValue={daySearch.shownValue} options={options.day.options} shownOptions={options.day.shownOptions} onSelect={changeSelectedDay} /></div>
-                    <div className="col-1"><SearchDropdown value={skillSearch.value} shownValue={skillSearch.shownValue} options={options.skill.options} shownOptions={options.skill.shownOptions} onSelect={changeSelectedSkill} /></div>
-                    <div className="col-2"><SearchDropdown value={fromSearch.value} shownValue={fromSearch.shownValue} options={options.from.options} shownOptions={options.from.shownOptions} onSelect={changeSelectedFrom} /></div>
-                    <div className="col-1"><SearchDropdown value={untilSearch.value} shownValue={untilSearch.shownValue} options={options.until.options} shownOptions={options.until.shownOptions} onSelect={changeSelectedUntil} /></div>
-                    <div className="col-3"><SearchDropdown value={assignedSearch.value} shownValue={assignedSearch.shownValue} options={options.assigned.options} shownOptions={options.assigned.shownOptions} onSelect={changeSelectedWorker} /></div>
-                    <div className="col-2"><SearchDropdown value={shiftIndexSearch.value} shownValue={shiftIndexSearch.shownValue} options={options.shiftIndex.options} shownOptions={options.shiftIndex.shownOptions} onSelect={changeSelectedShift} /></div>
-                    <div className="col-1"><button onClick={filterTable}>Search</button></div>
-                </div>
+                {renderInfo.isGenerated && (<Table indexSearchElement={indexSearchElement} linesFiltered={linesFiltered} content={renderInfo.table} start={currentIndex} pageSize={page_size} colors={renderInfo.colors} rowsToRender={renderInfo.rowsToRender} shiftsPerWorker={renderInfo.shiftsPerWorkers}
+                    workerMap={workerMap} shiftsInfo={shiftsInfo} onCellEdit={handleCellEdit} generateWorkerList={generateWorkerList} getLineInfo={getLineInfo} searchDayElement={searchDayElement}
+                    searchSkillElement={searchSkillElement} searchFromElement={searchFromElement} searchUntilElement={searchUntilElement} searchAssignedElement={searchAssignedElement} searchShiftIndexElement={searchShiftIndexElement}></Table>)}
                 <div className="row"><br></br></div>
                 <div className="row">
                     <div className="col-2"></div>
                     <div className="col-8" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <button onClick={firstPage} disabled={currentIndex == 0}>first page</button>
-                        <button onClick={prevPage} disabled={currentIndex == 0}>prev page</button>
-                        <div style={{ position: 'relative', display: 'inline-block' }}>
-                            <input
-                                name="searchIndex"
-                                type="number"
-                                onChange={handleInputChange}
-                                style={{ paddingRight: '30px' }} // Adjust padding to accommodate the button
-                            />
-                            <button
-                                style={{
-                                    position: 'absolute',
-                                    top: 0,
-                                    right: 0,
-                                    width: '30px', // Adjust button width as needed
-                                    height: '100%', // Make button height same as input field
-                                }}
-                                onClick={changeCurrentIndex}
-                            >
-                            </button>
-                        </div>
-                        <button onClick={nextPage} disabled={currentIndex + page_size >= linesFiltered.length}>next page</button>
-                        <button onClick={lastPage} disabled={currentIndex + page_size >= linesFiltered.length}>last page</button>
+                        <button onClick={firstPage} disabled={currentIndex === 0} style={{ background: 'white', border: '2px solid black' }}>
+                            <img src={end} alt="End" style={{ width: '25px', height: '25px', filter: currentIndex === 0 ? 'blur(2px)' : 'none' }} />
+                        </button>
+                        <button onClick={prevPage} disabled={currentIndex === 0} style={{ background: 'white', border: '2px solid black' }}>
+                            <img src={left} alt="Left" style={{ width: '25px', height: '25px', filter: currentIndex === 0 ? 'blur(2px)' : 'none' }} />
+                        </button>
+                        <button onClick={filterTable} style={{ background: 'white', border: '2px solid black' }}>
+                            <img src={search} alt="Search" style={{ width: '25px', height: '25px' }} />
+                        </button>
+                        <button onClick={nextPage} disabled={currentIndex + page_size >= linesFiltered.length} style={{ background: 'white', border: '2px solid black' }}>
+                            <img src={right} alt="Right" style={{ width: '25px', height: '25px', filter: currentIndex + page_size >= linesFiltered.length ? 'blur(2px)' : 'none' }} />
+                        </button>
+                        <button onClick={lastPage} disabled={currentIndex + page_size >= linesFiltered.length} style={{ background: 'white', border: '2px solid black' }}>
+                            <img src={start} alt="Start" style={{ width: '25px', height: '25px', filter: currentIndex + page_size >= linesFiltered.length ? 'blur(2px)' : 'none' }} />
+                        </button>
                     </div>
+
                     <div className="col-2"></div>
                 </div>
                 <div className="row"><br></br></div>

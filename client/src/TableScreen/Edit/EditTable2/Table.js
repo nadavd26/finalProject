@@ -41,7 +41,7 @@ function arePropsEqual(oldProps, newProps) {
 
 const MemorizedTableRow = React.memo(TableRow, arePropsEqual)
 //first row : [{name : , validate : function}, ....]
-function Table({ linesFiltered, content, start,pageSize ,colors, shiftsPerWorker, workerMap, shiftsInfo, onCellEdit, generateWorkerList, getLineInfo, rowsToRender }) {
+function Table({ linesFiltered, content, start,pageSize ,colors, shiftsPerWorker, workerMap, shiftsInfo, onCellEdit, generateWorkerList, getLineInfo, rowsToRender, indexSearchElement,searchDayElement, searchSkillElement, searchFromElement, searchUntilElement, searchAssignedElement, searchShiftIndexElement }) {
     console.log("render table" + start)
     console.log("linesFiltered")
     console.log(linesFiltered)
@@ -71,13 +71,13 @@ function Table({ linesFiltered, content, start,pageSize ,colors, shiftsPerWorker
                         <table className="table table-hover table-striped" id="table">
                             <tbody>
                                 <tr className="row100 body first-row">
-                                    <th className="cell100 col-2 first-column blue static-position" id="first-row-first-col">Index</th>
-                                    <th class="cell100  last-columns blue col-1">Day</th>
-                                    <th class="cell100  last-columns blue col-2">Skill</th>
-                                    <th class="cell100  last-columns blue col-1">From</th>
-                                    <th class="cell100  last-columns blue col-1">Until</th>
-                                    <th class="cell100  last-columns blue col-3">Assigned Worker</th>
-                                    <th class="cell100  last-columns blue col-2">Shift Number</th>
+                                    <th className="cell100 col-2 first-column blue static-position" id="first-row-first-col"><div>Index</div><div>{indexSearchElement()}</div></th>
+                                    <th class="cell100  last-columns blue col-2"><div>Day</div><div>{searchDayElement()}</div></th>
+                                    <th class="cell100  last-columns blue col-2"><div>Skill</div><div>{searchSkillElement()}</div></th>
+                                    <th class="cell100  last-columns blue col-1"><div>From</div><div>{searchFromElement()}</div></th>
+                                    <th class="cell100  last-columns blue col-1"><div>Until</div><div>{searchUntilElement()}</div></th>
+                                    <th class="cell100  last-columns blue col-3"><div>Assigned Worker</div><div>{searchAssignedElement()}</div></th>
+                                    <th class="cell100  last-columns blue col-2"><div>Shift Number</div><div>{searchShiftIndexElement()}</div></th>
                                 </tr>
                                 {renderedRows}
                             </tbody>

@@ -22,19 +22,36 @@ const SearchDropdown = ({ value, shownValue, options, shownOptions, onSelect }) 
 
     // Handle selection
     const handleSelect = (selectedOption) => {
-        const selectedValue = selectedOption.value;
-        const selectedShownValue = shownOptions[selectedValue];
-        onSelect(selectedValue, selectedShownValue);
+        if (selectedOption) {
+            const selectedValue = selectedOption.value;
+            onSelect(selectedValue);
+        } else {
+            // If selectedOption is null, set the value to the index of the first option and call onSelect with its index
+            onSelect(0);
+        }
+    };
+
+    // Custom styles to hide the first option
+    const customStyles = {
+        option: (provided, state) => ({
+            ...provided,
+            display: state.data.value === 0 ? 'none' : 'block', // Hide the first option
+        }),
     };
 
     return (
         <>
-        <Select
-            value={selectedValue !== null ? transformedOptions[selectedValue] : null} // Set the selected value
-            options={transformedOptions} // Set options with labels
-            formatOptionLabel={formatOptionLabel} // Pass the formatOptionLabel function
-            onChange={handleSelect} // Handle selection
-        />
+            <Select
+                value={selectedValue !== null ? transformedOptions[selectedValue] : null} // Set the selected value
+                options={transformedOptions} // Set options with labels
+                formatOptionLabel={formatOptionLabel} // Pass the formatOptionLabel function
+                onChange={handleSelect} // Handle selection
+                placeholder={shownOptions[0]} // Set the placeholder to the first visible option from shownOptions
+                isClearable // Enable the clearable option
+                styles={customStyles} // Apply custom styles
+            />
+            {/* <div>value: {value}</div>
+            <div>shownValue: {shownValue}</div> */}
         </>
     );
 };
