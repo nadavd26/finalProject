@@ -21,10 +21,15 @@ const Graph = ({ reqs, shifts, skill, day }) => {
 
         // Convert hours to index
         const hourToIndex = (hour) => {
+            if (typeof hour !== 'string') {
+                // Handle the case where hour is not a string
+                return -1; // or any other default value
+            }
             const [hours, minutes] = hour.split(':');
             return hours * 2 + (minutes === '30' ? 1 : 0);
         };
 
+        
         // Parse shifts data
         const parseShifts = (shifts) => {
             const newShifts = [];
