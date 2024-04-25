@@ -448,7 +448,7 @@ export async function generateAlgo1Results(table) {
     const scheduleData = table
     for (let i = 0; i < scheduleData.length; i++) {
         // scheduleData[i][4] = (2*i+5) % 10
-        scheduleData[i][4] = 1
+        scheduleData[i][4] = Math.floor(Math.random() * 300) + 1;
     }
 
     const transformedData = transformDataToMap(scheduleData);

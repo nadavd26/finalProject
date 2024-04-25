@@ -14,6 +14,7 @@ import EditResFile1 from "./Edit/EditTable1/EditResFile1";
 import SkillDropdown from "./conponenets/SkillDropdown";
 import * as utils from './Utils'
 import EditResFile2 from "./Edit/EditTable2/EditResFile2";
+import Graph from "./conponenets/Graph";
 // expecting json: {"Sunday" : [{"worker":"name1", "shifts":[true, true, false, ...]}, {"worker":"name2", "shifts":[true, true, false, ...]}, ....], ... , "Saturday" : ...}
 // every boolean array is 48 cells, starting from 7:00, ending at 23:30
 
@@ -188,7 +189,7 @@ function TableScreen({ user, setUser }) {
     ) : (
         <EditResFile2 initialTable={JSON.parse(JSON.stringify(user.algo2Table))}
             currentDay={tableScreenState.get.currentDay} setInEdit={editInfoState.setInEdit} user={user} setUser={setUser} workerMap={tableScreenState.get.workerMap}
-            shiftsInfo={(algo2TableState.get.shiftInfo)} shiftsPerWorkers={arraysToSets(JSON.parse(JSON.stringify(setsToArrays(algo2TableState.get.shiftsPerWorkers))))} setShiftsPerWorkers={algo2TableState.setShiftsPerWorkers} finishCallback={table2finishEditCallback}/>
+            shiftsInfo={(algo2TableState.get.shiftInfo)} shiftsPerWorkers={arraysToSets(JSON.parse(JSON.stringify(setsToArrays(algo2TableState.get.shiftsPerWorkers))))} setShiftsPerWorkers={algo2TableState.setShiftsPerWorkers} finishCallback={table2finishEditCallback} />
     );
 
     return (
@@ -237,7 +238,7 @@ function TableScreen({ user, setUser }) {
                                 </div>
                                     <br></br><br></br><Loader speed={5} customText="Calculating..." /></>
                             ) : (<div>
-                                <div className="row"> 
+                                <div className="row">
                                     <div className="col-5"></div>
                                     <div className="col-1 text-center">
                                         <Dropdown firstDay={tableScreenState.get.currentDay} dayHandler={switchDay}></Dropdown>
@@ -245,14 +246,23 @@ function TableScreen({ user, setUser }) {
                                     <div className="col-1 text-center">
                                         <SkillDropdown currentSkill={tableAlgo1State.get.currentSkill} skillList={tableAlgo1State.get.otherSkills} handlerSkill={handlerSkillChange} />
                                     </div>
-                                    <div className="col-5">{"" + tableAlgo1State.get.req}</div>
+                                    <div className="col-5"></div>
                                 </div>
                                 <br></br>
+                                <div className="row">
+                                    <div className="col-1"></div>
+                                    <div className="col-5">
+                                        <Graph reqs={!(tableAlgo1State.get.req) ? [] : tableAlgo1State.get.req} shifts={!(tableAlgo1State.get.worksPerShift) ? [] : tableAlgo1State.get.worksPerShift} skill={tableAlgo1State.get.currentSkill} day={tableScreenState.get.currentDay}></Graph>
+                                    </div>
+                                    <div className="col-6">
+                                        <div>reqs {JSON.stringify(!(tableAlgo1State.get.req) ? [] : tableAlgo1State.get.req)}</div>
+                                        <div>shifts {JSON.stringify(!(tableAlgo1State.get.worksPerShift) ? [] : tableAlgo1State.get.worksPerShift)}</div>
+                                    </div>
+                                </div>
                                 <br></br>
                             </div>)}
                         </>
                     )}
-
                     <div className="row"><br /></div>
                     <div className="row"><br /></div>
                     <div className="d-flex justify-content-between mb-3 down-buttons">
