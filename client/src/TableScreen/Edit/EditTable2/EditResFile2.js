@@ -26,7 +26,6 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
     const [untilSearch, setUntilSearch] = useState({ value: "", shownValue: "Until" });
     const [assignedSearch, setAssignedSearch] = useState({ value: "", shownValue: "Worker" });
     const [shiftIndexSearch, setShiftIndexSearch] = useState({ value: "", shownValue: "Shift Number" });
-
     const [options, setOptions] = useState({
         day: { options: [], shownOptions: [] },
         skill: { options: [], shownOptions: [] },
@@ -91,7 +90,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
 
     const getWorkerList = () => {
         const workerList = utils.generateWorkerList(user.table1)
-        var res = { options: ["", "+", "-", ...workerList], shownOptions: ["Any", "Any Assigned Shift", "Any Unassigned Shift", ...workerList] }
+        var res = { options: ["", "+", "-", "$", ...workerList], shownOptions: ["Any", "Any Assigned Shift", "Any Unassigned Shift", "Lines With Conflicts", ...workerList] }
         return res
     }
 
@@ -362,53 +361,57 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
         }
 
         //deciding which rows of shifts at the same day to render again
-        var oldWorkerHasSkill = {}
-        var newWorkerHasSkill = {}
-        var shiftsInfoDay = (shiftsInfo[day])
-        var overlaps = (shiftsInfoDay[row[5]]).overlaps
-        for (const shiftId of overlaps) {
-            const start = getAbsuluteIndex((shiftsInfoDay[shiftId]).start, day)
-            const end = getAbsuluteIndex((shiftsInfoDay[shiftId]).end, day)
-            const skill = (newTable[start][1])
-            const workersOfShiftSkill = workerMap.get(skill)
-            var renderShift = oldWorkerHasSkill[skill] || newWorkerHasSkill[skill]
-            if (!renderShift) { //skill is not memorized or the workers dont have the skilll
-                for (let i = 0; i < workersOfShiftSkill.length; i++) {
-                    if (workersOfShiftSkill[i].id == newId) {//the new worker or the old worker has this skill - workerList of this shift can change
-                        newWorkerHasSkill[skill] = true //memorization
-                        renderShift = true
-                    }
+        // var oldWorkerHasSkill = {}
+        // var newWorkerHasSkill = {}
+        // var shiftsInfoDay = (shiftsInfo[day])
+        // var overlaps = (shiftsInfoDay[row[5]]).overlaps
+        // for (const shiftId of overlaps) {
+        //     const start = getAbsuluteIndex((shiftsInfoDay[shiftId]).start, day)
+        //     const end = getAbsuluteIndex((shiftsInfoDay[shiftId]).end, day)
+        //     const skill = (newTable[start][1])
+        //     const workersOfShiftSkill = workerMap.get(skill)
+        //     var renderShift = oldWorkerHasSkill[skill] || newWorkerHasSkill[skill]
+        //     if (!renderShift) { //skill is not memorized or the workers dont have the skilll
+        //         for (let i = 0; i < workersOfShiftSkill.length; i++) {
+        //             if (workersOfShiftSkill[i].id == newId) {//the new worker or the old worker has this skill - workerList of this shift can change
+        //                 newWorkerHasSkill[skill] = true //memorization
+        //                 renderShift = true
+        //             }
 
-                    if (workersOfShiftSkill[i].id == oldId) {//the new worker or the old worker has this skill - workerList of this shift can change
-                        oldWorkerHasSkill[skill] = true //memorization
-                        renderShift = true
-                    }
-                }
+        //             if (workersOfShiftSkill[i].id == oldId) {//the new worker or the old worker has this skill - workerList of this shift can change
+        //                 oldWorkerHasSkill[skill] = true //memorization
+        //                 renderShift = true
+        //             }
+        //         }
+        //     } else {
+        //         console.log("oldWorkerHasSkill")
+        //         console.log(oldWorkerHasSkill)
+        //         console.log("newWorkerHasSkill")
+        //         console.log(newWorkerHasSkill)
+        //     }
+        //     if (renderShift) { //rendering all the rows of this shift
+        //         for (let i = start; i <= end; i++) {
+        //             //re-render only if shift skill is equal to one of the worker`s skills
+        //             newRowsToRender[i] = true
+        //         }
+        //     }
+        // }
+
+        var length = linesFiltered.length
+        var newRowsToRender = {}
+        var endOfPage = Math.min(page_size + currentIndex - 1, length - 1)
+        for (let i = currentIndex; i <= endOfPage; i++) {
+            let absuluteIndex = linesFiltered[i]
+            let rowChcked = renderInfo.table[absuluteIndex]
+            if (capitalizeFirstLetter(rowChcked[0]) == day && (utils.checkOverlap(rowChcked[2], rowChcked[3], row[2], row[3]))) {
+                newRowsToRender[linesFiltered[i]] = true
             } else {
-                console.log("oldWorkerHasSkill")
-                console.log(oldWorkerHasSkill)
-                console.log("newWorkerHasSkill")
-                console.log(newWorkerHasSkill)
-            }
-            if (renderShift) { //rendering all the rows of this shift
-                for (let i = start; i <= end; i++) {
-                    //re-render only if shift skill is equal to one of the worker`s skills
-                    newRowsToRender[i] = true
-                }
+                console.log("rowChcked")
+                console.log(rowChcked)
+                console.log("day")
+                console.log(day)
             }
         }
-
-        // var length = linesFiltered.length
-        // var newRowsToRender = {}
-        // var endOfPage = Math.min(page_size + currentIndex - 1, length - 1)
-        // for (let i = currentIndex; i<= endOfPage; i++) {
-        //     let absuluteIndex = linesFiltered[i]
-        //     let rowChcked = renderInfo.table[absuluteIndex]
-        //     if (rowChcked[0] != day || !(utils.checkOverlap(rowChcked[2], rowChcked[3], row[2], row[3]))) {
-        //         continue
-        //     }
-
-        // }
         //rendering copies of the same shift
         //rendering overlapping rows of this row
         setRenderInfo({ table: newTable, colors: newColors, shiftsPerWorkers: newShiftPerWorkers, isGenerated: true, rowsToRender: newRowsToRender })
@@ -474,6 +477,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
         for (let i = newCurrentIndex; i <= end; i++) {
             newRowsToRender[linesFiltered[i]] = true
         }
+        document.getElementById('searchIndexInput').value = '';
         setRenderInfo(prevRenderInfo => ({
             ...prevRenderInfo,
             rowsToRender: newRowsToRender
@@ -488,7 +492,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
         for (let i = newCurrentIndex; i < oldCurrentIndex; i++) {
             newRowsToRender[linesFiltered[i]] = true
         }
-
+        document.getElementById('searchIndexInput').value = '';
         setRenderInfo(prevRenderInfo => ({
             ...prevRenderInfo,
             rowsToRender: newRowsToRender
@@ -505,7 +509,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
         for (let i = newCurrentIndex; i <= end; i++) {
             newRowsToRender[linesFiltered[i]] = true
         }
-
+        document.getElementById('searchIndexInput').value = '';
         setRenderInfo(prevRenderInfo => ({
             ...prevRenderInfo,
             rowsToRender: newRowsToRender
@@ -524,6 +528,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
         for (let i = newCurrentIndex; i < length; i++) {
             newRowsToRender[linesFiltered[i]] = true
         }
+        document.getElementById('searchIndexInput').value = '';
         setRenderInfo(prevRenderInfo => ({
             ...prevRenderInfo,
             rowsToRender: newRowsToRender
@@ -547,7 +552,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
         for (let i = newCurrentIndex; i <= end; i++) {
             newRowsToRender[linesFiltered[i]] = true
         }
-
+        document.getElementById('searchIndexInput').value = '';
         setRenderInfo(prevRenderInfo => ({
             ...prevRenderInfo,
             rowsToRender: newRowsToRender
@@ -594,6 +599,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
         var newLinesFiltered = []
         var newRowsToRender = {}
         const table = renderInfo.table
+        const colors = renderInfo.colors
         for (let i = 0; i < table.length; i++) {
             var goodLine = true
             const [day, skill, from, until, assigned, shiftIndex] = table[i]
@@ -610,7 +616,11 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
             if (untilSearch.value != "" && untilSearch.value != until) {
                 goodLine = false
             }
-            if (assignedSearch.value != "" && assignedSearch.value != "+" && assignedSearch.value != "-" && assignedSearch.value != assigned) {
+            if (assignedSearch.value != "" && assignedSearch.value != "+" && assignedSearch.value != "-" && assignedSearch.value != "$" && assignedSearch.value != assigned) {
+                goodLine = false
+            }
+
+            if (assignedSearch.value == "$" && colors[i] == "white") {
                 goodLine = false
             }
 
@@ -632,6 +642,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
                 newRowsToRender[i] = true
             }
         }
+        document.getElementById('searchIndexInput').value = '';
 
         setCurrentIndex(0)
         setLinesFiltered(newLinesFiltered)
@@ -669,16 +680,21 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
             <div style={{ position: 'relative', display: 'inline-block' }}>
                 <input
                     name="searchIndex"
+                    id="searchIndexInput"
                     type="number"
                     onChange={handleInputChange}
+                    placeholder={"Choose Index To Jump"}
                     style={{
                         paddingRight: '30px', // Adjust padding to accommodate the button
                         height: '38px', // Match the height of the button
                         boxSizing: 'border-box', // Ensure padding is included in the height calculation
                         verticalAlign: 'middle', // Align input vertically with the button
-                        maxWidth: 'calc(100% - 0px)' // Limit the width to accommodate the button
+                        maxWidth: 'calc(100% - 0px)', // Limit the width to accommodate the button
+                        backgroundColor: "white", // Set the background color to inherit to prevent changes
+                        border: '1px solid black'
                     }}
                 />
+
                 <button
                     style={{
                         position: 'absolute',
@@ -692,31 +708,43 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
                         padding: 0, // Remove padding
                         display: 'flex', // Use flexbox to center content
                         alignItems: 'center', // Center vertically
-                        justifyContent: 'center' // Center horizontally
+                        justifyContent: 'center', // Center horizontally
+                        outline: 'none' // Remove outline border
                     }}
                     onClick={changeCurrentIndex}
                 >
                     <img src={search} alt="Search" style={{ maxWidth: '100%', maxHeight: '100%' }} />
                 </button>
+
             </div>
         );
     };
 
 
-
+    const filterButton = () => {
+        return (<button onClick={filterTable} style={{ background: 'white', border: '2px solid black' }}>
+            Apply Serach&nbsp;<img src={search} alt="Search" style={{ width: '25px', height: '25px' }} />
+        </button>)
+    }
 
 
 
     return (
         <div id="edit-file">
             <div className="container-fluid py-3">
-                <div className="col-1">
+                <div className="row">
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#backModal" onClick={handleBack}>Back</button>
                 </div>
-                <div className="col-11"></div>
-                {renderInfo.isGenerated && (<Table indexSearchElement={indexSearchElement} linesFiltered={linesFiltered} content={renderInfo.table} start={currentIndex} pageSize={page_size} colors={renderInfo.colors} rowsToRender={renderInfo.rowsToRender} shiftsPerWorker={renderInfo.shiftsPerWorkers}
-                    workerMap={workerMap} shiftsInfo={shiftsInfo} onCellEdit={handleCellEdit} generateWorkerList={generateWorkerList} getLineInfo={getLineInfo} searchDayElement={searchDayElement}
-                    searchSkillElement={searchSkillElement} searchFromElement={searchFromElement} searchUntilElement={searchUntilElement} searchAssignedElement={searchAssignedElement} searchShiftIndexElement={searchShiftIndexElement}></Table>)}
+                <div className="row">
+                    <div className="col-5"></div>
+                    <div className="col-2 d-flex justify-content-center" style={{marginBottom: "20px"}}>{filterButton()}</div>
+                    <div className="col-5"></div>
+                </div>
+                <div className="col-12">
+                    {renderInfo.isGenerated && (<Table indexSearchElement={indexSearchElement} linesFiltered={linesFiltered} content={renderInfo.table} start={currentIndex} pageSize={page_size} colors={renderInfo.colors} rowsToRender={renderInfo.rowsToRender} shiftsPerWorker={renderInfo.shiftsPerWorkers}
+                        workerMap={workerMap} shiftsInfo={shiftsInfo} onCellEdit={handleCellEdit} generateWorkerList={generateWorkerList} getLineInfo={getLineInfo} searchDayElement={searchDayElement}
+                        searchSkillElement={searchSkillElement} searchFromElement={searchFromElement} searchUntilElement={searchUntilElement} searchAssignedElement={searchAssignedElement} searchShiftIndexElement={searchShiftIndexElement}></Table>)}
+                </div>
                 <div className="row"><br></br></div>
                 <div className="row">
                     <div className="col-2"></div>
@@ -726,9 +754,6 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
                         </button>
                         <button onClick={prevPage} disabled={currentIndex === 0} style={{ background: 'white', border: '2px solid black' }}>
                             <img src={left} alt="Left" style={{ width: '25px', height: '25px', filter: currentIndex === 0 ? 'blur(2px)' : 'none' }} />
-                        </button>
-                        <button onClick={filterTable} style={{ background: 'white', border: '2px solid black' }}>
-                            <img src={search} alt="Search" style={{ width: '25px', height: '25px' }} />
                         </button>
                         <button onClick={nextPage} disabled={currentIndex + page_size >= linesFiltered.length} style={{ background: 'white', border: '2px solid black' }}>
                             <img src={right} alt="Right" style={{ width: '25px', height: '25px', filter: currentIndex + page_size >= linesFiltered.length ? 'blur(2px)' : 'none' }} />

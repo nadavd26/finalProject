@@ -29,7 +29,7 @@ const Graph = ({ reqs, shifts, skill, day }) => {
             return hours * 2 + (minutes === '30' ? 1 : 0);
         };
 
-        
+
         // Parse shifts data
         const parseShifts = (shifts) => {
             const newShifts = [];
@@ -240,12 +240,6 @@ const Graph = ({ reqs, shifts, skill, day }) => {
                 config={fig.config}
                 style={{ width: '100%', height: '100%' }}
             />
-            <div>
-                reqs {JSON.stringify(reqs)}
-            </div>
-            <div>
-                shifts {JSON.stringify(shifts)}
-            </div>
         </div>
     );
 };

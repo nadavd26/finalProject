@@ -328,7 +328,15 @@ export function binarySearch(arr, target) {
     return -1; // Target not found
 }
 
+export function skillsOfWorkers(table1) {
+    var map = {}
+    for (let i = 0; i< table1.length; i++) {
+        const row = table1[i]
+        map[row[0]] = {skill1: row[2], skill2: row[3], skill3: row[4]}
+    }
 
+    return map
+}
 
 
 export async function generateAlgo2Results(table) {
@@ -336,7 +344,7 @@ export async function generateAlgo2Results(table) {
     const scheduleDataa = table
     for (let i = 0; i < scheduleDataa.length; i++) {
         // scheduleDataa[i][4] = (2*i+5) % 10
-        scheduleDataa[i][4] = 20
+        scheduleDataa[i][4] = 12345
     }
     const scheduleData = duplicateLines(scheduleDataa)
     // console.log("scheduleData : " + scheduleData)
