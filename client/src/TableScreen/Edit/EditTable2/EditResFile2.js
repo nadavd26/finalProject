@@ -405,12 +405,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
             let rowChcked = renderInfo.table[absuluteIndex]
             if (capitalizeFirstLetter(rowChcked[0]) == day && (utils.checkOverlap(rowChcked[2], rowChcked[3], row[2], row[3]))) {
                 newRowsToRender[linesFiltered[i]] = true
-            } else {
-                console.log("rowChcked")
-                console.log(rowChcked)
-                console.log("day")
-                console.log(day)
-            }
+            } 
         }
         //rendering copies of the same shift
         //rendering overlapping rows of this row

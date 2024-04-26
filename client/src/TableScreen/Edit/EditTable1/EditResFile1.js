@@ -10,6 +10,7 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
     const [showBackModal, setShowBackModal] = useState(false)
     const defaultErrorMsg = "Assigned Number Of Workers is a non-negative integer."
     const [errorMsg, setErrorMsg] = useState(defaultErrorMsg)
+    const [rowsToRender, setRowsToRender] = useState({})
     const token = user.token
 
     console.log("key isssssssssss : " + currentDay + "******" + currentSkill)
@@ -23,6 +24,12 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
 
     useEffect(() => {
         setContent(initialTable)
+        var newRowsToRender = {}
+        for (let i = 0; i < initialTable.length; i++) {
+            newRowsToRender[i] = true
+        }
+
+        setRowsToRender(newRowsToRender)
     }, []);
 
     const handleCellEdit = (rowIndex, columnIndex, value) => {
@@ -34,6 +41,9 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
             }
         });
 
+        var newRowsToRender = {}
+        newRowsToRender[rowIndex] = true
+        setRowsToRender(newRowsToRender)
         setContent(updatedContent);
     };
 
@@ -101,7 +111,7 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#backModal" onClick={handleBack}>Back</button>
                 </div>
                 <div className="col-11"></div>
-                <Table content={content} onCellEdit={handleCellEdit} isNumberOfWorkersValid={isNumberOfWorkersValid}></Table>
+                <Table content={content} onCellEdit={handleCellEdit} isNumberOfWorkersValid={isNumberOfWorkersValid} rowsToRender={rowsToRender}></Table>
                 <div className="row"><br /></div>
                 <div className="d-flex justify-content-between mb-3 down-buttons">
                     <div className="col-3"></div>
