@@ -1,7 +1,7 @@
 import React from 'react';
 import Select from 'react-select';
 
-const SearchDropdown = ({ value, shownValue, options, shownOptions, onSelect }) => {
+const SearchDropdown = ({ value, shownValue, options, shownOptions, onSelect, width }) => {
     // Define a function to format the option label
     const formatOptionLabel = (option) => {
         const label = shownOptions[option.value];
@@ -45,6 +45,10 @@ const SearchDropdown = ({ value, shownValue, options, shownOptions, onSelect }) 
             ...provided,
             backgroundColor: value == "" ? 'white' : 'lightblue',
             border: '1px solid black', // Add border to the control
+            width: width !== undefined ? width : '100%',
+            margin: '0px',
+            padding: '0px' // Set padding to 0
+             // Set width to either the specified value or 100%
         }),
         indicatorSeparator: (provided) => ({
             ...provided,
@@ -54,6 +58,16 @@ const SearchDropdown = ({ value, shownValue, options, shownOptions, onSelect }) 
             ...provided,
             color: 'black',
             padding: '4px' // Change color of the dropdown indicator to black
+        }),
+        container: (provided) => ({
+            ...provided,
+            display: 'flex', // Use flexbox
+            justifyContent: 'center', // Center items horizontally
+            alignItems: 'center',
+            marginLeft: '0px', // Add margin on the left
+            padding: '0px',
+            marginRight: '0px',
+            width: '100%' // Add margin on the right // Center items vertically
         }),
     };
 

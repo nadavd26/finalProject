@@ -71,7 +71,7 @@ export default function WorkerDropdown({ value, rowIndex, coloumnIndex, workerLi
             ...provided,
             backgroundColor: value == "" ? 'white' : 'lightblue',
             border: '1px solid black', // Add border to the control
-            width: '80%', // Set width to a fixed value (adjust as needed)
+            width: '80%',
         }),
         dropdownIndicator: (provided) => ({
             ...provided,

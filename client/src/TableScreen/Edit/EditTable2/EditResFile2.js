@@ -657,44 +657,44 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
         setIsFiltered(true)
     }
 
-    const searchDayElement = () => {
-        return (<SearchDropdown value={daySearch.value} shownValue={daySearch.shownValue} options={options.day.options} shownOptions={options.day.shownOptions} onSelect={changeSelectedDay} />)
+    const searchDayElement = (width) => {
+        return (<SearchDropdown value={daySearch.value} shownValue={daySearch.shownValue} options={options.day.options} shownOptions={options.day.shownOptions} onSelect={changeSelectedDay} width={width}/>)
     }
 
-    const searchSkillElement = () => {
-        return (<SearchDropdown value={skillSearch.value} shownValue={skillSearch.shownValue} options={options.skill.options} shownOptions={options.skill.shownOptions} onSelect={changeSelectedSkill} />)
+    const searchSkillElement = (width) => {
+        return (<SearchDropdown value={skillSearch.value} shownValue={skillSearch.shownValue} options={options.skill.options} shownOptions={options.skill.shownOptions} onSelect={changeSelectedSkill} width={width}/>)
     }
 
-    const searchFromElement = () => {
-        return (<SearchDropdown value={fromSearch.value} shownValue={fromSearch.shownValue} options={options.from.options} shownOptions={options.from.shownOptions} onSelect={changeSelectedFrom} />)
+    const searchFromElement = (width) => {
+        return (<SearchDropdown value={fromSearch.value} shownValue={fromSearch.shownValue} options={options.from.options} shownOptions={options.from.shownOptions} onSelect={changeSelectedFrom} width={width}/>)
     }
 
-    const searchUntilElement = () => {
-        return (<SearchDropdown value={untilSearch.value} shownValue={untilSearch.shownValue} options={options.until.options} shownOptions={options.until.shownOptions} onSelect={changeSelectedUntil} />)
+    const searchUntilElement = (width) => {
+        return (<SearchDropdown value={untilSearch.value} shownValue={untilSearch.shownValue} options={options.until.options} shownOptions={options.until.shownOptions} onSelect={changeSelectedUntil} width={width}/>)
     }
-    const searchAssignedElement = () => {
-        return (<SearchDropdown value={assignedSearch.value} shownValue={assignedSearch.shownValue} options={options.assigned.options} shownOptions={options.assigned.shownOptions} onSelect={changeSelectedWorker} />)
+    const searchAssignedElement = (width) => {
+        return (<SearchDropdown value={assignedSearch.value} shownValue={assignedSearch.shownValue} options={options.assigned.options} shownOptions={options.assigned.shownOptions} onSelect={changeSelectedWorker} width={width}/>)
     }
 
-    const searchShiftIndexElement = () => {
-        return (<SearchDropdown value={shiftIndexSearch.value} shownValue={shiftIndexSearch.shownValue} options={options.shiftIndex.options} shownOptions={options.shiftIndex.shownOptions} onSelect={changeSelectedShift} />)
+    const searchShiftIndexElement = (width) => {
+        return (<SearchDropdown value={shiftIndexSearch.value} shownValue={shiftIndexSearch.shownValue} options={options.shiftIndex.options} shownOptions={options.shiftIndex.shownOptions} onSelect={changeSelectedShift} width={width}/>)
     }
 
     const indexSearchElement = () => {
         return (
-            <div style={{ position: 'relative', display: 'inline-block' }}>
+            <div style={{ position: 'relative', display: 'inline-block', width: "100%" }}>
                 <input
                     name="searchIndex"
                     id="searchIndexInput"
                     type="text"
                     onChange={handleInputChange}
-                    placeholder={"Choose Index To Jump"}
+                    placeholder={"Index"}
                     style={{
                         paddingRight: '30px', // Adjust padding to accommodate the button
                         height: '38px', // Match the height of the button
                         boxSizing: 'border-box', // Ensure padding is included in the height calculation
                         verticalAlign: 'middle', // Align input vertically with the button
-                        maxWidth: 'calc(100% - 0px)', // Limit the width to accommodate the button
+                        maxWidth: '100%', // Limit the width to accommodate the button
                         backgroundColor: "white", // Set the background color to inherit to prevent changes
                         border: '1px solid black'
                     }}
@@ -728,7 +728,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
     const handleInputChange = (event) => {
         const { value } = event.target;
         const regex = /^[0-9]+$/;
-        if (regex.test(value)) {
+        if (regex.test(value) || value == "") {
             setSearchedIndex(value);
         } else {
             document.getElementById('searchIndexInput').value = searchedIndex
