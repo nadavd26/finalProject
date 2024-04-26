@@ -12,11 +12,16 @@ import left from '../Images/left.png'
 import search from '../Images/search.webp'
 import start from '../Images/start.png'
 import end from '../Images/end.png'
+import Loader from "../../conponenets/Loader";
 import SearchDropdown from "../components/SearchDropdown";
+import filterTableLoader from "../components/FilterTableLoader";
+import FilterTableLoader from "../components/FilterTableLoader";
 
 export default function EditResFile2({ initialTable, setInEdit, user, setUser, workerMap, shiftsInfo, shiftsPerWorkers, setShiftsPerWorkers, finishCallback }) {
     const [currentIndex, setCurrentIndex] = useState(0)
     const [searchedIndex, setSearchedIndex] = useState(currentIndex)
+    const [isGenerated, setIsGenerated] = useState(false)
+    const [isFiltered, setIsFiltered] = useState(true)
     var page_size = 11
     const [showBackModal, setShowBackModal] = useState(false)
     const [renderInfo, setRenderInfo] = useState({ table: [["", "", "", "", "", ""]], colors: [], shiftsPerWorkers: {}, isGenerated: false, rowsToRender: {} })
@@ -68,14 +73,9 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
         newOptions.until = getUntilTimeList()
 
         setLinesFiltered(Array.from({ length: newTable.length }, (_, index) => index))
-        // setLinesFiltered(
-        //     Array.from({ length: newTable.length }, (_, index) => index)
-        //         .filter(index => index % 2 === 0)
-        // );
-        // setLinesFiltered(Array.from({ length: newTable.length/2 }, (_, index) => index))
         setRenderInfo({ table: newTable, colors: newColors, shiftsPerWorkers: shiftsPerWorkers, isGenerated: true, rowsToRender: {} })
-
         setOptions(newOptions)
+        setIsGenerated(true)
     }, []);
 
     const getDayOptions = () => {
@@ -595,7 +595,12 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
         setUntilSearch(newSearch)
     }
 
-    const filterTable = () => {
+    const filterButtonHandler = async () => {
+        setIsFiltered(false)
+    }
+
+    const filterTable = async () => {
+        await utils.sleep(1)
         var newLinesFiltered = []
         var newRowsToRender = {}
         const table = renderInfo.table
@@ -636,8 +641,6 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
             }
 
             if (goodLine) {
-                console.log("day, skill, from, until, assigned, shiftIndex")
-                console.log(day, skill, from, until, assigned, shiftIndex)
                 newLinesFiltered.push(i)
                 newRowsToRender[i] = true
             }
@@ -650,6 +653,8 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
             ...prevRenderInfo,
             rowsToRender: newRowsToRender
         }));
+        
+        setIsFiltered(true)
     }
 
     const searchDayElement = () => {
@@ -722,7 +727,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
 
 
     const filterButton = () => {
-        return (<button onClick={filterTable} style={{ background: 'white', border: '2px solid black' }}>
+        return (<button onClick={filterButtonHandler} style={{ background: 'white', border: '2px solid black' }}>
             Apply Serach&nbsp;<img src={search} alt="Search" style={{ width: '25px', height: '25px' }} />
         </button>)
     }
@@ -737,7 +742,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
                 </div>
                 <div className="row">
                     <div className="col-5"></div>
-                    <div className="col-2 d-flex justify-content-center" style={{marginBottom: "20px"}}>{filterButton()}</div>
+                    <div className="col-2 d-flex justify-content-center" style={{ marginBottom: "20px" }}>{filterButton()}</div>
                     <div className="col-5"></div>
                 </div>
                 <div className="col-12">
@@ -776,8 +781,9 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
                 </div>
             </div>
 
+            {!isGenerated && <Loader speed={5} customText="Calculating..." />}
 
-
+            <FilterTableLoader initialValue={isFiltered} callBack={filterTable}></FilterTableLoader>
             <div className="modal fade" id="infoModal" tabIndex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-lg modal-dialog-side" role="document">
                     <div className="modal-content" style={{ backgroundColor: "white" }}>

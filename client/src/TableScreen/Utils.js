@@ -1,4 +1,4 @@
-async function sleep(ms) {
+export async function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
@@ -344,7 +344,7 @@ export async function generateAlgo2Results(table) {
     const scheduleDataa = table
     for (let i = 0; i < scheduleDataa.length; i++) {
         // scheduleDataa[i][4] = (2*i+5) % 10
-        scheduleDataa[i][4] = 12345
+        scheduleDataa[i][4] = 123452
     }
     const scheduleData = duplicateLines(scheduleDataa)
     // console.log("scheduleData : " + scheduleData)
