@@ -24,7 +24,7 @@ const TableRow = ({ rowIndex, row, color, generateWorkerList, onCellEdit, getLin
     };
 
     return (
-        <tr className="row100 body last-rows" id="table-row" style={rowStyle}>
+        <tr className="row100 body last-rows" id="table-row" style={{opacity: hidden ? 0 : 1, height: "8.5vh", fontSize: "1vw"}}>
             <NonEditableCell value={rowIndex + 1} rowIndex={rowIndex} coloumnIndex={0} color={color} shiftIndex={row[5]} hidden={hidden} />
             <NonEditableCell value={capitalizeFirstLetter(row[0])} rowIndex={rowIndex} coloumnIndex={0} color={color} additionalClass={"no-left second"} shiftIndex={row[5]} hidden={hidden} />
             <NonEditableCell value={row[1]} rowIndex={rowIndex} columnIndex={1} color={color} additionalClass={"no-left"} shiftIndex={row[5]} hidden={hidden} />
@@ -101,11 +101,11 @@ function Table({ linesFiltered, content, start, pageSize, colors, shiftsPerWorke
         <div className="container-table100">
             <div className="wrap-table100" style={{width: "100vw"}}>
                 <div className="ver1 m-b-110">
-                    <div className="table100-body scrollbar">
+                    <div className="table100-body scrollbar" style={{maxHeight: "100vh", height: "80vh"}}>
                         <table className="table table-hover table-striped" id="table">
                             <tbody>
-                                <tr className="row100 body first-row">
-                                    <th className="cell100 first-column blue static-position" id="first-row-first-col" style={{maxWidth: "11vw"}}><div>Index</div><div>{indexSearchElement()}</div></th>
+                                <tr className="row100 body first-row" style={{fontSize: "1vw"}}>
+                                    <th className="cell100 first-column blue static-position" id="first-row-first-col" style={{maxWidth: "11vw", fontSize: "1vw"}}><div>Index</div><div>{indexSearchElement()}</div></th>
                                     <th class="cell100  last-columns blue " id="header" style={{maxWidth: vw(widths[0])}}><div>Day</div><div>{searchDayElement(vw1(widths[0]))}</div></th>
                                     <th class="cell100  last-columns blue " id="header" style={{maxWidth: vw(widths[1])}}><div>Skill</div><div>{searchSkillElement(vw1(widths[1]))}</div></th>
                                     <th class="cell100  last-columns blue " id="header" style={{maxWidth: vw(widths[2])}}><div>From</div><div>{searchFromElement(vw1(widths[2]))}</div></th>

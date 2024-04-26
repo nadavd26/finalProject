@@ -22,7 +22,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
     const [searchedIndex, setSearchedIndex] = useState('')
     const [isGenerated, setIsGenerated] = useState(false)
     const [isFiltered, setIsFiltered] = useState(true)
-    var page_size = 11
+    var page_size = 8
     const [showBackModal, setShowBackModal] = useState(false)
     const [renderInfo, setRenderInfo] = useState({ table: [["", "", "", "", "", ""]], colors: [], shiftsPerWorkers: {}, isGenerated: false, rowsToRender: {} })
     const [daySearch, setDaySearch] = useState({ value: "", shownValue: "Day" });
@@ -658,26 +658,26 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
     }
 
     const searchDayElement = (width) => {
-        return (<SearchDropdown value={daySearch.value} shownValue={daySearch.shownValue} options={options.day.options} shownOptions={options.day.shownOptions} onSelect={changeSelectedDay} width={width}/>)
+        return (<SearchDropdown value={daySearch.value} shownValue={daySearch.shownValue} options={options.day.options} shownOptions={options.day.shownOptions} onSelect={changeSelectedDay} width={width} />)
     }
 
     const searchSkillElement = (width) => {
-        return (<SearchDropdown value={skillSearch.value} shownValue={skillSearch.shownValue} options={options.skill.options} shownOptions={options.skill.shownOptions} onSelect={changeSelectedSkill} width={width}/>)
+        return (<SearchDropdown value={skillSearch.value} shownValue={skillSearch.shownValue} options={options.skill.options} shownOptions={options.skill.shownOptions} onSelect={changeSelectedSkill} width={width} />)
     }
 
     const searchFromElement = (width) => {
-        return (<SearchDropdown value={fromSearch.value} shownValue={fromSearch.shownValue} options={options.from.options} shownOptions={options.from.shownOptions} onSelect={changeSelectedFrom} width={width}/>)
+        return (<SearchDropdown value={fromSearch.value} shownValue={fromSearch.shownValue} options={options.from.options} shownOptions={options.from.shownOptions} onSelect={changeSelectedFrom} width={width} />)
     }
 
     const searchUntilElement = (width) => {
-        return (<SearchDropdown value={untilSearch.value} shownValue={untilSearch.shownValue} options={options.until.options} shownOptions={options.until.shownOptions} onSelect={changeSelectedUntil} width={width}/>)
+        return (<SearchDropdown value={untilSearch.value} shownValue={untilSearch.shownValue} options={options.until.options} shownOptions={options.until.shownOptions} onSelect={changeSelectedUntil} width={width} />)
     }
     const searchAssignedElement = (width) => {
-        return (<SearchDropdown value={assignedSearch.value} shownValue={assignedSearch.shownValue} options={options.assigned.options} shownOptions={options.assigned.shownOptions} onSelect={changeSelectedWorker} width={width}/>)
+        return (<SearchDropdown value={assignedSearch.value} shownValue={assignedSearch.shownValue} options={options.assigned.options} shownOptions={options.assigned.shownOptions} onSelect={changeSelectedWorker} width={width} />)
     }
 
     const searchShiftIndexElement = (width) => {
-        return (<SearchDropdown value={shiftIndexSearch.value} shownValue={shiftIndexSearch.shownValue} options={options.shiftIndex.options} shownOptions={options.shiftIndex.shownOptions} onSelect={changeSelectedShift} width={width}/>)
+        return (<SearchDropdown value={shiftIndexSearch.value} shownValue={shiftIndexSearch.shownValue} options={options.shiftIndex.options} shownOptions={options.shiftIndex.shownOptions} onSelect={changeSelectedShift} width={width} />)
     }
 
     const indexSearchElement = () => {
@@ -749,20 +749,22 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
         <div id="edit-file">
             <div className="container-fluid py-3">
                 <div className="row">
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#backModal" onClick={handleBack}>Back</button>
-                </div>
-                <div className="row">
+                    <div className="col-2">
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#backModal" onClick={handleBack}>Back</button>
+                    </div>
+                    <div className="col-3"></div>
+                    <div className="col-2 d-flex justify-content-center" style={{ marginBottom: "20px" }}>
+                        {filterButton()}
+                    </div>
                     <div className="col-5"></div>
-                    <div className="col-2 d-flex justify-content-center" style={{ marginBottom: "20px" }}>{filterButton()}</div>
-                    <div className="col-5"></div>
                 </div>
-                <div className="col-12">
+                <div className="col-12" style={{position: "fixed", top: "8%", left: "0%"}}>
                     {renderInfo.isGenerated && (<Table indexSearchElement={indexSearchElement} linesFiltered={linesFiltered} content={renderInfo.table} start={currentIndex} pageSize={page_size} colors={renderInfo.colors} rowsToRender={renderInfo.rowsToRender} shiftsPerWorker={renderInfo.shiftsPerWorkers}
                         workerMap={workerMap} shiftsInfo={shiftsInfo} onCellEdit={handleCellEdit} generateWorkerList={generateWorkerList} getLineInfo={getLineInfo} searchDayElement={searchDayElement}
                         searchSkillElement={searchSkillElement} searchFromElement={searchFromElement} searchUntilElement={searchUntilElement} searchAssignedElement={searchAssignedElement} searchShiftIndexElement={searchShiftIndexElement}></Table>)}
                 </div>
-                <div className="row"><br></br></div>
-                <div className="row">
+                <br></br>
+                <div className="row" style={{position: "fixed", top: "89%", width: "100%"}}>
                     <div className="col-2"></div>
                     <div className="col-8" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <button onClick={firstPage} disabled={currentIndex === 0} style={{ background: 'white', border: '2px solid black' }}>
@@ -781,13 +783,12 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
 
                     <div className="col-2"></div>
                 </div>
-                <div className="row"><br></br></div>
-                <div className="d-flex justify-content-between mb-3 down-buttons">
+                <br></br>
+                <div className="d-flex justify-content-between mb-3 down-buttons" style={{position: "fixed", top: "94%", width: "100%"}}>
                     <div className="col-3"></div>
                     <button className="btn btn-success col-3" onClick={handleSave}
                         data-toggle="modal" >Save</button>
                     <div className="col-3">
-
                     </div>
                 </div>
             </div>

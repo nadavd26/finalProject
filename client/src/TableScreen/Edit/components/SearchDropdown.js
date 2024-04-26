@@ -47,7 +47,8 @@ const SearchDropdown = ({ value, shownValue, options, shownOptions, onSelect, wi
             border: '1px solid black', // Add border to the control
             width: width !== undefined ? width : '100%',
             margin: '0px',
-            padding: '0px' // Set padding to 0
+            padding: '0px',
+             // Set padding to 0
              // Set width to either the specified value or 100%
         }),
         indicatorSeparator: (provided) => ({
@@ -67,7 +68,8 @@ const SearchDropdown = ({ value, shownValue, options, shownOptions, onSelect, wi
             marginLeft: '0px', // Add margin on the left
             padding: '0px',
             marginRight: '0px',
-            width: '100%' // Add margin on the right // Center items vertically
+            width: '100%',
+             // Add margin on the right // Center items vertically
         }),
     };
 
