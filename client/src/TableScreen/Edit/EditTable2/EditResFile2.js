@@ -691,7 +691,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
                     placeholder={"Index"}
                     style={{
                         paddingRight: '30px', // Adjust padding to accommodate the button
-                        height: '38px', // Match the height of the button
+                        height: '4.5vh', // Match the height of the button
                         boxSizing: 'border-box', // Ensure padding is included in the height calculation
                         verticalAlign: 'middle', // Align input vertically with the button
                         maxWidth: '100%', // Limit the width to accommodate the button

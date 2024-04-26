@@ -104,7 +104,7 @@ function Table({ linesFiltered, content, start, pageSize, colors, shiftsPerWorke
                     <div className="table100-body scrollbar" style={{maxHeight: "100vh", height: "80vh"}}>
                         <table className="table table-hover table-striped" id="table">
                             <tbody>
-                                <tr className="row100 body first-row" style={{fontSize: "0.75vw"}}>
+                                <tr className="row100 body first-row" style={{fontSize: "1.1vw"}}>
                                     <th className="cell100 first-column blue static-position" id="first-row-first-col" style={{maxWidth: "11vw"}}><div style={{fontSize: "1vw"}}>Index</div><div>{indexSearchElement()}</div></th>
                                     <th class="cell100  last-columns blue " id="header" style={{maxWidth: vw(widths[0])}}><div style={{fontSize: "1vw"}}>Day</div><div>{searchDayElement(vw1(widths[0]))}</div></th>
                                     <th class="cell100  last-columns blue " id="header" style={{maxWidth: vw(widths[1])}}><div style={{fontSize: "1vw"}}>Skill</div><div>{searchSkillElement(vw1(widths[1]))}</div></th>
