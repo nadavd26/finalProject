@@ -21,7 +21,7 @@ function generateShiftArray(shifts) {
 }
 
 
-function generateShifts(scheduleData, workerTable, existingWorkers) {
+function generateShifts(scheduleData) {
     // console.log("scheduleData")
     // console.log(scheduleData)
     const workersAndShifts = [];
@@ -41,16 +41,16 @@ function generateShifts(scheduleData, workerTable, existingWorkers) {
 
 
     // Extract worker IDs from the schedule data
-    const scheduleWorkerIDs = scheduleData.map(entry => entry[4]);
+    // const scheduleWorkerIDs = scheduleData.map(entry => entry[4]);
 
     // Filter out new workers who are not in the existing workers list
-    const newWorkers = existingWorkers.filter(workerID => !scheduleWorkerIDs.includes(workerID));
+    // const newWorkers = existingWorkers.filter(workerID => !scheduleWorkerIDs.includes(workerID));
 
     // Initialize shifts for new workers
-    const shiftsFalse = new Array(48).fill(false);
-    newWorkers.forEach(worker => {
-        workersAndShifts.push({ name: worker, shifts: shiftsFalse });
-    });
+    // const shiftsFalse = new Array(48).fill(false);
+    // newWorkers.forEach(worker => {
+    //     workersAndShifts.push({ name: worker, shifts: shiftsFalse });
+    // });
 
     // Initialize a map to store unique shifts for each worker
     const workerShiftsMap = new Map();
@@ -344,7 +344,7 @@ export async function generateAlgo2Results(table) {
     const scheduleDataa = table
     for (let i = 0; i < scheduleDataa.length; i++) {
         // scheduleDataa[i][4] = (2*i+5) % 10
-        scheduleDataa[i][4] = 123452
+        scheduleDataa[i][4] = 12345
     }
     const scheduleData = duplicateLines(scheduleDataa)
     // console.log("scheduleData : " + scheduleData)
@@ -388,16 +388,15 @@ export function generateAlgoShifts(data) {
     return shifts
 }
 
-export function generateAlgoGraphicResults(data, workerTable) {
-    const existingWorkers = workerTable.map(entry => entry[1] + "\n" + entry[0]);
+export function generateAlgoGraphicResults(data) {
     const daysWorkersAndShifts = {
-        Sunday: generateShifts(data.Sunday, workerTable, existingWorkers),
-        Monday: generateShifts(data.Monday, workerTable, existingWorkers),
-        Tuesday: generateShifts(data.Tuesday, workerTable, existingWorkers),
-        Wednesday: generateShifts(data.Wednesday, workerTable, existingWorkers),
-        Thursday: generateShifts(data.Thursday, workerTable, existingWorkers),
-        Friday: generateShifts(data.Friday, workerTable, existingWorkers),
-        Saturday: generateShifts(data.Saturday, workerTable, existingWorkers)
+        Sunday: generateShifts(data.Sunday),
+        Monday: generateShifts(data.Monday),
+        Tuesday: generateShifts(data.Tuesday),
+        Wednesday: generateShifts(data.Wednesday),
+        Thursday: generateShifts(data.Thursday),
+        Friday: generateShifts(data.Friday),
+        Saturday: generateShifts(data.Saturday)
     }
 
     return daysWorkersAndShifts

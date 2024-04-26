@@ -31,7 +31,6 @@ const SearchDropdown = ({ value, shownValue, options, shownOptions, onSelect }) 
         }
     };
 
-    // Custom styles to hide the first option
     const customStyles = {
         option: (provided, state) => ({
             ...provided,
@@ -39,8 +38,23 @@ const SearchDropdown = ({ value, shownValue, options, shownOptions, onSelect }) 
         }),
         clearIndicator: (provided) => ({
             ...provided,
-            padding: '4px' // Adjust the padding of the clear indicator button
-        })
+            padding: '4px',
+            color: 'black' // Adjust the padding of the clear indicator button
+        }),
+        control: (provided) => ({
+            ...provided,
+            backgroundColor: value == "" ? 'white' : 'lightblue',
+            border: '1px solid black', // Add border to the control
+        }),
+        indicatorSeparator: (provided) => ({
+            ...provided,
+            backgroundColor: 'black', // Change color of the vertical line to black
+        }),
+        dropdownIndicator: (provided) => ({
+            ...provided,
+            color: 'black',
+            padding: '4px' // Change color of the dropdown indicator to black
+        }),
     };
 
     return (

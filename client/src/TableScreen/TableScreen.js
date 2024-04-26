@@ -96,7 +96,7 @@ function TableScreen({ user, setUser }) {
         console.log(JSON.stringify(res))
         var newUser = user
         newUser.algo2Table = res
-        const ui = utils.generateAlgoGraphicResults(res, user.table1)
+        const ui = utils.generateAlgoGraphicResults(res)
         newUser.algo2Graphic = ui
         var shifts = utils.generateAlgoShifts(res)
         // console.log("shifts")
@@ -200,8 +200,8 @@ function TableScreen({ user, setUser }) {
     }
     return (
         !editInfoState.get.inEdit ? (
-            <div id="table-screen">
-                <div className="container-fluid py-3">
+            <div id="table-screen" style={{maxHeight: "100vh"}}>
+                <div className="container-fluid py-3"  style={{marginBottom: "1000px"}}>
                     <div className="d-flex justify-content-between mb-3 top-buttons">
                         <div className="col-1"></div>
                         <button className={`btn ${tableScreenState.get.tableNum === 2 ? 'btn-secondary' : 'btn-primary'} col-4`} onClick={() => changeTable(1)}>Amount of employees required for each shift</button>
@@ -269,13 +269,12 @@ function TableScreen({ user, setUser }) {
                             </div>)}
                         </>
                     )}
-                    <div className="row"><br /></div>
-                    <div className="row"><br /></div>
-                    <div className="d-flex justify-content-between mb-3 down-buttons">
+                    <div className="d-flex justify-content-between fixed-bottom mb-3" style={{ marginBottom: "1000px" }}>
                         <div className="col-4"></div>
                         <button className="btn btn-secondary col-4" onClick={() => handleEdit()}>Edit</button>
                         <div className="col-4"></div>
                     </div>
+
                 </div>
             </div>
         ) : <>{editComponent}</>

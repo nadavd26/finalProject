@@ -19,7 +19,7 @@ import FilterTableLoader from "../components/FilterTableLoader";
 
 export default function EditResFile2({ initialTable, setInEdit, user, setUser, workerMap, shiftsInfo, shiftsPerWorkers, setShiftsPerWorkers, finishCallback }) {
     const [currentIndex, setCurrentIndex] = useState(0)
-    const [searchedIndex, setSearchedIndex] = useState(currentIndex)
+    const [searchedIndex, setSearchedIndex] = useState('')
     const [isGenerated, setIsGenerated] = useState(false)
     const [isFiltered, setIsFiltered] = useState(true)
     var page_size = 11
@@ -405,7 +405,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
             let rowChcked = renderInfo.table[absuluteIndex]
             if (capitalizeFirstLetter(rowChcked[0]) == day && (utils.checkOverlap(rowChcked[2], rowChcked[3], row[2], row[3]))) {
                 newRowsToRender[linesFiltered[i]] = true
-            } 
+            }
         }
         //rendering copies of the same shift
         //rendering overlapping rows of this row
@@ -473,12 +473,13 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
         for (let i = newCurrentIndex; i <= end; i++) {
             newRowsToRender[linesFiltered[i]] = true
         }
-        document.getElementById('searchIndexInput').value = '';
         setRenderInfo(prevRenderInfo => ({
             ...prevRenderInfo,
             rowsToRender: newRowsToRender
         }));
         setCurrentIndex(newCurrentIndex)
+        setSearchedIndex('')
+        document.getElementById('searchIndexInput').value = '';
     }
 
     const prevPage = () => {
@@ -488,12 +489,13 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
         for (let i = newCurrentIndex; i < oldCurrentIndex; i++) {
             newRowsToRender[linesFiltered[i]] = true
         }
-        document.getElementById('searchIndexInput').value = '';
         setRenderInfo(prevRenderInfo => ({
             ...prevRenderInfo,
             rowsToRender: newRowsToRender
         }));
         setCurrentIndex(newCurrentIndex)
+        setSearchedIndex('')
+        document.getElementById('searchIndexInput').value = '';
     }
 
     const firstPage = () => {
@@ -505,12 +507,14 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
         for (let i = newCurrentIndex; i <= end; i++) {
             newRowsToRender[linesFiltered[i]] = true
         }
-        document.getElementById('searchIndexInput').value = '';
+
         setRenderInfo(prevRenderInfo => ({
             ...prevRenderInfo,
             rowsToRender: newRowsToRender
         }));
         setCurrentIndex(newCurrentIndex)
+        setSearchedIndex('')
+        document.getElementById('searchIndexInput').value = '';
     }
 
 
@@ -524,12 +528,13 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
         for (let i = newCurrentIndex; i < length; i++) {
             newRowsToRender[linesFiltered[i]] = true
         }
-        document.getElementById('searchIndexInput').value = '';
         setRenderInfo(prevRenderInfo => ({
             ...prevRenderInfo,
             rowsToRender: newRowsToRender
         }));
         setCurrentIndex(newCurrentIndex)
+        setSearchedIndex('')
+        document.getElementById('searchIndexInput').value = '';
     }
 
     const changeCurrentIndex = () => {
@@ -551,18 +556,14 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
         for (let i = newCurrentIndex; i <= end; i++) {
             newRowsToRender[linesFiltered[i]] = true
         }
-        document.getElementById('searchIndexInput').value = '';
         setRenderInfo(prevRenderInfo => ({
             ...prevRenderInfo,
             rowsToRender: newRowsToRender
         }));
         setCurrentIndex(newCurrentIndex)
+        setSearchedIndex('')
+        document.getElementById('searchIndexInput').value = '';
     }
-
-    function handleInputChange(e) {
-        setSearchedIndex(e.target.value)
-    }
-
 
     const changeSelectedDay = (newDayIndex) => {
         var newDaySearch = { value: (options.day.options)[newDayIndex], shownValue: (options.day.shownOptions)[newDayIndex] }
@@ -644,15 +645,15 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
                 newRowsToRender[i] = true
             }
         }
-        document.getElementById('searchIndexInput').value = '';
-
         setCurrentIndex(0)
+        setSearchedIndex('')
+        document.getElementById('searchIndexInput').value = '';
         setLinesFiltered(newLinesFiltered)
         setRenderInfo(prevRenderInfo => ({
             ...prevRenderInfo,
             rowsToRender: newRowsToRender
         }));
-        
+
         setIsFiltered(true)
     }
 
@@ -685,7 +686,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
                 <input
                     name="searchIndex"
                     id="searchIndexInput"
-                    type="number"
+                    type="text"
                     onChange={handleInputChange}
                     placeholder={"Choose Index To Jump"}
                     style={{
@@ -723,6 +724,17 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
             </div>
         );
     };
+
+    const handleInputChange = (event) => {
+        const { value } = event.target;
+        const regex = /^[0-9]+$/;
+        if (regex.test(value)) {
+            setSearchedIndex(value);
+        } else {
+            document.getElementById('searchIndexInput').value = searchedIndex
+        }
+    };
+
 
 
     const filterButton = () => {
