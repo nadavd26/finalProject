@@ -420,6 +420,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
 
     const handleSave = async () => {
         const errorModal = new window.bootstrap.Modal(document.getElementById('errModal'));
+        setErrorMsg(defaultErrorMsg)
         const saveModal = new window.bootstrap.Modal(document.getElementById('saveModal'));
         var isValid = true;
         for (const color of renderInfo.colors) {
@@ -543,6 +544,9 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
         var length = linesFiltered.length
 
         if (indexNum < 0 || indexNum >= renderInfo.table.length) {
+            const errorModal = new window.bootstrap.Modal(document.getElementById('errModal'));
+            setErrorMsg("Index was not found in the filtered lines")
+            errorModal.show()
             return
         }
 
@@ -709,7 +713,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
                         width: '30px', // Adjust button width as needed
                         height: '30px', // Make button height same as input field
                         border: '1px solid transparent', // Set border to transparent
-                        background: 'white', // Add background style
+                        background: 'transparent', // Add background style
                         padding: 0, // Remove padding
                         display: 'flex', // Use flexbox to center content
                         alignItems: 'center', // Center vertically
@@ -718,7 +722,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
                     }}
                     onClick={changeCurrentIndex}
                 >
-                    <img src={search} alt="Search" style={{ maxWidth: '100%', maxHeight: '100%' }} />
+                    <img src={search} alt="Search" style={{ maxWidth: '100%', maxHeight: '100%', background: 'transparent' }} />
                 </button>
 
             </div>
