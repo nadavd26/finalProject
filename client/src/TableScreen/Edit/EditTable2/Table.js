@@ -24,7 +24,7 @@ const TableRow = ({ rowIndex, row, color, generateWorkerList, onCellEdit, getLin
     };
 
     return (
-        <tr className="row100 body last-rows" id="table-row" style={{opacity: hidden ? 0 : 1, height: "8.5vh", fontSize: "1vw"}}>
+        <tr className="row100 body last-rows" id="table-row" style={{opacity: hidden ? 0 : 1, height: "8.5vh", fontSize: "0.9vw"}}>
             <NonEditableCell value={rowIndex + 1} rowIndex={rowIndex} coloumnIndex={0} color={color} shiftIndex={row[5]} hidden={hidden} />
             <NonEditableCell value={capitalizeFirstLetter(row[0])} rowIndex={rowIndex} coloumnIndex={0} color={color} additionalClass={"no-left second"} shiftIndex={row[5]} hidden={hidden} />
             <NonEditableCell value={row[1]} rowIndex={rowIndex} columnIndex={1} color={color} additionalClass={"no-left"} shiftIndex={row[5]} hidden={hidden} />
@@ -104,14 +104,14 @@ function Table({ linesFiltered, content, start, pageSize, colors, shiftsPerWorke
                     <div className="table100-body scrollbar" style={{maxHeight: "100vh", height: "80vh"}}>
                         <table className="table table-hover table-striped" id="table">
                             <tbody>
-                                <tr className="row100 body first-row" style={{fontSize: "1vw"}}>
-                                    <th className="cell100 first-column blue static-position" id="first-row-first-col" style={{maxWidth: "11vw", fontSize: "1vw"}}><div>Index</div><div>{indexSearchElement()}</div></th>
-                                    <th class="cell100  last-columns blue " id="header" style={{maxWidth: vw(widths[0])}}><div>Day</div><div>{searchDayElement(vw1(widths[0]))}</div></th>
-                                    <th class="cell100  last-columns blue " id="header" style={{maxWidth: vw(widths[1])}}><div>Skill</div><div>{searchSkillElement(vw1(widths[1]))}</div></th>
-                                    <th class="cell100  last-columns blue " id="header" style={{maxWidth: vw(widths[2])}}><div>From</div><div>{searchFromElement(vw1(widths[2]))}</div></th>
-                                    <th class="cell100  last-columns blue" id="header" style={{maxWidth: vw(widths[3])}}><div>Until</div><div>{searchUntilElement(vw1(widths[3]))}</div></th>
-                                    <th class="cell100  last-columns blue " id="header" style={{maxWidth: vw(widths[4])}}><div>Assigned Worker</div><div>{searchAssignedElement(vw1(widths[4]))}</div></th>
-                                    <th class="cell100  last-columns blue" id="header" style={{maxWidth: vw(widths[5])}}><div>Shift Number</div><div>{searchShiftIndexElement(vw1(widths[5]))}</div></th>
+                                <tr className="row100 body first-row" style={{fontSize: "0.75vw"}}>
+                                    <th className="cell100 first-column blue static-position" id="first-row-first-col" style={{maxWidth: "11vw"}}><div style={{fontSize: "1vw"}}>Index</div><div>{indexSearchElement()}</div></th>
+                                    <th class="cell100  last-columns blue " id="header" style={{maxWidth: vw(widths[0])}}><div style={{fontSize: "1vw"}}>Day</div><div>{searchDayElement(vw1(widths[0]))}</div></th>
+                                    <th class="cell100  last-columns blue " id="header" style={{maxWidth: vw(widths[1])}}><div style={{fontSize: "1vw"}}>Skill</div><div>{searchSkillElement(vw1(widths[1]))}</div></th>
+                                    <th class="cell100  last-columns blue " id="header" style={{maxWidth: vw(widths[2])}}><div style={{fontSize: "1vw"}}>From</div><div>{searchFromElement(vw1(widths[2]))}</div></th>
+                                    <th class="cell100  last-columns blue" id="header" style={{maxWidth: vw(widths[3])}}><div style={{fontSize: "1vw"}}>Until</div><div>{searchUntilElement(vw1(widths[3]))}</div></th>
+                                    <th class="cell100  last-columns blue " id="header" style={{maxWidth: vw(widths[4])}}><div style={{fontSize: "1vw"}}>Assigned Worker</div><div>{searchAssignedElement(vw1(widths[4]))}</div></th>
+                                    <th class="cell100  last-columns blue" id="header" style={{maxWidth: vw(widths[5])}}><div style={{fontSize: "1vw"}}>Shift Number</div><div>{searchShiftIndexElement(vw1(widths[5]))}</div></th>
                                 </tr>
                                 {renderedRows}
                             </tbody>
