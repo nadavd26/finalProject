@@ -5,12 +5,14 @@ import './css/table-main.css'
 import './css/perfect-scrollbar.css'
 import Dropdown from "./conponenets/Dropdown";
 import { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom'
 import Loader from "./conponenets/Loader";
 import { useTableScreenState } from "./states/TableScreenState";
 import { useTableAlgo2State } from "./states/TableAlgo2State";
 import { useEditInfoState } from "./states/EditInfo";
 import { useTableAlgo1State } from "./states/TableAlgo1State";
 import EditResFile1 from "./Edit/EditTable1/EditResFile1";
+
 import SkillDropdown from "./conponenets/SkillDropdown";
 import * as utils from './Utils'
 import EditResFile2 from "./Edit/EditTable2/EditResFile2";
@@ -19,6 +21,7 @@ import Graph from "./conponenets/Graph";
 // every boolean array is 48 cells, starting from 7:00, ending at 23:30
 
 function TableScreen({ user, setUser }) {
+    const navigate = useNavigate();
     const tableScreenState = useTableScreenState();
     const algo2TableState = useTableAlgo2State();
     const tableAlgo1State = useTableAlgo1State()
@@ -192,6 +195,9 @@ function TableScreen({ user, setUser }) {
             shiftsInfo={(algo2TableState.get.shiftInfo)} shiftsPerWorkers={arraysToSets(JSON.parse(JSON.stringify(setsToArrays(algo2TableState.get.shiftsPerWorkers))))} setShiftsPerWorkers={algo2TableState.setShiftsPerWorkers} finishCallback={table2finishEditCallback} />
     );
 
+    const backToUpload = () => {
+        navigate("/upload")
+    }
     return (
         !editInfoState.get.inEdit ? (
             <div id="table-screen">
@@ -200,7 +206,7 @@ function TableScreen({ user, setUser }) {
                         <div className="col-1"></div>
                         <button className={`btn ${tableScreenState.get.tableNum === 2 ? 'btn-secondary' : 'btn-primary'} col-4`} onClick={() => changeTable(1)}>Amount of employees required for each shift</button>
                         <button className={`btn ${tableScreenState.get.tableNum === 1 ? 'btn-secondary' : 'btn-primary'} col-4`} onClick={() => changeTable(2)}>Allocation of employees</button>
-                        <button className="btn btn-success col-2">
+                        <button className="btn btn-success col-2" onClick={backToUpload}>
                             <img src={Upload} alt="Upload" className="upload-image" />
                         </button>
                         <div className="col-1"></div>
