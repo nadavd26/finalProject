@@ -216,7 +216,7 @@ const Graph = ({ reqs, shifts, skill, day }) => {
 
     if (reqs.length === 0 && shifts.length === 0) {
         return (
-            <div className="Graph"  style={{position: 'fixed', maxHeight: "67vh", width: "98%", left: "1%", top: "23%"}}>
+            <div className="Graph"  style={{position: 'fixed', height: "74%", width: "98%", left: "1%", top: "16%"}}>
                 <Plot
                     data={fig.data}
                     layout={fig.layout}
