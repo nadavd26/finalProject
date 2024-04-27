@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Plotly from 'plotly.js-dist';
 import createPlotlyComponent from 'react-plotly.js/factory';
-import { Modal, Button, Col } from 'react-bootstrap';
+import { Modal, Button} from 'react-bootstrap';
 
 const Plot = createPlotlyComponent(Plotly);
 
@@ -17,6 +17,12 @@ const Graph = ({ reqs, shifts, skill, day }) => {
 
     const [showModal, setShowModal] = useState(true);
 
+    useEffect(() => {
+        if (!showModal && reqs.length === 0 && shifts.length === 0) {
+            setShowModal(true);
+        }
+    }, [reqs, shifts]);
+
     const makeGraph = () => {
 
         // Convert hours to index
@@ -29,7 +35,7 @@ const Graph = ({ reqs, shifts, skill, day }) => {
             return hours * 2 + (minutes === '30' ? 1 : 0);
         };
 
-
+        
         // Parse shifts data
         const parseShifts = (shifts) => {
             const newShifts = [];
@@ -159,10 +165,11 @@ const Graph = ({ reqs, shifts, skill, day }) => {
             displayModeBar: false,  // Hide the interactive mode bar
             scrollZoom: false       // Disable scroll zoom
         };
-
         const layout = {
+            margin: {t: 20},
             barmode: 'stack',
             bargap: 0.04,
+            showlegend: true, // Ensure legend is shown
             xaxis: {
                 title: "Time",              // Set x-axis title
                 tickvals: tickvals,         // Set tick values
@@ -209,7 +216,7 @@ const Graph = ({ reqs, shifts, skill, day }) => {
 
     if (reqs.length === 0 && shifts.length === 0) {
         return (
-            <>
+            <div className="Graph"  style={{position: 'fixed', maxHeight: "67vh", width: "98%", left: "1%", top: "23%"}}>
                 <Plot
                     data={fig.data}
                     layout={fig.layout}
@@ -228,20 +235,21 @@ const Graph = ({ reqs, shifts, skill, day }) => {
                         <Button variant="danger" onClick={() => setShowModal(false)}>Close</Button>
                     </Modal.Footer>
                 </Modal>
-            </>
+                </div>
         );
     }
 
     return (
-        <div className="Graph">
+        <div className="Graph" style={{position: 'fixed', height: "74%", width: "98%", left: "1%", top: "16%"}}>
             <Plot
                 data={fig.data}
                 layout={fig.layout}
                 config={fig.config}
-                style={{ width: '100%', height: '100%' }}
+                style={{ width: '100%', height: '100%'}}
             />
         </div>
     );
+    
 };
 
 export default Graph;
