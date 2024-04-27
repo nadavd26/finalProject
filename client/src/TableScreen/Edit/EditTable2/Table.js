@@ -24,7 +24,7 @@ const TableRow = ({ rowIndex, row, color, generateWorkerList, onCellEdit, getLin
     };
 
     return (
-        <tr className="row100 body last-rows" id="table-row" style={{opacity: hidden ? 0 : 1, height: "8.5vh", fontSize: "0.8vw"}}>
+        <tr className="row100 body last-rows" id="table-row" style={{opacity: hidden ? 0 : 1, height: "8.5vh", fontSize: "1vw"}}>
             <NonEditableCell value={rowIndex + 1} rowIndex={rowIndex} coloumnIndex={0} color={color} shiftIndex={row[5]} hidden={hidden} style={{fontSize: "1.2vw"}}/>
             <NonEditableCell value={capitalizeFirstLetter(row[0])} rowIndex={rowIndex} coloumnIndex={0} color={color} additionalClass={"no-left second"} shiftIndex={row[5]} hidden={hidden} style={{fontSize: "1.7vw"}}/>
             <NonEditableCell value={row[1]} rowIndex={rowIndex} columnIndex={1} color={color} additionalClass={"no-left"} shiftIndex={row[5]} hidden={hidden} style={{fontSize: "1.5vw"}}/>
