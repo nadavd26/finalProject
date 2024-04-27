@@ -420,7 +420,7 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
     return (
         <div id="edit-file">
             <div className="container-fluid py-3">
-                <div className="col-1">
+                <div className="col-1" style={{position: "fixed", top: "1%" ,height: "3%"}}>
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#backModal" onClick={handleBack}>Back</button>
                 </div>
                 <div className="col-11"></div>

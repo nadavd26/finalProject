@@ -748,7 +748,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
     return (
         <div id="edit-file">
             <div className="container-fluid py-3">
-                <div className="row">
+                <div className="row" style={{position: "fixed", top: "1%" ,height: "5%", width: "100%"}}>
                     <div className="col-2">
                         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#backModal" onClick={handleBack}>Back</button>
                     </div>
