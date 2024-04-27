@@ -24,12 +24,12 @@ const TableRow = ({ rowIndex, row, color, generateWorkerList, onCellEdit, getLin
     };
 
     return (
-        <tr className="row100 body last-rows" id="table-row" style={{opacity: hidden ? 0 : 1, height: "8.5vh", fontSize: "0.9vw"}}>
-            <NonEditableCell value={rowIndex + 1} rowIndex={rowIndex} coloumnIndex={0} color={color} shiftIndex={row[5]} hidden={hidden} />
-            <NonEditableCell value={capitalizeFirstLetter(row[0])} rowIndex={rowIndex} coloumnIndex={0} color={color} additionalClass={"no-left second"} shiftIndex={row[5]} hidden={hidden} />
-            <NonEditableCell value={row[1]} rowIndex={rowIndex} columnIndex={1} color={color} additionalClass={"no-left"} shiftIndex={row[5]} hidden={hidden} />
-            <NonEditableCell value={row[2]} rowIndex={rowIndex} columnIndex={2} color={color} additionalClass={"no-left"} shiftIndex={row[5]} hidden={hidden} />
-            <NonEditableCell value={row[3]} rowIndex={rowIndex} columnIndex={3} color={color} additionalClass={"no-left"} shiftIndex={row[5]} hidden={hidden} />
+        <tr className="row100 body last-rows" id="table-row" style={{opacity: hidden ? 0 : 1, height: "8.5vh", fontSize: "0.8vw"}}>
+            <NonEditableCell value={rowIndex + 1} rowIndex={rowIndex} coloumnIndex={0} color={color} shiftIndex={row[5]} hidden={hidden} style={{fontSize: "1.2vw"}}/>
+            <NonEditableCell value={capitalizeFirstLetter(row[0])} rowIndex={rowIndex} coloumnIndex={0} color={color} additionalClass={"no-left second"} shiftIndex={row[5]} hidden={hidden} style={{fontSize: "1.7vw"}}/>
+            <NonEditableCell value={row[1]} rowIndex={rowIndex} columnIndex={1} color={color} additionalClass={"no-left"} shiftIndex={row[5]} hidden={hidden} style={{fontSize: "1.5vw"}}/>
+            <NonEditableCell value={row[2]} rowIndex={rowIndex} columnIndex={2} color={color} additionalClass={"no-left"} shiftIndex={row[5]} hidden={hidden} style={{fontSize: "1.7vw"}}/>
+            <NonEditableCell value={row[3]} rowIndex={rowIndex} columnIndex={3} color={color} additionalClass={"no-left"} shiftIndex={row[5]} hidden={hidden} style={{fontSize: "1.7vw"}}/>
             <WorkerDropdown value={row[4]} rowIndex={rowIndex} columnIndex={4} color={color} workerList={generateWorkerList(rowIndex, capitalizeFirstLetter(row[0]))} onCellEdit={onCellEdit} shiftIndex={row[5]} getLineInfo={getLineInfo} hidden={hidden} />
             <ShiftIdCell value={(row[5] + 1)} rowIndex={rowIndex} columnIndex={3} color={color} additionalClass={"no-left"} shiftIndex={row[5]} hidden={hidden} />
         </tr>

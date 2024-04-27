@@ -1,4 +1,4 @@
-export default function NonEditableCell({ value, rowIndex, shiftIndex ,columnIndex, color, additionalClass }) {
+export default function NonEditableCell({ value, rowIndex, shiftIndex ,columnIndex, color, additionalClass, style }) {
     // Define the styles outside of the JSX
     const cellStyle = columnIndex === 0  ? { borderLeftWidth: '1px' } : { borderLeftWidth: '0px' };
     var finalColor = color ? color : "white"
@@ -12,11 +12,13 @@ export default function NonEditableCell({ value, rowIndex, shiftIndex ,columnInd
         }
     }
 
+    const merge = {...cellStyle, ...style}
+
     return (
         <td
             id={(columnIndex == undefined || columnIndex == 0) ? 'first-column' : ''}
             className={`cell100 ${(columnIndex == 0  || columnIndex == undefined)? 'first-columns' : 'last-columns'} ${color} ${additionalClass}`}
-            style={cellStyle} // Apply the style object here
+            style={merge} // Apply the style object here
             contentEditable="false"
         >
             {value}
