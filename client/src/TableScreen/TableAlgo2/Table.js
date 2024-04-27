@@ -17,7 +17,7 @@ function TableAlgo2({ workersAndShifts }) {
             <div className="container-table100">
                 <div className="wrap-table100" style={{ opacity: workersAndShifts.length == 0 ? 0 : 1 }}>
                     <div className="ver1 m-b-110">
-                        <div className="table100-body scrollbar" style={{position: 'fixed', maxHeight: "67vh", width: "98%", left: "1%", top: "23%"}}>
+                        <div className="table100-body scrollbar" style={{position: 'fixed', maxHeight: "74vh", width: "98%", left: "1%", top: "16%"}}>
                             <table className="table table-hover table-striped" id="table">
                                 <tbody>
                                     <tr className="row100 body first-row">

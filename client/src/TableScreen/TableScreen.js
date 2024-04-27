@@ -201,8 +201,8 @@ function TableScreen({ user, setUser }) {
     return (
         !editInfoState.get.inEdit ? (
             <div id="table-screen" style={{maxHeight: "100vh"}}>
-                <div className="container-fluid py-3"  style={{marginBottom: "1000px"}}>
-                    <div className="d-flex justify-content-between mb-3 top-buttons">
+                <div className="container-fluid py-3" >
+                    <div className="d-flex justify-content-between mb-3 top-buttons" style={{position: "fixed", top: "1%", height: "7%", width: "100%"}}>
                         <div className="col-1"></div>
                         <button className={`btn ${tableScreenState.get.tableNum === 2 ? 'btn-secondary' : 'btn-primary'} col-4`} onClick={() => changeTable(1)}>Amount of employees required for each shift</button>
                         <button className={`btn ${tableScreenState.get.tableNum === 1 ? 'btn-secondary' : 'btn-primary'} col-4`} onClick={() => changeTable(2)}>Allocation of employees</button>
@@ -213,7 +213,7 @@ function TableScreen({ user, setUser }) {
                     </div>
                     {tableScreenState.get.tableNum === 2 ? (
                         <div>
-                            <div className="row">
+                            <div className="row" style={{position: "relative", top:"6vh"}}>
                                 <div className="col-3"></div>
                                 <div className="col-6 text-center">
                                     <Dropdown firstDay={tableScreenState.get.currentDay} dayHandler={switchDay}></Dropdown>
@@ -232,7 +232,7 @@ function TableScreen({ user, setUser }) {
                     ) : ( //current table table 1
                         <>
                             {!tableScreenState.get.is1Generated ? (
-                                <><div className="row">
+                                <><div className="row" style={{position: "relative", top:"6vh"}}>
                                     <div className="col-3"></div>
                                     <div className="col-6 text-center">
                                         <Dropdown firstDay={tableScreenState.get.currentDay} dayHandler={switchDay}></Dropdown>
@@ -241,7 +241,7 @@ function TableScreen({ user, setUser }) {
                                 </div>
                                     <br></br><br></br><Loader speed={5} customText="Calculating..." /></>
                             ) : (<div>
-                                <div className="row">
+                                <div className="row" style={{position: "relative", top:"6vh"}}>
                                     <div className="col-5"></div>
                                     <div className="col-1 text-center">
                                         <Dropdown firstDay={tableScreenState.get.currentDay} dayHandler={switchDay}></Dropdown>
@@ -252,7 +252,7 @@ function TableScreen({ user, setUser }) {
                                     <div className="col-5"></div>
                                 </div>
                                 <br></br>
-                                <div className="row">
+                                <div className="row" >
                                     <div className="col-1"></div>
                                     <div className="col-10">
                                         <Graph reqs={!(tableAlgo1State.get.req) ? [] : tableAlgo1State.get.req} shifts={!(tableAlgo1State.get.worksPerShift) ? [] : tableAlgo1State.get.worksPerShift} skill={tableAlgo1State.get.currentSkill} day={tableScreenState.get.currentDay}></Graph>
