@@ -83,6 +83,7 @@ const SearchDropdown = ({ value, shownValue, options, shownOptions, onSelect, wi
                 placeholder={shownOptions[0]} // Set the placeholder to the first visible option from shownOptions
                 isClearable // Enable the clearable option
                 styles={customStyles} // Apply custom styles
+                menuShouldBlockScroll={true}
             />
             {/* <div>value: {value}</div>
             <div>shownValue: {shownValue}</div> */}

@@ -24,12 +24,12 @@ const TableRow = ({ rowIndex, row, color, generateWorkerList, onCellEdit, getLin
     };
 
     return (
-        <tr className="row100 body last-rows" id="table-row" style={{opacity: hidden ? 0 : 1, height: "8.5vh", fontSize: "1vw"}}>
-            <NonEditableCell value={rowIndex + 1} rowIndex={rowIndex} coloumnIndex={0} color={color} shiftIndex={row[5]} hidden={hidden} style={{fontSize: "1.2vw"}}/>
-            <NonEditableCell value={capitalizeFirstLetter(row[0])} rowIndex={rowIndex} coloumnIndex={0} color={color} additionalClass={"no-left second"} shiftIndex={row[5]} hidden={hidden} style={{fontSize: "1.7vw"}}/>
-            <NonEditableCell value={row[1]} rowIndex={rowIndex} columnIndex={1} color={color} additionalClass={"no-left"} shiftIndex={row[5]} hidden={hidden} style={{fontSize: "1.5vw"}}/>
-            <NonEditableCell value={row[2]} rowIndex={rowIndex} columnIndex={2} color={color} additionalClass={"no-left"} shiftIndex={row[5]} hidden={hidden} style={{fontSize: "1.7vw"}}/>
-            <NonEditableCell value={row[3]} rowIndex={rowIndex} columnIndex={3} color={color} additionalClass={"no-left"} shiftIndex={row[5]} hidden={hidden} style={{fontSize: "1.7vw"}}/>
+        <tr className="row100 body last-rows" id="table-row" style={{opacity: hidden ? 0 : 1, height: "6vh", fontSize: "1vw"}}>
+            <NonEditableCell value={rowIndex + 1} rowIndex={rowIndex} coloumnIndex={0} color={color} shiftIndex={row[5]} hidden={hidden} style={{fontSize: "1vw"}}/>
+            <NonEditableCell value={capitalizeFirstLetter(row[0])} rowIndex={rowIndex} coloumnIndex={0} color={color} additionalClass={"no-left second"} shiftIndex={row[5]} hidden={hidden} style={{fontSize: "1.5vw"}}/>
+            <NonEditableCell value={row[1]} rowIndex={rowIndex} columnIndex={1} color={color} additionalClass={"no-left"} shiftIndex={row[5]} hidden={hidden} style={{fontSize: "1.3vw"}}/>
+            <NonEditableCell value={row[2]} rowIndex={rowIndex} columnIndex={2} color={color} additionalClass={"no-left"} shiftIndex={row[5]} hidden={hidden} style={{fontSize: "1.5vw"}}/>
+            <NonEditableCell value={row[3]} rowIndex={rowIndex} columnIndex={3} color={color} additionalClass={"no-left"} shiftIndex={row[5]} hidden={hidden} style={{fontSize: "1.5vw"}}/>
             <WorkerDropdown value={row[4]} rowIndex={rowIndex} columnIndex={4} color={color} workerList={generateWorkerList(rowIndex, capitalizeFirstLetter(row[0]))} onCellEdit={onCellEdit} shiftIndex={row[5]} getLineInfo={getLineInfo} hidden={hidden} />
             <ShiftIdCell value={(row[5] + 1)} rowIndex={rowIndex} columnIndex={3} color={color} additionalClass={"no-left"} shiftIndex={row[5]} hidden={hidden} />
         </tr>
@@ -101,7 +101,7 @@ function Table({ linesFiltered, content, start, pageSize, colors, shiftsPerWorke
         <div className="container-table100">
             <div className="wrap-table100" style={{width: "100vw"}}>
                 <div className="ver1 m-b-110">
-                    <div className="table100-body scrollbar" style={{maxHeight: "100vh", height: "80vh"}}>
+                    <div className="table100-body scrollbar" style={{maxHeight: "100vh", height: "75vh"}}>
                         <table className="table table-hover table-striped" id="table">
                             <tbody>
                                 <tr className="row100 body first-row" style={{fontSize: "1.1vw"}}>

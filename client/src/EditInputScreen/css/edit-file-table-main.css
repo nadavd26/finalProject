@@ -92,7 +92,7 @@
 #edit-file .table100-body {
   max-height: 80vh;
   position: fixed;
-  top: 7%;
+  top: 10%;
   width: 95%;
   left: 2%;
   overflow: auto;

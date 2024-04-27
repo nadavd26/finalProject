@@ -691,7 +691,8 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
                     placeholder={"Index"}
                     style={{
                         paddingRight: '30px', // Adjust padding to accommodate the button
-                        height: '4.5vh', // Match the height of the button
+                        height: '4.5vh',
+                        minHeight: '35px', // Match the height of the button
                         boxSizing: 'border-box', // Ensure padding is included in the height calculation
                         verticalAlign: 'middle', // Align input vertically with the button
                         maxWidth: '100%', // Limit the width to accommodate the button
@@ -718,7 +719,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
                     }}
                     onClick={changeCurrentIndex}
                 >
-                    <img src={search} alt="Search" style={{ maxWidth: '100%', maxHeight: '100%', background: 'transparent' }} />
+                    <img src={search} alt="Search" style={{ maxWidth: '100%', maxHeight: '20px', background: 'transparent' }} />
                 </button>
 
             </div>
@@ -764,7 +765,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
                         searchSkillElement={searchSkillElement} searchFromElement={searchFromElement} searchUntilElement={searchUntilElement} searchAssignedElement={searchAssignedElement} searchShiftIndexElement={searchShiftIndexElement}></Table>)}
                 </div>
                 <br></br>
-                <div className="row" style={{position: "fixed", top: "89%", width: "100%"}}>
+                <div className="row" style={{position: "fixed", top: "86.5%", width: "100%"}}>
                     <div className="col-2"></div>
                     <div className="col-8" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <button onClick={firstPage} disabled={currentIndex === 0} style={{ background: 'white', border: '2px solid black' }}>
@@ -784,11 +785,11 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
                     <div className="col-2"></div>
                 </div>
                 <br></br>
-                <div className="d-flex justify-content-between mb-3 down-buttons" style={{position: "fixed", top: "94%", width: "100%"}}>
-                    <div className="col-3"></div>
-                    <button className="btn btn-success col-3" onClick={handleSave}
-                        data-toggle="modal" >Save</button>
-                    <div className="col-3">
+                <div className="row" style={{position: "fixed", top: "93%", width: "100%"}}>
+                    <div className="col-2"></div>
+                    <button className="btn btn-success col-8" onClick={handleSave}
+                        data-toggle="modal" style={{position: "fixed", width: "30%", height: "4%", left: "35%", fontSize: "15px", minHeight: "35px"}}>Save</button>
+                    <div className="col-2">
                     </div>
                 </div>
             </div>
