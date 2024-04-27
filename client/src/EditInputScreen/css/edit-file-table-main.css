@@ -86,6 +86,7 @@
 
 #first-row-first-col {
   z-index: 3 !important;
+  min-width: 66px;
 }
 
 #edit-file .table100-body {
