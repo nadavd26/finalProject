@@ -113,11 +113,11 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
                 <div className="col-11"></div>
                 <Table content={content} onCellEdit={handleCellEdit} isNumberOfWorkersValid={isNumberOfWorkersValid} rowsToRender={rowsToRender}></Table>
                 <div className="row"><br /></div>
-                <div className="d-flex justify-content-between mb-3 down-buttons">
-                    <div className="col-3"></div>
-                    <button className="btn btn-success col-3" onClick={handleSave}
+                <div className="row down-buttons"  style={{position: "fixed", top: "90%", width: "100%"}}>
+                    <div className="col-4"></div>
+                    <button className="btn btn-success col-4" onClick={handleSave}
                         data-toggle="modal" >Save</button>
-                    <div className="col-3"></div>
+                    <div className="col-4"></div>
                 </div>
             </div>
             {showBackModal && (

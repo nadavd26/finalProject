@@ -435,7 +435,7 @@ export default function EditFile3({ csvArray, setEditInfo, user, setUser, fromSe
                 <div className="col-11"></div>
                 <Table content={content} onCellEdit={handleCellEdit} onRowDelete={deleteRow} errors={errors} onRowAdd={onRowAdd} rowsToRender={rowsToRender}></Table>
                 <div className="row"><br /></div>
-                <div className="d-flex justify-content-between mb-3 down-buttons">
+                <div className="row down-buttons"  style={{position: "fixed", top: "90%", width: "100%"}}>
                     <div className="col-3"></div>
                     <button className="btn btn-success col-3" onClick={handleSave}
                         data-toggle="modal" >Save</button>
