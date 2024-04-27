@@ -220,9 +220,6 @@ function TableScreen({ user, setUser }) {
                                 </div>
                                 <div className="col-3"></div>
                             </div>
-
-                            <br></br>
-                            <br></br>
                             {tableScreenState.get.is2Generated ? (
                                 <TableAlgo2 workersAndShifts={algo2TableState.get.currentWorkersAndShifts} />
                             ) : (
