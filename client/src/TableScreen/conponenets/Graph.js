@@ -3,6 +3,56 @@ import Plotly from 'plotly.js-dist';
 import createPlotlyComponent from 'react-plotly.js/factory';
 import { Modal, Button} from 'react-bootstrap';
 
+// Convert hours to index
+const hourToIndex = (hour) => {
+    if (typeof hour !== 'string') {
+        // Handle the case where hour is not a string
+        return -1; // or any other default value
+    }
+    const [hours, minutes] = hour.split(':');
+    return hours * 2 + (minutes === '30' ? 1 : 0);
+};
+
+// Parse reqs data
+const parseReqs = (reqs) => {
+    const newReqs = Array.from({ length: 48 }, () => 0);
+    for (const req of reqs) {
+        const start = hourToIndex(req[2]);
+        let end = hourToIndex(req[3]);
+        if (end === 0) {
+            end = 48;
+        }
+        for (let i = start; i < end; i++) {
+            newReqs[i] = parseInt(req[4]);
+        }
+    }
+    return newReqs;
+};
+
+const parseStackedShifts = (shifts) => {
+    let newShifts = Array(48).fill(0);
+    for (const shift of shifts) {
+        const start = hourToIndex(shift[2]);
+        let end = hourToIndex(shift[3]);
+        if (end === 0) {
+            end = 48;
+        }
+        for (let i = start; i < end; i++) {
+            newShifts[i] += shift[4];
+        }
+    }
+    return newShifts;
+}
+
+const isReqsOverShifts = (reqs, shifts) => {
+    let newReqs = parseReqs(reqs);
+    let newShifts = parseStackedShifts(shifts)
+    for(let i = 0; i < 48; i++)
+        if(newReqs[i] > newShifts[i])
+            return true
+    return false
+}
+
 const Plot = createPlotlyComponent(Plotly);
 
 const Graph = ({ reqs, shifts, skill, day }) => {
@@ -10,42 +60,19 @@ const Graph = ({ reqs, shifts, skill, day }) => {
         makeGraph();
     }, []);
 
-    console.log("reqs")
-    console.log(reqs)
-    console.log("shifts")
-    console.log(shifts)
-
-    const [showModal, setShowModal] = useState(true);
-
+    const [showEmptyGraphModal, setShowEmptyGraphModal] = useState(false);
+    const [showDeviationModal, setShowDeviationModal] = useState(false);
     useEffect(() => {
-        if (!showModal && reqs.length === 0 && shifts.length === 0) {
-            setShowModal(true);
+        if (!showEmptyGraphModal && reqs.length === 0 && shifts.length === 0) {
+            setShowEmptyGraphModal(true);
+        }
+        else if(isReqsOverShifts(reqs, shifts)){
+            setShowDeviationModal(true);
         }
     }, [reqs, shifts]);
 
+
     const makeGraph = () => {
-
-        // Convert hours to index
-        const hourToIndex = (hour) => {
-            if (typeof hour !== 'string') {
-                // Handle the case where hour is not a string
-                return -1; // or any other default value
-            }
-            const [hours, minutes] = hour.split(':');
-            return hours * 2 + (minutes === '30' ? 1 : 0);
-        };
-
-        
-        // Parse shifts data
-        const parseShifts = (shifts) => {
-            const newShifts = [];
-            for (const shift of shifts) {
-                if (shift[4] !== 0) {
-                    newShifts.push(hoursToArrayNumber(shift[2], shift[3], shift[4]));
-                }
-            }
-            return newShifts;
-        };
 
         // Convert hours to array number
         const hoursToArrayNumber = (startHour, endHour, num) => {
@@ -58,20 +85,15 @@ const Graph = ({ reqs, shifts, skill, day }) => {
             return hoursArray;
         };
 
-        // Parse reqs data
-        const parseReqs = (reqs) => {
-            const newReqs = Array.from({ length: 48 }, () => 0);
-            for (const req of reqs) {
-                const start = hourToIndex(req[2]);
-                let end = hourToIndex(req[3]);
-                if (end === 0) {
-                    end = 48;
-                }
-                for (let i = start; i < end; i++) {
-                    newReqs[i] = req[4];
+        // Parse shifts data
+        const parseShifts = (shifts) => {
+            const newShifts = [];
+            for (const shift of shifts) {
+                if (shift[4] !== 0) {
+                    newShifts.push(hoursToArrayNumber(shift[2], shift[3], shift[4]));
                 }
             }
-            return newReqs;
+            return newShifts;
         };
 
         // Get hover template
@@ -165,6 +187,7 @@ const Graph = ({ reqs, shifts, skill, day }) => {
             displayModeBar: false,  // Hide the interactive mode bar
             scrollZoom: false       // Disable scroll zoom
         };
+
         const layout = {
             margin: {t: 20},
             barmode: 'stack',
@@ -214,31 +237,6 @@ const Graph = ({ reqs, shifts, skill, day }) => {
 
     const fig = makeGraph();
 
-    if (reqs.length === 0 && shifts.length === 0) {
-        return (
-            <div className="Graph"  style={{position: 'fixed', height: "74%", width: "98%", left: "1%", top: "16%"}}>
-                <Plot
-                    data={fig.data}
-                    layout={fig.layout}
-                    config={fig.config}
-                    style={{ width: '100%', height: '100%' }}
-                />
-                <Modal show={showModal} onHide={() => setShowModal(false)}>
-                    <Modal.Header>
-                        <Modal.Title className="text-danger">No Results</Modal.Title>
-                        <button type="button" className="close" onClick={() => setShowModal(false)} aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </Modal.Header>
-                    <Modal.Body className="text-danger">No requests at {day} to {skill}</Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="danger" onClick={() => setShowModal(false)}>Close</Button>
-                    </Modal.Footer>
-                </Modal>
-                </div>
-        );
-    }
-
     return (
         <div className="Graph" style={{position: 'fixed', height: "74%", width: "98%", left: "1%", top: "16%"}}>
             <Plot
@@ -247,6 +245,32 @@ const Graph = ({ reqs, shifts, skill, day }) => {
                 config={fig.config}
                 style={{ width: '100%', height: '100%'}}
             />
+
+            <Modal show={showEmptyGraphModal} onHide={() => setShowEmptyGraphModal(false)}>
+                <Modal.Header>
+                    <Modal.Title className="text-danger">No Results</Modal.Title>
+                    <button type="button" className="close" onClick={() => setShowEmptyGraphModal(false)} aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </Modal.Header>
+                <Modal.Body className="text-danger">No requests to {skill} at {day}</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="danger" onClick={() => setShowEmptyGraphModal(false)}>Close</Button>
+                </Modal.Footer>
+            </Modal>
+
+            <Modal show={showDeviationModal} onHide={() => setShowDeviationModal(false)}>
+                <Modal.Header>
+                    <Modal.Title className="text-danger">Cannot satisfy the requests</Modal.Title>
+                    <button type="button" className="close" onClick={() => setShowDeviationModal(false)} aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </Modal.Header>
+                <Modal.Body className="text-danger">Cannot satisfy the requests to {skill} at {day}</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="danger" onClick={() => setShowDeviationModal(false)}>Close</Button>
+                </Modal.Footer>
+            </Modal>
         </div>
     );
     
