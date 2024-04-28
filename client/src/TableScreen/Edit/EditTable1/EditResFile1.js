@@ -5,7 +5,7 @@ import '../css/edit-file-table-main.css'
 import '../css/perfect-scrollbar.css'
 import * as utils from '../../Utils'
 
-export default function EditResFile1({ initialTable, setInEdit, user, setUser, currentDay, currentSkill, setWorksPerShift, finishCallback}) {
+export default function EditResFile1({ initialTable, setInEdit, user, setUser, currentDay, currentSkill, setWorksPerShift, finishCallback }) {
     const [content, setContent] = useState([["", "", "", "", ""]])
     const [showBackModal, setShowBackModal] = useState(false)
     const defaultErrorMsg = "Assigned Number Of Workers is a non-negative integer."
@@ -57,7 +57,7 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
             isValid = false;
         }
         content.forEach((row) => {
-            if(!(isNumberOfWorkersValid(row[4]))) {
+            if (!(isNumberOfWorkersValid(row[4]))) {
                 isValid = false
             }
         });
@@ -104,20 +104,30 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
         setInEdit(false)
     }
 
+    const kpi = (num, value) => {
+        return (
+            <span style={{ border: '1px solid black', padding: '2px', fontSize: "3vh" }}>kpi {num}: {value}</span>
+        )
+    }
+
     return (
         <div id="edit-file">
             <div className="container-fluid py-3">
-                <div className="col-1" style={{position: "fixed", top: "1%" ,height: "3%"}}>
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#backModal" onClick={handleBack}>Back</button>
+                <div className="row" style={{ position: "fixed", top: "1%", height: "3%" }}>
+                    <div className="col-12">
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#backModal" onClick={handleBack}>Back</button>
+                            <span style={{position: "fixed", left: "29%", top: "2%"}}>{kpi(1, 1234556)}</span>
+                            <span style={{position: "fixed", left: "64.5%", top: "2%"}}>{kpi(2, 123242345)}</span>
+                    </div>
                 </div>
-                <div className="col-11"></div>
                 <Table content={content} onCellEdit={handleCellEdit} isNumberOfWorkersValid={isNumberOfWorkersValid} rowsToRender={rowsToRender}></Table>
-                <div className="row"><br /></div>
-                <div className="row down-buttons"  style={{position: "fixed", top: "90%", width: "100%"}}>
-                    <div className="col-4"></div>
+                <div className="row down-buttons" style={{ position: "fixed", top: "90%", width: "100%" }}>
+                    <div className="col-4">
+                    </div>
                     <button className="btn btn-success col-4" onClick={handleSave}
-                        data-toggle="modal" >Save</button>
-                    <div className="col-4"></div>
+                        data-toggle="modal" style={{ fontSize: "2.7vh" }}>Save</button>
+                    <div className="col-4">
+                    </div>
                 </div>
             </div>
             {showBackModal && (
