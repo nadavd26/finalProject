@@ -4,6 +4,9 @@ import '../css/bootstrap.min.css'
 import '../css/edit-file-table-main.css'
 import '../css/perfect-scrollbar.css'
 import * as utils from '../../Utils'
+import up from '../Images/up.jpg'
+import down from '../Images/down.jpg'
+import { Modal, Button } from "react-bootstrap";
 
 export default function EditResFile1({ initialTable, setInEdit, user, setUser, currentDay, currentSkill, setWorksPerShift, finishCallback }) {
     const [content, setContent] = useState([["", "", "", "", ""]])
@@ -12,7 +15,9 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
     const [errorMsg, setErrorMsg] = useState(defaultErrorMsg)
     const [rowsToRender, setRowsToRender] = useState({})
     const token = user.token
-
+    const [showKpi1Modal, setShowKpi1Modal] = useState(false)
+    const [showKpi2Modal, setShowKpi2Modal] = useState(false)
+    const [showKpiAvgModal, setShowKpiAvgModal] = useState(false)
     console.log("key isssssssssss : " + currentDay + "******" + currentSkill)
     function isNumberOfWorkersValid(numOfWorkers) {
         if (numOfWorkers === "") {
@@ -104,9 +109,34 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
         setInEdit(false)
     }
 
-    const kpi = (num, value) => {
+    const kpi = (name, value, initialValue, showModal, setShowModal) => {
+        const imgType = value >= initialValue ? up : down
+        const modalTextType = value >= initialValue ? "text-success" : "text-danger"
+        const modalButtonType = value >= initialValue ? "success" : "danger"
         return (
-            <span style={{ border: '1px solid black', padding: '2px', fontSize: "3vh" }}>kpi {num}: {value}</span>
+            <><span style={{ border: '1px solid black', padding: '2px', fontSize: "3vh", backgroundColor: "white" }}>{name}: {value}
+                <button onClick={() => setShowModal(true)} style={{ padding: 0, margin: 0, border: "none", background: "none", outline: "none" }}>
+                    <img src={imgType} style={{ position: "relative", bottom: "0.5vh", height: "4vh", width: "4vh" }} alt="Button Image" />
+                </button>
+                {Math.abs(value - initialValue)}
+            </span>
+                <Modal show={showModal} onHide={() => setShowModal(false)}>
+                    <Modal.Header>
+                        <Modal.Title className={modalTextType}>{name} info</Modal.Title>
+                        <button type="button" className="close" onClick={() => setShowModal(false)} aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </Modal.Header>
+                    <Modal.Body className={modalTextType}>
+                        <div><span style={{ color: "black" }}>starting value:</span> {initialValue}</div>
+                        <div><span style={{ color: "black" }}>current value:</span> {value}</div>
+                        <div><span style={{ color: "black" }}>difference:</span> {value >= initialValue ? "increased" : "reduced"} by {Math.abs(value - initialValue)}</div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant={modalButtonType} onClick={() => setShowModal(false)}>Close</Button>
+                    </Modal.Footer>
+                </Modal>
+            </>
         )
     }
 
@@ -116,8 +146,9 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
                 <div className="row" style={{ position: "fixed", top: "1%", height: "3%" }}>
                     <div className="col-12">
                         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#backModal" onClick={handleBack}>Back</button>
-                            <span style={{position: "fixed", left: "29%", top: "2%"}}>{kpi(1, 1234556)}</span>
-                            <span style={{position: "fixed", left: "64.5%", top: "2%"}}>{kpi(2, 123242345)}</span>
+                        <span style={{ position: "fixed", left: "9.7%", top: "1%" }}>{kpi("kpi1", 123, 400, showKpi1Modal, setShowKpi1Modal)}</span>
+                        <span style={{ position: "fixed", left: "41.5%", top: "1%" }}>{kpi("kpi2", 76, 10, showKpi2Modal, setShowKpi2Modal)}</span>
+                        <span style={{ position: "fixed", left: "73.3%", top: "1%" }}>{kpi("avg", 99.5, 205, showKpiAvgModal, setShowKpiAvgModal)}</span>
                     </div>
                 </div>
                 <Table content={content} onCellEdit={handleCellEdit} isNumberOfWorkersValid={isNumberOfWorkersValid} rowsToRender={rowsToRender}></Table>
