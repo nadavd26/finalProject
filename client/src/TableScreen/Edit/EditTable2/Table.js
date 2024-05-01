@@ -72,22 +72,22 @@ function Table({ linesFiltered, content, start, pageSize, colors, shiftsPerWorke
             />
         );
     }
-    for (let i = end; i < pageSize + start - 1; i++) {
-        renderedRows.push(
-            <MemorizedTableRow
-                rowIndex={0}
-                row={["a", "a", "a", "a", "a", "a", "a", "a"]}
-                color={"white"}
-                workerMap={workerMap}
-                shiftsInfo={shiftsInfo}
-                generateWorkerList={() => []}
-                onCellEdit={() => { }}
-                getLineInfo={() => { }}
-                shouldRender={true}
-                hidden={true}
-            />
-        )
-    }
+    // for (let i = end; i < pageSize + start - 1; i++) {
+    //     renderedRows.push(
+    //         <MemorizedTableRow
+    //             rowIndex={0}
+    //             row={["a", "a", "a", "a", "a", "a", "a", "a"]}
+    //             color={"white"}
+    //             workerMap={workerMap}
+    //             shiftsInfo={shiftsInfo}
+    //             generateWorkerList={() => []}
+    //             onCellEdit={() => { }}
+    //             getLineInfo={() => { }}
+    //             shouldRender={true}
+    //             hidden={true}
+    //         />
+    //     )
+    // }
 
     const widths=[12, 18, 10, 10, 25, 14]
     const vw = (num) => {
