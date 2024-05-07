@@ -1,5 +1,7 @@
 const UserService = require("../services/user");
 const TablesService = require("../services/tables")
+const TableValidator = require("../services/tableValidator")
+const ResultsService = require("../services/results")
 const jwt = require("jsonwebtoken");
 
 const createUser = async (req, res) => {
@@ -92,4 +94,38 @@ const sortTable = (req, res) => {
     const sortedTable = TablesService.sortTable(table, parseInt(req.params.tableNum))
     res.status(200).send({ content: sortedTable })
 }
-module.exports = { login, createUser, setTable, getTable, sortTable }
+
+const returnResults = async (req, res) => {
+    try {
+        table2 = await UserService.getTable(req.user.email, req.user.googleId, 2)
+        if (JSON.stringify(table2) == JSON.stringify([]))
+            res.status(404).send("At least one of the tables were never set.")
+        table3 = await UserService.getTable(req.user.email, req.user.googleId, 3)
+        if (JSON.stringify(table3) == JSON.stringify([]))
+            res.status(404).send("At least one of the tables were never set.")
+        console.log("hello")
+        if (!TableValidator.validateAlgoRequirements(table2.table2Content, table3.table3Content))
+            res.status(404).send("Invalid tables.")
+        else {
+            // Call getResults1 and wait for its completion
+            console.log(req.user._id)
+            const results = await ResultsService.getResults1(table2.table2Content, table3.table3Content, req.user._id);
+            console.log(results)
+            /*if (req.params.tableNum != 1 && req.params.tableNum != 2 && req.params.tableNum != 3) {
+                res.status(404).send("Invalid table number.")
+            } else {
+                await UserService.setTable(req.user.email, req.user.googleId, content, req.params.tableNum)
+                res.sendStatus(200)
+            }*/
+        }
+    } catch (err) {
+        if (err.name === "Error") {
+            res.sendStatus(409);
+        }
+    }
+}
+
+const editResults = async (req, res) => {
+   
+}
+module.exports = { login, createUser, setTable, getTable, sortTable, returnResults, editResults }

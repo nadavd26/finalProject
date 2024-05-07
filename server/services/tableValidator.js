@@ -70,4 +70,19 @@ const validateTable3 = (table) => {
     return true;
 }
 
-module.exports = { validateTable1, validateTable2, validateTable3}
+// This function checks that all days and skills that are in table 3 are also in table 2.
+const validateAlgoRequirements = (table2, table3) => {
+    daysSet = new Set();
+    skillsSet = new Set();
+    for (line of table2) {
+        daysSet.add(line[0])
+        skillsSet.add(line[1])
+    }
+    for (line of table3) {
+        if(!(daysSet.has(line[1]) && skillsSet.has(line[0])))
+            return false
+    }
+    return true;
+}
+
+module.exports = { validateTable1, validateTable2, validateTable3, validateAlgoRequirements}

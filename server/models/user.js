@@ -42,6 +42,21 @@ const User = new Schema(
             ref: "TableLine3",
             required: true,
         }],
+        shiftTables: [{
+            day: {
+                type: String,
+                required: true,
+            },
+            skill: {
+                type: String,
+                required: true,
+            },
+            shifts: [{
+                type: Schema.Types.ObjectId,
+                ref: "ShiftLine",
+                required: true,
+            }],
+        }],
     },
     { autoIndex: false, autoCreate: false }
 );
