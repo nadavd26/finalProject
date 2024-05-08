@@ -255,7 +255,7 @@ function TableScreen({ user, setUser }) {
                                 <div className="row" >
                                     <div className="col-1"></div>
                                     <div className="col-10">
-                                        <Graph reqs={!(tableAlgo1State.get.req) ? [] : tableAlgo1State.get.req} shifts={!(tableAlgo1State.get.worksPerShift) ? [] : tableAlgo1State.get.worksPerShift} skill={tableAlgo1State.get.currentSkill} day={tableScreenState.get.currentDay}></Graph>
+                                        <Graph reqs={!(tableAlgo1State.get.req) ? [] : tableAlgo1State.get.req} shifts={!(tableAlgo1State.get.worksPerShift) ? [] : tableAlgo1State.get.worksPerShift} skill={tableAlgo1State.get.currentSkill} day={tableScreenState.get.currentDay} user={user} setUser={setUser}></Graph>
                                     </div>
                                     <div className="col-1">
                                         {/* <div>reqs {JSON.stringify(!(tableAlgo1State.get.req) ? [] : tableAlgo1State.get.req)}</div>

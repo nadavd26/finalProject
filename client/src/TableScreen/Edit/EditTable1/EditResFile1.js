@@ -12,8 +12,8 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
     const defaultErrorMsg = "Assigned Number Of Workers is a non-negative integer."
     const [errorMsg, setErrorMsg] = useState(defaultErrorMsg)
     const [rowsToRender, setRowsToRender] = useState({})
-    var intialWastedHours = 0
-    const [wastedHoursKpi, setWastedHoursKpi] = useState(intialWastedHours)
+    var intialWastedHours = user.currentWastedHours
+    const [wastedHoursKpi, setWastedHoursKpi] = useState(user.currentWastedHours)
     const [initialCost, setInitialCost] = useState(0)
     const [costKpi, setCostKpi] = useState(0)
     const token = user.token
@@ -49,23 +49,53 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
         setCostKpi(initCost)
     }, []);
 
+    const hourToIndex = (hour) => {
+        if (typeof hour !== 'string') {
+            // Handle the case where hour is not a string
+            return -1; // or any other default value
+        }
+        const [hours, minutes] = hour.split(':');
+        return hours * 2 + (minutes === '30' ? 1 : 0);
+    };
+    
+    // Convert hours to array number
+    const hoursToArrayNumber = (startHour, endHour, num) => {
+        const start = hourToIndex(startHour);
+        let end = hourToIndex(endHour);
+        if (end === 0) {
+            end = 48;
+        }
+        const hoursArray = Array.from({ length: 48 }, (_, i) => (start <= i && i < end) ? num : 0);
+        return hoursArray;
+    };
+    
+    const computeWastedHours = (reqs, line) => {
+        console.log("reqs")
+        console.log(reqs)
+        console.log("line")
+        console.log(line)
+        var shiftsArray = hoursToArrayNumber(line[2], line[3], parseInt(line[4]))
+        let sum = 0;
+        for(let i = 0; i < 48; i++)
+            sum += Math.max(0, shiftsArray[i] - reqs[i])
+        return sum / 2
+    }
+
     const handleCellEdit = (rowIndex, columnIndex, value, oldValue) => {
         console.log("value")
         console.log(value)
         console.log("oldValue")
         console.log(oldValue)
         var price = 100
-        // const updatedContent = content.map((row, i) => {
-        //     if (i === rowIndex) {
-        //         return row.map((cell, j) => (j === columnIndex ? value : cell));
-        //     } else {
-        //         return row;
-        //     }
-        // });
         var updatedContent = content
         updatedContent[rowIndex][columnIndex] = value
         setCostKpi(prevCostKpi => prevCostKpi - (price * (oldValue - value))); // Functional update
-        setWastedHoursKpi(prevWastedHours => prevWastedHours + 1)
+        var newRow = updatedContent[rowIndex]
+        var oldRow = [...newRow]
+        oldRow[4] = oldValue
+        var wastedHoursReduce = computeWastedHours(user.currentRequestArray, oldRow)
+        var wastedHoursAdd = computeWastedHours(user.currentRequestArray, newRow)
+        setWastedHoursKpi(prevWastedHours => prevWastedHours - wastedHoursReduce + wastedHoursAdd)
         var newRowsToRender = {}
         newRowsToRender[rowIndex] = true
         setRowsToRender(newRowsToRender)

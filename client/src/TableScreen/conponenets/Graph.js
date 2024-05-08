@@ -45,32 +45,41 @@ const parseStackedShifts = (shifts) => {
 }
 
 const isReqsOverShifts = (reqs, shifts) => {
-    let newReqs = parseReqs(reqs);
-    let newShifts = parseStackedShifts(shifts)
     for(let i = 0; i < 48; i++)
-        if(newReqs[i] > newShifts[i])
+        if(reqs[i] > shifts[i])
             return true
     return false
 }
 
+const wastedHours = (reqs, shifts) => {
+    let sum = 0;
+    for(let i = 0; i < 48; i++)
+        sum += Math.max(0, shifts[i] - reqs[i])
+    return sum / 2
+}
+
 const Plot = createPlotlyComponent(Plotly);
 
-const Graph = ({ reqs, shifts, skill, day }) => {
-    useEffect(() => {
-        makeGraph();
-    }, []);
-
+const Graph = ({ reqs, shifts, skill, day, user, setUser  }) => {
     const [showEmptyGraphModal, setShowEmptyGraphModal] = useState(false);
     const [showDeviationModal, setShowDeviationModal] = useState(false);
     useEffect(() => {
+        let newReqs = parseReqs(reqs);
+        let newShifts = parseStackedShifts(shifts);
+        
         if (!showEmptyGraphModal && reqs.length === 0 && shifts.length === 0) {
             setShowEmptyGraphModal(true);
-        }
-        else if(isReqsOverShifts(reqs, shifts)){
+        } else if (isReqsOverShifts(newReqs, newShifts)) {
             setShowDeviationModal(true);
         }
+    
+        var newUser = user;
+        newUser.currentWastedHours = wastedHours(newReqs, newShifts);
+        console.log(newUser.currentWastedHours)
+        newUser.currentRequestArray = newReqs;
+        setUser(newUser);
     }, [reqs, shifts]);
-
+    
 
     const makeGraph = () => {
 
