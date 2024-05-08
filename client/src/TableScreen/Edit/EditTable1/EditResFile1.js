@@ -137,9 +137,9 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
                 <div className="row" style={{ position: "fixed", top: "1%", height: "3%" }}>
                     <div className="col-12">
                         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#backModal" onClick={handleBack}>Back</button>
-                        <span style={{ position: "fixed", left: "9.7%", top: "1%" }}><Kpi name={"Cost"} value={costKpi} initialValue={initialCost}></Kpi></span>
-                        <span style={{ position: "fixed", left: "41.5%", top: "1%" }}><Kpi name={"Wasted Hours"} value={wastedHoursKpi} initialValue={intialWastedHours}></Kpi></span>
-                        <span style={{ position: "fixed", left: "73.3%", top: "1%" }}><Kpi name={"Avg"} value={(costKpi + wastedHoursKpi) / 2} initialValue={(intialWastedHours + initialCost) / 2}></Kpi></span>
+                        <span style={{ position: "fixed", left: "9.7%", top: "1%" }}><Kpi name={"Cost"} value={costKpi} initialValue={initialCost} description={"Total cost of shifts where day is " + initialTable[0][0] + " and skill is " + initialTable[0][1]}></Kpi></span>
+                        <span style={{ position: "fixed", left: "41.5%", top: "1%" }}><Kpi name={"Wasted Hours"} value={wastedHoursKpi} initialValue={intialWastedHours} description={"Total wasted hours as there are more assigned workers than the demand at some half hour where day is " + initialTable[0][0] + " and skill is " + initialTable[0][1]}></Kpi></span>
+                        <span style={{ position: "fixed", left: "73.3%", top: "1%" }}><Kpi name={"Avg"} value={(costKpi + wastedHoursKpi) / 2} initialValue={(intialWastedHours + initialCost) / 2} description={"Average of the measures where day is " + initialTable[0][0] + " and skill is " + initialTable[0][1]}></Kpi></span>
                     </div>
                 </div>
                 <Table content={content} onCellEdit={handleCellEdit} isNumberOfWorkersValid={isNumberOfWorkersValid} rowsToRender={rowsToRender}></Table>
