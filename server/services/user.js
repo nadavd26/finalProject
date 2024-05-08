@@ -87,19 +87,23 @@ const getTable = async (email, googleId, tableNum) => {
     const tableField = `table${tableNum}`;
     const user = await User.findOne({ email, googleId }).populate(tableField);
     const tableContent = user[tableField] || [];
-    //Getting rid of the id and v fields and converting from json to simple array.
-    /*const formattedTable = tableContent.map(line => [
-        line.day,
-        line.skill,
-        line.startTime,
-        line.finishTime,
-        line.requiredNumOfWorkers.toString(),
-    ]);*/
     const formattedTable = Tables.formatTable(parseInt(tableNum), tableContent)
     if (JSON.stringify(formattedTable) == JSON.stringify([]))
         return []
     return { [`table${tableNum}Content`]: formattedTable };
 }
 
-module.exports = { createUser, isUserInDBByEmail, getUser, setTable, getTable }
+const getTableByUserId = async (userId, tableNum) => {
+    if (tableNum != 1 && tableNum != 2 && tableNum != 3) //Checking for invalid table number.
+        return []
+    const tableField = `table${tableNum}`;
+    const user = await User.findById(userId).populate(tableField);
+    const tableContent = user[tableField] || [];
+    const formattedTable = Tables.formatTable(parseInt(tableNum), tableContent)
+    if (JSON.stringify(formattedTable) == JSON.stringify([]))
+        return []
+    return { [`table${tableNum}Content`]: formattedTable };
+}
+
+module.exports = { createUser, isUserInDBByEmail, getUser, setTable, getTable, getTableByUserId }
 

@@ -12,4 +12,5 @@ app.use(bodyParser.urlencoded({ extended: true}));
 app.use(express.json())
 app.use("/Login", require("./routes/user.js"))
 app.use("/Table", checkAuthorized, require("./routes/table.js"))
+app.use("/Results", checkAuthorized, require("./routes/results.js"))
 const server = app.listen(process.env.SERVER_PORT)
