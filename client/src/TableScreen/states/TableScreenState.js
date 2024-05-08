@@ -6,7 +6,8 @@ export const useTableScreenState = () => {
         is2Generated: false,
         tableNum: 1,
         currentDay: "Sunday",
-        workerMap: new Map()
+        workerMap: new Map(),
+        skillsOfWorkers: {}
     });
 
     const setCurrentDay = (day) => {
@@ -30,6 +31,13 @@ export const useTableScreenState = () => {
         }));
     };
 
+    const setSkillsOfWorkers = (value) => {
+        setState(prevState => ({
+            ...prevState,
+            skillsOfWorkers: value
+        }));
+    };
+
     const setIs2Generated = (value) => {
         setState(prevState => ({
             ...prevState,
@@ -50,6 +58,7 @@ export const useTableScreenState = () => {
         setIs2Generated,
         setTableNum,
         setCurrentDay,
-        setWorkerMap
+        setWorkerMap,
+        setSkillsOfWorkers
     };
 };

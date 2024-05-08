@@ -1,4 +1,4 @@
-async function sleep(ms) {
+export async function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
@@ -21,7 +21,7 @@ function generateShiftArray(shifts) {
 }
 
 
-function generateShifts(scheduleData, workerTable, existingWorkers) {
+function generateShifts(scheduleData) {
     // console.log("scheduleData")
     // console.log(scheduleData)
     const workersAndShifts = [];
@@ -41,16 +41,16 @@ function generateShifts(scheduleData, workerTable, existingWorkers) {
 
 
     // Extract worker IDs from the schedule data
-    const scheduleWorkerIDs = scheduleData.map(entry => entry[4]);
+    // const scheduleWorkerIDs = scheduleData.map(entry => entry[4]);
 
     // Filter out new workers who are not in the existing workers list
-    const newWorkers = existingWorkers.filter(workerID => !scheduleWorkerIDs.includes(workerID));
+    // const newWorkers = existingWorkers.filter(workerID => !scheduleWorkerIDs.includes(workerID));
 
     // Initialize shifts for new workers
-    const shiftsFalse = new Array(48).fill(false);
-    newWorkers.forEach(worker => {
-        workersAndShifts.push({ name: worker, shifts: shiftsFalse });
-    });
+    // const shiftsFalse = new Array(48).fill(false);
+    // newWorkers.forEach(worker => {
+    //     workersAndShifts.push({ name: worker, shifts: shiftsFalse });
+    // });
 
     // Initialize a map to store unique shifts for each worker
     const workerShiftsMap = new Map();
@@ -236,6 +236,15 @@ export function generateShiftsPerWorker(data) {
     return shifts
 }
 
+export function generateWorkerList(table1) {
+    var workerList = []
+    for (let i = 0; i < table1.length; i++) {
+        workerList.push(table1[i][1] + "\n" + table1[i][0])
+    }
+
+    return workerList
+}
+
 function generateWorkerShiftList(table) {
     const workerShiftMap = {}; // Use an object to map worker name+id to a Set of shiftIds
     for (let i = 0; i < table.length; i++) {
@@ -300,16 +309,42 @@ export function removeShiftFromWorker(workerShiftMap, id, name, rowIndex) {
 }
 
 
+export function binarySearch(arr, target) {
+    let left = 0;
+    let right = arr.length - 1;
 
+    while (left <= right) {
+        const mid = Math.floor((left + right) / 2);
 
+        if (arr[mid] === target) {
+            return mid; // Found the target
+        } else if (arr[mid] < target) {
+            left = mid + 1; // Search the right half
+        } else {
+            right = mid - 1; // Search the left half
+        }
+    }
+
+    return -1; // Target not found
+}
+
+export function skillsOfWorkers(table1) {
+    var map = {}
+    for (let i = 0; i< table1.length; i++) {
+        const row = table1[i]
+        map[row[0]] = {skill1: row[2], skill2: row[3], skill3: row[4]}
+    }
+
+    return map
+}
 
 
 export async function generateAlgo2Results(table) {
     await sleep(10)
     const scheduleDataa = table
     for (let i = 0; i < scheduleDataa.length; i++) {
-        scheduleDataa[i][4] = (2*i+5) % 10
-        // scheduleDataa[i][4] = 2
+        // scheduleDataa[i][4] = (2*i+5) % 10
+        scheduleDataa[i][4] = 12345
     }
     const scheduleData = duplicateLines(scheduleDataa)
     // console.log("scheduleData : " + scheduleData)
@@ -353,16 +388,15 @@ export function generateAlgoShifts(data) {
     return shifts
 }
 
-export function generateAlgoGraphicResults(data, workerTable) {
-    const existingWorkers = workerTable.map(entry => entry[1] + "\n" + entry[0]);
+export function generateAlgoGraphicResults(data) {
     const daysWorkersAndShifts = {
-        Sunday: generateShifts(data.Sunday, workerTable, existingWorkers),
-        Monday: generateShifts(data.Monday, workerTable, existingWorkers),
-        Tuesday: generateShifts(data.Tuesday, workerTable, existingWorkers),
-        Wednesday: generateShifts(data.Wednesday, workerTable, existingWorkers),
-        Thursday: generateShifts(data.Thursday, workerTable, existingWorkers),
-        Friday: generateShifts(data.Friday, workerTable, existingWorkers),
-        Saturday: generateShifts(data.Saturday, workerTable, existingWorkers)
+        Sunday: generateShifts(data.Sunday),
+        Monday: generateShifts(data.Monday),
+        Tuesday: generateShifts(data.Tuesday),
+        Wednesday: generateShifts(data.Wednesday),
+        Thursday: generateShifts(data.Thursday),
+        Friday: generateShifts(data.Friday),
+        Saturday: generateShifts(data.Saturday)
     }
 
     return daysWorkersAndShifts
@@ -380,6 +414,10 @@ function transformDataToMap(data) {
     });
 
     return resultMap;
+}
+
+export function generateReqSkillDayMap(table2) {
+    return transformDataToMap(table2)
 }
 
 function duplicateLines(table) {
@@ -417,7 +455,7 @@ export async function generateAlgo1Results(table) {
     const scheduleData = table
     for (let i = 0; i < scheduleData.length; i++) {
         // scheduleData[i][4] = (2*i+5) % 10
-        scheduleData[i][4] = 1
+        scheduleData[i][4] = Math.floor(Math.random() * 300) + 1;
     }
 
     const transformedData = transformDataToMap(scheduleData);
@@ -426,8 +464,13 @@ export async function generateAlgo1Results(table) {
     return transformedData
 }
 
-export function getKey(day, skill) {
-    return (day).toLowerCase() + "*" + skill
+export function getKey(day, skill, req) {
+    if (!req) {
+        return (day).toLowerCase() + "*" + skill
+    }
+
+    return skill + "*" + (day).toLowerCase()
+
 }
 
 export function getSkillSet(arr) {

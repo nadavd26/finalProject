@@ -1,7 +1,22 @@
 import React from 'react';
-import TableRows from './TableRows';
+import TableRowMemo from './TableRow';
+// import TableRow from './TableRow';
 //first row : [{name : , validate : function}, ....]
-function Table({content, isNumberOfWorkersValid, onCellEdit}) {
+const TableRows = ({ content, isNumberOfWorkersValid, onCellEdit, rowsToRender}) => {
+    
+    return (
+        content.map((rowMap, index) => (
+            <TableRowMemo
+                rowIndex={index}
+                row={rowMap}
+                isNumberOfWorkersValid={isNumberOfWorkersValid}
+                onCellEdit={onCellEdit}
+                shouldRender={rowsToRender[index]}
+            />
+        ))
+    );
+}
+function Table({content, isNumberOfWorkersValid, onCellEdit, rowsToRender}) {
     return (
         <div className="container-table100">
             <div className="wrap-table100">
@@ -16,7 +31,7 @@ function Table({content, isNumberOfWorkersValid, onCellEdit}) {
                                     <th class="cell100  last-columns blue col-2">Until</th>
                                     <th class="cell100  last-columns blue col-3">Assinged Number Of Workers</th>
                                 </tr>
-                                <TableRows content={content} isNumberOfWorkersValid={isNumberOfWorkersValid} onCellEdit={onCellEdit}/>
+                                <TableRows content={content} isNumberOfWorkersValid={isNumberOfWorkersValid} onCellEdit={onCellEdit} rowsToRender={rowsToRender}/>
                             </tbody>
                         </table>
                     </div>

@@ -5,23 +5,28 @@ import './css/table-main.css'
 import './css/perfect-scrollbar.css'
 import Dropdown from "./conponenets/Dropdown";
 import { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom'
 import Loader from "./conponenets/Loader";
 import { useTableScreenState } from "./states/TableScreenState";
 import { useTableAlgo2State } from "./states/TableAlgo2State";
 import { useEditInfoState } from "./states/EditInfo";
 import { useTableAlgo1State } from "./states/TableAlgo1State";
 import EditResFile1 from "./Edit/EditTable1/EditResFile1";
+
 import SkillDropdown from "./conponenets/SkillDropdown";
 import * as utils from './Utils'
 import EditResFile2 from "./Edit/EditTable2/EditResFile2";
+import Graph from "./conponenets/Graph";
 // expecting json: {"Sunday" : [{"worker":"name1", "shifts":[true, true, false, ...]}, {"worker":"name2", "shifts":[true, true, false, ...]}, ....], ... , "Saturday" : ...}
 // every boolean array is 48 cells, starting from 7:00, ending at 23:30
 
 function TableScreen({ user, setUser }) {
+    const navigate = useNavigate();
     const tableScreenState = useTableScreenState();
     const algo2TableState = useTableAlgo2State();
     const tableAlgo1State = useTableAlgo1State()
     const editInfoState = useEditInfoState()
+    console.log(tableAlgo1State.get.req)
     function switchDay(day) {
         if ((tableScreenState.get.tableNum == 1 && !tableScreenState.get.is1Generated) || (tableScreenState.get.tableNum == 2 && !tableScreenState.get.is2Generated)) {
             return
@@ -33,7 +38,9 @@ function TableScreen({ user, setUser }) {
 
         if (tableScreenState.get.is1Generated) {
             const key = utils.getKey(day, tableAlgo1State.get.currentSkill)
+            const key1 = utils.getKey(day, tableAlgo1State.get.currentSkill, true)
             tableAlgo1State.setWorksPerShift(((user.algo1Table).get(key)))
+            tableAlgo1State.setReq(((user.daySkillReqMap).get(key1)))
         }
     }
 
@@ -43,8 +50,10 @@ function TableScreen({ user, setUser }) {
         tableAlgo1State.setOtherSkills(newSkillList)
         tableAlgo1State.setCurrentSkill(skill)
         const key = utils.getKey(tableScreenState.get.currentDay, skill)
+        const key1 = utils.getKey(tableScreenState.get.currentDay, skill, true)
         // console.log("key " + key)
         tableAlgo1State.setWorksPerShift(((user.algo1Table).get(key)))
+        tableAlgo1State.setReq(((user.daySkillReqMap).get(key1)))
         // console.log("res " + ((user.algo1Table).get(key)))
     }
 
@@ -56,15 +65,26 @@ function TableScreen({ user, setUser }) {
     }
     async function generateResults1() {
         const res = await utils.generateAlgo1Results(user.table3)
+        console.log("res")
+        console.log(res)
+        const newDaySkillReqMap = utils.generateReqSkillDayMap(user.table2)
         var newUser = user
         newUser.algo1Table = res
+        newUser.daySkillReqMap = newDaySkillReqMap
         newUser.skillList = utils.getSkillSet(user.table2)
         const startSkill = (newUser.skillList)[0]
         tableAlgo1State.setCurrentSkill(startSkill)
         tableAlgo1State.setOtherSkills((utils.removeElementAtIndex(newUser.skillList, 0)))
         const key = utils.getKey("sunday", startSkill)
+        const key1 = utils.getKey("sunday", startSkill, true)
         tableAlgo1State.setKey(key)
         var newWorkersPerShift = res.get(key)
+        var newReq = newDaySkillReqMap.get(key1)
+        console.log("newDaySkillReqMap")
+        console.log(newDaySkillReqMap)
+        console.log("newReq")
+        console.log(newReq)
+        tableAlgo1State.setReq(newReq)
         tableAlgo1State.setWorksPerShift(newWorkersPerShift)
         setUser(newUser)
         tableScreenState.setIs1Generated(true)
@@ -76,7 +96,7 @@ function TableScreen({ user, setUser }) {
         console.log(JSON.stringify(res))
         var newUser = user
         newUser.algo2Table = res
-        const ui = utils.generateAlgoGraphicResults(res, user.table1)
+        const ui = utils.generateAlgoGraphicResults(res)
         newUser.algo2Graphic = ui
         var shifts = utils.generateAlgoShifts(res)
         // console.log("shifts")
@@ -172,34 +192,34 @@ function TableScreen({ user, setUser }) {
     ) : (
         <EditResFile2 initialTable={JSON.parse(JSON.stringify(user.algo2Table))}
             currentDay={tableScreenState.get.currentDay} setInEdit={editInfoState.setInEdit} user={user} setUser={setUser} workerMap={tableScreenState.get.workerMap}
-            shiftsInfo={(algo2TableState.get.shiftInfo)} shiftsPerWorkers={arraysToSets(JSON.parse(JSON.stringify(setsToArrays(algo2TableState.get.shiftsPerWorkers))))} setShiftsPerWorkers={algo2TableState.setShiftsPerWorkers} finishCallback={table2finishEditCallback}/>
+            shiftsInfo={(algo2TableState.get.shiftInfo)} shiftsPerWorkers={arraysToSets(JSON.parse(JSON.stringify(setsToArrays(algo2TableState.get.shiftsPerWorkers))))} setShiftsPerWorkers={algo2TableState.setShiftsPerWorkers} finishCallback={table2finishEditCallback} />
     );
 
+    const backToUpload = () => {
+        navigate("/upload")
+    }
     return (
         !editInfoState.get.inEdit ? (
-            <div id="table-screen">
-                <div className="container-fluid py-3">
-                    <div className="d-flex justify-content-between mb-3 top-buttons">
+            <div id="table-screen" style={{maxHeight: "100vh"}}>
+                <div className="container-fluid py-3" >
+                    <div className="d-flex justify-content-between mb-3 top-buttons" style={{position: "fixed", top: "1%", height: "7%", width: "100%"}}>
                         <div className="col-1"></div>
                         <button className={`btn ${tableScreenState.get.tableNum === 2 ? 'btn-secondary' : 'btn-primary'} col-4`} onClick={() => changeTable(1)}>Amount of employees required for each shift</button>
                         <button className={`btn ${tableScreenState.get.tableNum === 1 ? 'btn-secondary' : 'btn-primary'} col-4`} onClick={() => changeTable(2)}>Allocation of employees</button>
-                        <button className="btn btn-success col-2">
+                        <button className="btn btn-success col-2" onClick={backToUpload}>
                             <img src={Upload} alt="Upload" className="upload-image" />
                         </button>
                         <div className="col-1"></div>
                     </div>
                     {tableScreenState.get.tableNum === 2 ? (
                         <div>
-                            <div className="row">
+                            <div className="row" style={{position: "relative", top:"6vh"}}>
                                 <div className="col-3"></div>
                                 <div className="col-6 text-center">
                                     <Dropdown firstDay={tableScreenState.get.currentDay} dayHandler={switchDay}></Dropdown>
                                 </div>
                                 <div className="col-3"></div>
                             </div>
-
-                            <br></br>
-                            <br></br>
                             {tableScreenState.get.is2Generated ? (
                                 <TableAlgo2 workersAndShifts={algo2TableState.get.currentWorkersAndShifts} />
                             ) : (
@@ -209,10 +229,10 @@ function TableScreen({ user, setUser }) {
                                 </>
                             )}
                         </div>
-                    ) : (
+                    ) : ( //current table table 1
                         <>
                             {!tableScreenState.get.is1Generated ? (
-                                <><div className="row">
+                                <><div className="row" style={{position: "relative", top:"6vh"}}>
                                     <div className="col-3"></div>
                                     <div className="col-6 text-center">
                                         <Dropdown firstDay={tableScreenState.get.currentDay} dayHandler={switchDay}></Dropdown>
@@ -221,7 +241,7 @@ function TableScreen({ user, setUser }) {
                                 </div>
                                     <br></br><br></br><Loader speed={5} customText="Calculating..." /></>
                             ) : (<div>
-                                <div className="row">
+                                <div className="row" style={{position: "relative", top:"6vh"}}>
                                     <div className="col-5"></div>
                                     <div className="col-1 text-center">
                                         <Dropdown firstDay={tableScreenState.get.currentDay} dayHandler={switchDay}></Dropdown>
@@ -232,18 +252,26 @@ function TableScreen({ user, setUser }) {
                                     <div className="col-5"></div>
                                 </div>
                                 <br></br>
+                                <div className="row" >
+                                    <div className="col-1"></div>
+                                    <div className="col-10">
+                                        <Graph reqs={!(tableAlgo1State.get.req) ? [] : tableAlgo1State.get.req} shifts={!(tableAlgo1State.get.worksPerShift) ? [] : tableAlgo1State.get.worksPerShift} skill={tableAlgo1State.get.currentSkill} day={tableScreenState.get.currentDay} user={user} setUser={setUser}></Graph>
+                                    </div>
+                                    <div className="col-1">
+                                        {/* <div>reqs {JSON.stringify(!(tableAlgo1State.get.req) ? [] : tableAlgo1State.get.req)}</div>
+                                        <div>shifts {JSON.stringify(!(tableAlgo1State.get.worksPerShift) ? [] : tableAlgo1State.get.worksPerShift)}</div> */}
+                                    </div>
+                                </div>
                                 <br></br>
                             </div>)}
                         </>
                     )}
-
-                    <div className="row"><br /></div>
-                    <div className="row"><br /></div>
-                    <div className="d-flex justify-content-between mb-3 down-buttons">
+                    <div className="d-flex justify-content-between fixed-bottom mb-3" style={{ marginBottom: "1000px" }}>
                         <div className="col-4"></div>
                         <button className="btn btn-secondary col-4" onClick={() => handleEdit()}>Edit</button>
                         <div className="col-4"></div>
                     </div>
+
                 </div>
             </div>
         ) : <>{editComponent}</>

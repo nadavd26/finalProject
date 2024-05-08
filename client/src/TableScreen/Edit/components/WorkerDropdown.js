@@ -69,25 +69,40 @@ export default function WorkerDropdown({ value, rowIndex, coloumnIndex, workerLi
         },
         control: (provided) => ({
             ...provided,
-            width: '80%', // Set width to a fixed value (adjust as needed)
+            backgroundColor: value == "" ? 'white' : 'lightblue',
+            border: '1px solid black', // Add border to the control
+            width: '80%',
+        }),
+        dropdownIndicator: (provided) => ({
+            ...provided,
+            color: 'black', // Change color of the dropdown indicator to black
+        }),
+        clearIndicator: (provided) => ({
+            ...provided,
+            color: 'black', // Change color of the clear indicator (x) to black
+        }),
+        indicatorSeparator: (provided) => ({
+            ...provided,
+            backgroundColor: 'black', // Change color of the vertical line to black
         }),
     };
 
     return (
         <td id={`cell-${rowIndex}-${coloumnIndex}`} className={`cell100 last-columns worker-dropdown ${color}`}>
             <div className="cell-content" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <div className='selection' style={{width: '75%'}}>
+                <div className='selection' style={{ width: '75%' }}>
                     <Select
                         id={`selectWorker-${rowIndex}`}
-                        value={{ label: shownValue, value }}
+                        value={value === "" ? { label: "not selected", value: "" } : { label: shownValue, value }}
                         onChange={(selectedOption) => onCellEdit(selectedOption ? selectedOption.value : "", rowIndex)} // Handle null value for clearing
                         options={optionsWithHidden} // Use the options array with the hidden first option
                         styles={customStyles} // Apply custom styles
                         isClearable // Make the Select component clearable
                         menuPosition="fixed" // Ensure menu is positioned fixed to the bottom of the select input
                         menuShouldBlockScroll={true}
-                        // closeMenuOnScroll={true}
+                    // closeMenuOnScroll={true}
                     />
+
                 </div>
                 <button
                     className="border-0 p-0 no-outline actionButton"

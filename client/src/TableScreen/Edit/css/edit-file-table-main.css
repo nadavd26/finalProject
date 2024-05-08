@@ -79,9 +79,16 @@
 #edit-file .table tbody tr .first-column {
   white-space: pre-wrap !important;
   width: 50px !important;
+  padding-right: 0.5vw;
+  padding-left: 0.5vw;
   height: 50px !important;
   border-left: 1px solid black !important;
   border-right: 1px solid black !important;
+}
+
+#header {
+  padding-right: 0px !important;
+  padding-left: 0px !important;
 }
 
 #first-row-first-col {
@@ -89,7 +96,6 @@
 }
 
 #edit-file .table100-body {
-  max-height: 70vh;
   overflow: auto;
 }
 
@@ -142,6 +148,15 @@ img.img-fluid.actionImage.worker-dropdown {
 
 td#first-column.cell100.first-columns.no-left.second {
   border-left-width: 0px !important;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 
 

@@ -1,7 +1,9 @@
 import "../css/TableRow.css"; // Import your CSS file for styling
 import FreeEditCell from '../components/FreeEditCell';
 import NonEditableCell from "../components/NonEditableCell";
-export default function TableRow({ row, isNumberOfWorkersValid, rowIndex, onCellEdit}) {
+import React from "react";
+const TableRow = ({ row, isNumberOfWorkersValid, rowIndex, onCellEdit, shouldRender}) => {
+    console.log("row " + (rowIndex + 1) +" is rendererd" + " " + row)
 
     return (
         <>
@@ -15,3 +17,14 @@ export default function TableRow({ row, isNumberOfWorkersValid, rowIndex, onCell
         </>
     );
 }
+
+function arePropsEqual(oldProps, newProps) {
+    if (newProps.shouldRender) {
+        return false
+    }
+    return true
+}
+
+const TableRowMemo = React.memo(TableRow, arePropsEqual)
+export default TableRowMemo
+

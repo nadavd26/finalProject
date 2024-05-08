@@ -406,14 +406,14 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
     return (
         <div id="edit-file">
             <div className="container-fluid py-3">
-                <div className="col-1">
+                <div className="col-1" style={{position: "fixed", top: "1%" ,height: "3%"}}>
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#backModal" onClick={handleBack}>Back</button>
                 </div>
                 <div className="col-11"></div>
                 <Table content={content} onCellEdit={handleCellEdit} onRowDelete={deleteRow} errors={errors}
                     isNumberOfWorkersValid={isNumberOfWorkersValid} isSkillValid={isSkillValid} onRowAdd={onRowAdd} rowsToRender={rowsToRender}></Table>
                 <div className="row"><br /></div>
-                <div className="d-flex justify-content-between mb-3 down-buttons">
+                <div className="row down-buttons" style={{position: "fixed", top: "90%", width: "100%"}}>
                     <div className="col-3"></div>
                     <button className="btn btn-success col-3" onClick={handleSave}
                         data-toggle="modal" >Save</button>

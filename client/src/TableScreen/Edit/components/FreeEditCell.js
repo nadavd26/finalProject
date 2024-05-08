@@ -3,9 +3,9 @@ export default function FreeEditCell({value, rowIndex, columnIndex, isValid, onE
         document.getElementById(`cell-${rowIndex}-${columnIndex}`).classList.add("focused-cell");
     };
 
-    const handleOnBlur = (value) => {
+    const handleOnBlur = (newValue) => {
         document.getElementById(`cell-${rowIndex}-${columnIndex}`).classList.remove("focused-cell");
-        onEdit(rowIndex, columnIndex, value)
+        onEdit(rowIndex, columnIndex, newValue, value)
     }
 
     return <td
