@@ -3,15 +3,15 @@ const ShiftLine = require("../models/shiftLine")
 const { spawn } = require('child_process');
 const fs = require('fs');
 const shiftLine = require("../models/shiftLine");
-const Table = require("../services/tables")
+const Table = require("../services/tables");
+const { getTableByUserId } = require("./user");
+const { table } = require("console");
 //const fs = require('fs').promises; // Using fs.promises for async file operations
 
 //This function runs algorithm 1 and returns the results.
 const getResults1 = async (reqs, shifts, userId) => {
     const shiftsJson = JSON.stringify(shifts);
     const reqsJson = JSON.stringify(reqs);
-    console.log(shiftsJson)
-    console.log(reqsJson)
     const shiftsFileName = `./algorithm/shifts${userId}.json`;
     const reqsFileName = `./algorithm/reqs${userId}.json`;
 
@@ -19,8 +19,6 @@ const getResults1 = async (reqs, shifts, userId) => {
         // Write JSON data to temporary files
         await fs.promises.writeFile(shiftsFileName, shiftsJson);
         await fs.promises.writeFile(reqsFileName, reqsJson);
-
-        console.log("JSON files are written successfully.");
 
         // Spawn a Python process
         const algorithm1 = spawn('python', ['./algorithm/algorithm1.py']);
@@ -47,7 +45,6 @@ const getResults1 = async (reqs, shifts, userId) => {
                 try {
                     const outputArray = JSON.parse(outputBuffer); // Parse accumulated data
                     console.log(outputArray);
-                    console.log("HERE")
                     resolve(outputArray); // Resolve the promise with the output
                 } catch (error) {
                     console.error('Error parsing JSON:', error);
@@ -87,7 +84,7 @@ const saveResults = async (results, userId) => {
     sortedResults = Table.sortTable(results, 2) //Same sorting as for table2.
     await deleteCurrentResults(userId)
     const user = await User.findById(userId)
-    for(line of sortedResults) {
+    for (line of sortedResults) {
         //Creating the shiftLine
         const shiftLine = new ShiftLine({
             day: line[0],
@@ -100,7 +97,7 @@ const saveResults = async (results, userId) => {
         //Checking whether there already is a table of this pair of day and skill.
         //The item in index 0 is a day and in 1 it is skill.
         const existingShiftTable = user.shiftTables.find(table => table.day === line[0] && table.skill === line[1]);
-        if(existingShiftTable) {
+        if (existingShiftTable) {
             //Adding this line to the existing table.
             existingShiftTable.shifts.push(savedLine._id);
         } else {
@@ -115,12 +112,12 @@ const saveResults = async (results, userId) => {
     }
     // Populating the shift lines for each shift table
     await user.populate('shiftTables.shifts');
-    return transformShiftTablesToMap(user.shiftTables)
+    return await transformShiftTablesToMap(user.shiftTables)
 }
 // This function transforms the user's shiftTables data into a map
-function transformShiftTablesToMap(shiftTables) {
+const transformShiftTablesToMap = async (shiftTables, userId) => {
     const resultMap = new Map();
-
+    const table3 = await getTableByUserId(userId,3)
     // Iterate over each shift table in the user's data
     shiftTables.forEach(shiftTable => {
         const key = getKey(shiftTable.day, shiftTable.skill); // Form the key using day and skill
@@ -133,7 +130,8 @@ function transformShiftTablesToMap(shiftTables) {
             skill: shiftTable.skill,
             startTime: shift.startTime,
             finishTime: shift.finishTime,
-            numOfWorkers: shift.numOfWorkers
+            numOfWorkers: shift.numOfWorkers,
+            cost: getShiftCost(shift, table3.table3Content)
         }));
         resultMap.get(key).push(...shiftsData);
     });
@@ -146,6 +144,14 @@ function getKey(day, skill, req) {
 
     return skill + "" + (day).toLowerCase()
 }
+//Calculating the cost of the shift according to table 3. 
+//Assuming there is only one that share the same day, skill, startTime and finishTime.
+function getShiftCost(shift, table3) {
+    for (line of table3) {
+        if(line[0] == shift.skill && line[1] == shift.day && line[2] == shift.startTime && line[3] == shift.finishTime)
+        return shift.numOfWorkers * line[4]
+    }
+}
 
 
-module.exports = {getResults1, saveResults}
+module.exports = { getResults1, saveResults }
