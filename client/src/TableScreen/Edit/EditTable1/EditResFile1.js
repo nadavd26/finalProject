@@ -12,6 +12,10 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
     const defaultErrorMsg = "Assigned Number Of Workers is a non-negative integer."
     const [errorMsg, setErrorMsg] = useState(defaultErrorMsg)
     const [rowsToRender, setRowsToRender] = useState({})
+    var intialWastedHours = 0
+    const [wastedHoursKpi, setWastedHoursKpi] = useState(intialWastedHours)
+    const [initialCost, setInitialCost] = useState(0)
+    const [costKpi, setCostKpi] = useState(0)
     const token = user.token
     console.log("key isssssssssss : " + currentDay + "******" + currentSkill)
     function isNumberOfWorkersValid(numOfWorkers) {
@@ -22,29 +26,52 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
         return Number.isInteger(parsedValue) && parsedValue >= 0;
     };
 
+    function calcCost() {
+        var cost = 0
+        for (let i = 0; i < initialTable.length; i++) {
+            var costShift = 100
+            cost = cost + (costShift * initialTable[i][4])
+        }
+        console.log("cost")
+        console.log(cost)
+        return cost
+    }
+
     useEffect(() => {
-        setContent(initialTable)
+        setContent(initialTable.map(row => [...row]))
         var newRowsToRender = {}
         for (let i = 0; i < initialTable.length; i++) {
             newRowsToRender[i] = true
         }
-
         setRowsToRender(newRowsToRender)
+        var initCost = calcCost()
+        setInitialCost(initCost)
+        setCostKpi(initCost)
     }, []);
 
-    const handleCellEdit = (rowIndex, columnIndex, value) => {
-        const updatedContent = content.map((row, i) => {
-            if (i === rowIndex) {
-                return row.map((cell, j) => (j === columnIndex ? value : cell));
-            } else {
-                return row;
-            }
-        });
-
+    const handleCellEdit = (rowIndex, columnIndex, value, oldValue) => {
+        console.log("value")
+        console.log(value)
+        console.log("oldValue")
+        console.log(oldValue)
+        var price = 100
+        // const updatedContent = content.map((row, i) => {
+        //     if (i === rowIndex) {
+        //         return row.map((cell, j) => (j === columnIndex ? value : cell));
+        //     } else {
+        //         return row;
+        //     }
+        // });
+        var updatedContent = content
+        updatedContent[rowIndex][columnIndex] = value
+        setCostKpi(prevCostKpi => prevCostKpi - (price * (oldValue - value))); // Functional update
+        setWastedHoursKpi(prevWastedHours => prevWastedHours + 1)
         var newRowsToRender = {}
         newRowsToRender[rowIndex] = true
         setRowsToRender(newRowsToRender)
         setContent(updatedContent);
+        console.log("content")
+        console.log(content)
     };
 
 
@@ -110,9 +137,9 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
                 <div className="row" style={{ position: "fixed", top: "1%", height: "3%" }}>
                     <div className="col-12">
                         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#backModal" onClick={handleBack}>Back</button>
-                        <span style={{ position: "fixed", left: "9.7%", top: "1%" }}><Kpi name={"kpi1"}  value={123} initialValue={400}></Kpi></span>
-                        <span style={{ position: "fixed", left: "41.5%", top: "1%" }}><Kpi name={"kpi2"}  value={76} initialValue={10}></Kpi></span>
-                        <span style={{ position: "fixed", left: "73.3%", top: "1%" }}><Kpi name={"avg"}  value={99.5} initialValue={205}></Kpi></span>
+                        <span style={{ position: "fixed", left: "9.7%", top: "1%" }}><Kpi name={"Cost"} value={costKpi} initialValue={initialCost}></Kpi></span>
+                        <span style={{ position: "fixed", left: "41.5%", top: "1%" }}><Kpi name={"Wasted Hours"} value={wastedHoursKpi} initialValue={intialWastedHours}></Kpi></span>
+                        <span style={{ position: "fixed", left: "73.3%", top: "1%" }}><Kpi name={"Avg"} value={(costKpi + wastedHoursKpi) / 2} initialValue={(intialWastedHours + initialCost) / 2}></Kpi></span>
                     </div>
                 </div>
                 <Table content={content} onCellEdit={handleCellEdit} isNumberOfWorkersValid={isNumberOfWorkersValid} rowsToRender={rowsToRender}></Table>
@@ -173,25 +200,28 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
                 </div>
             )}
             {true && (
-                <div class="modal fade show" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="saveModal" aria-hidden="true" onHide={handleSuccessModalClose}>
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content modal-success"> {/* Add custom class modal-success */}
-                            <div class="modal-header">
-                                <h5 class="modal-title text-success" id="saveModalLongTitle">Changes Saved Successfully</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <div className={`modal fade show ${((costKpi + wastedHoursKpi) > (initialCost + intialWastedHours)) ? 'modal-warning' : 'modal-success'}`} id="saveModal" tabIndex="-1" role="dialog" aria-labelledby="saveModal" aria-hidden="true" onHide={handleSuccessModalClose}>
+                    <div className="modal-dialog modal-dialog-centered" role="document">
+                        <div className={`modal-content ${(costKpi + wastedHoursKpi) > (initialCost + intialWastedHours) ? 'modal-warning' : 'modal-success'}`}>
+                            <div className="modal-header">
+                                <h5 className={`modal-title ${(costKpi + wastedHoursKpi) > (initialCost + intialWastedHours) ? 'text-warning' : 'text-success'}`} id="saveModalLongTitle">{((costKpi + wastedHoursKpi) > (initialCost + intialWastedHours)) ? 'Warning!' : 'Success!'}</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body text-success"> {/* Add text-success for green text */}
-                                Your changes have been saved successfully.
+                            <div className={`modal-body ${(costKpi + wastedHoursKpi) > (initialCost + intialWastedHours) ? 'text-warning' : 'text-success'}`}>
+                                {((costKpi + wastedHoursKpi) >= (initialCost + intialWastedHours)) ?
+                                    "Avg of the measures has been reduced, do you want to save the changes?" :
+                                    "Your changes have been saved successfully."
+                                }
                             </div>
-                            <div class="modal-footer">
+                            <div className="modal-footer">
                                 <div className="col-4" />
                                 <div className="col-2">
-                                    <button type="button" class="btn btn-success" data-dismiss="modal" onClick={finishEdit}>Finish</button>
+                                <button type="button" className={`btn ${((costKpi + wastedHoursKpi) > (initialCost + intialWastedHours)) ? 'btn-warning' : 'btn-success'}`} data-dismiss="modal" onClick={finishEdit}>Finish</button>
                                 </div>
                                 <div className="col-2">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Keep Editing</button>
+                                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Keep Editing</button>
                                 </div>
                                 <div className="col-4" />
                             </div>

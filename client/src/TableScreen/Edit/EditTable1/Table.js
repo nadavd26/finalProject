@@ -3,8 +3,7 @@ import TableRowMemo from './TableRow';
 // import TableRow from './TableRow';
 //first row : [{name : , validate : function}, ....]
 const TableRows = ({ content, isNumberOfWorkersValid, onCellEdit, rowsToRender}) => {
-    console.log("content")
-    console.log(content)
+    
     return (
         content.map((rowMap, index) => (
             <TableRowMemo
