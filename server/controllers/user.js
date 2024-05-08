@@ -110,7 +110,16 @@ const returnResults = async (req, res) => {
             // Call getResults1 and wait for its completion
             console.log(req.user._id)
             const results = await ResultsService.getResults1(table2.table2Content, table3.table3Content, req.user._id);
-            console.log(results)
+            resultsMap = await ResultsService.saveResults(results, req.user._id)
+            console.log(resultsMap)
+            // Convert the map to a plain object before sending
+            const serializedResults = {};
+            for (const [key, value] of resultsMap.entries()) {
+                serializedResults[key] = value;
+            }
+
+            res.status(200).send(serializedResults);
+            //res.status(200).send({content: resultsMap})
             /*if (req.params.tableNum != 1 && req.params.tableNum != 2 && req.params.tableNum != 3) {
                 res.status(404).send("Invalid table number.")
             } else {
