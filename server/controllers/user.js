@@ -56,7 +56,6 @@ const setTable = async (req, res) => {
         if (!TablesService.validateTable(content, parseInt(req.params.tableNum)))
             res.status(404).send("Invalid table.")
         else {
-            console.log(content)
             if (req.params.tableNum != 1 && req.params.tableNum != 2 && req.params.tableNum != 3) {
                 res.status(404).send("Invalid table number.")
             } else {
@@ -123,7 +122,11 @@ const returnResults = async (req, res) => {
     }
 }
 
+// This function deletes the existing result under the key of the first line in the given data, and replaces
+// it with the lines that are given by the client.
 const editResults = async (req, res) => {
-   
+    dataToEdit = JSON.parse(req.body.content)
+    await ResultsService.editResults(dataToEdit, req.user._id)
+    res.sendStatus(200)
 }
 module.exports = { login, createUser, setTable, getTable, sortTable, returnResults, editResults }

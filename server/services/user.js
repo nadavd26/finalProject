@@ -97,7 +97,7 @@ const getTableByUserId = async (userId, tableNum) => {
     if (tableNum != 1 && tableNum != 2 && tableNum != 3) //Checking for invalid table number.
         return []
     const tableField = `table${tableNum}`;
-    const user = await User.findOne({ userId }).populate(tableField);
+    const user = await User.findById(userId).populate(tableField);
     const tableContent = user[tableField] || [];
     const formattedTable = Tables.formatTable(parseInt(tableNum), tableContent)
     if (JSON.stringify(formattedTable) == JSON.stringify([]))

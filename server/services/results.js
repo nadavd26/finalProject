@@ -68,6 +68,7 @@ const getResults1 = async (reqs, shifts, userId) => {
         return subprocessFinished;
 
     } catch (error) {
+        // Print error if any occurs
         console.error('Error in getResults1:', error);
         throw error;
     }
@@ -112,8 +113,9 @@ const saveResults = async (results, userId) => {
     }
     // Populating the shift lines for each shift table
     await user.populate('shiftTables.shifts');
-    return await transformShiftTablesToMap(user.shiftTables)
+    return await transformShiftTablesToMap(user.shiftTables, userId);
 }
+
 // This function transforms the user's shiftTables data into a map
 const transformShiftTablesToMap = async (shiftTables, userId) => {
     const resultMap = new Map();
@@ -137,6 +139,7 @@ const transformShiftTablesToMap = async (shiftTables, userId) => {
     });
     return resultMap;
 }
+
 function getKey(day, skill, req) {
     if (!req) {
         return (day).toLowerCase() + "*" + skill
@@ -144,14 +147,62 @@ function getKey(day, skill, req) {
 
     return skill + "" + (day).toLowerCase()
 }
+
 //Calculating the cost of the shift according to table 3. 
 //Assuming there is only one that share the same day, skill, startTime and finishTime.
 function getShiftCost(shift, table3) {
     for (line of table3) {
-        if(line[0] == shift.skill && line[1] == shift.day && line[2] == shift.startTime && line[3] == shift.finishTime)
-        return shift.numOfWorkers * line[4]
+        if (line[0] == shift.skill && line[1] == shift.day && line[2] == shift.startTime && line[3] == shift.finishTime)
+            return shift.numOfWorkers * line[4]
+    }
+}
+
+//This function updates the results. It assumes that they all lines share the same day and skill.
+const editResults = async (newData, userId) => {
+    const keyDay = newData[0][0]
+    const keySkill = newData[0][1]
+    const user = await User.findById(userId)
+    // Finding the index of the shift table with the given day and skill
+    const shiftTableIndex = user.shiftTables.findIndex(table => table.day === keyDay && table.skill === keySkill);
+    //Checking if such a table exists. If it is, it will be deleted and replaced with the new data.
+    if (shiftTableIndex !== -1) {
+        // Gping through every shift in this shift table in order to delete those shifts.
+        const shiftTable = user.shiftTables[shiftTableIndex];
+        for (const shiftId of shiftTable.shifts) {
+            await ShiftLine.findByIdAndDelete(shiftId);
+        }
+        // Removing the shifth table itself.
+        user.shiftTables.splice(shiftTableIndex, 1);
+        await user.save();
+    }
+    //Now saving the new shifts.
+    for (line of newData) {
+        //Creating the shiftLine
+        const shiftLine = new ShiftLine({
+            day: line[0],
+            skill: line[1],
+            startTime: line[2],
+            finishTime: line[3],
+            numOfWorkers: line[4],
+        });
+        const savedLine = await shiftLine.save();
+        //Checking whether there already is a table of this pair of day and skill.
+        //The item in index 0 is a day and in 1 it is skill.
+        const existingShiftTable = user.shiftTables.find(table => table.day === line[0] && table.skill === line[1]);
+        if (existingShiftTable) {
+            //Adding this line to the existing table.
+            existingShiftTable.shifts.push(savedLine._id);
+        } else {
+            // Creating a new shift table for the pair of day and skill
+            user.shiftTables.push({
+                day: keyDay,
+                skill: keySkill,
+                shifts: [savedLine._id]
+            });
+        }
+        await user.save()
     }
 }
 
 
-module.exports = { getResults1, saveResults }
+module.exports = { getResults1, saveResults, editResults }
