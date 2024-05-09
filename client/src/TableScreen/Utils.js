@@ -33,7 +33,7 @@ function generateShifts(scheduleData) {
         "12:00": 24, "12:30": 25, "13:00": 26, "13:30": 27, "14:00": 28, "14:30": 29,
         "15:00": 30, "15:30": 31, "16:00": 32, "16:30": 33, "17:00": 34, "17:30": 35,
         "18:00": 36, "18:30": 37, "19:00": 38, "19:30": 39, "20:00": 40, "20:30": 41,
-        "21:00": 42, "21:30": 43, "22:00": 44, "22:30": 45, "23:00": 46, "23:30": 47, "24:00" : 48
+        "21:00": 42, "21:30": 43, "22:00": 44, "22:30": 45, "23:00": 46, "23:30": 47, "24:00": 48
     };
 
 
@@ -330,9 +330,9 @@ export function binarySearch(arr, target) {
 
 export function skillsOfWorkers(table1) {
     var map = {}
-    for (let i = 0; i< table1.length; i++) {
+    for (let i = 0; i < table1.length; i++) {
         const row = table1[i]
-        map[row[0]] = {skill1: row[2], skill2: row[3], skill3: row[4]}
+        map[row[0]] = { skill1: row[2], skill2: row[3], skill3: row[4] }
     }
 
     return map
@@ -451,17 +451,24 @@ function duplicateLines(table) {
 
 
 
-export async function generateAlgo1Results(table) {
-    const scheduleData = table
-    for (let i = 0; i < scheduleData.length; i++) {
-        // scheduleData[i][4] = (2*i+5) % 10
-        scheduleData[i][4] = Math.floor(Math.random() * 300) + 1;
-    }
+export async function generateAlgo1Results(token) {
+    console.log("token")
+    console.log(token)
+    const url = "http://localhost:12345/Results/GetResults1";    
 
-    const transformedData = transformDataToMap(scheduleData);
-    // console.log("hiiiiii" + transformedData["TV technition"]["sunday"]);
-    await sleep(10);
-    return transformedData
+    // const url = "http://localhost:12345/Table/3"; 
+    const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': 'bearer ' + token     
+        }
+    });
+
+    const responseData = await response.json(); // Parse JSON response
+    console.log("responseData")
+    console.log(responseData)
+    return responseData; // Return the parsed response
 }
 
 export function getKey(day, skill, req) {
