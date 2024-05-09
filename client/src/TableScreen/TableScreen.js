@@ -40,7 +40,12 @@ function TableScreen({ user, setUser }) {
             const key = utils.getKey(day, tableAlgo1State.get.currentSkill)
             const key1 = utils.getKey(day, tableAlgo1State.get.currentSkill, true)
             tableAlgo1State.setWorksPerShift(((user.algo1Table).get(key)))
-            tableAlgo1State.setReq(((user.daySkillReqMap).get(key1)))
+            console.log("key1")
+            console.log(key1)
+            var newReq = ((user.daySkillReqMap).get(key1))
+            console.log("newReq")
+            console.log(newReq)
+            tableAlgo1State.setReq(newReq)
         }
     }
 
@@ -51,9 +56,14 @@ function TableScreen({ user, setUser }) {
         tableAlgo1State.setCurrentSkill(skill)
         const key = utils.getKey(tableScreenState.get.currentDay, skill)
         const key1 = utils.getKey(tableScreenState.get.currentDay, skill, true)
+        console.log("key1")
+        console.log(key1)
         // console.log("key " + key)
         tableAlgo1State.setWorksPerShift(((user.algo1Table).get(key)))
-        tableAlgo1State.setReq(((user.daySkillReqMap).get(key1)))
+        var newReq = ((user.daySkillReqMap).get(key1))
+        console.log("newReq")
+        console.log(newReq)
+        tableAlgo1State.setReq(newReq)
         // console.log("res " + ((user.algo1Table).get(key)))
     }
 
@@ -68,6 +78,8 @@ function TableScreen({ user, setUser }) {
         console.log("res")
         console.log(res)
         const newDaySkillReqMap = utils.generateReqSkillDayMap(user.table2)
+        console.log("newDaySkillReqMap")
+        console.log(newDaySkillReqMap)
         var newUser = user
         newUser.algo1Table = res
         newUser.daySkillReqMap = newDaySkillReqMap
@@ -200,9 +212,9 @@ function TableScreen({ user, setUser }) {
     }
     return (
         !editInfoState.get.inEdit ? (
-            <div id="table-screen" style={{maxHeight: "100vh"}}>
+            <div id="table-screen" style={{ maxHeight: "100vh" }}>
                 <div className="container-fluid py-3" >
-                    <div className="d-flex justify-content-between mb-3 top-buttons" style={{position: "fixed", top: "1%", height: "7%", width: "100%"}}>
+                    <div className="d-flex justify-content-between mb-3 top-buttons" style={{ position: "fixed", top: "1%", height: "7%", width: "100%" }}>
                         <div className="col-1"></div>
                         <button className={`btn ${tableScreenState.get.tableNum === 2 ? 'btn-secondary' : 'btn-primary'} col-4`} onClick={() => changeTable(1)}>Amount of employees required for each shift</button>
                         <button className={`btn ${tableScreenState.get.tableNum === 1 ? 'btn-secondary' : 'btn-primary'} col-4`} onClick={() => changeTable(2)}>Allocation of employees</button>
@@ -213,7 +225,7 @@ function TableScreen({ user, setUser }) {
                     </div>
                     {tableScreenState.get.tableNum === 2 ? (
                         <div>
-                            <div className="row" style={{position: "relative", top:"6vh"}}>
+                            <div className="row" style={{ position: "relative", top: "6vh" }}>
                                 <div className="col-3"></div>
                                 <div className="col-6 text-center">
                                     <Dropdown firstDay={tableScreenState.get.currentDay} dayHandler={switchDay}></Dropdown>
@@ -232,7 +244,7 @@ function TableScreen({ user, setUser }) {
                     ) : ( //current table table 1
                         <>
                             {!tableScreenState.get.is1Generated ? (
-                                <><div className="row" style={{position: "relative", top:"6vh"}}>
+                                <><div className="row" style={{ position: "relative", top: "6vh" }}>
                                     <div className="col-3"></div>
                                     <div className="col-6 text-center">
                                         <Dropdown firstDay={tableScreenState.get.currentDay} dayHandler={switchDay}></Dropdown>
@@ -241,7 +253,7 @@ function TableScreen({ user, setUser }) {
                                 </div>
                                     <br></br><br></br><Loader speed={5} customText="Calculating..." /></>
                             ) : (<div>
-                                <div className="row" style={{position: "relative", top:"6vh"}}>
+                                <div className="row" style={{ position: "relative", top: "6vh" }}>
                                     <div className="col-5"></div>
                                     <div className="col-1 text-center">
                                         <Dropdown firstDay={tableScreenState.get.currentDay} dayHandler={switchDay}></Dropdown>

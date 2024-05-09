@@ -406,7 +406,7 @@ function transformDataToMap(data) {
     const resultMap = new Map();
 
     data.forEach(entry => {
-        const key = getKey(entry[1], entry[0]); // Combining day and skill to form the key
+        const key = entry[1] + "*" + entry[0] // Combining day and skill to form the key
         if (!resultMap.has(key)) {
             resultMap.set(key, []);
         }

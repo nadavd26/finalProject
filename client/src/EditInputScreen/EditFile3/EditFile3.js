@@ -197,6 +197,12 @@ export default function EditFile3({ csvArray, setEditInfo, user, setUser, fromSe
     }, [csvArray, setContent]);
 
     const addRowHandler = () => {
+        for (let i = 0; i < content.length; i++) {
+            for (let j = 0; j <= 4; j++) {
+                const cell = document.getElementById(`cell-${(i)}-${j}`)
+                cell.classList.remove("pink")
+            }
+        }
         const newRow = ["", "", "", "", ""]
         const newErrorRow = [true, true, true, true, true]
         var newRowsToRender = {}
@@ -211,6 +217,12 @@ export default function EditFile3({ csvArray, setEditInfo, user, setUser, fromSe
     };
 
     const onRowAdd = (rowIndex) => {
+        for (let i = 0; i < content.length; i++) {
+            for (let j = 0; j <= 4; j++) {
+                const cell = document.getElementById(`cell-${(i)}-${j}`)
+                cell.classList.remove("pink")
+            }
+        }
         const newEmptyRow = [content[rowIndex][0], content[rowIndex][1], "00:00", "24:00", ""];
         const newErrorRow = [errors[rowIndex][0], errors[rowIndex][1], false, false, true];
         var newRowsToRender = {}
@@ -376,6 +388,12 @@ export default function EditFile3({ csvArray, setEditInfo, user, setUser, fromSe
 
 
     const deleteRow = (rowIndex) => {
+        for (let i = 0; i < content.length; i++) {
+            for (let j = 0; j <= 4; j++) {
+                const cell = document.getElementById(`cell-${(i)}-${j}`)
+                cell.classList.remove("pink")
+            }
+        }
         if (rowIndex >= 0 && rowIndex < content.length) {
             setContent((prevContent) => {
                 const newContent = [...prevContent];

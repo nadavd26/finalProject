@@ -61,6 +61,8 @@ const wastedHours = (reqs, shifts) => {
 const Plot = createPlotlyComponent(Plotly);
 
 const Graph = ({ reqs, shifts, skill, day, user, setUser  }) => {
+    console.log("reqs")
+    console.log(reqs)
     const [showEmptyGraphModal, setShowEmptyGraphModal] = useState(false);
     const [showDeviationModal, setShowDeviationModal] = useState(false);
     useEffect(() => {

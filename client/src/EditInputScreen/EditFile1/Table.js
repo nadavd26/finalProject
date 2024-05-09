@@ -1,9 +1,9 @@
 import React from 'react';
-import TableRowMemo from './TableRow'
+import TableRow from './TableRow'
 const TableRows = ({ content, errors, onCellEdit,  onRowDelete, onRowAdd, rowsToRender}) => {
     return (
         content.map((rowMap, index) => (
-            <TableRowMemo
+            <TableRow
                 rowIndex={index}
                 row={rowMap}
                 rowErrors={errors[index]}
