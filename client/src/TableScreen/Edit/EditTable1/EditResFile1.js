@@ -29,7 +29,7 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
     function calcCost() {
         var cost = 0
         for (let i = 0; i < initialTable.length; i++) {
-            var costShift = 100
+            var costShift = initialTable[i][5]
             cost = cost + (costShift * initialTable[i][4])
         }
         console.log("cost")
@@ -86,8 +86,8 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
         console.log(value)
         console.log("oldValue")
         console.log(oldValue)
-        var price = 100
         var updatedContent = content
+        var price = updatedContent[rowIndex][5]
         updatedContent[rowIndex][columnIndex] = value
         setCostKpi(prevCostKpi => prevCostKpi - (price * (oldValue - value))); // Functional update
         var newRow = updatedContent[rowIndex]
