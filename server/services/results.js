@@ -167,7 +167,7 @@ function getKey(day, skill, req) {
 function getShiftCost(skill, day, startTime, finishTime, table3) {
     for (line3 of table3) {
         if (line3[0] == skill && line3[1] == day && line3[2] == startTime && line3[3] == finishTime)
-            return line[4]
+            return line3[4]
     }
 }
 
