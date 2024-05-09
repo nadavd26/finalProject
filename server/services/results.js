@@ -19,7 +19,7 @@ const getResults1 = async (reqs, shifts, userId) => {
         await fs.promises.writeFile(reqsFileName, reqsJson);
 
         // Spawn a Python process
-        const algorithm1 = spawn('python', ['./algorithm/algorithm1.py']);
+        const algorithm1 = spawn('python3', ['./algorithm/algorithm1.py']);
 
         let outputBuffer = '';
 

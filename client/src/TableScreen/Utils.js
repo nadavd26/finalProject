@@ -452,24 +452,36 @@ function duplicateLines(table) {
 
 
 export async function generateAlgo1Results(token) {
-    console.log("token")
-    console.log(token)
-    const url = "http://localhost:12345/Results/GetResults1";    
+    try {
+        const url = "http://localhost:12345/Results/GetResults1";    
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'authorization': 'bearer ' + token     
+            }
+        });
 
-    // const url = "http://localhost:12345/Table/3"; 
-    const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'authorization': 'bearer ' + token     
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`); //cannot happen
         }
-    });
 
-    const responseData = await response.json(); // Parse JSON response
-    console.log("responseData")
-    console.log(responseData)
-    return responseData; // Return the parsed response
+        const responseData = await response.json(); // Parse JSON response
+        console.log("responseData:", responseData);
+        
+        // Convert the responseData to a Map object
+        const resultMap = new Map();
+        for (const key in responseData) {
+            resultMap.set(key, responseData[key]);
+        }
+        
+        return resultMap; // Return the Map object
+    } catch (error) {
+        console.error("Error fetching results:", error);
+        throw error; // Rethrow the error to handle it elsewhere if needed
+    }
 }
+
 
 export function getKey(day, skill, req) {
     if (!req) {

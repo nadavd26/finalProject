@@ -1,7 +1,15 @@
-function SkillDropdown({ currentSkill , skillList, handlerSkill }) {
+function SkillDropdown({ currentSkill, skillList, handlerSkill }) {
     return (
         <div className="dropdown">
-            <button className="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button
+                className="btn btn-success dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+                style={{ pointerEvents: skillList.length === 0 ? 'none' : 'auto' }}
+            >
                 {currentSkill}
             </button>
             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
