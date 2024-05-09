@@ -2,10 +2,8 @@ const User = require("../models/user");
 const ShiftLine = require("../models/shiftLine")
 const { spawn } = require('child_process');
 const fs = require('fs');
-const shiftLine = require("../models/shiftLine");
 const Table = require("../services/tables");
 const { getTableByUserId } = require("./user");
-const { table } = require("console");
 //const fs = require('fs').promises; // Using fs.promises for async file operations
 
 //This function runs algorithm 1 and returns the results.
@@ -44,7 +42,6 @@ const getResults1 = async (reqs, shifts, userId) => {
                 fs.unlink(reqsFileName);*/
                 try {
                     const outputArray = JSON.parse(outputBuffer); // Parse accumulated data
-                    console.log(outputArray);
                     resolve(outputArray); // Resolve the promise with the output
                 } catch (error) {
                     console.error('Error parsing JSON:', error);
@@ -74,8 +71,17 @@ const getResults1 = async (reqs, shifts, userId) => {
     }
 }
 
+//This function deletes every all the shift tables and lines of the user. 
 const deleteCurrentResults = async (userId) => {
     const user = await User.findById(userId)
+    // Going through each shift table.
+    for (const shiftTable of user.shiftTables) {
+        //Inside each shift table, going through each shift line, in order to delete it.
+        for (const shiftId of shiftTable.shifts) {
+            await ShiftLine.findByIdAndDelete(shiftId);
+        }
+    }
+    //Making the shift table empty and saving it.
     user.shiftTables = []
     await user.save()
 }
@@ -85,6 +91,7 @@ const saveResults = async (results, userId) => {
     sortedResults = Table.sortTable(results, 2) //Same sorting as for table2.
     await deleteCurrentResults(userId)
     const user = await User.findById(userId)
+    const table3 = await getTableByUserId(userId,3)
     for (line of sortedResults) {
         //Creating the shiftLine
         const shiftLine = new ShiftLine({
@@ -93,6 +100,7 @@ const saveResults = async (results, userId) => {
             startTime: line[2],
             finishTime: line[3],
             numOfWorkers: line[4],
+            cost: getShiftCost(line[1], line[0], line[2], line[3], table3.table3Content)
         });
         const savedLine = await shiftLine.save();
         //Checking whether there already is a table of this pair of day and skill.
@@ -119,7 +127,6 @@ const saveResults = async (results, userId) => {
 // This function transforms the user's shiftTables data into a map
 const transformShiftTablesToMap = async (shiftTables, userId) => {
     const resultMap = new Map();
-    const table3 = await getTableByUserId(userId,3)
     // Iterate over each shift table in the user's data
     shiftTables.forEach(shiftTable => {
         const key = getKey(shiftTable.day, shiftTable.skill); // Form the key using day and skill
@@ -127,14 +134,14 @@ const transformShiftTablesToMap = async (shiftTables, userId) => {
             resultMap.set(key, []); // Initialize an empty array for the key if it doesn't exist
         }
         // Push the shifts data into the array for the corresponding key
-        const shiftsData = shiftTable.shifts.map(shift => ({
-            day: shiftTable.day,
-            skill: shiftTable.skill,
-            startTime: shift.startTime,
-            finishTime: shift.finishTime,
-            numOfWorkers: shift.numOfWorkers,
-            cost: getShiftCost(shift, table3.table3Content)
-        }));
+        const shiftsData = shiftTable.shifts.map(shift => ([
+            shiftTable.day,
+            shiftTable.skill,
+            shift.startTime,
+            shift.finishTime,
+            shift.numOfWorkers,
+            shift.cost
+        ]));
         resultMap.get(key).push(...shiftsData);
     });
     return resultMap;
@@ -150,10 +157,17 @@ function getKey(day, skill, req) {
 
 //Calculating the cost of the shift according to table 3. 
 //Assuming there is only one that share the same day, skill, startTime and finishTime.
-function getShiftCost(shift, table3) {
+/*function getShiftCost(shift, table3) {
     for (line of table3) {
         if (line[0] == shift.skill && line[1] == shift.day && line[2] == shift.startTime && line[3] == shift.finishTime)
             return shift.numOfWorkers * line[4]
+    }
+}*/
+//Getting the cost of a single shift according to table3.
+function getShiftCost(skill, day, startTime, finishTime, table3) {
+    for (line3 of table3) {
+        if (line3[0] == skill && line3[1] == day && line3[2] == startTime && line3[3] == finishTime)
+            return line[4]
     }
 }
 
@@ -184,6 +198,7 @@ const editResults = async (newData, userId) => {
             startTime: line[2],
             finishTime: line[3],
             numOfWorkers: line[4],
+            cost: line[5]
         });
         const savedLine = await shiftLine.save();
         //Checking whether there already is a table of this pair of day and skill.

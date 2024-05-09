@@ -24,6 +24,10 @@ const ShiftLine = new Schema(
             type: Number,
             required: true,
         },
+        cost : {
+            type: Number,
+            required: true,
+        }
     },
     { autoIndex: false, autoCreate: false }
 );
