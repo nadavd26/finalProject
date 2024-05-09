@@ -102,8 +102,8 @@ const returnResults = async (req, res) => {
         table3 = await UserService.getTable(req.user.email, req.user.googleId, 3)
         if (JSON.stringify(table3) == JSON.stringify([]))
             res.status(404).send("At least one of the tables were never set.")
-        if (!TableValidator.validateAlgoRequirements(table2.table2Content, table3.table3Content))
-            res.status(404).send("Invalid tables.")
+        /*if (!TableValidator.validateAlgoRequirements(table2.table2Content, table3.table3Content))
+            res.status(404).send("Invalid input tables: there is a shift with a day or skiill that is not in the requirements.")*/
         else {
             // Call getResults1 and wait for its completion
             const results = await ResultsService.getResults1(table2.table2Content, table3.table3Content, req.user._id);
