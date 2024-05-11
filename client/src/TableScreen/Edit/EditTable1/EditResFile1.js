@@ -62,7 +62,7 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
         const [hours, minutes] = hour.split(':');
         return hours * 2 + (minutes === '30' ? 1 : 0);
     };
-    
+
     // Convert hours to array number
     const hoursToArrayNumber = (startHour, endHour, num) => {
         const start = hourToIndex(startHour);
@@ -73,7 +73,7 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
         const hoursArray = Array.from({ length: 48 }, (_, i) => (start <= i && i < end) ? num : 0);
         return hoursArray;
     };
-    
+
     const computeWastedHours = (reqs, line) => {
         // console.log("reqs")
         // console.log(reqs)
@@ -81,16 +81,33 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
         // console.log(line)
         var shiftsArray = hoursToArrayNumber(line[2], line[3], parseInt(line[4]))
         let sum = 0;
-        for(let i = 0; i < 48; i++)
+        for (let i = 0; i < 48; i++)
             sum += Math.max(0, shiftsArray[i] - reqs[i])
         return sum / 2
     }
+
 
     const handleCellEdit = (rowIndex, columnIndex, value, oldValue) => {
         console.log("value")
         console.log(value)
         console.log("oldValue")
         console.log(oldValue)
+        if (value == oldValue) {
+            var newRowsToRender = {}
+            newRowsToRender[rowIndex] = true
+            setRowsToRender(newRowsToRender)
+            return
+        }
+        if (!isNumberOfWorkersValid(value)) {
+            console.log("not valud")
+            var newRowsToRender = {}
+            newRowsToRender[rowIndex] = true
+            var updatedContent = content
+            updatedContent[rowIndex][columnIndex] = oldValue
+            setRowsToRender(newRowsToRender)
+            setContent(updatedContent)
+            return
+        }
         var updatedContent = content
         var price = updatedContent[rowIndex][5]
         updatedContent[rowIndex][columnIndex] = value
@@ -253,7 +270,7 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
                             <div className="modal-footer">
                                 <div className="col-4" />
                                 <div className="col-2">
-                                <button type="button" className={`btn ${((costKpi + wastedHoursKpi) > (initialCost + intialWastedHours)) ? 'btn-warning' : 'btn-success'}`} data-dismiss="modal" onClick={finishEdit}>Finish</button>
+                                    <button type="button" className={`btn ${((costKpi + wastedHoursKpi) > (initialCost + intialWastedHours)) ? 'btn-warning' : 'btn-success'}`} data-dismiss="modal" onClick={finishEdit}>Finish</button>
                                 </div>
                                 <div className="col-2">
                                     <button type="button" className="btn btn-secondary" data-dismiss="modal">Keep Editing</button>

@@ -201,6 +201,7 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
                 updatedErrors[rowIndex][columnIndex] = !isNameValid(updatedContent[rowIndex][columnIndex])
                 break;
             case 2: //skill1
+                console.log("skill1")
                 updatedErrors[rowIndex][columnIndex] = !isSkillValid(updatedContent[rowIndex][columnIndex])
                 if (value != "") {
                     if (value == skill2) {
@@ -224,12 +225,20 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
                 }
                 break;
             case 3: //skill2
-                updatedErrors[rowIndex][columnIndex] = !isSkillValid(updatedContent[rowIndex][columnIndex])
+                console.log("skill2")
+                console.log("updatedErrors[rowIndex] case 3 a")
+                console.log(updatedErrors[rowIndex])
+                updatedErrors[rowIndex][columnIndex] = !isSkillValid(updatedContent[rowIndex][columnIndex]) && (updatedContent[rowIndex][columnIndex] != "")
+                console.log("updatedErrors[rowIndex] case 3")
+                console.log(updatedErrors[rowIndex])
                 if (value == "") {
+                    console.log("skill2 empty")
                     if (skill3 != "") {
+                        console.log("skill3 not emty")
                         updatedErrors[rowIndex][3] = true
                     }
                 } else {
+                    console.log("skill2 not empty")
                     if (value == skill1) { //duplicate skill
                         updatedErrors[rowIndex][3] = true
                     }
@@ -245,7 +254,8 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
                 break;
 
             case 4: //skill3
-                updatedErrors[rowIndex][columnIndex] = !isSkillValid(updatedContent[rowIndex][columnIndex])
+                console.log("skill3")
+                updatedErrors[rowIndex][columnIndex] = !isSkillValid(updatedContent[rowIndex][columnIndex]) && (updatedContent[rowIndex][columnIndex] != "")
                 if (value != "") {
                     if (updatedContent[rowIndex][3] == "") {
                         updatedErrors[rowIndex][3] = true
@@ -266,6 +276,8 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
                 break;
         }
 
+        console.log("updatedErrors[rowIndex]")
+        console.log(updatedErrors[rowIndex])
         var newRowsToRender = {}
         newRowsToRender[rowIndex] = true
         setRowsToRender(newRowsToRender)
@@ -384,14 +396,14 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
     return (
         <div id="edit-file">
             <div className="container-fluid py-3">
-                <div className="col-1" style={{position: "fixed", top: "1%" ,height: "3%"}}>
+                <div className="col-1" style={{ position: "fixed", top: "1%", height: "3%" }}>
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#backModal" onClick={handleBack}>Back</button>
                 </div>
                 <div className="col-11"></div>
                 <Table content={content} onCellEdit={handleCellEdit} onRowDelete={deleteRow} errors={errors}
                     isNumberOfWorkersValid={isNumberOfWorkersValid} isSkillValid={isSkillValid} onRowAdd={onRowAdd} rowsToRender={rowsToRender}></Table>
                 <div className="row"><br /></div>
-                <div className="row down-buttons"  style={{position: "fixed", top: "90%", width: "100%"}}>
+                <div className="row down-buttons" style={{ position: "fixed", top: "90%", width: "100%" }}>
                     <div className="col-3"></div>
                     <button className="btn btn-success col-3" onClick={handleSave}
                         data-toggle="modal" >Save</button>
