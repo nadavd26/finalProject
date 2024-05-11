@@ -182,6 +182,11 @@ export default function EditFile3({ csvArray, setEditInfo, user, setUser, fromSe
 
 
     useEffect(() => {
+        console.log("content")
+        console.log(content)
+    }, [content])
+
+    useEffect(() => {
         if (csvArray.length > 0 && fromServer == false) {
             initAndCheck(csvArray);
         }
@@ -246,44 +251,23 @@ export default function EditFile3({ csvArray, setEditInfo, user, setUser, fromSe
     }
 
     const handleCellEdit = (rowIndex, columnIndex, value) => {
-        const updatedContent = content.map((row, i) => {
-            if (i === rowIndex) {
-                return row.map((cell, j) => (j === columnIndex ? value : cell));
-            } else {
-                return row;
-            }
-        });
-
-        var updatedErrors
+        if (value == content[rowIndex][columnIndex]) {
+            return
+        }
+        const updatedContent = [...content]
+        updatedContent[rowIndex][columnIndex] = value
+        var updatedErrors = [...errors]
         switch (columnIndex) {
             case 0:
-                updatedErrors = errors.map((row, i) => {
-                    if (i === rowIndex) {
-                        return row.map((cell, j) => (j === columnIndex ? !isSkillValid(updatedContent[i][j]) : cell));
-                    } else {
-                        return row;
-                    }
-                });
+                updatedErrors[rowIndex][columnIndex] = !isSkillValid(value)
                 break; // Add break statement here
 
             case 4:
-                updatedErrors = errors.map((row, i) => {
-                    if (i === rowIndex) {
-                        return row.map((cell, j) => (j === columnIndex ? !isCostValid(updatedContent[i][j]) : cell));
-                    } else {
-                        return row;
-                    }
-                });
+                updatedErrors[rowIndex][columnIndex] = !isCostValid(value)
                 break; // Add break statement here
 
             default:
-                updatedErrors = errors.map((row, i) => {
-                    if (i === rowIndex) {
-                        return row.map((cell, j) => (j === columnIndex ? false : cell));
-                    } else {
-                        return row;
-                    }
-                });
+                updatedErrors[rowIndex][columnIndex] = false //editing for the dropdown which is always valid
                 break; // Add break statement here
         }
         var newRowsToRender = {}

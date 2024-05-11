@@ -180,6 +180,12 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
         setErrors(errorsFound)
     }
 
+    //debug
+    useEffect(() => {
+        console.log("content")
+        console.log(content)
+    }, [content])
+
 
     useEffect(() => {
         if (csvArray.length > 0 && fromServer == false) {
@@ -197,7 +203,7 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
     }, [csvArray, setContent]);
 
     const addRowHandler = () => {
-        for(let i = 0; i <  content.length; i++) {
+        for (let i = 0; i < content.length; i++) {
             for (let j = 0; j <= 4; j++) {
                 const cell = document.getElementById(`cell-${(i)}-${j}`)
                 cell.classList.remove("pink")
@@ -217,7 +223,7 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
     };
 
     const onRowAdd = (rowIndex) => {
-        for(let i = 0; i <  content.length; i++) {
+        for (let i = 0; i < content.length; i++) {
             for (let j = 0; j <= 4; j++) {
                 const cell = document.getElementById(`cell-${(i)}-${j}`)
                 cell.classList.remove("pink")
@@ -246,51 +252,66 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
     }
 
     const handleCellEdit = (rowIndex, columnIndex, value) => {
-        const updatedContent = content.map((row, i) => {
-            if (i === rowIndex) {
-                return row.map((cell, j) => (j === columnIndex ? value : cell));
-            } else {
-                return row;
+        // const updatedContent = content.map((row, i) => {
+        //     if (i === rowIndex) {
+        //         return row.map((cell, j) => (j === columnIndex ? value : cell));
+        //     } else {
+        //         return row;
+        //     }
+        // });
+
+        // var updatedErrors
+        // switch (columnIndex) {
+        //     case 1:
+        //         updatedErrors = errors.map((row, i) => {
+        //             if (i === rowIndex) {
+        //                 return row.map((cell, j) => (j === columnIndex ? !isSkillValid(updatedContent[i][j]) : cell));
+        //             } else {
+        //                 return row;
+        //             }
+        //         });
+        //         break; // Add break statement here
+
+        //     case 4:
+        //         updatedErrors = errors.map((row, i) => {
+        //             if (i === rowIndex) {
+        //                 return row.map((cell, j) => (j === columnIndex ? !isNumberOfWorkersValid(updatedContent[i][j]) : cell));
+        //             } else {
+        //                 return row;
+        //             }
+        //         });
+        //         break; // Add break statement here
+
+        //     default:
+        //         updatedErrors = errors.map((row, i) => {
+        //             if (i === rowIndex) {
+        //                 return row.map((cell, j) => (j === columnIndex ? false : cell));
+        //             } else {
+        //                 return row;
+        //             }
+        //         });
+        //         break; // Add break statement here
+        // }
+        if (value != content[rowIndex][columnIndex]) {
+            var updatedContent = [...content]
+            var updatedErrors = [...errors]
+            updatedContent[rowIndex][columnIndex] = value
+            switch(columnIndex) {
+                case 1: 
+                    updatedErrors[rowIndex][columnIndex] = !isSkillValid(value)
+                    break;
+                case 4:
+                    updatedErrors[rowIndex][columnIndex] = !isNumberOfWorkersValid(value)
+                    break;
+                default:
+                    updatedErrors[rowIndex][columnIndex] = false //editing through the day/hour dropdown which is always valid
             }
-        });
-
-        var updatedErrors
-        switch (columnIndex) {
-            case 1:
-                updatedErrors = errors.map((row, i) => {
-                    if (i === rowIndex) {
-                        return row.map((cell, j) => (j === columnIndex ? !isSkillValid(updatedContent[i][j]) : cell));
-                    } else {
-                        return row;
-                    }
-                });
-                break; // Add break statement here
-
-            case 4:
-                updatedErrors = errors.map((row, i) => {
-                    if (i === rowIndex) {
-                        return row.map((cell, j) => (j === columnIndex ? !isNumberOfWorkersValid(updatedContent[i][j]) : cell));
-                    } else {
-                        return row;
-                    }
-                });
-                break; // Add break statement here
-
-            default:
-                updatedErrors = errors.map((row, i) => {
-                    if (i === rowIndex) {
-                        return row.map((cell, j) => (j === columnIndex ? false : cell));
-                    } else {
-                        return row;
-                    }
-                });
-                break; // Add break statement here
+            var newRowsToRender = {}
+            newRowsToRender[rowIndex] = true
+            setRowsToRender(newRowsToRender)
+            setContent(updatedContent);
+            setErrors(updatedErrors)
         }
-        var newRowsToRender = {}
-        newRowsToRender[rowIndex] = true
-        setRowsToRender(newRowsToRender)
-        setContent(updatedContent);
-        setErrors(updatedErrors)
     };
 
 
@@ -337,6 +358,11 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
         if (!isValid) {
             setErrorMsg(defaultErrorMsg)
             errorModal.show()
+            // var newRowsToRender = {}
+            // for (let i = 0; i < content.length; i++) {
+            //     newRowsToRender[i] = true
+            // }
+            // setRowsToRender(newRowsToRender)
             return
         }
         const sortedTable = await sortTable(2, content, user.token);
@@ -367,7 +393,7 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
 
 
     const deleteRow = (rowIndex) => {
-        for(let i = 0; i <  content.length; i++) {
+        for (let i = 0; i < content.length; i++) {
             for (let j = 0; j <= 4; j++) {
                 const cell = document.getElementById(`cell-${(i)}-${j}`)
                 cell.classList.remove("pink")
@@ -426,14 +452,14 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
     return (
         <div id="edit-file">
             <div className="container-fluid py-3">
-                <div className="col-1" style={{position: "fixed", top: "1%" ,height: "3%"}}>
+                <div className="col-1" style={{ position: "fixed", top: "1%", height: "3%" }}>
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#backModal" onClick={handleBack}>Back</button>
                 </div>
                 <div className="col-11"></div>
                 <Table content={content} onCellEdit={handleCellEdit} onRowDelete={deleteRow} errors={errors}
                     isNumberOfWorkersValid={isNumberOfWorkersValid} isSkillValid={isSkillValid} onRowAdd={onRowAdd} rowsToRender={rowsToRender}></Table>
                 <div className="row"><br /></div>
-                <div className="row down-buttons" style={{position: "fixed", top: "90%", width: "100%"}}>
+                <div className="row down-buttons" style={{ position: "fixed", top: "90%", width: "100%" }}>
                     <div className="col-3"></div>
                     <button className="btn btn-success col-3" onClick={handleSave}
                         data-toggle="modal" >Save</button>

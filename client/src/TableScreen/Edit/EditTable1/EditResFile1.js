@@ -49,6 +49,11 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
         setCostKpi(initCost)
     }, []);
 
+    useEffect(() => {
+        console.log("content")
+        console.log(content)
+    }, [content])
+
     const hourToIndex = (hour) => {
         if (typeof hour !== 'string') {
             // Handle the case where hour is not a string
@@ -70,10 +75,10 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
     };
     
     const computeWastedHours = (reqs, line) => {
-        console.log("reqs")
-        console.log(reqs)
-        console.log("line")
-        console.log(line)
+        // console.log("reqs")
+        // console.log(reqs)
+        // console.log("line")
+        // console.log(line)
         var shiftsArray = hoursToArrayNumber(line[2], line[3], parseInt(line[4]))
         let sum = 0;
         for(let i = 0; i < 48; i++)

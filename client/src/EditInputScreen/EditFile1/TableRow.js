@@ -59,4 +59,4 @@ function arePropsEqual(oldProps, newProps) {
 }
 
 const TableRowMemo = React.memo(TableRow, arePropsEqual)
-export default TableRow
+export default TableRowMemo

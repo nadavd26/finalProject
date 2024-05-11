@@ -54,11 +54,12 @@ const TableRow = ({ row, rowErrors, rowIndex, onCellEdit, onRowDelete, onRowAdd,
 }
 
 function arePropsEqual(oldProps, newProps) {
-    if (newProps.shouldRender) {
-        return false
+    if (!newProps.shouldRender) {
+        return true;
     }
-    return true
+    return false;
 }
 
+
 const TableRowMemo = React.memo(TableRow, arePropsEqual)
-export default TableRow
+export default TableRowMemo

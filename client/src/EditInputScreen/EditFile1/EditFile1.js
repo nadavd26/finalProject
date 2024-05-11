@@ -122,6 +122,11 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
 
 
     useEffect(() => {
+        console.log("content")
+        console.log(content)
+    }, [content])
+
+    useEffect(() => {
         if (csvArray.length > 0 && fromServer == false) {
             initAndCheck(csvArray);
         }
@@ -176,48 +181,27 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
 
     const handleCellEdit = (rowIndex, columnIndex, value) => {
         var oldValue = content[rowIndex][columnIndex]
-        const updatedContent = content.map((row, i) => {
-            if (i === rowIndex) {
-                return row.map((cell, j) => (j === columnIndex ? value : cell));
-            } else {
-                return row;
-            }
-        });
+        if (value == oldValue) {
+            return
+        }
+        const updatedContent = [...content]
+        updatedContent[rowIndex][columnIndex] = value
 
         const skill1 = updatedContent[rowIndex][2]
         const skill2 = updatedContent[rowIndex][3]
         const skill3 = updatedContent[rowIndex][4]
 
-        var updatedErrors
+        var updatedErrors = [...errors]
         switch (columnIndex) {
             case 0: //id
-                updatedErrors = errors.map((row, i) => {
-                    if (i === rowIndex) {
-                        return row.map((cell, j) => (j === columnIndex ? !isIdValid(updatedContent[i][j]) : cell));
-                    } else {
-                        return row;
-                    }
-                });
+                updatedErrors[rowIndex][columnIndex] = !isIdValid(updatedContent[rowIndex][columnIndex])
                 break;
 
             case 1: //name
-                updatedErrors = errors.map((row, i) => {
-                    if (i === rowIndex) {
-                        return row.map((cell, j) => (j === columnIndex ? !isNameValid(updatedContent[i][j]) : cell));
-                    } else {
-                        return row;
-                    }
-                });
+                updatedErrors[rowIndex][columnIndex] = !isNameValid(updatedContent[rowIndex][columnIndex])
                 break;
             case 2: //skill1
-                updatedErrors = errors.map((row, i) => {
-                    if (i === rowIndex) {
-                        return row.map((cell, j) => (j === columnIndex ? !isSkillValid(updatedContent[i][j]) : cell));
-                    } else {
-                        return row;
-                    }
-                });
-
+                updatedErrors[rowIndex][columnIndex] = !isSkillValid(updatedContent[rowIndex][columnIndex])
                 if (value != "") {
                     if (value == skill2) {
                         updatedErrors[rowIndex][3] = true
@@ -238,17 +222,9 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
                     updatedErrors[rowIndex][3] = (!isSkillValid(skill2) && skill2 != "") || (skill3 != "" && skill2 == "")
                     updatedErrors[rowIndex][4] = !isSkillValid(skill3) && skill3 != ""
                 }
-
                 break;
             case 3: //skill2
-                updatedErrors = errors.map((row, i) => {
-                    if (i === rowIndex) {
-                        return row.map((cell, j) => (j === columnIndex ? updatedContent[i][j] != "" && !isSkillValid(updatedContent[i][j]) : cell));
-                    } else {
-                        return row;
-                    }
-                });
-
+                updatedErrors[rowIndex][columnIndex] = !isSkillValid(updatedContent[rowIndex][columnIndex])
                 if (value == "") {
                     if (skill3 != "") {
                         updatedErrors[rowIndex][3] = true
@@ -267,15 +243,9 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
                     }
                 }
                 break;
-            case 4: //skill3
-                updatedErrors = errors.map((row, i) => {
-                    if (i === rowIndex) {
-                        return row.map((cell, j) => (j === columnIndex ? updatedContent[i][j] != "" && !isSkillValid(updatedContent[i][j]) : cell));
-                    } else {
-                        return row;
-                    }
-                });
 
+            case 4: //skill3
+                updatedErrors[rowIndex][columnIndex] = !isSkillValid(updatedContent[rowIndex][columnIndex])
                 if (value != "") {
                     if (updatedContent[rowIndex][3] == "") {
                         updatedErrors[rowIndex][3] = true
@@ -292,13 +262,7 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
                 break;
 
             case 5:
-                updatedErrors = errors.map((row, i) => {
-                    if (i === rowIndex) {
-                        return row.map((cell, j) => (j === columnIndex ? !isContractValid(updatedContent[i][j]) : cell));
-                    } else {
-                        return row;
-                    }
-                });
+                updatedErrors[rowIndex][columnIndex] = !isContractValid(updatedContent[rowIndex][columnIndex])
                 break;
         }
 
