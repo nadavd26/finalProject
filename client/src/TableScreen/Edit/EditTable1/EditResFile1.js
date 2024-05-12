@@ -169,6 +169,7 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
         const map = user.algo1Table
         map.set(utils.getKey(currentDay, currentSkill), content)
         newUser.algo1Table = map
+        newUser.tableAlgo1Changed = true
         setWorksPerShift(content)
         setUser(newUser)
         setInEdit(false)

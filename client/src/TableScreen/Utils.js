@@ -451,7 +451,8 @@ function duplicateLines(table) {
 
 
 
-export async function generateAlgo1Results(token) {
+export async function generateAlgo1Results(token, getFromDatabase) {
+    const data = {getFromDatabase: getFromDatabase}
     try {
         const url = "http://localhost:12345/Results/GetResults1";    
         const response = await fetch(url, {
@@ -459,7 +460,8 @@ export async function generateAlgo1Results(token) {
             headers: {
                 'Content-Type': 'application/json',
                 'authorization': 'bearer ' + token     
-            }
+            },
+            // 'body': JSON.stringify(data)
         });
 
         if (!response.ok) {

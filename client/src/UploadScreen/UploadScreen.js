@@ -20,6 +20,14 @@ function UploadScreen({user, setUser}) {
     }
   }, [editInfo.errorMsg]);
 
+  useEffect(()=> {
+    const userInfo = user
+    userInfo["table1Changed"] = false 
+    userInfo["table2Changed"] = false 
+    userInfo["table3Changed"] = false
+    userInfo["tableAlgo1Changed"] = false  
+    setUser(userInfo)
+  },[])
 
   const handleButtonClick = (buttonId) => {
     setSelectedButton(buttonId);

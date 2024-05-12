@@ -74,7 +74,9 @@ function TableScreen({ user, setUser }) {
         editInfoState.setInEdit(true)
     }
     async function generateResults1() {
-        const res = await utils.generateAlgo1Results(user.token)
+        console.log("user")
+        console.log(user)
+        const res = await utils.generateAlgo1Results(user.token, !(user.table2Changed || user.table3Changed))
         console.log("res")
         console.log(res)
         const newDaySkillReqMap = utils.generateReqSkillDayMap(user.table2)

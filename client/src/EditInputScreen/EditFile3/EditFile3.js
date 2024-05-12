@@ -417,6 +417,7 @@ export default function EditFile3({ csvArray, setEditInfo, user, setUser, fromSe
         setEditInfo({ inEdit: false, errorMsg: "" })
         var newUser = user
         newUser.table3 = content
+        newUser.table3Changed = true
         setUser(newUser)
     };
 
