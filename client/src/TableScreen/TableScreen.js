@@ -27,6 +27,8 @@ function TableScreen({ user, setUser }) {
     const tableAlgo1State = useTableAlgo1State()
     const editInfoState = useEditInfoState()
     console.log(tableAlgo1State.get.req)
+    console.log("user")
+    console.log(user)
     function switchDay(day) {
         if ((tableScreenState.get.tableNum == 1 && !tableScreenState.get.is1Generated) || (tableScreenState.get.tableNum == 2 && !tableScreenState.get.is2Generated)) {
             return
@@ -74,8 +76,7 @@ function TableScreen({ user, setUser }) {
         editInfoState.setInEdit(true)
     }
     async function generateResults1() {
-        console.log("user")
-        console.log(user)
+
         const res = await utils.generateAlgo1Results(user.token, !(user.table2Changed || user.table3Changed))
         console.log("res")
         console.log(res)

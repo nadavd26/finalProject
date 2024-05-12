@@ -1,3 +1,6 @@
+import React from 'react';
+import Select from 'react-select';
+
 function Dropdown({ firstDay, dayHandler }) {
     let otherDays;
 
@@ -26,19 +29,68 @@ function Dropdown({ firstDay, dayHandler }) {
         default:
             otherDays = [];
     }
-    return <div className="dropdown">
-        <button className="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            {firstDay}
-        </button>
-        <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <button className="dropdown-item changeDayButton" onClick={() => dayHandler(otherDays[0])}>{otherDays[0]}</button>
-            <button className="dropdown-item changeDayButton" onClick={() => dayHandler(otherDays[1])}>{otherDays[1]}</button>
-            <button className="dropdown-item changeDayButton" onClick={() => dayHandler(otherDays[2])}>{otherDays[2]}</button>
-            <button className="dropdown-item changeDayButton" onClick={() => dayHandler(otherDays[3])}>{otherDays[3]}</button>
-            <button className="dropdown-item changeDayButton" onClick={() => dayHandler(otherDays[4])}>{otherDays[4]}</button>
-            <button className="dropdown-item changeDayButton" onClick={() => dayHandler(otherDays[5])}>{otherDays[5]}</button>
-        </div>
-    </div>
+
+    // Transform otherDays into an array of objects with value and label properties
+    const transformedOptions = otherDays.map((day) => ({
+        value: day,
+        label: day
+    }));
+
+    // Handle selection
+    const handleSelect = (selectedOption) => {
+        if (selectedOption) {
+            dayHandler(selectedOption.value);
+        }
+    };
+
+    const customStyles = {
+        option: (provided, state) => ({
+            ...provided,
+            color: 'black', // Set text color of options to black
+        }),
+        singleValue: (provided) => ({
+            ...provided,
+            color: 'white', // Set text color of selected option to white
+        }),
+        control: (provided, state) => ({
+            ...provided,
+            backgroundColor: '#28a745', // Set background color to #28a745
+            border: 'none', // Remove border
+            width: 'auto', // Set width to auto
+            margin: '0px',
+            padding: '0px',
+            color: 'white', // Set text color of select text to white
+        }),
+        indicatorSeparator: (provided) => ({
+            ...provided,
+            backgroundColor: 'white', // Set separator color to white
+        }),
+        dropdownIndicator: (provided) => ({
+            ...provided,
+            color: 'white', // Set arrow color to white
+            padding: '4px' // Change padding of the dropdown indicator to match the example
+        }),
+        container: (provided) => ({
+            ...provided,
+            display: 'inline-flex', // Use inline-flex to adjust to the width of the content
+            width: 'auto', // Set width to auto
+        }),
+        menu: (provided) => ({
+            ...provided,
+            width: 'auto', // Set menu width to auto
+        }),
+    };
+
+    return (
+        <Select
+            value={{ value: firstDay, label: firstDay }} // Set the selected value
+            options={transformedOptions} // Set options with labels
+            onChange={handleSelect} // Handle selection
+            styles={customStyles} // Apply custom styles
+            menuShouldBlockScroll={true}
+            autoWidth={true} // Set autoWidth to true
+        />
+    );
 }
 
-export default Dropdown
+export default Dropdown;
