@@ -257,12 +257,12 @@ function TableScreen({ user, setUser }) {
                                     <br></br><br></br><Loader speed={5} customText="Calculating..." /></>
                             ) : (<div>
                                 <div className="row" style={{ position: "relative", top: "6vh" }}>
-                                    <div className="col-4"></div>
-                                    <div className="col-4 d-flex justify-content-between align-items-center">
+                                    <div className="col-3"></div>
+                                    <div className="col-6 d-flex justify-content-between align-items-center">
                                         <div style={{marginRight: "10px"}}><Dropdown firstDay={tableScreenState.get.currentDay} dayHandler={switchDay}/></div>
                                         <div><SkillDropdown currentSkill={tableAlgo1State.get.currentSkill} skillList={tableAlgo1State.get.otherSkills} handlerSkill={handlerSkillChange}/></div>
                                     </div>
-                                    <div className="col-4"></div>
+                                    <div className="col-3"></div>
                                 </div>
 
 

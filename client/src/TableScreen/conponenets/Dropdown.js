@@ -1,7 +1,7 @@
 import React from 'react';
 import Select from 'react-select';
 
-function Dropdown({ firstDay, dayHandler }) {
+function Dropdown({ firstDay, dayHandler, hasMaxWidth }) {
     let otherDays;
 
     switch (firstDay) {
@@ -72,8 +72,8 @@ function Dropdown({ firstDay, dayHandler }) {
         }),
         container: (provided) => ({
             ...provided,
-            display: 'inline-flex', // Use inline-flex to adjust to the width of the content
             width: 'auto', // Set width to auto
+            display: 'inline-flex', // Use inline-flex to adjust to the width of the content
         }),
         menu: (provided) => ({
             ...provided,
@@ -82,14 +82,15 @@ function Dropdown({ firstDay, dayHandler }) {
     };
 
     return (
-        <Select
-            value={{ value: firstDay, label: firstDay }} // Set the selected value
-            options={transformedOptions} // Set options with labels
-            onChange={handleSelect} // Handle selection
-            styles={customStyles} // Apply custom styles
-            menuShouldBlockScroll={true}
-            autoWidth={true} // Set autoWidth to true
-        />
+            <Select
+                value={{ value: firstDay, label: firstDay }} // Set the selected value
+                options={transformedOptions} // Set options with labels
+                onChange={handleSelect} // Handle selection
+                styles={customStyles} // Apply custom styles
+                autoWidth={true} // Set autoWidth to true
+                isSearchable={false} // Disable search functionality
+                menuShouldBlockScroll={true}
+            />
     );
 }
 

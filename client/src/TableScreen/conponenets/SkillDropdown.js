@@ -44,7 +44,6 @@ function SkillDropdown({ currentSkill, skillList, handlerSkill }) {
         }),
         container: (provided) => ({
             ...provided,
-            display: 'inline-flex', // Use inline-flex to adjust to the width of the content
             width: 'auto', // Set width to auto
         }),
         menu: (provided) => ({
@@ -54,6 +53,7 @@ function SkillDropdown({ currentSkill, skillList, handlerSkill }) {
     };
     
     return (
+        <div style={{maxWidth: "36vw"}}>
         <Select
             value={{ value: currentSkill, label: currentSkill }} // Set the selected value
             options={transformedOptions} // Set options with labels
@@ -62,6 +62,7 @@ function SkillDropdown({ currentSkill, skillList, handlerSkill }) {
             menuShouldBlockScroll={true}
             autoWidth={true} // Set autoWidth to true
         />
+        </div>
     );
 }
 
