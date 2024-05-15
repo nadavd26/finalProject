@@ -121,11 +121,17 @@ const saveResults = async (results, userId) => {
     }
     // Populating the shift lines for each shift table
     await user.populate('shiftTables.shifts');
-    return await transformShiftTablesToMap(user.shiftTables, userId);
+    return await transformShiftTablesToMap(user.shiftTables);
+}
+
+const getResults1FromDB = async (userId) => {
+    const user = await User.findById(userId)
+    await user.populate('shiftTables.shifts');
+    return await transformShiftTablesToMap(user.shiftTables);
 }
 
 // This function transforms the user's shiftTables data into a map
-const transformShiftTablesToMap = async (shiftTables, userId) => {
+const transformShiftTablesToMap = async (shiftTables) => {
     const resultMap = new Map();
     // Iterate over each shift table in the user's data
     shiftTables.forEach(shiftTable => {
@@ -220,4 +226,4 @@ const editResults = async (newData, userId) => {
 }
 
 
-module.exports = { getResults1, saveResults, editResults }
+module.exports = { getResults1, saveResults, editResults, getResults1FromDB }
