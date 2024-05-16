@@ -452,16 +452,17 @@ function duplicateLines(table) {
 
 
 export async function generateAlgo1Results(token, getFromDatabase) {
-    const data = {getFromDatabase: getFromDatabase}
+    var data = "?getFromDatabase="
+    data += getFromDatabase ? "true" : "false"
+    // data += "true"
     try {
-        const url = "http://localhost:12345/Results/GetResults1";    
+        const url = "http://localhost:12345/Results/GetResults1" + data;
         const response = await fetch(url, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'authorization': 'bearer ' + token     
+                'authorization': 'bearer ' + token
             },
-            // 'body': JSON.stringify(data)
         });
 
         if (!response.ok) {
@@ -470,18 +471,40 @@ export async function generateAlgo1Results(token, getFromDatabase) {
 
         const responseData = await response.json(); // Parse JSON response
         console.log("responseData:", responseData);
-        
+
         // Convert the responseData to a Map object
         const resultMap = new Map();
         for (const key in responseData) {
             resultMap.set(key, responseData[key]);
         }
-        
+
         return resultMap; // Return the Map object
     } catch (error) {
         console.error("Error fetching results:", error);
         throw error; // Rethrow the error to handle it elsewhere if needed
     }
+}
+
+export async function postAlgo1Res(content, token) {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", "Bearer " + token);
+
+    const raw = JSON.stringify({
+        "content": content
+    });
+
+    const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow"
+    };
+
+    fetch("localhost:12345/Results/GetResults1", requestOptions)
+        .then((response) => response.text())
+        .then((result) => console.log(result))
+        .catch((error) => console.error(error));
 }
 
 

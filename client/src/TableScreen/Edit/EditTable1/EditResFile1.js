@@ -171,6 +171,7 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
         newUser.algo1Table = map
         newUser.tableAlgo1Changed = true
         setWorksPerShift(content)
+        await utils.postAlgo1Res(content, user.token)
         setUser(newUser)
         setInEdit(false)
         finishCallback()
