@@ -28,8 +28,6 @@ export async function postInputTable(tableNum, table, token) {
         },
         'body': JSON.stringify(data)
     });
-
-
 }
 
 export async function sortTable(tableNum, table, token) {
