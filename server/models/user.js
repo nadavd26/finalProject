@@ -57,6 +57,17 @@ const User = new Schema(
                 required: true,
             }],
         }],
+        assignedShiftTables: [{
+            day: {
+                type: String,
+                required: true,
+            },
+            assignedShifts: [{
+                type: Schema.Types.ObjectId,
+                ref: "AssignedShiftLine",
+                required: true,
+            }],
+        }]
     },
     { autoIndex: false, autoCreate: false }
 );

@@ -94,7 +94,7 @@ const sortTable = (req, res) => {
     res.status(200).send({ content: sortedTable })
 }
 
-const returnResults = async (req, res) => {
+const returnResults1 = async (req, res) => {
     try {
         if (req.query.getFromDatabase === 'false') {
             table2 = await UserService.getTable(req.user.email, req.user.googleId, 2)
@@ -135,9 +135,45 @@ const returnResults = async (req, res) => {
 
 // This function deletes the existing result under the key of the first line in the given data, and replaces
 // it with the lines that are given by the client.
-const editResults = async (req, res) => {
+const editResults1 = async (req, res) => {
     dataToEdit = JSON.parse(req.body.content)
     await ResultsService.editResults(dataToEdit, req.user._id)
     res.sendStatus(200)
 }
-module.exports = { login, createUser, setTable, getTable, sortTable, returnResults, editResults }
+
+const returnResults2 = async (req, res) => {
+    try {
+        if (req.query.getFromDatabase === 'false') {
+            const results1 = await ResultsService.getResults1FromDB(req.user._id)
+            if (results1.size == 0)
+                res.status(404).send("There are no shift tables.")
+            else {
+                // Call getResults1 and wait for its completion
+                const results = await ResultsService.getResults2(req.user._id);
+                await ResultsService.saveResults2(results, req.user._id)
+                res.status(200).send(results);
+            }
+        } else if (req.query.getFromDatabase === 'true') {
+            const resultsMap = await ResultsService.getResults2FromDB(req.user._id)
+            const serializedResults = {};
+                for (const [key, value] of resultsMap.entries()) {
+                    serializedResults[key] = value;
+                }
+                res.status(200).send(serializedResults);
+        } else {
+            res.status(404).send("Invalid getFromDatabase value.")
+        }
+    } catch (err) {
+        console.log(err)
+        if (err.name === "Error") {
+            res.sendStatus(409);
+        }
+    }
+}
+
+// This function deletes the existing results and replacing it with the given table.
+const editResults2 = async (req, res) => {
+    await ResultsService.editResults2(req, req.user._id)
+    res.sendStatus(200)
+}
+module.exports = { login, createUser, setTable, getTable, sortTable, returnResults1, editResults1, returnResults2, editResults2 }
