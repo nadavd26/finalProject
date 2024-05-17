@@ -344,7 +344,7 @@ export async function generateAlgo2Results(table) {
     const scheduleDataa = table
     for (let i = 0; i < scheduleDataa.length; i++) {
         // scheduleDataa[i][4] = (2*i+5) % 10
-        scheduleDataa[i][4] = 12345
+        scheduleDataa[i][4] = 2
     }
     const scheduleData = duplicateLines(scheduleDataa)
     // console.log("scheduleData : " + scheduleData)
@@ -356,8 +356,7 @@ export async function generateAlgo2Results(table) {
     const scheduleDataFriday = scheduleData.filter(item => item[0].toLowerCase() === "friday");
     const scheduleDataSaturday = scheduleData.filter(item => item[0].toLowerCase() === "saturday");
 
-    console.log("scheduleDataSunday")
-    console.log(scheduleDataSunday)
+
     const data = {
         Sunday: scheduleDataSunday,
         Monday: scheduleDataMonday,
@@ -367,6 +366,9 @@ export async function generateAlgo2Results(table) {
         Friday: scheduleDataFriday,
         Saturday: scheduleDataSaturday
     }
+
+    console.log("data")
+    console.log("data" + JSON.stringify(data))
 
     // console.log("data : " + JSON.stringify(data))
 
@@ -485,27 +487,37 @@ export async function generateAlgo1Results(token, getFromDatabase) {
     }
 }
 
-export async function postAlgo1Res(content, token) {
-    const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("Authorization", "Bearer " + token);
+// export async function postAlgo1Res(content, token) {
+//     const myHeaders = new Headers();
+//     myHeaders.append("Content-Type", "application/json");
+//     myHeaders.append("Authorization", "Bearer " + token);
 
-    const raw = JSON.stringify({
-        "content": content
+//     const raw = JSON.stringify({
+//         "content": content
+//     });
+
+//     const requestOptions = {
+//         method: "POST",
+//         headers: myHeaders,
+//         body: raw,
+//         redirect: "follow"
+//     };
+
+//     const res = await fetch("localhost:12345/Results/GetResults1", requestOptions)
+// }
+
+export async function postAlgo1Res(table, token) {
+    const data = {content : JSON.stringify(table)}
+    const res = await fetch('http://localhost:12345/Results/GetResults1', {
+        'method': 'post',
+        'headers': {
+            'Content-Type': 'application/json',
+            'authorization': 'bearer ' + token
+        },
+        'body': JSON.stringify(data)
     });
-
-    const requestOptions = {
-        method: "POST",
-        headers: myHeaders,
-        body: raw,
-        redirect: "follow"
-    };
-
-    fetch("localhost:12345/Results/GetResults1", requestOptions)
-        .then((response) => response.text())
-        .then((result) => console.log(result))
-        .catch((error) => console.error(error));
 }
+
 
 
 export function getKey(day, skill, req) {
