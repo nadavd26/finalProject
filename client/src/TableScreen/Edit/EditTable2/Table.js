@@ -11,7 +11,8 @@ import { memo } from 'react';
 
 
 const TableRow = ({ rowIndex, row, color, generateWorkerList, onCellEdit, getLineInfo, hidden }) => {
-    console.log("render row num " + (rowIndex + 1));
+    // console.log("render row num " + (rowIndex + 1));
+    // console.log("color " + color)
 
     // Function to capitalize the first letter of a string
     function capitalizeFirstLetter(str) {
@@ -31,7 +32,7 @@ const TableRow = ({ rowIndex, row, color, generateWorkerList, onCellEdit, getLin
             <NonEditableCell value={row[2]} rowIndex={rowIndex} columnIndex={2} color={color} additionalClass={"no-left"} shiftIndex={row[5]} hidden={hidden} style={{fontSize: "1.5vw"}}/>
             <NonEditableCell value={row[3]} rowIndex={rowIndex} columnIndex={3} color={color} additionalClass={"no-left"} shiftIndex={row[5]} hidden={hidden} style={{fontSize: "1.5vw"}}/>
             <WorkerDropdown value={row[4]} rowIndex={rowIndex} columnIndex={4} color={color} workerList={generateWorkerList(rowIndex, capitalizeFirstLetter(row[0]))} onCellEdit={onCellEdit} shiftIndex={row[5]} getLineInfo={getLineInfo} hidden={hidden} />
-            <ShiftIdCell value={(row[5] + 1)} rowIndex={rowIndex} columnIndex={3} color={color} additionalClass={"no-left"} shiftIndex={row[5]} hidden={hidden} />
+            <ShiftIdCell value={(row[5] + 1) + " " + color} rowIndex={rowIndex} columnIndex={3} color={color} additionalClass={"no-left"} shiftIndex={row[5]} hidden={hidden} />
         </tr>
     );
 };
@@ -50,9 +51,9 @@ function arePropsEqual(oldProps, newProps) {
 const MemorizedTableRow = React.memo(TableRow, arePropsEqual)
 //first row : [{name : , validate : function}, ....]
 function Table({ linesFiltered, content, start, pageSize, colors, shiftsPerWorker, workerMap, shiftsInfo, onCellEdit, generateWorkerList, getLineInfo, rowsToRender, indexSearchElement, searchDayElement, searchSkillElement, searchFromElement, searchUntilElement, searchAssignedElement, searchShiftIndexElement }) {
-    console.log("render table" + start)
-    console.log("linesFiltered")
-    console.log(linesFiltered)
+    // console.log("render table" + start)
+    // console.log("linesFiltered")
+    // console.log(linesFiltered)
     const renderedRows = [];
     var end = Math.min(pageSize + start - 1, linesFiltered.length - 1)
     for (let i = start; i <= end; i++) {

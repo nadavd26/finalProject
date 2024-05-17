@@ -36,7 +36,7 @@ export default function WorkerDropdown({ value, rowIndex, coloumnIndex, workerLi
         options = workerList.map(worker => ({
             label: `${worker.name}\n${worker.id}`,
             value: `${worker.name},${worker.id},${worker.color}`,
-            color: worker.color
+            color: worker.color == "redorange" ? "red" : worker.color
         }));
     } else {
         // Add a non-clickable option when workerList is empty
@@ -88,7 +88,7 @@ export default function WorkerDropdown({ value, rowIndex, coloumnIndex, workerLi
     };
 
     return (
-        <td id={`cell-${rowIndex}-${coloumnIndex}`} className={`cell100 last-columns worker-dropdown ${color}`}>
+        <td id={`cell-${rowIndex}-${coloumnIndex}`} className={`cell100 last-columns worker-dropdown ${color == "redorange" ? "red" : color}`}>
             <div className="cell-content" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <div className='selection' style={{ width: '75%' }}>
                     <Select
