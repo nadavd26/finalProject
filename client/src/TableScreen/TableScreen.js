@@ -106,7 +106,7 @@ function TableScreen({ user, setUser }) {
     }
 
     async function generateResults2(algo2table) {
-        const res = algo2table ? algo2table : await utils.generateAlgo2Results(user.table3)
+        const res = algo2table ? algo2table : await utils.generateAlgo2Results(user.token, false)
         console.log("res")
         console.log(JSON.stringify(res))
         var newUser = user

@@ -560,6 +560,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
         newUser.algo2Table = initialTable
         console.log("initialTable")
         console.log(initialTable)
+        await utils.postAlgo2Results(user.token, initialTable)
         setShiftsPerWorkers(renderInfo.shiftsPerWorkers)
         setUser(newUser)
         setInEdit(false)
