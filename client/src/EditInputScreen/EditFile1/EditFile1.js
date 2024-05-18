@@ -20,7 +20,8 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
         "Duplicates between skills are not alowed.\n" +
         "Skill cannot be empty if the next skill is not empty.\n" +
         "Must have at least one skill.\n" +
-        "Contract is a non-negative integer."
+        "Contract is a non-negative integer.\n" +
+        "Note that each field has maximum number of characters."
     const [errorMsg, setErrorMsg] = useState(defaultErrorMsg)
     const token = user.token
     var errorLines = 0

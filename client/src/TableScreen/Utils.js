@@ -339,42 +339,7 @@ export function skillsOfWorkers(table1) {
 }
 
 
-export async function generateAlgo2Results(table) {
-    await sleep(10)
-    const scheduleDataa = table
-    for (let i = 0; i < scheduleDataa.length; i++) {
-        // scheduleDataa[i][4] = (2*i+5) % 10
-        scheduleDataa[i][4] = 2
-    }
-    const scheduleData = duplicateLines(scheduleDataa)
-    // console.log("scheduleData : " + scheduleData)
-    const scheduleDataSunday = scheduleData.filter(item => item[0].toLowerCase() === "sunday");
-    const scheduleDataMonday = scheduleData.filter(item => item[0].toLowerCase() === "monday");
-    const scheduleDataTuesday = scheduleData.filter(item => item[0].toLowerCase() === "tuesday");
-    const scheduleDataWednesday = scheduleData.filter(item => item[0].toLowerCase() === "wednesday");
-    const scheduleDataThursday = scheduleData.filter(item => item[0].toLowerCase() === "thursday");
-    const scheduleDataFriday = scheduleData.filter(item => item[0].toLowerCase() === "friday");
-    const scheduleDataSaturday = scheduleData.filter(item => item[0].toLowerCase() === "saturday");
 
-
-    const data = {
-        Sunday: scheduleDataSunday,
-        Monday: scheduleDataMonday,
-        Tuesday: scheduleDataTuesday,
-        Wednesday: scheduleDataWednesday,
-        Thursday: scheduleDataThursday,
-        Friday: scheduleDataFriday,
-        Saturday: scheduleDataSaturday
-    }
-
-    console.log("data")
-    console.log("data" + JSON.stringify(data))
-
-    // console.log("data : " + JSON.stringify(data))
-
-    return data
-
-}
 
 export function generateAlgoShifts(data) {
     const shifts = {
@@ -451,7 +416,79 @@ function duplicateLines(table) {
     return duplicatedData;
 }
 
+// await sleep(10)
+// const scheduleDataa = table
+// for (let i = 0; i < scheduleDataa.length; i++) {
+//     // scheduleDataa[i][4] = (2*i+5) % 10
+//     scheduleDataa[i][4] = 2
+// }
+// const scheduleData = duplicateLines(scheduleDataa)
+// // console.log("scheduleData : " + scheduleData)
+// const scheduleDataSunday = scheduleData.filter(item => item[0].toLowerCase() === "sunday");
+// const scheduleDataMonday = scheduleData.filter(item => item[0].toLowerCase() === "monday");
+// const scheduleDataTuesday = scheduleData.filter(item => item[0].toLowerCase() === "tuesday");
+// const scheduleDataWednesday = scheduleData.filter(item => item[0].toLowerCase() === "wednesday");
+// const scheduleDataThursday = scheduleData.filter(item => item[0].toLowerCase() === "thursday");
+// const scheduleDataFriday = scheduleData.filter(item => item[0].toLowerCase() === "friday");
+// const scheduleDataSaturday = scheduleData.filter(item => item[0].toLowerCase() === "saturday");
 
+
+// const data = {
+//     Sunday: scheduleDataSunday,
+//     Monday: scheduleDataMonday,
+//     Tuesday: scheduleDataTuesday,
+//     Wednesday: scheduleDataWednesday,
+//     Thursday: scheduleDataThursday,
+//     Friday: scheduleDataFriday,
+//     Saturday: scheduleDataSaturday
+// }
+
+// console.log("data")
+// console.log("data" + JSON.stringify(data))
+
+// // console.log("data : " + JSON.stringify(data))
+
+// return data
+
+export async function generateAlgo2Results(token, getFromDatabase) {
+    var data = "?getFromDatabase="
+    data += getFromDatabase ? "true" : "false"
+
+    try {
+        const url = "http://localhost:12345/Results/GetResults2" + data;
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'authorization': 'bearer ' + token
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`); //cannot happen
+        }
+
+        const responseData = await response.json(); // Parse JSON response
+        console.log("responseData")
+        console.log(responseData)
+        return responseData
+    } catch (error) {
+        console.error("Error fetching results:", error);
+        throw error; // Rethrow the error to handle it elsewhere if needed
+    }
+}
+
+export async function postAlgo2Results(token, table) {
+    const data = JSON.stringify(table)
+    const res = await fetch('http://localhost:12345/Results/GetResults2', {
+        'method': 'post',
+        'headers': {
+            'Content-Type': 'application/json',
+            'authorization': 'bearer ' + token
+        },
+        'body': JSON.stringify(data)
+    });
+}
 
 export async function generateAlgo1Results(token, getFromDatabase) {
     var data = "?getFromDatabase="
@@ -507,7 +544,7 @@ export async function generateAlgo1Results(token, getFromDatabase) {
 // }
 
 export async function postAlgo1Res(table, token) {
-    const data = {content : JSON.stringify(table)}
+    const data = { content: JSON.stringify(table) }
     const res = await fetch('http://localhost:12345/Results/GetResults1', {
         'method': 'post',
         'headers': {
