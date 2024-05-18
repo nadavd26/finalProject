@@ -262,7 +262,7 @@ const transformAssignedShiftTablesToMap = async (assignedShiftTables) => {
             assignedShift.skill,
             assignedShift.startTime,
             assignedShift.finishTime,
-            assignedShift.assignedWorker,
+            assignedShift.assignedWorkerName,
             assignedShift.shiftId
         ]));
         resultMap.get(key).push(...assignedShiftsData);
@@ -366,7 +366,7 @@ const editResults2OfDay = async (newData, day, userId) => {
             skill: line[1],
             startTime: line[2],
             finishTime: line[3],
-            assignedWorker: line[4],
+            assignedWorkerName: line[4],
             shiftId: line[5]
         });
         const savedLine = await assignedShiftLine.save();

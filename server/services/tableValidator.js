@@ -47,7 +47,7 @@ const validateTable2 = (table) => {
             return false;
         if (!isNoneNegativeNumber(line[4]))
             return false;
-        if(line[0] == '' || line[1] == '' || line[2] == '' || line[3] == '' || line[4] == '')
+        if (line[0] == '' || line[1] == '' || line[2] == '' || line[3] == '' || line[4] == '')
             return false
     }
     return true;
@@ -64,25 +64,50 @@ const validateTable3 = (table) => {
             return false;
         if (!isNoneNegativeNumber(line[4]))
             return false;
-        if(line[0] == '' || line[1] == '' || line[2] == '' || line[3] == '' || line[4] == '')
+        if (line[0] == '' || line[1] == '' || line[2] == '' || line[3] == '' || line[4] == '')
             return false
     }
     return true;
 }
 
-// This function checks that all days and skills that are in table 3 are also in table 2.
-const validateAlgoRequirements = (table2, table3) => {
-    daysSet = new Set();
+// This function checks that all the skills that are in table 3 are also in table 2.
+const validateTable3SkillsInTable2 = (table2, table3) => {
+    info = [true, "The following skills are in table 3 but not in table 2: "]
     skillsSet = new Set();
-    for (line of table2) {
-        daysSet.add(line[0])
+    for (const line of table2) {
         skillsSet.add(line[1])
     }
-    for (line of table3) {
-        if(!(daysSet.has(line[1]) && skillsSet.has(line[0])))
-            return false
+    for (const line of table3) {
+        if (!skillsSet.has(line[0])) {
+            if(info[0]) {
+                info[0] = false
+                info[1] += line[0]
+            } else {
+                info[1] += ", " + line[0]
+            }
+        }
     }
-    return true;
+    return info;
 }
 
-module.exports = { validateTable1, validateTable2, validateTable3, validateAlgoRequirements}
+// This function checks that all the skills that are in table 2 are also in table 3.
+const validateTable2SkillsInTable3 = (table2, table3) => {
+    info = [true, "The following skills are in table 2 but not in table 3: "]
+    skillsSet = new Set();
+    for (const line of table3) {
+        skillsSet.add(line[0])
+    }
+    for (const line of table2) {
+        if (!skillsSet.has(line[1])) {
+            if(info[0]) {
+                info[0] = false
+                info[1] += line[1]
+            } else {
+                info[1] += ", " + line[1]
+            }
+        }
+    }
+    return info;
+}
+
+module.exports = { validateTable1, validateTable2, validateTable3 }

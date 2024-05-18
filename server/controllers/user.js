@@ -192,4 +192,16 @@ const editResults2 = async (req, res) => {
     await ResultsService.editResults2(req, req.user._id)
     res.sendStatus(200)
 }
-module.exports = { login, createUser, setTable, getTable, sortTable, returnResults1, editResults1, returnResults2, editResults2 }
+
+const validateInputTables = async (req, res) => {
+
+}
+
+const validateTable1Algo1 = async (req, res) => {
+
+}
+
+const validateAlgo1 = async (req, res) => {
+
+}
+module.exports = { login, createUser, setTable, getTable, sortTable, returnResults1, editResults1, returnResults2, editResults2, validateInputTables, validateTable1Algo1, validateAlgo1 }
