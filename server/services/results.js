@@ -93,16 +93,18 @@ const getResults2 = async (userId) => {
         let capitalizedDayOfWeek = dayOfWeek.charAt(0).toUpperCase() + dayOfWeek.slice(1); //Changin the first letter to be a capital letter.
         if (results2Map.hasOwnProperty(capitalizedDayOfWeek)) { //Checking if that value is really on of the days.
             value.forEach(entry => {
-                let transformedEntry = [
-                    entry[0], // Keeping the first item as is
-                    entry[1], // Keeping the second item as is
-                    entry[2], // Keeping the third item as is
-                    entry[3], // Keeping the fourth item as is
-                    "",       // Setting the fifth item to be an empty string (for now)
-                    id        // Giving this line a uniqe id.
-                ];
-                results2Map[capitalizedDayOfWeek].push(transformedEntry); //Adding this to the map.
-                id++; // Increment the unique ID for the next entry
+                for (let i = 0; i < entry[4]; i++) {
+                    let transformedEntry = [
+                        entry[0], // Keeping the first item as is
+                        entry[1], // Keeping the second item as is
+                        entry[2], // Keeping the third item as is
+                        entry[3], // Keeping the fourth item as is
+                        "",       // Setting the fifth item to be an empty string (for now)
+                        id        // Giving this line a uniqe id.
+                    ];
+                    results2Map[capitalizedDayOfWeek].push(transformedEntry); //Adding this to the map.
+                    id++; // Increment the unique ID for the next entry
+                }
             });
         }
     }
