@@ -77,7 +77,7 @@ function TableScreen({ user, setUser }) {
     }
     async function generateResults1() {
 
-        const res = await utils.generateAlgo1Results(user.token, !(user.table2Changed || user.table3Changed))
+        const res = await utils.generateAlgo1Results(user.token, user.tableAlgo1FromDb)
         console.log("res")
         console.log(res)
         const newDaySkillReqMap = utils.generateReqSkillDayMap(user.table2)

@@ -4,14 +4,20 @@ import UploadFile from "./UploadFile";
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from "react";
 import EditInput from "../EditInputScreen/EditInput";
+import { Modal, Button } from 'react-bootstrap';
 
-function UploadScreen({user, setUser}) {
+
+function UploadScreen({ user, setUser }) {
+  const [showWarningModal, setShowWarningModal] = useState(false);
+
   const [selectedButton, setSelectedButton] = useState("FirstFileButton");
   const [showSubmitAlert, setShowSubmitAlert] = useState(false);
   const [currentFile, setCurrentFile] = useState(null)
-  const [editInfo, setEditInfo] = useState({inEdit : false, errorMsg : ""})
+  const [editInfo, setEditInfo] = useState({ inEdit: false, errorMsg: "" })
   const navigate = useNavigate();
-
+  const handleCloseWarningModal = () => {
+    setShowWarningModal(false);
+  };
   // console.log("upload screen user: "  + JSON.stringify(user) + "token: " + user.token)
   useEffect(() => {
     if (editInfo.errorMsg !== "") {
@@ -20,21 +26,21 @@ function UploadScreen({user, setUser}) {
     }
   }, [editInfo.errorMsg]);
 
-  useEffect(()=> {
+  useEffect(() => {
     const userInfo = user
-    userInfo["table1Changed"] = false 
-    userInfo["table2Changed"] = false 
+    userInfo["table1Changed"] = false
+    userInfo["table2Changed"] = false
     userInfo["table3Changed"] = false
-    userInfo["tableAlgo1Changed"] = false  
+    userInfo["tableAlgo1Changed"] = false
     setUser(userInfo)
-  },[])
+  }, [])
 
   const handleButtonClick = (buttonId) => {
     setSelectedButton(buttonId);
   };
 
   const handleFileAdded = (buttonId, file) => {
-    setEditInfo({inEdit : true, errorMsg : ""})
+    setEditInfo({ inEdit: true, errorMsg: "" })
     setCurrentFile(file)
   };
 
@@ -43,7 +49,7 @@ function UploadScreen({user, setUser}) {
 
   const handleSubmit = () => {
     var flag = false
-    for (let i = 1; i <=3; i++) {
+    for (let i = 1; i <= 3; i++) {
       if (!user["table" + i] || user["table" + i] == []) {
         flag = true
       }
@@ -54,12 +60,16 @@ function UploadScreen({user, setUser}) {
         setShowSubmitAlert(false);
       }, 2500);
     } else {
-      navigate("/table")
+      if (user.table2Changed || user.table3Changed) {
+        generateAgain()
+      } else {
+        setShowWarningModal(true);
+      }
     }
   }
 
   const handleEdit = () => {
-    setEditInfo({inEdit : true, errorMsg : ""})
+    setEditInfo({ inEdit: true, errorMsg: "" })
   }
 
   function getFileNumber() {
@@ -82,7 +92,19 @@ function UploadScreen({user, setUser}) {
   };
 
   const handleErrorModalClose = () => {
-    setEditInfo({inEdit : false, errorMsg : ""})
+    setEditInfo({ inEdit: false, errorMsg: "" })
+  }
+
+  const generateAgain = () => {
+    var newUser = user
+    newUser.tableAlgo1FromDb = false
+    navigate("/table")
+  }
+
+  const proceedCurrent = () => {
+    var newUser = user
+    newUser.tableAlgo1FromDb = true
+    navigate("/table")
   }
   return (
     !editInfo.inEdit ? (
@@ -181,9 +203,23 @@ function UploadScreen({user, setUser}) {
             </div>
           </div>
         </div>}
+        <Modal show={showWarningModal} onHide={handleCloseWarningModal} centered>
+        <Modal.Header closeButton style={{ paddingRight: '1rem' }}>
+            <Modal.Title className="text-center w-100">Which Results To Choose?</Modal.Title>
+          </Modal.Header>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={generateAgain} className="mr-auto">
+              Generate results again
+            </Button>
+            <Button variant="success" onClick={proceedCurrent}>
+              Proceed with current results
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
 
       </div>
-    ) : <EditInput file={currentFile} numOfFile={getFileNumber()} setEditInfo={setEditInfo} user={user} setUser={setUser} setCurrentFile={setCurrentFile}/>
+    ) : <EditInput file={currentFile} numOfFile={getFileNumber()} setEditInfo={setEditInfo} user={user} setUser={setUser} setCurrentFile={setCurrentFile} />
   );
 }
 
