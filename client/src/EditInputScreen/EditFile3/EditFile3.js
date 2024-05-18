@@ -16,7 +16,7 @@ export default function EditFile3({ csvArray, setEditInfo, user, setUser, fromSe
     const [rowsToRender, setRowsToRender] = useState({})
     const defaultErrorMsg = "The table must contain at least one line.\n" +
         "Skill contains only letters, spaces, apostrophes, and certain special characters.\n" +
-        "Cost is a non-negative integer."
+        "Cost is a non-negative integer.\n" + "Note that each field has maximum number of characters."
     const [errorMsg, setErrorMsg] = useState(defaultErrorMsg)
     const token = user.token
     var errorLines = 0

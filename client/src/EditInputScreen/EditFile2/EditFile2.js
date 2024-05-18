@@ -16,7 +16,7 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
     const [rowsToRender, setRowsToRender] = useState({})
     const defaultErrorMsg = "The table must contain at least one line.\n" +
         "Skill contains only letters, spaces, apostrophes, and certain special characters.\n" +
-        "Required Number Of Workers is a non-negative integer."
+        "Required Number Of Workers is a non-negative integer and cannot be larger than the total amount of workers.\n" + "Note that each field has maximum number of characters."
     const [errorMsg, setErrorMsg] = useState(defaultErrorMsg)
     const token = user.token
     var errorLines = 0
@@ -156,7 +156,7 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
 
             const numOfWorkers = table[i][4]
             const modifiedNumOfWorkers = parseInt(numOfWorkers)
-            if (!isNumberOfWorkersValid(modifiedNumOfWorkers)) {
+            if (!isNumberOfWorkersValid(modifiedNumOfWorkers, user.table1.length)) {
                 // isValid = false
                 // errorsFound[i][4] = true
                 // errorMsg += "line " + (i + 1) + " column 5 " + "invalid number of workers" + "\n"
@@ -194,11 +194,13 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
 
         if (fromServer == true) {
             setContent(csvArray)
-            const falseArray = Array.from({ length: csvArray.length }, () =>
+            var initialErrors = Array.from({ length: csvArray.length }, () =>
                 Array.from({ length: csvArray[0].length }, () => false)
             );
-
-            setErrors(falseArray)
+            for (let i = 0 ; i < csvArray.length; i++) {
+                initialErrors[i][4] = !isNumberOfWorkersValid(csvArray[i][4], user.table1.length)
+            }
+            setErrors(initialErrors)
         }
     }, [csvArray, setContent]);
 
@@ -301,7 +303,7 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
                     updatedErrors[rowIndex][columnIndex] = !isSkillValid(value)
                     break;
                 case 4:
-                    updatedErrors[rowIndex][columnIndex] = !isNumberOfWorkersValid(value)
+                    updatedErrors[rowIndex][columnIndex] = !isNumberOfWorkersValid(value, user.table1.length)
                     break;
                 default:
                     updatedErrors[rowIndex][columnIndex] = false //editing through the day/hour dropdown which is always valid

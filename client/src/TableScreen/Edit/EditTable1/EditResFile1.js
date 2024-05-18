@@ -9,7 +9,7 @@ import Kpi from "../components/Kpi";
 export default function EditResFile1({ initialTable, setInEdit, user, setUser, currentDay, currentSkill, setWorksPerShift, finishCallback }) {
     const [content, setContent] = useState([["", "", "", "", ""]])
     const [showBackModal, setShowBackModal] = useState(false)
-    const defaultErrorMsg = "Assigned Number Of Workers is a non-negative integer."
+    const defaultErrorMsg = "Assigned Number Of Workers is a non-negative integer and cannot be bigger than the total amount of workers"
     const [errorMsg, setErrorMsg] = useState(defaultErrorMsg)
     const [rowsToRender, setRowsToRender] = useState({})
     var intialWastedHours = user.currentWastedHours
@@ -23,7 +23,9 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
             return false
         }
         const parsedValue = Number(numOfWorkers);
-        return Number.isInteger(parsedValue) && parsedValue >= 0;
+        console.log("parsedValue")
+        console.log(parsedValue)
+        return Number.isInteger(parsedValue) && parsedValue >= 0 && parsedValue <= user.table1.length;
     };
 
     function calcCost() {
@@ -135,12 +137,14 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
         if (content.length === 0) {
             isValid = false;
         }
-        content.forEach((row) => {
-            if (!(isNumberOfWorkersValid(row[4]))) {
+        content.forEach((row, index) => {
+            const workerCell = document.getElementById("cell-"+index+"-"+4)
+            if (workerCell.classList.contains("red")) {
                 isValid = false
             }
         });
-
+        console.log("isValid")
+        console.log(isValid)
         if (!isValid) {
             setErrorMsg(defaultErrorMsg)
             errorModal.show()
@@ -191,9 +195,9 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
                 <div className="row" style={{ position: "fixed", top: "1%", height: "3%" }}>
                     <div className="col-12">
                         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#backModal" onClick={handleBack}>Back</button>
-                        <span style={{ position: "fixed", left: "9.7%", top: "1%" }}><Kpi name={"Cost"} value={costKpi} initialValue={initialCost} description={"Total cost of shifts where day is " + initialTable[0][0] + " and skill is " + initialTable[0][1]}></Kpi></span>
-                        <span style={{ position: "fixed", left: "41.5%", top: "1%" }}><Kpi name={"Wasted Hours"} value={wastedHoursKpi} initialValue={intialWastedHours} description={"Total wasted hours as there are more assigned workers than the demand at some half hour where day is " + initialTable[0][0] + " and skill is " + initialTable[0][1]}></Kpi></span>
-                        <span style={{ position: "fixed", left: "73.3%", top: "1%" }}><Kpi name={"Avg"} value={(costKpi + wastedHoursKpi) / 2} initialValue={(intialWastedHours + initialCost) / 2} description={"Average of the measures where day is " + initialTable[0][0] + " and skill is " + initialTable[0][1]}></Kpi></span>
+                        <span style={{ position: "fixed", left: "9.7%", top: "1%" }}><Kpi name={"Cost"} value={costKpi} initialValue={initialCost} description={"Total cost of shifts where day is " + initialTable[0][0] + " and skill is " + initialTable[0][1]} maxWidth={"30.8vw"}></Kpi></span>
+                        <span style={{ position: "fixed", left: "41.5%", top: "1%"}}><Kpi name={"Wasted Hours"} value={wastedHoursKpi} initialValue={intialWastedHours} description={"Total wasted hours as there are more assigned workers than the demand at some half hour where day is " + initialTable[0][0] + " and skill is " + initialTable[0][1]} maxWidth={"30.8vw"}></Kpi></span>
+                        <span style={{ position: "fixed", left: "73.3%", top: "1%" }}><Kpi name={"Avg"} value={(costKpi + wastedHoursKpi) / 2} initialValue={(intialWastedHours + initialCost) / 2} description={"Average of the measures where day is " + initialTable[0][0] + " and skill is " + initialTable[0][1]} maxWidth={"25.7vw"}></Kpi></span>
                     </div>
                 </div>
                 <Table content={content} onCellEdit={handleCellEdit} isNumberOfWorkersValid={isNumberOfWorkersValid} rowsToRender={rowsToRender}></Table>

@@ -42,12 +42,14 @@ export function parseTime(inputTime) {
     return `${formattedHours}:${formattedMinutes}`;
 }
 
-export function isNumberOfWorkersValid(numOfWorkers) {
+export function isNumberOfWorkersValid(numOfWorkers, maxWorkers) {
     if (numOfWorkers === "") {
         return false
     }
     const parsedValue = Number(numOfWorkers);
-    return Number.isInteger(parsedValue) && parsedValue >= 0;
+    console.log("parsedValue")
+    console.log(parsedValue)
+    return Number.isInteger(parsedValue) && parsedValue >= 0 && parsedValue <= maxWorkers;
 };
 
 export function isCostValid(cost) {
@@ -55,30 +57,30 @@ export function isCostValid(cost) {
         return false
     }
     const parsedValue = Number(cost);
-    return Number.isInteger(parsedValue) && parsedValue >= 0;
+    return Number.isInteger(parsedValue) && parsedValue >= 0 && parsedValue <= 1000000;
 }
 
 export function isSkillValid(name) {
     // Check if the skill contains only letters, spaces, apostrophes, and certain special characters
     const isValid = /^[a-zA-Z\s'+\-#\/.]+$/u.test(name);
-    return isValid;
+    return isValid && name.length <= 40;
 }
 
 
 export function isIdValid(str) {
     var digitRegex = /^\d+$/;
-    return digitRegex.test(str);
+    return digitRegex.test(str) && str.length <= 10;
 }
 
 
 export function isContractValid(str) {
-    return true
+    return str.length <= 10
 }
 
 export function isNameValid(name) {
     // Check if the name contains only letters, spaces, and apostrophes
     const isValid = /^[a-zA-Z\s']+$/u.test(name);
-    return isValid;
+    return isValid && name.length <= 25;
 }
 
 export function adjustTime(timeString, addHalfHour = true) {
