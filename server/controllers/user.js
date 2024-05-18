@@ -94,35 +94,43 @@ const sortTable = (req, res) => {
     res.status(200).send({ content: sortedTable })
 }
 
+const generateResults1 = async (req, res) => {
+    const table2 = await UserService.getTable(req.user.email, req.user.googleId, 2)
+    if (JSON.stringify(table2) == JSON.stringify([]))
+        res.status(404).send("At least one of the tables were never set.")
+    const table3 = await UserService.getTable(req.user.email, req.user.googleId, 3)
+    if (JSON.stringify(table3) == JSON.stringify([]))
+        res.status(404).send("At least one of the tables were never set.")
+    /*if (!TableValidator.validateAlgoRequirements(table2.table2Content, table3.table3Content))
+        res.status(404).send("Invalid input tables: there is a shift with a day or skiill that is not in the requirements.")*/
+    else {
+        // Call getResults1 and wait for its completion
+        const results = await ResultsService.getResults1(table2.table2Content, table3.table3Content, req.user._id);
+        const resultsMap = await ResultsService.saveResults(results, req.user._id)
+        // Convert the map to a plain object before sending
+        const serializedResults = {};
+        for (const [key, value] of resultsMap.entries()) {
+            serializedResults[key] = value;
+        }
+        res.status(200).send(serializedResults);
+    }
+}
+
 const returnResults1 = async (req, res) => {
     try {
         if (req.query.getFromDatabase === 'false') {
-            table2 = await UserService.getTable(req.user.email, req.user.googleId, 2)
-            if (JSON.stringify(table2) == JSON.stringify([]))
-                res.status(404).send("At least one of the tables were never set.")
-            table3 = await UserService.getTable(req.user.email, req.user.googleId, 3)
-            if (JSON.stringify(table3) == JSON.stringify([]))
-                res.status(404).send("At least one of the tables were never set.")
-            /*if (!TableValidator.validateAlgoRequirements(table2.table2Content, table3.table3Content))
-                res.status(404).send("Invalid input tables: there is a shift with a day or skiill that is not in the requirements.")*/
-            else {
-                // Call getResults1 and wait for its completion
-                const results = await ResultsService.getResults1(table2.table2Content, table3.table3Content, req.user._id);
-                const resultsMap = await ResultsService.saveResults(results, req.user._id)
-                // Convert the map to a plain object before sending
+            await generateResults1(req, res);
+        } else if (req.query.getFromDatabase === 'true') {
+            const resultsMap = await ResultsService.getResults1FromDB(req.user._id)
+            if (resultsMap.size === 0) {
+                await generateResults1(req, res); //If there are no results in the DB we generate them.
+            } else {
                 const serializedResults = {};
                 for (const [key, value] of resultsMap.entries()) {
                     serializedResults[key] = value;
                 }
                 res.status(200).send(serializedResults);
             }
-        } else if (req.query.getFromDatabase === 'true') {
-            const resultsMap = await ResultsService.getResults1FromDB(req.user._id)
-            const serializedResults = {};
-                for (const [key, value] of resultsMap.entries()) {
-                    serializedResults[key] = value;
-                }
-                res.status(200).send(serializedResults);
         } else {
             res.status(404).send("Invalid getFromDatabase value.")
         }
@@ -141,25 +149,33 @@ const editResults1 = async (req, res) => {
     res.sendStatus(200)
 }
 
+const generateResults2 = async (req, res) => {
+    const results1 = await ResultsService.getResults1FromDB(req.user._id)
+    if (results1.size == 0)
+        res.status(404).send("There are no shift tables.")
+    else {
+        // Call getResults1 and wait for its completion
+        const results = await ResultsService.getResults2(req.user._id);
+        await ResultsService.saveResults2(results, req.user._id)
+        res.status(200).send(results);
+    }
+}
+
 const returnResults2 = async (req, res) => {
     try {
         if (req.query.getFromDatabase === 'false') {
-            const results1 = await ResultsService.getResults1FromDB(req.user._id)
-            if (results1.size == 0)
-                res.status(404).send("There are no shift tables.")
-            else {
-                // Call getResults1 and wait for its completion
-                const results = await ResultsService.getResults2(req.user._id);
-                await ResultsService.saveResults2(results, req.user._id)
-                res.status(200).send(results);
-            }
+            await generateResults2(req, res)
         } else if (req.query.getFromDatabase === 'true') {
             const resultsMap = await ResultsService.getResults2FromDB(req.user._id)
-            const serializedResults = {};
+            if (resultsMap.size === 0) {
+                await generateResults2(req, res); //If there are no results in the DB we generate them.
+            } else {
+                const serializedResults = {};
                 for (const [key, value] of resultsMap.entries()) {
                     serializedResults[key] = value;
                 }
                 res.status(200).send(serializedResults);
+            }
         } else {
             res.status(404).send("Invalid getFromDatabase value.")
         }

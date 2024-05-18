@@ -103,8 +103,9 @@ const getResults2 = async (userId) => {
                         id        // Giving this line a uniqe id.
                     ];
                     results2Map[capitalizedDayOfWeek].push(transformedEntry); //Adding this to the map.
-                    id++; // Increment the unique ID for the next entry
                 }
+                if(entry[4] != 0)
+                    id++; // Increment the unique ID for the next entry
             });
         }
     }
