@@ -12,6 +12,7 @@ import { useTableAlgo2State } from "./states/TableAlgo2State";
 import { useEditInfoState } from "./states/EditInfo";
 import { useTableAlgo1State } from "./states/TableAlgo1State";
 import EditResFile1 from "./Edit/EditTable1/EditResFile1";
+import { Modal, Button } from 'react-bootstrap';
 
 import SkillDropdown from "./conponenets/SkillDropdown";
 import * as utils from './Utils'
@@ -21,6 +22,10 @@ import Graph from "./conponenets/Graph";
 // every boolean array is 48 cells, starting from 7:00, ending at 23:30
 
 function TableScreen({ user, setUser }) {
+    const [showWarningModal, setShowWarningModal] = useState(false);
+    const handleCloseWarningModal = () => {
+        setShowWarningModal(false);
+    };
     const navigate = useNavigate();
     const tableScreenState = useTableScreenState();
     const algo2TableState = useTableAlgo2State();
@@ -105,8 +110,8 @@ function TableScreen({ user, setUser }) {
         tableScreenState.setIs1Generated(true)
     }
 
-    async function generateResults2(algo2table) {
-        const res = algo2table ? algo2table : await utils.generateAlgo2Results(user.token, false)
+    async function generateResults2(algo2table, fromDb) {
+        const res = algo2table ? algo2table : await utils.generateAlgo2Results(user.token, fromDb)
         console.log("res")
         console.log(JSON.stringify(res))
         var newUser = user
@@ -135,8 +140,12 @@ function TableScreen({ user, setUser }) {
         }
 
         if (num == 2 && !tableScreenState.get.is2Generated) {
-            tableScreenState.setTableNum(num)
-            await generateResults2();
+            if (user.table1Changed || user.tableAlgo1Changed) {
+                tableScreenState.setTableNum(num)
+                await generateResults2(false, false);
+            } else {
+                setShowWarningModal(true)
+            }
             return
         }
 
@@ -145,6 +154,16 @@ function TableScreen({ user, setUser }) {
         }
 
         tableScreenState.setTableNum(num)
+    }
+
+    const generateAgain = async () => {
+        tableScreenState.setTableNum(2)
+        await generateResults2(false, false);
+    }
+
+    const proceedCurrent = async () => {
+        tableScreenState.setTableNum(2)
+        await generateResults2(false, true);
     }
 
     useEffect(() => {
@@ -189,7 +208,7 @@ function TableScreen({ user, setUser }) {
     }
 
     async function table2finishEditCallback() {
-        await generateResults2(user.algo2Table)
+        await generateResults2(user.algo2Table, true)
     }
 
     //i want to pass a deep copy to EditResFile2 and because json.parse does not parse sets, i need to convert them to array, parse and then convert back to sets 
@@ -259,8 +278,8 @@ function TableScreen({ user, setUser }) {
                                 <div className="row" style={{ position: "relative", top: "6vh" }}>
                                     <div className="col-3"></div>
                                     <div className="col-6 d-flex justify-content-between align-items-center">
-                                        <div style={{marginRight: "10px"}}><Dropdown firstDay={tableScreenState.get.currentDay} dayHandler={switchDay}/></div>
-                                        <div><SkillDropdown currentSkill={tableAlgo1State.get.currentSkill} skillList={tableAlgo1State.get.otherSkills} handlerSkill={handlerSkillChange}/></div>
+                                        <div style={{ marginRight: "10px" }}><Dropdown firstDay={tableScreenState.get.currentDay} dayHandler={switchDay} /></div>
+                                        <div><SkillDropdown currentSkill={tableAlgo1State.get.currentSkill} skillList={tableAlgo1State.get.otherSkills} handlerSkill={handlerSkillChange} /></div>
                                     </div>
                                     <div className="col-3"></div>
                                 </div>
@@ -288,6 +307,19 @@ function TableScreen({ user, setUser }) {
                     </div>
 
                 </div>
+                <Modal show={showWarningModal} onHide={handleCloseWarningModal} centered>
+                    <Modal.Header closeButton style={{ paddingRight: '1rem' }}>
+                        <Modal.Title className="text-center w-100">Which Results To Choose?</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={generateAgain} className="mr-auto">
+                            Generate results again
+                        </Button>
+                        <Button variant="success" onClick={proceedCurrent}>
+                            Proceed with current results
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
             </div>
         ) : <>{editComponent}</>
     );

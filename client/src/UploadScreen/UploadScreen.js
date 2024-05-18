@@ -98,12 +98,15 @@ function UploadScreen({ user, setUser }) {
   const generateAgain = () => {
     var newUser = user
     newUser.tableAlgo1FromDb = false
+    newUser.tableAlgo1Changed = true
+    setUser(newUser)
     navigate("/table")
   }
 
   const proceedCurrent = () => {
     var newUser = user
     newUser.tableAlgo1FromDb = true
+    setUser(newUser)
     navigate("/table")
   }
   return (

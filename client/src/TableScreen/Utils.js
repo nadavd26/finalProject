@@ -480,14 +480,19 @@ export async function generateAlgo2Results(token, getFromDatabase) {
 
 export async function postAlgo2Results(token, table) {
     const data = JSON.stringify(table)
+    console.log("data")
+    console.log(data)
     const res = await fetch('http://localhost:12345/Results/GetResults2', {
         'method': 'post',
         'headers': {
             'Content-Type': 'application/json',
             'authorization': 'bearer ' + token
         },
-        'body': JSON.stringify(data)
+        'body': data
     });
+
+    console.log("res")
+    console.log(res)
 }
 
 export async function generateAlgo1Results(token, getFromDatabase) {
