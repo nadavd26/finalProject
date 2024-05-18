@@ -40,6 +40,10 @@
     background-color: rgb(230, 96, 96) !important;
 }
 
+.orange {
+    background-color: orange !important;
+}
+
 .optionInvisible {
     display: none;
 }
