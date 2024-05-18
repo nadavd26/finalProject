@@ -179,7 +179,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
     function getColor(id, name, day, row) {
         var color = "white"
         const shiftSet = utils.getShiftsForWorker((renderInfo.shiftsPerWorkers)[day], id, name);
-        const shiftsWorker = getShifts(name + "\n" + id)
+        const shiftsWorker = getShifts(name + "\n" + id, shiftsPerWorkers)
         // console.log("shiftsWorker" + shiftsWorker)
         // console.log("numShifts")
         // console.log(numShifts)
@@ -231,7 +231,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
         }
     }
 
-    function getShifts(worker) {
+    function getShifts(worker, shiftsPerWorkers) {
         var shifts = []
         // const parts = inputString.split(',');
         // const worker = parts.slice(0, 2).join('\n');
@@ -356,11 +356,12 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
         const [newName = "", newId = "", newColor = "white"] = newWorker.split(",")
         const [oldName, oldId] = (row[4]).split("\n")
         const oldWorker = oldName + "\n" + oldId
-        var oldWorkerShifts = getShifts(oldWorker)
+        
         var newShiftPerWorkersDay = newName != "" ? utils.addShiftToWorker((renderInfo.shiftsPerWorkers)[day], newId, newName, getRelativeIndex(rowIndex, day)) : (renderInfo.shiftsPerWorkers)[day]
         utils.removeShiftFromWorker(newShiftPerWorkersDay, oldId, oldName, getRelativeIndex(rowIndex, day))
         var newShiftPerWorkers = renderInfo.shiftsPerWorkers
         newShiftPerWorkers[day] = newShiftPerWorkersDay
+        var oldWorkerShifts = getShifts(oldWorker, newShiftPerWorkers)
         newTable[rowIndex][4] = (newName == "") ? "" : newName + "\n" + newId
         newColors[rowIndex] = newColor
         if (newColor == "red" || newColor == "redorange") { //checking for overlapping shifts to color in red
@@ -417,7 +418,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
 
     const parts = newWorker.split(',');
     const newWorkerString = parts.slice(0, 2).join('\n');
-    var newWorkerShifts = getShifts(newWorkerString)
+    var newWorkerShifts = getShifts(newWorkerString, newShiftPerWorkers)
     if (newColor == "orange" || newColor == "redorange") {
         for (let i = 0; i < newWorkerShifts.length; i++) {
             const absuluteIndex = newWorkerShifts[i]
@@ -440,7 +441,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
         console.log("oldWorkerShifts")
         console.log(oldWorkerShifts)
         var contract = 2
-        if (oldWorkerShifts.length <= contract + 1) { //removing this shift makes the contract valid
+        if (oldWorkerShifts.length <= contract) { //removing this shift makes the contract valid
             for (let i = 0; i < oldWorkerShifts.length; i++) {
                 const absuluteIndex = oldWorkerShifts[i]
                 console.log("absuluteIndex")
