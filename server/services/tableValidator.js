@@ -110,4 +110,46 @@ const validateTable2SkillsInTable3 = (table2, table3) => {
     return info;
 }
 
-module.exports = { validateTable1, validateTable2, validateTable3 }
+// This function checks that the requiredNumOfWorkers of every 
+// line in table2 is not more than the actual number of workers. 
+const validateTable2NumOfWorkers = (table1, table2) => {
+    info = [true, "The following lines in Table2 have a requiredNumOfWorkers value higher than the actual number of workers: "]
+    const numOfWorkers = table1.length
+    lineIndex = 1
+    for (const line of table2) {
+        if (Number(line[4]) > numOfWorkers) {
+            if(info[0]) {
+                info[0] = false
+                info[1] += String(lineIndex)
+            } else {
+                info[1] += ", " + String(lineIndex)
+            }
+        }
+    lineIndex++
+    }
+    return info;
+}
+
+//This function checks that in each pair of day and skill, the amount of workes is 
+//not more than the actual amount of workers that are in Table1.
+const validateTable1Algo1 = (table1, resultsMap) => {
+    info = [true, "In the following pairs of days and skills there is a line with an amount of workers greater than the actual amount of workers : "]
+    const numOfWorkers = table1.length
+    for (const [key, value] of resultsMap.entries()) {
+        for(const line of value) {
+            if (Number(line[4]) > numOfWorkers) {
+                if(info[0]) {
+                    info[0] = false
+                    info[1] += "(" + key.replace("*", ", ") + ") "  //Replacing the '*' that sepreates the day and skill in the map.
+                    break                                           //We want to add each pair only once.
+                } else {
+                    info[1] += ", " + "(" + key.replace("*", ", ") + ") "
+                    break
+                }
+            }
+        }
+    }
+    return info
+}
+
+module.exports = { validateTable1, validateTable2, validateTable3, validateTable2SkillsInTable3, validateTable3SkillsInTable2, validateTable2NumOfWorkers, validateTable1Algo1 }
