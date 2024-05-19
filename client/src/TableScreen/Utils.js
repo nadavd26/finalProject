@@ -478,38 +478,20 @@ export async function generateAlgo2Results(token, getFromDatabase) {
     }
 }
 
-export async function postAlgo2Results(token, table) {
-    var data = table
-    for (let key in data) {
-        // Check if the key is present in the object
-        if (data.hasOwnProperty(key)) {
-            // Iterate over each array element corresponding to the key
-            data[key].forEach(sublist => {
-                // Iterate over each element in the sublist
-                sublist.forEach((element, index) => {
-                    // Check if the element is a string and replace newline characters with *
-                    if (typeof element === 'string') {
-                        data[key][data[key].indexOf(sublist)][index] = element.replace(/\n/g, '*');
-                    }
-                });
-            });
-        }
-    }
-    // data = JSON.stringify(data)
-    console.log("data")
-    console.log(data)
-    const res = await fetch('http://localhost:12345/Results/GetResults2', {
-        'method': 'post',
-        'headers': {
+export function postAlgo2Results(token, data, callback) {
+    fetch('http://localhost:12345/Results/GetResults2', {
+        method: 'POST',
+        headers: {
             'Content-Type': 'application/json',
             'authorization': 'bearer ' + token
         },
-        'body': JSON.stringify(data)
-    });
-
-    console.log("res")
-    console.log(res)
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(() => callback(true))
+    .catch(() => callback(false));
 }
+
 
 export async function generateAlgo1Results(token, getFromDatabase) {
     var data = "?getFromDatabase="

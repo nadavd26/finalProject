@@ -158,11 +158,13 @@ function TableScreen({ user, setUser }) {
 
     const generateAgain = async () => {
         tableScreenState.setTableNum(2)
+        setShowWarningModal(false)
         await generateResults2(false, false);
     }
 
     const proceedCurrent = async () => {
         tableScreenState.setTableNum(2)
+        setShowWarningModal(false)
         await generateResults2(false, true);
     }
 
