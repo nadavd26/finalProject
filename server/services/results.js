@@ -249,7 +249,11 @@ const transformShiftTablesToMap = async (shiftTables) => {
 
 // This function transforms the user's shiftTables data into a map
 const transformAssignedShiftTablesToMap = async (assignedShiftTables) => {
+    const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     const resultMap = new Map();
+    daysOfWeek.forEach(day => {
+        resultMap.set(day, []);
+    });
     // Iterate over each assgined shift table in the user's data
     assignedShiftTables.forEach(assignedShiftTable => {
         const key = assignedShiftTable.day
@@ -386,13 +390,13 @@ const editResults2OfDay = async (newData, day, userId) => {
     }
 }
 const editResults2 = async (req, userId) => {
-    await editResults2OfDay(JSON.parse(req.body.Sunday), "Sunday", userId)
-    await editResults2OfDay(JSON.parse(req.body.Monday), "Monday", userId)
-    await editResults2OfDay(JSON.parse(req.body.Tuesday), "Tuesday", userId)
-    await editResults2OfDay(JSON.parse(req.body.Wednesday), "Wednesday", userId)
-    await editResults2OfDay(JSON.parse(req.body.Thursday), "Thursday", userId)
-    await editResults2OfDay(JSON.parse(req.body.Friday), "Friday", userId)
-    await editResults2OfDay(JSON.parse(req.body.Saturday), "Saturday", userId)
+    await editResults2OfDay(req.body.Sunday, "Sunday", userId)
+    await editResults2OfDay(req.body.Monday, "Monday", userId)
+    await editResults2OfDay(req.body.Tuesday, "Tuesday", userId)
+    await editResults2OfDay(req.body.Wednesday, "Wednesday", userId)
+    await editResults2OfDay(req.body.Thursday, "Thursday", userId)
+    await editResults2OfDay(req.body.Friday, "Friday", userId)
+    await editResults2OfDay(req.body.Saturday, "Saturday", userId)
 }
 
 
