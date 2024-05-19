@@ -26,12 +26,13 @@ function Table({content, errors, onCellEdit, onRowDelete, onRowAdd, rowsToRender
                             <tbody>
                                 <tr className="row100 body first-row">
                                     <th className="cell100 col-1 first-column blue static-position" id="first-row-first-col"></th>
-                                    <th class="cell100  second-column blue col-2">Id</th>
+                                    <th class="cell100  second-column blue col-1">Id</th>
                                     <th class="cell100  last-columns blue col-2">Name</th>
                                     <th class="cell100  last-columns blue col-2">Skill1</th>
                                     <th class="cell100  last-columns blue col-2">Skill2</th>
                                     <th class="cell100  last-columns blue col-2">Skill3</th>
-                                    <th class="cell100  last-columns blue col-1">Contract</th>
+                                    <th class="cell100  last-columns blue col-1">Min Hours</th>
+                                    <th class="cell100  last-columns blue col-1">Max Hours</th>
                                 </tr>
                                 <TableRows content={content} errors={errors} onCellEdit={onCellEdit} onRowDelete={onRowDelete}  onRowAdd={onRowAdd} rowsToRender={rowsToRender}/>
                             </tbody>

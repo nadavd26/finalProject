@@ -16,13 +16,13 @@ export default function EditInput({ file, numOfFile, setEditInfo, user, setUser,
                 var table = null
                 switch (numOfFile) {
                     case 1:
-                        table = user.table1
+                        table = JSON.parse(JSON.stringify(user.table1))
                         break
                     case 2:
-                        table = user.table2
+                        table = JSON.parse(JSON.stringify(user.table2))
                         break
                     default:
-                        table = user.table3
+                        table = JSON.parse(JSON.stringify(user.table3))
                         break                                
                 }
                 if (table) {

@@ -54,7 +54,7 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
             isValid = true
             if (table[i].length != 5) {
                 isValid = false
-                setEditInfo({ inEdit: false, errorMsg: "The table must be 5 columns" })
+                setEditInfo({ inEdit: false, errorMsg: "Line " + (i+1) + " The table must be 5 columns (some can be empty but still need 4 commas)" })
                 return
             }
             table[i][0] = (table[i][0]).toLowerCase()

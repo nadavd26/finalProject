@@ -46,6 +46,8 @@ const TableRow = ({ row, rowErrors, rowIndex, onCellEdit, onRowDelete, onRowAdd,
                 <FreeEditCell value={row[4]} rowIndex={rowIndex} columnIndex={4} isValid={rowErrors[4]} onEdit={onCellEdit}/>
 
                 <FreeEditCell value={row[5]} rowIndex={rowIndex} columnIndex={5} isValid={rowErrors[5]} onEdit={onCellEdit}/>
+
+                <FreeEditCell value={row[6]} rowIndex={rowIndex} columnIndex={6} isValid={rowErrors[6]} onEdit={onCellEdit}/>
             </tr >
         </>
     );

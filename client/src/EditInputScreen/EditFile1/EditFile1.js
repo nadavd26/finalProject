@@ -8,7 +8,7 @@ import { csv_to_array, parseTime, isNumberOfWorkersValid, isSkillValid, isIdVali
 import { sortTable } from "../../api/InputTableApi";
 
 export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromServer }) {
-    const [content, setContent] = useState([["", "", "", "", "", ""]])
+    const [content, setContent] = useState([["", "", "", "", "", "", ""]])
     const [errors, setErrors] = useState([[true, true, true, false, false, true]])
     const [showErrorModel, setShowErrorModel] = useState(false)
     const [showSuccessModel, setShowSuccessModel] = useState(false)
@@ -57,9 +57,9 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
         }
         for (let i = 0; i < table.length; i++) {
             isValid = true
-            if (table[i].length != 6) {
+            if (table[i].length != 7) {
                 isValid = false
-                setEditInfo({ inEdit: false, errorMsg: "The table must be 6 columns" })
+                setEditInfo({ inEdit: false, errorMsg: "Line " + (i + 1) + " The table must be 7 columns (some can be empty but still need 6 commas)" })
                 return
             }
             const id = table[i][0]
@@ -83,27 +83,35 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
                 handleError(i, 2)
             }
 
-            if ((!isSkillValid(skill2) && skill2 != "") || (skill2 == skill1)) {
+            if ((skill2 != "") && (!isSkillValid(skill2) || (skill2 == skill1))) {
                 handleError(i, 3)
             }
 
-            if ((!isSkillValid(skill3) && skill3 != "") || (skill3 == skill2) || (skill3 == skill1)) {
+            if ((skill3 != "") && (!isSkillValid(skill3) || (skill3 == skill2) || (skill3 == skill1))) {
                 handleError(i, 4)
             }
 
-            if (skill3 != "") {
-                if (skill2 == "") {
-                    handleError(i, 3)
-                }
-
-                if (skill1 == "") {
-                    handleError(i, 2)
-                }
+            if (skill1 == "" && (skill2 != "" || skill3 != "")) {
+                handleError(i, 2)
             }
 
-            const contract = table[i][5]
-            if (!isContractValid(contract)) {
+            if (skill2 == "" && skill1 != "" && skill3 != "") {
+                handleError(i, 3)
+            }
+
+            const minHour = table[i][5]
+            if (!isContractValid(minHour)) {
                 handleError(i, 5)
+            }
+
+            const maxHour = table[i][6]
+            if (!isContractValid(maxHour)) {
+                handleError(i, 6)
+            }
+
+            if (parseInt(minHour) > parseInt(maxHour)) {
+                handleError(i, 5)
+                handleError(i, 6)
             }
 
             if (!isValid) {
@@ -112,8 +120,8 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
         }
 
         if (errorLines != table.length) {
-            const newTable = await sortTableWithErrors(table)
-            setContent(newTable)
+            // const newTable = await sortTableWithErrors(table) server
+            // setContent(newTable) server
             setContent(table)
         } else {
             setContent(table)
@@ -143,8 +151,8 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
     }, [csvArray, setContent]);
 
     const addRowHandler = () => {
-        const newRow = ["", "", "", "", "", ""]
-        const newErrorRow = [true, true, true, false, false, true]
+        const newRow = ["", "", "", "", "", "", ""]
+        const newErrorRow = [true, true, true, false, false, false, false]
         var newRowsToRender = {}
         for (let i = 0; i < content.length; i++) {
             console.log("render all")
@@ -157,8 +165,8 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
     };
 
     const onRowAdd = (rowIndex) => {
-        const newEmptyRow = ["", "", "", "", "", ""];
-        const newErrorRow = [true, true, true, false, false, true];
+        const newEmptyRow = ["", "", "", "", "", "", ""];
+        const newErrorRow = [true, true, true, false, false, false, false];
 
         var newRowsToRender = {}
         for (let i = 0; i < content.length; i++) {
@@ -271,10 +279,36 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
                     }
                 }
                 break;
-
             case 5:
-                updatedErrors[rowIndex][columnIndex] = !isContractValid(updatedContent[rowIndex][columnIndex])
-                break;
+                updatedErrors[rowIndex][5] = !isContractValid(updatedContent[rowIndex][columnIndex])
+                if (isContractValid(updatedContent[rowIndex][5]) && isContractValid(updatedContent[rowIndex][6]) && updatedContent[rowIndex][6] != "" && updatedContent[rowIndex][5] != "") {
+                    if (parseInt(updatedContent[rowIndex][5]) > parseInt(updatedContent[rowIndex][6])) {
+                        updatedErrors[rowIndex][5] = true
+                        updatedErrors[rowIndex][6] = true
+                    } else {
+                        updatedErrors[rowIndex][5] = false
+                        updatedErrors[rowIndex][6] = false
+                    }
+                }
+                if (!isContractValid(updatedContent[rowIndex][5]) && isContractValid(updatedContent[rowIndex][6])) {
+                    updatedErrors[rowIndex][6] = false
+                }
+                break
+            case 6:
+                updatedErrors[rowIndex][6] = !isContractValid(updatedContent[rowIndex][columnIndex])
+                if (isContractValid(updatedContent[rowIndex][5]) && isContractValid(updatedContent[rowIndex][6]) && updatedContent[rowIndex][6] != "" && updatedContent[rowIndex][5] != "") {
+                    if (parseInt(updatedContent[rowIndex][5]) > parseInt(updatedContent[rowIndex][6])) {
+                        updatedErrors[rowIndex][5] = true
+                        updatedErrors[rowIndex][6] = true
+                    } else {
+                        updatedErrors[rowIndex][5] = false
+                        updatedErrors[rowIndex][6] = false
+                    }
+                }
+                if (!isContractValid(updatedContent[rowIndex][6]) && isContractValid(updatedContent[rowIndex][5])) {
+                    updatedErrors[rowIndex][5] = false
+                }
+                break
         }
 
         console.log("updatedErrors[rowIndex]")
@@ -322,21 +356,24 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
             errorModal.show()
             return
         } else {
-            const sortedTable = await sortTable(1, content, user.token);
+            // const sortedTable = await sortTable(1, content, user.token); server
             var newRowsToRender = {}
             for (let i = 0; i < content.length; i++) {
                 newRowsToRender[i] = true
             }
 
             setRowsToRender(newRowsToRender)
-            setContent(sortedTable)
-            const duplicatesId = findDuplicatesId(sortedTable)
-            if (duplicatesId.length != 0) {
-                setErrorMsg("Dupliacted Id's in rows: " + JSON.stringify(duplicatesId))
-                errorModal.show()
-            } else {
-                saveModal.show()
-            }
+            //server
+            // setContent(sortedTable) 
+            // const duplicatesId = findDuplicatesId(sortedTable)
+            // if (duplicatesId.length != 0) {
+            //     setErrorMsg("Dupliacted Id's in rows: " + JSON.stringify(duplicatesId))
+            //     errorModal.show()
+            // } else {
+            //     saveModal.show()
+            // }
+            saveModal.show() //remove
+            //server
         }
     };
 
@@ -379,7 +416,7 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
     }
 
     const finishEdit = async () => {
-        await postInputTable(1, content, token)
+        // await postInputTable(1, content, token) server
         setEditInfo({ inEdit: false, errorMsg: "" })
         var newUser = user
         newUser.table1 = content

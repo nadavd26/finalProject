@@ -74,7 +74,11 @@ export function isIdValid(str) {
 
 
 export function isContractValid(str) {
-    return str.length <= 10
+    if (str == "") {
+        return true
+    }
+    const parsedValue = Number(str);
+    return Number.isInteger(parsedValue) && parsedValue >= 0 && parsedValue <= 168;
 }
 
 export function isNameValid(name) {
