@@ -80,16 +80,25 @@ function TableScreen({ user, setUser }) {
         }
         editInfoState.setInEdit(true)
     }
-    async function generateResults1() {
 
-        const res = await utils.generateAlgo1Results(user.token, user.tableAlgo1FromDb)
-        console.log("res")
-        console.log(res)
+
+    async function generateResults1() {
+        var newUser = user
+        const algo1Callback = (res) => {
+            newUser.algo1Table = res
+            var newWorkersPerShift = res.get(key)
+            tableAlgo1State.setWorksPerShift(newWorkersPerShift)
+            tableScreenState.setIs1Generated(true)
+            console.log("finish callback")
+        }
+        utils.generateAlgo1Results(user.token, user.tableAlgo1FromDb, algo1Callback)     
+
+        // console.log("res")
+        // console.log(res)
         const newDaySkillReqMap = utils.generateReqSkillDayMap(user.table2)
         console.log("newDaySkillReqMap")
         console.log(newDaySkillReqMap)
-        var newUser = user
-        newUser.algo1Table = res
+        // newUser.algo1Table = res
         newUser.daySkillReqMap = newDaySkillReqMap
         newUser.skillList = utils.getSkillSet(user.table2)
         const startSkill = (newUser.skillList)[0]
@@ -98,22 +107,23 @@ function TableScreen({ user, setUser }) {
         const key = utils.getKey("sunday", startSkill)
         const key1 = utils.getKey("sunday", startSkill, true)
         tableAlgo1State.setKey(key)
-        var newWorkersPerShift = res.get(key)
+        // var newWorkersPerShift = res.get(key)
         var newReq = newDaySkillReqMap.get(key1)
         console.log("newDaySkillReqMap")
         console.log(newDaySkillReqMap)
         console.log("newReq")
         console.log(newReq)
         tableAlgo1State.setReq(newReq)
-        tableAlgo1State.setWorksPerShift(newWorkersPerShift)
+        // tableAlgo1State.setWorksPerShift(newWorkersPerShift)
         setUser(newUser)
-        tableScreenState.setIs1Generated(true)
+        console.log("finish code")
+        // tableScreenState.setIs1Generated(true)
     }
 
     async function generateResults2(algo2table, fromDb) {
         const res = algo2table ? algo2table : await utils.generateAlgo2Results(user.token, fromDb)
-        console.log("res")
-        console.log(JSON.stringify(res))
+        // console.log("res")
+        // console.log(JSON.stringify(res))
         var newUser = user
         newUser.algo2Table = res
         const ui = utils.generateAlgoGraphicResults(res)
@@ -124,8 +134,8 @@ function TableScreen({ user, setUser }) {
         algo2TableState.setShiftsInfo(shifts)
         var shiftsPerWorkers = utils.generateShiftsPerWorker(res)
         algo2TableState.setShiftsPerWorkers(shiftsPerWorkers)
-        console.log("ui")
-        console.log(JSON.stringify(ui))
+        // console.log("ui")
+        // console.log(JSON.stringify(ui))
         setUser(newUser)
         algo2TableState.setCurrentWorkersAndShifts((user.algo2Graphic)[tableScreenState.get.currentDay])
         tableScreenState.setIs2Generated(true)
