@@ -483,49 +483,55 @@ export function postAlgo2Results(token, data, callback) {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'authorization': 'bearer ' + token
+            'authorization': 'Bearer ' + token
         },
         body: JSON.stringify(data)
     })
-    .then(response => response.json())
-    .then(() => callback(true))
+    .then(response => {
+        if (response.ok) {
+            callback(true);
+        } else {
+            callback(false);
+        }
+    })
     .catch(() => callback(false));
 }
 
 
-export async function generateAlgo1Results(token, getFromDatabase) {
-    var data = "?getFromDatabase="
-    data += getFromDatabase ? "true" : "false"
-    // data += "true"
-    try {
-        const url = "http://localhost:12345/Results/GetResults1" + data;
-        const response = await fetch(url, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'authorization': 'bearer ' + token
-            },
-        });
 
+export function generateAlgo1Results(token, getFromDatabase, callback) {
+    var data = "?getFromDatabase=";
+    data += getFromDatabase ? "true" : "false";
+
+    const url = "http://localhost:12345/Results/GetResults1" + data;
+
+    fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': 'Bearer ' + token
+        },
+    })
+    .then(response => {
         if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`); //cannot happen
+            throw new Error(`HTTP error! Status: ${response.status}`);
         }
-
-        const responseData = await response.json(); // Parse JSON response
-        console.log("responseData:", responseData);
-
+        return response.json();
+    })
+    .then(responseData => {
         // Convert the responseData to a Map object
         const resultMap = new Map();
         for (const key in responseData) {
             resultMap.set(key, responseData[key]);
         }
-
-        return resultMap; // Return the Map object
-    } catch (error) {
+        callback(resultMap); // Call the callback with the result
+    })
+    .catch(error => {
         console.error("Error fetching results:", error);
-        throw error; // Rethrow the error to handle it elsewhere if needed
-    }
+        callback(null, error); // Call the callback with an error
+    });
 }
+
 
 // export async function postAlgo1Res(content, token) {
 //     const myHeaders = new Headers();
