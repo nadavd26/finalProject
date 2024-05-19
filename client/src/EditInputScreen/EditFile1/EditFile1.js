@@ -109,7 +109,7 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
                 handleError(i, 6)
             }
 
-            if (parseInt(minHour) > parseInt(maxHour)) {
+            if (parseFloat(minHour) > parseFloat(maxHour)) {
                 handleError(i, 5)
                 handleError(i, 6)
             }
@@ -282,7 +282,7 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
             case 5:
                 updatedErrors[rowIndex][5] = !isContractValid(updatedContent[rowIndex][columnIndex])
                 if (isContractValid(updatedContent[rowIndex][5]) && isContractValid(updatedContent[rowIndex][6]) && updatedContent[rowIndex][6] != "" && updatedContent[rowIndex][5] != "") {
-                    if (parseInt(updatedContent[rowIndex][5]) > parseInt(updatedContent[rowIndex][6])) {
+                    if (parseFloat(updatedContent[rowIndex][5]) > parseFloat(updatedContent[rowIndex][6])) {
                         updatedErrors[rowIndex][5] = true
                         updatedErrors[rowIndex][6] = true
                     } else {
@@ -297,7 +297,7 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
             case 6:
                 updatedErrors[rowIndex][6] = !isContractValid(updatedContent[rowIndex][columnIndex])
                 if (isContractValid(updatedContent[rowIndex][5]) && isContractValid(updatedContent[rowIndex][6]) && updatedContent[rowIndex][6] != "" && updatedContent[rowIndex][5] != "") {
-                    if (parseInt(updatedContent[rowIndex][5]) > parseInt(updatedContent[rowIndex][6])) {
+                    if (parseFloat(updatedContent[rowIndex][5]) > parseFloat(updatedContent[rowIndex][6])) {
                         updatedErrors[rowIndex][5] = true
                         updatedErrors[rowIndex][6] = true
                     } else {

@@ -74,12 +74,23 @@ export function isIdValid(str) {
 
 
 export function isContractValid(str) {
-    if (str == "") {
-        return true
+    if (str === "") {
+        return true;
     }
-    const parsedValue = Number(str);
-    return Number.isInteger(parsedValue) && parsedValue >= 0 && parsedValue <= 168;
+
+    // Check if the string matches the specified pattern
+    const validNumberPattern = /^(0(\.0|\.5)?|[1-9]\d*(\.0|\.5)?)$/;
+    if (!validNumberPattern.test(str)) {
+        return false;
+    }
+
+    // Parse the string to a floating point number
+    const parsedValue = parseFloat(str);
+
+    // Check if the parsed value is within the valid range
+    return parsedValue >= 0 && parsedValue <= 168;
 }
+
 
 export function isNameValid(name) {
     // Check if the name contains only letters, spaces, and apostrophes
