@@ -29,9 +29,6 @@ def hours_to_array(start_hour, end_hour):
 # And range of hours the shift is happening at.
 # Example ["sunday", "cable technition", "08:00", "12:00", 150].
 def solve_shifts(reqs, shifts):
-    # Dont print msgs
-    pulp.LpSolverDefault.msg = 0
-
     skills = []
     days = []
     # Fill skills and days arrays
@@ -114,7 +111,7 @@ def solve_shifts(reqs, shifts):
                 prob += pulp.lpSum([a[t][j] * y[j] for j in range(num_shifts)]) >= d[t]
 
             # Solve        
-            prob.solve()
+            prob.solve(pulp.PULP_CBC_CMD(msg=False, timeLimit=1))
 
             for shift in range(num_shifts):
                 output_array[day][skill][shift][4] = str(int(y[shift].value()))
