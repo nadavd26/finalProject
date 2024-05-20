@@ -62,14 +62,16 @@ const Plot = createPlotlyComponent(Plotly);
 
 const Graph = ({ reqs, shifts, skill, day, user, setUser }) => {
     console.log("reqs")
-    console.log(reqs)
+    console.log(reqs, shifts, skill, day)
     const [showEmptyGraphModal, setShowEmptyGraphModal] = useState(false);
     const [showDeviationModal, setShowDeviationModal] = useState(false);
     useEffect(() => {
         let newReqs = parseReqs(reqs);
         let newShifts = parseStackedShifts(shifts);
-
-        if (!showEmptyGraphModal && reqs.length === 0 && shifts.length === 0) {
+        console.log("!showEmptyGraphModal, reqs.length, shifts.length")
+        console.log(!showEmptyGraphModal, reqs.length, shifts.length)
+        if (!showEmptyGraphModal && reqs.length === 0) {
+            console.log("inside if")
             setShowEmptyGraphModal(true);
         } else if (isReqsOverShifts(newReqs, newShifts)) {
             setShowDeviationModal(true);

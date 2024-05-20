@@ -78,7 +78,7 @@ function TableScreen({ user, setUser }) {
     }
 
     function handleEdit() {
-        if ((tableScreenState.get.tableNum == 1 && !tableScreenState.get.is1Generated) || (tableScreenState.get.tableNum == 2 && !tableScreenState.get.is2Generated) || (tableScreenState.get.tableNum == 1 && !shifts)) {
+        if ((tableScreenState.get.tableNum == 1 && !tableScreenState.get.is1Generated) || (tableScreenState.get.tableNum == 2 && !tableScreenState.get.is2Generated) || (tableScreenState.get.tableNum == 1 && (!reqs || reqs.length == 0 || !shifts || shifts.length == 0))) {
             return
         }
         editInfoState.setInEdit(true)
