@@ -4,19 +4,23 @@ import UploadFile from "./UploadFile";
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from "react";
 import EditInput from "../EditInputScreen/EditInput";
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, ModalBody } from 'react-bootstrap';
+import { validateInputTables } from "../api/InputTableApi";
+import { ExclamationTriangleFill } from 'react-bootstrap-icons';
+
 
 
 function UploadScreen({ user, setUser }) {
-  const [showWarningModal, setShowWarningModal] = useState(false);
-
+  const [showGenerateModal, setShowGenerateModal] = useState(false);
+  const [showWarningModal, setShowWarningModal] = useState(false)
+  const [validationWarning, setValidationWarning] = useState("")
   const [selectedButton, setSelectedButton] = useState("FirstFileButton");
   const [showSubmitAlert, setShowSubmitAlert] = useState(false);
   const [currentFile, setCurrentFile] = useState(null)
   const [editInfo, setEditInfo] = useState({ inEdit: false, errorMsg: "" })
   const navigate = useNavigate();
-  const handleCloseWarningModal = () => {
-    setShowWarningModal(false);
+  const handleCloseGenerateModal = () => {
+    setShowGenerateModal(false);
   };
   // console.log("upload screen user: "  + JSON.stringify(user) + "token: " + user.token)
   useEffect(() => {
@@ -44,10 +48,11 @@ function UploadScreen({ user, setUser }) {
     setCurrentFile(file)
   };
 
-  const handleFileDelete = (buttonId) => {
-  };
+  const handleCloseWarningModal = () => {
+    setShowWarningModal(false)
+  }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     var flag = false
     for (let i = 1; i <= 3; i++) {
       if (!user["table" + i] || user["table" + i] == []) {
@@ -60,12 +65,29 @@ function UploadScreen({ user, setUser }) {
         setShowSubmitAlert(false);
       }, 2500);
     } else {
-      if (user.table2Changed || user.table3Changed) {
-        generateAgain()
+      const warning = await validateInputTables(user.token)
+      console.log("warning")
+      console.log(warning)
+      if (warning != "") {
+        setValidationWarning(warning)
+        setShowWarningModal(true)
       } else {
-        setShowWarningModal(true);
+        generate()
       }
     }
+  }
+
+  const generate = () => {
+    if (user.table2Changed || user.table3Changed) {
+      generateAgain()
+    } else {
+      setShowGenerateModal(true);
+    }
+  }
+
+  const generateAnyway = () => {
+    setShowWarningModal(false)
+    generate()
   }
 
   const handleEdit = () => {
@@ -144,7 +166,6 @@ function UploadScreen({ user, setUser }) {
             id="uploadFile1"
             file={currentFile}
             onFileAdded={(file) => handleFileAdded("FirstFileButton", file)}
-            onFileDelete={() => handleFileDelete("FirstFileButton")}
             user={user}
             fileNum={1}
             handleEdit={handleEdit}
@@ -155,7 +176,6 @@ function UploadScreen({ user, setUser }) {
             id="uploadFile2"
             file={currentFile}
             onFileAdded={(file) => handleFileAdded("SecondFileButton", file)}
-            onFileDelete={() => handleFileDelete("SecondFileButton")}
             user={user}
             fileNum={2}
             handleEdit={handleEdit}
@@ -166,7 +186,6 @@ function UploadScreen({ user, setUser }) {
             id="uploadFile3"
             file={currentFile}
             onFileAdded={(file) => handleFileAdded("ThirdFileButton", file)}
-            onFileDelete={() => handleFileDelete("ThirdFileButton")}
             user={user}
             fileNum={3}
             handleEdit={handleEdit}
@@ -206,9 +225,12 @@ function UploadScreen({ user, setUser }) {
             </div>
           </div>
         </div>}
-        <Modal show={showWarningModal} onHide={handleCloseWarningModal} centered>
-        <Modal.Header closeButton style={{ paddingRight: '1rem' }}>
+        <Modal show={showGenerateModal} onHide={handleCloseGenerateModal} centered>
+          <Modal.Header style={{ paddingRight: '1rem' }}>
             <Modal.Title className="text-center w-100">Which Results To Choose?</Modal.Title>
+            <button type="button" className="close" onClick={() => setShowGenerateModal(false)} aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
           </Modal.Header>
           <Modal.Footer>
             <Button variant="secondary" onClick={generateAgain} className="mr-auto">
@@ -216,6 +238,28 @@ function UploadScreen({ user, setUser }) {
             </Button>
             <Button variant="success" onClick={proceedCurrent}>
               Proceed with current results
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
+        <Modal show={showWarningModal} onHide={handleCloseWarningModal} centered>
+          <Modal.Header style={{ backgroundColor: '#f8d7da', paddingRight: '1rem' }}>
+            <Modal.Title className="text-center w-100" style={{ color: '#721c24' }}>
+              <ExclamationTriangleFill style={{ marginRight: '10px' }} /> Warning
+            </Modal.Title>
+            <button type="button" className="close" onClick={() => setShowWarningModal(false)} aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </Modal.Header>
+          <Modal.Body style={{ backgroundColor: '#f8d7da', color: '#721c24' }}>
+            {validationWarning}
+          </Modal.Body>
+          <Modal.Footer style={{ backgroundColor: '#f8d7da', display: 'flex', justifyContent: 'space-between' }}>
+            <Button variant="danger" onClick={handleCloseWarningModal} className="mr-auto">
+              Ok
+            </Button>
+            <Button variant="danger" onClick={generateAnyway}>
+              Generate Anyway
             </Button>
           </Modal.Footer>
         </Modal>

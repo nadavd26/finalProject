@@ -45,3 +45,20 @@ export async function sortTable(tableNum, table, token) {
     const sortedTable = JSON.parse(body);
     return sortedTable["content"]
 }
+
+export async function validateInputTables(token) {
+    const res = await fetch('http://localhost:12345/Validation/validateInputTables', {
+        'method': 'get',
+        'headers': {
+            'Content-Type': 'application/json',
+            'authorization': 'bearer ' + token
+        }
+    });
+
+    // Show the server's response    
+    if (!res.ok) {
+        const body = await res.text()
+        return body
+    } 
+    return ""
+}

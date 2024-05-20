@@ -2,16 +2,13 @@ import React, { useState } from "react";
 import Upload from "../TableScreen/images/uploadImage.webp";
 import FileAdded from "./FileAdded";
 
-const UploadFile = ({ file, onFileAdded, onFileDelete, user, fileNum, handleEdit }) => {
+const UploadFile = ({ file, onFileAdded, user, fileNum, handleEdit }) => {
     // Destructure the file-related state
 
     const handleFileAdded = (event) => {
         onFileAdded(event.target.files[0]);
     };
 
-    const handleFileDelete = () => {
-        onFileDelete();
-    };
 
     const table = user["table"+fileNum]
     return (

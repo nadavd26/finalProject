@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Plotly from 'plotly.js-dist';
 import createPlotlyComponent from 'react-plotly.js/factory';
-import { Modal, Button} from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
 
 // Convert hours to index
 const hourToIndex = (hour) => {
@@ -45,22 +45,22 @@ const parseStackedShifts = (shifts) => {
 }
 
 const isReqsOverShifts = (reqs, shifts) => {
-    for(let i = 0; i < 48; i++)
-        if(reqs[i] > shifts[i])
+    for (let i = 0; i < 48; i++)
+        if (reqs[i] > shifts[i])
             return true
     return false
 }
 
 const wastedHours = (reqs, shifts) => {
     let sum = 0;
-    for(let i = 0; i < 48; i++)
+    for (let i = 0; i < 48; i++)
         sum += Math.max(0, shifts[i] - reqs[i])
     return sum / 2
 }
 
 const Plot = createPlotlyComponent(Plotly);
 
-const Graph = ({ reqs, shifts, skill, day, user, setUser  }) => {
+const Graph = ({ reqs, shifts, skill, day, user, setUser }) => {
     console.log("reqs")
     console.log(reqs)
     const [showEmptyGraphModal, setShowEmptyGraphModal] = useState(false);
@@ -68,20 +68,20 @@ const Graph = ({ reqs, shifts, skill, day, user, setUser  }) => {
     useEffect(() => {
         let newReqs = parseReqs(reqs);
         let newShifts = parseStackedShifts(shifts);
-        
+
         if (!showEmptyGraphModal && reqs.length === 0 && shifts.length === 0) {
             setShowEmptyGraphModal(true);
         } else if (isReqsOverShifts(newReqs, newShifts)) {
             setShowDeviationModal(true);
         }
-    
+
         var newUser = user;
         newUser.currentWastedHours = wastedHours(newReqs, newShifts);
         console.log(newUser.currentWastedHours)
         newUser.currentRequestArray = newReqs;
         setUser(newUser);
     }, [reqs, shifts]);
-    
+
 
     const makeGraph = () => {
 
@@ -200,7 +200,7 @@ const Graph = ({ reqs, shifts, skill, day, user, setUser  }) => {
         };
 
         const layout = {
-            margin: {t: 20},
+            margin: { t: 20 },
             barmode: 'stack',
             bargap: 0.04,
             showlegend: true, // Ensure legend is shown
@@ -249,12 +249,12 @@ const Graph = ({ reqs, shifts, skill, day, user, setUser  }) => {
     const fig = makeGraph();
 
     return (
-        <div className="Graph" style={{position: 'fixed', height: "74%", width: "98%", left: "1%", top: "16%"}}>
+        <div className="Graph" style={{ position: 'fixed', height: "74%", width: "98%", left: "1%", top: "16%" }}>
             <Plot
                 data={fig.data}
                 layout={fig.layout}
                 config={fig.config}
-                style={{ width: '100%', height: '100%'}}
+                style={{ width: '100%', height: '100%' }}
             />
 
             <Modal show={showEmptyGraphModal} onHide={() => setShowEmptyGraphModal(false)}>
@@ -284,7 +284,17 @@ const Graph = ({ reqs, shifts, skill, day, user, setUser  }) => {
             </Modal>
         </div>
     );
-    
+
 };
 
-export default Graph;
+
+function arraysEqual(arr1, arr2) {
+    return JSON.stringify(arr1) == JSON.stringify(arr2)
+}
+
+function arePropsEqual(oldProps, newProps) {
+    return arraysEqual(oldProps.reqs, newProps.reqs) && arraysEqual(oldProps.shifts, newProps.shifts) && oldProps.day == newProps.day && oldProps.skill == newProps.skill
+}
+
+const GraphMemo = React.memo(Graph, arePropsEqual)
+export default GraphMemo

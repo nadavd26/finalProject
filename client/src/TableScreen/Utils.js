@@ -532,6 +532,40 @@ export function generateAlgo1Results(token, getFromDatabase, callback) {
     });
 }
 
+// export async function generateAlgo1Results(token, getFromDatabase) {
+//     var data = "?getFromDatabase="
+//     data += getFromDatabase ? "true" : "false"
+//     // data += "true"
+//     try {
+//         const url = "http://localhost:12345/Results/GetResults1" + data;
+//         const response = await fetch(url, {
+//             method: 'GET',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//                 'authorization': 'bearer ' + token
+//             },
+//         });
+
+//         if (!response.ok) {
+//             throw new Error(`HTTP error! Status: ${response.status}`); //cannot happen
+//         }
+
+//         const responseData = await response.json(); // Parse JSON response
+//         console.log("responseData:", responseData);
+
+//         // Convert the responseData to a Map object
+//         const resultMap = new Map();
+//         for (const key in responseData) {
+//             resultMap.set(key, responseData[key]);
+//         }
+
+//         return resultMap; // Return the Map object
+//     } catch (error) {
+//         console.error("Error fetching results:", error);
+//         throw error; // Rethrow the error to handle it elsewhere if needed
+//     }
+// }
+
 
 // export async function postAlgo1Res(content, token) {
 //     const myHeaders = new Headers();

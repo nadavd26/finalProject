@@ -17,12 +17,15 @@ import { Modal, Button } from 'react-bootstrap';
 import SkillDropdown from "./conponenets/SkillDropdown";
 import * as utils from './Utils'
 import EditResFile2 from "./Edit/EditTable2/EditResFile2";
-import Graph from "./conponenets/Graph";
+import GraphMemo from "./conponenets/Graph";
 // expecting json: {"Sunday" : [{"worker":"name1", "shifts":[true, true, false, ...]}, {"worker":"name2", "shifts":[true, true, false, ...]}, ....], ... , "Saturday" : ...}
 // every boolean array is 48 cells, starting from 7:00, ending at 23:30
 
 function TableScreen({ user, setUser }) {
+    const [showDeviationModal, setShowDeviationModal] = useState(false);
     const [showWarningModal, setShowWarningModal] = useState(false);
+    const [reqs, setReqs] = useState(undefined)
+    const [shifts, setShifts] = useState(undefined)
     const handleCloseWarningModal = () => {
         setShowWarningModal(false);
     };
@@ -31,7 +34,7 @@ function TableScreen({ user, setUser }) {
     const algo2TableState = useTableAlgo2State();
     const tableAlgo1State = useTableAlgo1State()
     const editInfoState = useEditInfoState()
-    console.log(tableAlgo1State.get.req)
+    console.log(reqs)
     console.log("user")
     console.log(user)
     function switchDay(day) {
@@ -46,13 +49,13 @@ function TableScreen({ user, setUser }) {
         if (tableScreenState.get.is1Generated) {
             const key = utils.getKey(day, tableAlgo1State.get.currentSkill)
             const key1 = utils.getKey(day, tableAlgo1State.get.currentSkill, true)
-            tableAlgo1State.setWorksPerShift(((user.algo1Table).get(key)))
+            setShifts(((user.algo1Table).get(key)))
             console.log("key1")
             console.log(key1)
             var newReq = ((user.daySkillReqMap).get(key1))
             console.log("newReq")
             console.log(newReq)
-            tableAlgo1State.setReq(newReq)
+            setReqs(newReq)
         }
     }
 
@@ -66,32 +69,35 @@ function TableScreen({ user, setUser }) {
         console.log("key1")
         console.log(key1)
         // console.log("key " + key)
-        tableAlgo1State.setWorksPerShift(((user.algo1Table).get(key)))
+        setShifts(((user.algo1Table).get(key)))
         var newReq = ((user.daySkillReqMap).get(key1))
         console.log("newReq")
         console.log(newReq)
-        tableAlgo1State.setReq(newReq)
+        setReqs(newReq)
         // console.log("res " + ((user.algo1Table).get(key)))
     }
 
     function handleEdit() {
-        if ((tableScreenState.get.tableNum == 1 && !tableScreenState.get.is1Generated) || (tableScreenState.get.tableNum == 2 && !tableScreenState.get.is2Generated) || (tableScreenState.get.tableNum == 1 && !tableAlgo1State.get.worksPerShift)) {
+        if ((tableScreenState.get.tableNum == 1 && !tableScreenState.get.is1Generated) || (tableScreenState.get.tableNum == 2 && !tableScreenState.get.is2Generated) || (tableScreenState.get.tableNum == 1 && !shifts)) {
             return
         }
         editInfoState.setInEdit(true)
     }
 
 
-    async function generateResults1() {
+    function generateResults1() {
+        console.log("gen res 1")
         var newUser = user
+        var newReq = []
         const algo1Callback = (res) => {
             newUser.algo1Table = res
             var newWorkersPerShift = res.get(key)
-            tableAlgo1State.setWorksPerShift(newWorkersPerShift)
+            setShifts(newWorkersPerShift)
+            setReqs(newReq)
             tableScreenState.setIs1Generated(true)
             console.log("finish callback")
         }
-        utils.generateAlgo1Results(user.token, user.tableAlgo1FromDb, algo1Callback)     
+        utils.generateAlgo1Results(user.token, user.tableAlgo1FromDb, algo1Callback)
 
         // console.log("res")
         // console.log(res)
@@ -108,17 +114,49 @@ function TableScreen({ user, setUser }) {
         const key1 = utils.getKey("sunday", startSkill, true)
         tableAlgo1State.setKey(key)
         // var newWorkersPerShift = res.get(key)
-        var newReq = newDaySkillReqMap.get(key1)
+        newReq = newDaySkillReqMap.get(key1)
         console.log("newDaySkillReqMap")
         console.log(newDaySkillReqMap)
         console.log("newReq")
         console.log(newReq)
-        tableAlgo1State.setReq(newReq)
+
+        var workerMap = utils.generateWorkerMap(user.table1)
+        // console.log("worker map : " +workerMap)
+        tableScreenState.setWorkerMap(workerMap)
         // tableAlgo1State.setWorksPerShift(newWorkersPerShift)
         setUser(newUser)
         console.log("finish code")
         // tableScreenState.setIs1Generated(true)
     }
+    // async function generateResults1() {
+
+    //     const res = await utils.generateAlgo1Results(user.token, user.tableAlgo1FromDb)
+    //     console.log("res")
+    //     console.log(res)
+    //     const newDaySkillReqMap = utils.generateReqSkillDayMap(user.table2)
+    //     console.log("newDaySkillReqMap")
+    //     console.log(newDaySkillReqMap)
+    //     var newUser = user
+    //     newUser.algo1Table = res
+    //     newUser.daySkillReqMap = newDaySkillReqMap
+    //     newUser.skillList = utils.getSkillSet(user.table2)
+    //     const startSkill = (newUser.skillList)[0]
+    //     tableAlgo1State.setCurrentSkill(startSkill)
+    //     tableAlgo1State.setOtherSkills((utils.removeElementAtIndex(newUser.skillList, 0)))
+    //     const key = utils.getKey("sunday", startSkill)
+    //     const key1 = utils.getKey("sunday", startSkill, true)
+    //     tableAlgo1State.setKey(key)
+    //     var newWorkersPerShift = res.get(key)
+    //     var newReq = newDaySkillReqMap.get(key1)
+    //     console.log("newDaySkillReqMap")
+    //     console.log(newDaySkillReqMap)
+    //     console.log("newReq")
+    //     console.log(newReq)
+    //     tableAlgo1State.setReq(newReq)
+    //     tableAlgo1State.setWorksPerShift(newWorkersPerShift)
+    //     setUser(newUser)
+    //     tableScreenState.setIs1Generated(true)
+    // }
 
     async function generateResults2(algo2table, fromDb) {
         const res = algo2table ? algo2table : await utils.generateAlgo2Results(user.token, fromDb)
@@ -179,10 +217,8 @@ function TableScreen({ user, setUser }) {
     }
 
     useEffect(() => {
+        console.log("geneneen")
         generateResults1();
-        var workerMap = utils.generateWorkerMap(user.table1)
-        // console.log("worker map : " +workerMap)
-        tableScreenState.setWorkerMap(workerMap)
     }, []);
 
     function setsToArrays(obj) {
@@ -226,10 +262,10 @@ function TableScreen({ user, setUser }) {
     //i want to pass a deep copy to EditResFile2 and because json.parse does not parse sets, i need to convert them to array, parse and then convert back to sets 
     const editComponent = tableScreenState.get.tableNum === 1 ? (
         <EditResFile1
-            initialTable={tableAlgo1State.get.worksPerShift}
+            initialTable={shifts}
             currentDay={tableScreenState.get.currentDay}
             currentSkill={tableAlgo1State.get.currentSkill}
-            setWorksPerShift={tableAlgo1State.setWorksPerShift}
+            setWorksPerShift={setShifts}
             setInEdit={editInfoState.setInEdit}
             user={user}
             setUser={setUser}
@@ -301,7 +337,7 @@ function TableScreen({ user, setUser }) {
                                 <div className="row" >
                                     <div className="col-1"></div>
                                     <div className="col-10">
-                                        <Graph reqs={!(tableAlgo1State.get.req) ? [] : tableAlgo1State.get.req} shifts={!(tableAlgo1State.get.worksPerShift) ? [] : tableAlgo1State.get.worksPerShift} skill={tableAlgo1State.get.currentSkill} day={tableScreenState.get.currentDay} user={user} setUser={setUser}></Graph>
+                                        <GraphMemo reqs={!(reqs) ? [] : reqs} shifts={!(shifts) ? [] : shifts} skill={tableAlgo1State.get.currentSkill} day={tableScreenState.get.currentDay} user={user} setUser={setUser}></GraphMemo>
                                     </div>
                                     <div className="col-1">
                                         {/* <div>reqs {JSON.stringify(!(tableAlgo1State.get.req) ? [] : tableAlgo1State.get.req)}</div>
@@ -320,8 +356,11 @@ function TableScreen({ user, setUser }) {
 
                 </div>
                 <Modal show={showWarningModal} onHide={handleCloseWarningModal} centered>
-                    <Modal.Header closeButton style={{ paddingRight: '1rem' }}>
+                    <Modal.Header style={{ paddingRight: '1rem' }}>
                         <Modal.Title className="text-center w-100">Which Results To Choose?</Modal.Title>
+                        <button type="button" className="close" onClick={() => setShowWarningModal(false)} aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </Modal.Header>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={generateAgain} className="mr-auto">
