@@ -44,7 +44,8 @@ const updateTable = async (tableNum, tableContent, email, googleId) => {
                         skill1: lineData[2],
                         skill2: lineData[3],
                         skill3: lineData[4],
-                        contract: lineData[5],
+                        minHouers: lineData[5],
+                        maxHouers: lineData[6],
                     });
                     const savedLine = await tableLine1.save();
                     tableLines1.push(savedLine._id);
@@ -110,7 +111,8 @@ const formatTable = (tableNum, tableContent) => {
                     line.skill1,
                     line.skill2,
                     line.skill3,
-                    line.contract,
+                    String(line.minHouers),
+                    String(line.maxHouers),
                 ]);
             case 2:
                 return tableContent.map(line => [
