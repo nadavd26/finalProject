@@ -30,7 +30,7 @@ const isNoneNegativeNumber = (number) => {
 //This functions checks that table is a valid table1.
 const validateTable1 = (table) => {
     for (line of table) {
-        if (line.length != 6 || line[0] == '' || line[1] == '' || line[2] == '' || line[5] == '')
+        if (line.length != 7 || line[0] == '' || line[1] == '' || line[2] == '' )
             return false;
     }
     return true;
