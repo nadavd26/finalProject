@@ -3,8 +3,16 @@ export default function NonEditableCell({ value, rowIndex, shiftIndex, columnInd
     // console.log("color" + color)
     const cellStyle = columnIndex === 0 ? { borderLeftWidth: '1px' } : { borderLeftWidth: '0px' };
     var finalColor = color ? color : "white"
-    if (color == "redorange") {
+    if (color.includes("red")) {
         finalColor = "red"
+    } else {
+        if (color.includes("orange")) {
+            finalColor = "orange"
+        } else {
+            if (color.includes("yellow")) {
+                finalColor = "yellow"
+            }
+        }
     }
     
     // console.log("finalcolor " + finalColor)

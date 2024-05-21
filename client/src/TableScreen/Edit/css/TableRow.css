@@ -44,6 +44,10 @@
     background-color: orange !important;
 }
 
+.yellow {
+    background-color: yellow !important;
+}
+
 .optionInvisible {
     display: none;
 }

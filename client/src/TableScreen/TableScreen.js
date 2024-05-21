@@ -157,25 +157,35 @@ function TableScreen({ user, setUser }) {
     //     setUser(newUser)
     //     tableScreenState.setIs1Generated(true)
     // }
-
-    async function generateResults2(algo2table, fromDb) {
+    async function generateResults2(algo2table ,fromDb) {
+        var newUser = user
+        if (!algo2table) {
+            newUser.contracts = []
+        }
         const res = algo2table ? algo2table : await utils.generateAlgo2Results(user.token, fromDb)
         // console.log("res")
         // console.log(JSON.stringify(res))
-        var newUser = user
+        if (!algo2table) {
+            newUser.contracts = utils.generateContracts(user.table1, res)
+            console.log( "newUser.contracts")
+            console.log( newUser.contracts)
+        }
         newUser.algo2Table = res
         const ui = utils.generateAlgoGraphicResults(res)
         newUser.algo2Graphic = ui
         var shifts = utils.generateAlgoShifts(res)
         // console.log("shifts")
         // console.log(shifts)
-        algo2TableState.setShiftsInfo(shifts)
-        var shiftsPerWorkers = utils.generateShiftsPerWorker(res)
-        algo2TableState.setShiftsPerWorkers(shiftsPerWorkers)
+
         // console.log("ui")
         // console.log(JSON.stringify(ui))
         setUser(newUser)
+        algo2TableState.setShiftsInfo(shifts)
+        var shiftsPerWorkers = utils.generateShiftsPerWorker(res)
+        algo2TableState.setShiftsPerWorkers(shiftsPerWorkers)
         algo2TableState.setCurrentWorkersAndShifts((user.algo2Graphic)[tableScreenState.get.currentDay])
+        console.log("newUser")
+        console.log(newUser)
         tableScreenState.setIs2Generated(true)
     }
 
@@ -256,7 +266,7 @@ function TableScreen({ user, setUser }) {
     }
 
     async function table2finishEditCallback() {
-        await generateResults2(user.algo2Table, true)
+        await generateResults2(user.algo2Table,true)
     }
 
     //i want to pass a deep copy to EditResFile2 and because json.parse does not parse sets, i need to convert them to array, parse and then convert back to sets 
@@ -272,7 +282,7 @@ function TableScreen({ user, setUser }) {
             finishCallback={table1finishEditCallback}
         />
     ) : (
-        <EditResFile2 initialTable={JSON.parse(JSON.stringify(user.algo2Table))}
+        <EditResFile2 initialTable={JSON.parse(JSON.stringify(user.algo2Table))} contracts={JSON.parse(JSON.stringify(user.contracts))}
             currentDay={tableScreenState.get.currentDay} setInEdit={editInfoState.setInEdit} user={user} setUser={setUser} workerMap={tableScreenState.get.workerMap}
             shiftsInfo={(algo2TableState.get.shiftInfo)} shiftsPerWorkers={arraysToSets(JSON.parse(JSON.stringify(setsToArrays(algo2TableState.get.shiftsPerWorkers))))} setShiftsPerWorkers={algo2TableState.setShiftsPerWorkers} finishCallback={table2finishEditCallback} />
     );

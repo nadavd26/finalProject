@@ -599,6 +599,56 @@ export async function postAlgo1Res(table, token) {
 }
 
 
+export function calculateHours(from, until) {
+
+    // Helper function to convert time string to total minutes from midnight
+    function timeToMinutes(time) {
+        const [hours, minutes] = time.split(':').map(Number);
+        return hours * 60 + minutes;
+    }
+
+    // Convert times to total minutes
+    const fromMinutes = timeToMinutes(from);
+    const untilMinutes = timeToMinutes(until);
+
+    // Calculate the difference in minutes
+    // If `until` is less than `from`, it means it passed midnight
+    const minutesDifference = untilMinutes >= fromMinutes
+        ? untilMinutes - fromMinutes
+        : (24 * 60 - fromMinutes) + untilMinutes;
+
+    // Convert minutes to hours
+    const hours = minutesDifference / 60;
+
+    return hours;
+}
+
+export function generateContracts(table1, tableAlgo2) {
+    var contracts = {}
+    for (let i = 0; i < table1.length; i++) {
+        const row = table1[i]
+        const id = row[0]
+        const name = row[1]
+        const minHours = row[5]
+        const maxHours = row[6]
+        contracts[name+"\n"+id] = {minHours: !minHours || minHours.length == 0? 0 : minHours, maxHours: !maxHours || maxHours.length == 0? 169 : maxHours, assignment: 0}
+    }
+
+    var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    for (let i = 0; i < days.length; i++) {
+        const table = tableAlgo2[days[i]]
+        for (let j = 0; j < table.length; j++) {
+            const row = table[j]
+            const assigned = row[4]
+            const hours = calculateHours(row[2], row[3])
+            if (assigned != "") {
+                contracts[assigned].assignment += hours
+            }
+        }
+    }
+
+    return contracts
+}
 
 export function getKey(day, skill, req) {
     if (!req) {

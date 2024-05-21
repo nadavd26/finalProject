@@ -7,15 +7,24 @@ export default function WorkerDropdown({ value, rowIndex, coloumnIndex, workerLi
         visibility: color === 'white' ? 'hidden' : 'visible'
     };
     var finalColor = color ? color : "white"
-    if (color == "red") {
-        if (shiftIndex % 2 == 0) {
-            finalColor = "pink"
-        }
+    if (color.includes("red")) {
+        finalColor = "red"
     } else {
-        if (shiftIndex % 2 == 1) {
-            finalColor = "gray"
+        if (color.includes("orange")) {
+            finalColor = "orange"
+        } else {
+            if (color.includes("yellow")) {
+                finalColor = "yellow"
+            }
         }
     }
+    // if (color == "redorange" || color == "redyellow" || color == "redorangeyellow") {
+    //     finalColor = "red"
+    // }
+
+    // if (color == "orangeyellow") {
+    //     finalColor = "orange"
+    // }
     var startIndex = value == "" ? 0 : 1
     var shownValue = value
     if (value == "") {
@@ -33,11 +42,34 @@ export default function WorkerDropdown({ value, rowIndex, coloumnIndex, workerLi
     // Add a hidden first option
     let options = [];
     if (workerList.length > 0) {
-        options = workerList.map(worker => ({
-            label: `${worker.name}\n${worker.id}`,
-            value: `${worker.name},${worker.id},${worker.color}`,
-            color: worker.color == "redorange" ? "red" : worker.color
-        }));
+        options = workerList.map(worker => {
+            // let finalColor = worker.color ? worker.color : "white";
+
+            // if (worker.color == "redorange" || worker.color == "redyellow" || worker.color == "redorangeyellow") {
+            //     finalColor = "red";
+            // } else if (worker.color == "orangeyellow") {
+            //     finalColor = "orange";
+            // }
+            let finalColor = worker.color ? worker.color : "white";
+            if (worker.color.includes("red")) {
+                finalColor = "red"
+            } else {
+                if (worker.color.includes("orange")) {
+                    finalColor = "orange"
+                } else {
+                    if (worker.color.includes("yellow")) {
+                        finalColor = "yellow"
+                    }
+                }
+            }
+
+            return {
+                label: `${worker.name}\n${worker.id}`,
+                value: `${worker.name},${worker.id},${worker.color}`,
+                color: finalColor
+            };
+        });
+
     } else {
         // Add a non-clickable option when workerList is empty
         options = [{
@@ -88,7 +120,7 @@ export default function WorkerDropdown({ value, rowIndex, coloumnIndex, workerLi
     };
 
     return (
-        <td id={`cell-${rowIndex}-${coloumnIndex}`} className={`cell100 last-columns worker-dropdown ${color == "redorange" ? "red" : color}`}>
+        <td id={`cell-${rowIndex}-${coloumnIndex}`} className={`cell100 last-columns worker-dropdown ${finalColor}`}>
             <div className="cell-content" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <div className='selection' style={{ width: '75%' }}>
                     <Select

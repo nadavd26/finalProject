@@ -32,7 +32,7 @@ const TableRow = ({ rowIndex, row, color, generateWorkerList, onCellEdit, getLin
             <NonEditableCell value={row[2]} rowIndex={rowIndex} columnIndex={2} color={color} additionalClass={"no-left"} shiftIndex={row[5]} hidden={hidden} style={{fontSize: "1.5vw"}}/>
             <NonEditableCell value={row[3]} rowIndex={rowIndex} columnIndex={3} color={color} additionalClass={"no-left"} shiftIndex={row[5]} hidden={hidden} style={{fontSize: "1.5vw"}}/>
             <WorkerDropdown value={row[4]} rowIndex={rowIndex} columnIndex={4} color={color} workerList={generateWorkerList(rowIndex, capitalizeFirstLetter(row[0]))} onCellEdit={onCellEdit} shiftIndex={row[5]} getLineInfo={getLineInfo} hidden={hidden} />
-            <ShiftIdCell value={(row[5] + 1)} rowIndex={rowIndex} columnIndex={3} color={color} additionalClass={"no-left"} shiftIndex={row[5]} hidden={hidden} />
+            <ShiftIdCell value={(row[5] + 1) + " " + color} rowIndex={rowIndex} columnIndex={3} color={color} additionalClass={"no-left"} shiftIndex={row[5]} hidden={hidden} />
         </tr>
     );
 };

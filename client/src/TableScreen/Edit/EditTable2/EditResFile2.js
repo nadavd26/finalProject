@@ -17,7 +17,9 @@ import SearchDropdown from "../components/SearchDropdown";
 import filterTableLoader from "../components/FilterTableLoader";
 import FilterTableLoader from "../components/FilterTableLoader";
 
-export default function EditResFile2({ initialTable, setInEdit, user, setUser, workerMap, shiftsInfo, shiftsPerWorkers, setShiftsPerWorkers, finishCallback }) {
+export default function EditResFile2({ initialTable, contracts, setInEdit, user, setUser, workerMap, shiftsInfo, shiftsPerWorkers, setShiftsPerWorkers, finishCallback }) {
+    console.log("contracts")
+    console.log(JSON.stringify(contracts))
     const [currentIndex, setCurrentIndex] = useState(0)
     const [searchedIndex, setSearchedIndex] = useState('')
     const [isGenerated, setIsGenerated] = useState(false)
@@ -52,6 +54,33 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
     const defaultErrorMsg = "There are workers who work in 2 diffrent shifts at the same time."
     const [errorMsg, setErrorMsg] = useState(defaultErrorMsg)
     const token = user.token
+    function initialColors() {
+        var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+        var colors = []
+        for (let i = 0; i < days.length; i++) {
+            const table = initialTable[days[i]]
+            for (let j = 0; j < table.length; j++) {
+                const row = table[j]
+                const assigned = row[4]
+                const contract = contracts[assigned]
+                if (contract) {
+                    if (contract.minHours > contract.assignment) {
+                        colors.push("yellow")
+                    } else {
+                        if (contract.maxHours < contract.assignment) {
+                            colors.push("orange")
+                        } else { //valid
+                            colors.push("white")
+                        }
+                    }
+                } else {
+                    colors.push("white")
+                }
+            }
+        }
+
+        return colors
+    }
     useEffect(() => {
         const newTable = [
             ...initialTable.Sunday,
@@ -62,10 +91,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
             ...initialTable.Friday,
             ...initialTable.Saturday
         ];
-        var newColors = Array.from({
-            length: initialTable.Sunday.length + initialTable.Monday.length + initialTable.Tuesday.length +
-                initialTable.Wednesday.length + initialTable.Thursday.length + initialTable.Friday.length + initialTable.Saturday.length
-        }, () => "white")
+        var newColors = initialColors()
 
         var newOptions = options
         newOptions.day = getDayOptions()
@@ -177,26 +203,46 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
 
     }
 
-    function getColor(id, name, day, row) {
-        var color = "white"
+
+
+    function getColor(id, name, day, row, contracts) {
+        const white = "white"
+        const red = "red"
+        const yellow = "yellow"
+        const orange = "orange"
+        const green = "green"
+        var color = white
         const shiftSet = utils.getShiftsForWorker((renderInfo.shiftsPerWorkers)[day], id, name);
-        const shiftsWorker = getShifts(name + "\n" + id, shiftsPerWorkers)
+        // const shiftsWorker = getShifts(name + "\n" + id, shiftsPerWorkers)
         // console.log("shiftsWorker" + shiftsWorker)
+        const contract = contracts[name + "\n" + id]
         // console.log("numShifts")
         // console.log(numShifts)
-        const contract = 2
-        if (shiftsWorker.length + 1 > contract) { //selecting worker violates contract
-            color = "orange"
+        if (contract.assignment + utils.calculateHours(row[2], row[3]) < contract.minHours) { //selecting worker violates contract
+            color = yellow
+        } else {
+            if (contract.assignment < contract.minHours) {
+                color = green
+            }
+        }
+        if (utils.calculateHours(row[2], row[3]) + contract.assignment > contract.maxHours) { //selecting worker violates contract
+            if (color != white) {
+                color = orange + color
+            } else {
+                color = orange
+            }
         }
         for (const relativeIndex of shiftSet) {
             const absuluteIndex = getAbsuluteIndex(relativeIndex, day)
             const shiftRow = (renderInfo.table)[absuluteIndex];
 
             if (utils.checkOverlap(shiftRow[2], shiftRow[3], row[2], row[3])) {
-                return color == "orange" ? "redorange" : "red"; // Return "red" if there's an overlap
+                if (color != white) {
+                    return red + color
+                }
+                return red
             }
         }
-
         return color; // Return "white" if no overlap is found
     }
 
@@ -270,7 +316,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
         const row = (renderInfo.table)[absuluteIndex]
         const day = capitalizeFirstLetter(row[0])
         const worker = row[4]
-        if (renderInfo.colors[absuluteIndex] == "red" || renderInfo.colors[absuluteIndex] == "redorange") {
+        if (renderInfo.colors[absuluteIndex].includes("red")) {
             const shiftsId = row[5]
             const shiftEntry = shiftsInfo[day][shiftsId]
             const overlaps = shiftEntry.overlaps
@@ -289,15 +335,19 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
             }
         }
 
-        if (renderInfo.colors[absuluteIndex] == "orange" || renderInfo.colors[absuluteIndex] == "redorange") {
-            var contract = 2
+        const contract = contracts[worker]
+
+        if ((renderInfo.colors[absuluteIndex]).includes("orange")) {
             var workerShifts = getShifts(worker, shiftsPerWorkers, 1)
-            if (workerShifts.length > contract) {
-                workerShifts = workerShifts.filter(item => item != (absuluteIndex))
-                workerShifts = workerShifts.map((item, index) => item + 1);
-                workerShifts.sort((a, b) => a - b);
-                contractMsg = "Current contract " + contract + ", number of shifts " + (workerShifts.length + 1) + "." + "\nOther assigments of this worker at indexes: " + workerShifts.join(", ")
-            }
+            workerShifts = workerShifts.filter(item => item != (absuluteIndex))
+            workerShifts = workerShifts.map((item, index) => item + 1);
+            workerShifts.sort((a, b) => a - b);
+            var otherAss = workerShifts.join(", ")
+            contractMsg = "Maximum hours per week: " + contract.maxHours + ", number of hours: " + (contract.assignment) + "." + (otherAss != [] ? ("\nOther assigments of this worker at indexes: " + otherAss) : " Number of shifts: 1")
+        }
+
+        if ((renderInfo.colors[absuluteIndex]).includes("yellow")) {
+            contractMsg = "Minimum hours per week: " + contract.minHours + ", number of hours: " + (contract.assignment) 
         }
 
         console.log("overlapsLineNumbers")
@@ -342,7 +392,7 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
                 transformedWorkerList.push({
                     id: worker.id, // Assuming the worker object has an id property
                     name: worker.name, // Assuming the worker object has a name property
-                    color: getColor(worker.id, worker.name, day, row)
+                    color: getColor(worker.id, worker.name, day, row, contracts)
                 });
             }
             // console.log("transformedWorkerList")
@@ -362,9 +412,23 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
         return absuluteIndex - firstIndex(day)
     }
 
+
+    function addColor(start, newColor) {
+        return start + newColor
+    }
+
+    function removeColor(start, colorToRemove) {
+        // Use the replace method with a regular expression and the global flag to remove all instances
+        const regex = new RegExp(colorToRemove, 'g');
+        var res = start.replace(regex, '');
+        if (!res || res.length == 0) {
+            return "white"
+        }
+
+        return res
+    }
+
     function handleCellEdit(newWorker, rowIndex) {
-        var newWorkerContract = 2
-        var oldWorkerContract = 2
         const row = (renderInfo.table)[rowIndex]
         console.log("row")
         console.log(row)
@@ -376,7 +440,28 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
         const [newName = "", newId = "", newColor = "white"] = newWorker.split(",")
         const [oldName, oldId] = (row[4]).split("\n")
         const oldWorker = oldName + "\n" + oldId
+        const newContracts = contracts
+        console.log("newContracts")
+        console.log(newContracts)
+        console.log("oldWorker")
+        console.log(oldWorker)
+        console.log("newWorker")
+        console.log(newWorker)
+        console.log(" newContracts[oldWorker]")
+        console.log(newContracts[oldWorker])
+        console.log("newContracts[newWorker]")
+        console.log(newContracts[newName + "\n" + newId])
+        if (newContracts.hasOwnProperty(oldWorker)) { //maybe ""
+            newContracts[oldWorker].assignment -= utils.calculateHours(row[2], row[3])
+        }
 
+        if (newContracts.hasOwnProperty(newName + "\n" + newId)) {
+            newContracts[newName + "\n" + newId].assignment += utils.calculateHours(row[2], row[3])
+        }
+        const oldWorkerContract = newContracts[oldWorker]
+        const newWorkerContract = newContracts[newName + "\n" + newId]
+        console.log("newContracts")
+        console.log(newContracts)
         var newShiftPerWorkersDay = newName != "" ? utils.addShiftToWorker((renderInfo.shiftsPerWorkers)[day], newId, newName, getRelativeIndex(rowIndex, day)) : (renderInfo.shiftsPerWorkers)[day]
         utils.removeShiftFromWorker(newShiftPerWorkersDay, oldId, oldName, getRelativeIndex(rowIndex, day))
         var newShiftPerWorkers = renderInfo.shiftsPerWorkers
@@ -384,23 +469,30 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
         var oldWorkerShifts = getShifts(oldWorker, newShiftPerWorkers)
         newTable[rowIndex][4] = (newName == "") ? "" : newName + "\n" + newId
         newColors[rowIndex] = newColor
-        if (newColor == "red" || newColor == "redorange") { //checking for overlapping shifts to color in red
+        if (newColor.includes("red")) { //checking for overlapping shifts to color in red
             const shiftsOfNewWorker = utils.getShiftsForWorker((renderInfo.shiftsPerWorkers)[day], newId, newName)
             for (const relativeIndex of shiftsOfNewWorker) {
                 const absuluteIndex = getAbsuluteIndex(relativeIndex, day)
                 const from = (renderInfo.table)[absuluteIndex][2]
                 const until = (renderInfo.table)[absuluteIndex][3]
                 if (utils.checkOverlap(from, until, row[2], row[3])) { //overlaps with some shift of new worker
-                    if (newColors[absuluteIndex] == "orange") {
-                        newColors[absuluteIndex] = "redorange"
-                    } else {
+                    // if (newColors[absuluteIndex] == "orange") {
+                    //     newColors[absuluteIndex] = "redorange"
+                    // } else {
+                    //     newColors[absuluteIndex] = "red"
+                    // }
+
+                    if (newColors[absuluteIndex] != "white" && !((newColors[absuluteIndex]).includes("red"))) {
+                        newColors[absuluteIndex] = "red" + newColors[absuluteIndex]
+                    }
+                    if (newColors[absuluteIndex] == "white") {
                         newColors[absuluteIndex] = "red"
                     }
                 }
             }
         }
 
-        if (oldColor == "red" || oldColor == "redorange") {//removing the overlaps of the old worker
+        if (oldColor.includes("red")) {//removing the overlaps of the old worker
             const shiftsOfOldWorker = utils.getShiftsForWorker(newShiftPerWorkersDay, oldId, oldName)
             for (const relativeIndex of shiftsOfOldWorker) {
                 // console.log("relativeIndex")
@@ -424,12 +516,13 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
                     }
 
                     if (!found) { //only overlap it has it is with the original shift
-                        if (newColors[absuluteIndex] == "redorange") {
-                            newColors[absuluteIndex] = "orange"
-                        }
-                        else {
-                            newColors[absuluteIndex] = "white"
-                        }
+                        newColors[absuluteIndex] = removeColor(newColors[absuluteIndex], "red")
+                        // if (newColors[absuluteIndex] == "redorange") {
+                        //     newColors[absuluteIndex] = "orange"
+                        // }
+                        // else {
+                        //     newColors[absuluteIndex] = "white"
+                        // }
                     }
                 }
             }
@@ -439,16 +532,57 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
         const parts = newWorker.split(',');
         const newWorkerString = parts.slice(0, 2).join('\n');
         var newWorkerShifts = getShifts(newWorkerString, newShiftPerWorkers)
-        if (newColor == "orange" || newColor == "redorange") {
-            for (let i = 0; i < newWorkerShifts.length; i++) {
-                const absuluteIndex = newWorkerShifts[i]
-                if (newColors[absuluteIndex] == "white") {
-                    newColors[absuluteIndex] = "orange"
-                }
-                if (newColors[absuluteIndex] == "red") {
-                    newColors[absuluteIndex] = "redorange"
-                }
+        // if (newColor.includes("orange")) {
+        //     for (let i = 0; i < newWorkerShifts.length; i++) {
+        //         const absuluteIndex = newWorkerShifts[i]
+        //         // if (newColors[absuluteIndex] == "white") {
+        //         //     newColors[absuluteIndex] = "orange"
+        //         // }
+        //         // if (newColors[absuluteIndex] == "red") {
+        //         //     newColors[absuluteIndex] = "redorange"
+        //         // }
+        //         newColors[absuluteIndex] = addColor(newColors[absuluteIndex], "orange")
+        //     }
+        // }
+
+        // if (newColor.includes("yellow")) {
+        //     for (let i = 0; i < newWorkerShifts.length; i++) {
+        //         const absuluteIndex = newWorkerShifts[i]
+        //         // if (newColors[absuluteIndex] == "white") {
+        //         //     newColors[absuluteIndex] = "orange"
+        //         // }
+        //         // if (newColors[absuluteIndex] == "red") {
+        //         //     newColors[absuluteIndex] = "redorange"
+        //         // }
+        //         newColors[absuluteIndex] = addColor(newColors[absuluteIndex], "yellow")
+        //     }
+        // }
+
+        if (newColor.includes("orange")) {
+            // for (let i = 0; i < newWorkerShifts.length; i++) {
+            //     const absuluteIndex = newWorkerShifts[i]
+            //     newColors[absuluteIndex] = addColor(newColors[absuluteIndex], "orange")
+            // }
+        }
+
+        for (let i = 0; i < newWorkerShifts.length; i++) {
+            const absuluteIndex = newWorkerShifts[i]
+            if (newWorkerContract.assignment <= newWorkerContract.maxHours && newWorkerContract.assignment >= newWorkerContract.minHours) { //valid
+                newColors[absuluteIndex] = removeColor(newColors[absuluteIndex], "yellow")
+                newColors[absuluteIndex] = removeColor(newColors[absuluteIndex], "orange")
             }
+
+            if (newWorkerContract.assignment < newWorkerContract.minHours) { //too less hours
+                newColors[absuluteIndex] = addColor(newColors[absuluteIndex], "yellow")
+            }
+
+            if (newWorkerContract.assignment > newWorkerContract.maxHours) { //too much
+                newColors[absuluteIndex] = addColor(newColors[absuluteIndex], "orange")
+            }
+        }
+
+        if (newColor.includes("green")) {
+            newColors[rowIndex] = removeColor(newColors[rowIndex], "green")
         }
 
 
@@ -456,26 +590,48 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
         console.log(oldWorker)
         // console.log("oldWorkerShifts")
         //     console.log(oldWorkerShifts)
-        if (oldColor == "orange" || oldColor == "redorange") { //now cheking if the removed worker obeys the contract
-            console.log("old worker orange")
-            console.log("oldWorkerShifts")
-            console.log(oldWorkerShifts)
-            var contract = 2
-            if (oldWorkerShifts.length <= contract) { //removing this shift makes the contract valid
-                for (let i = 0; i < oldWorkerShifts.length; i++) {
-                    const absuluteIndex = oldWorkerShifts[i]
-                    console.log("absuluteIndex")
-                    console.log(absuluteIndex)
-                    if (newColors[absuluteIndex] == "orange") {
-                        newColors[absuluteIndex] = "white"
-                    }
-                    if (newColors[absuluteIndex] == "redorange") {
-                        newColors[absuluteIndex] = "red"
-                    }
-                    newRowsToRender[absuluteIndex] = true
-                }
+        for (let i = 0; i < oldWorkerShifts.length; i++) {
+            const absuluteIndex = oldWorkerShifts[i]
+            if (oldWorkerContract.assignment <= oldWorkerContract.maxHours && oldWorkerContract.assignment >= oldWorkerContract.minHours) { //valid
+                newColors[absuluteIndex] = removeColor(newColors[absuluteIndex], "yellow")
+                newColors[absuluteIndex] = removeColor(newColors[absuluteIndex], "orange")
+            }
+
+            if (oldWorkerContract.assignment < oldWorkerContract.minHours) { //too less hours
+                newColors[absuluteIndex] = addColor(newColors[absuluteIndex], "yellow")
+            }
+
+            if (oldWorkerContract.assignment > oldWorkerContract.maxHours) { //too much
+                newColors[absuluteIndex] = addColor(newColors[absuluteIndex], "orange")
             }
         }
+
+        // if (oldColor.includes("orange")) { //now cheking if the removed worker obeys the contract
+        //     console.log("old worker orange")
+        //     console.log("oldWorkerShifts")
+        //     console.log(oldWorkerShifts)
+        //     if (oldWorkerContract.assignment <= oldWorkerContract.maxHours) { //removing this shift makes the contract below maxHours
+        //         for (let i = 0; i < oldWorkerShifts.length; i++) {
+        //             const absuluteIndex = oldWorkerShifts[i]
+        //             console.log("absuluteIndex")
+        //             console.log(absuluteIndex)
+        //             // if (newColors[absuluteIndex] == "orange") {
+        //             //     newColors[absuluteIndex] = "white"
+        //             // }
+        //             // if (newColors[absuluteIndex] == "redorange") {
+        //             //     newColors[absuluteIndex] = "red"
+        //             // }
+        //             newColors[absuluteIndex] = removeColor(newColors[absuluteIndex], "orange")
+        //             newRowsToRender[absuluteIndex] = true
+        //         }
+        //     }
+        // }
+
+        // if(oldWorkerContract.assignment <= oldWorkerContract.maxHours && oldWorkerContract.assignment >= oldWorkerContract.minHours) {
+        //     if (!(oldColor.includes("yellow"))) {
+
+        //     }
+        // }
 
 
         var newRowsToRender = {}
@@ -484,9 +640,11 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
         for (let i = currentIndex; i <= endOfPage; i++) {
             let absuluteIndex = linesFiltered[i]
             let rowChcked = renderInfo.table[absuluteIndex]
-            if (capitalizeFirstLetter(rowChcked[0]) == day && (utils.checkOverlap(rowChcked[2], rowChcked[3], row[2], row[3]))) {
-                newRowsToRender[linesFiltered[i]] = true
-            }
+            // if (capitalizeFirstLetter(rowChcked[0]) == day && (utils.checkOverlap(rowChcked[2], rowChcked[3], row[2], row[3]))) {
+            //     newRowsToRender[linesFiltered[i]] = true
+            // }
+
+            newRowsToRender[linesFiltered[i]] = true
 
             // console.log("workerMap.get(rowChcked[1])")
             // console.log(workerMap.get(rowChcked[1]))
@@ -494,15 +652,15 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
             // console.log({id: newId, name: newName})
             // console.log("workerMap.get(rowChcked[1]).indexOf({id: newId, name: newName})")
             // console.log(workerMap.get(rowChcked[1]).indexOf({id: newId, name: newName}))
-            const objToFind = { id: newId, name: newName }
-            if ((workerMap.get(rowChcked[1]).findIndex(obj => obj.id === objToFind.id && obj.name === objToFind.name) != -1) && newWorkerShifts.length >= newWorkerContract) { //need to render only if contract violation
-                newRowsToRender[linesFiltered[i]] = true
-            }
+            // const objToFind = { id: newId, name: newName }
+            // if ((workerMap.get(rowChcked[1]).findIndex(obj => obj.id === objToFind.id && obj.name === objToFind.name) != -1) && newWorkerShifts.length >= newWorkerContract) { //need to render only if contract violation
+            //     newRowsToRender[linesFiltered[i]] = true
+            // }
 
-            const objToFind2 = { id: oldId, name: oldName }
-            if ((workerMap.get(rowChcked[1]).findIndex(obj => obj.id === objToFind2.id && obj.name === objToFind2.name) != -1) && newWorkerShifts.length <= newWorkerContract) { //need to render only if contract becomes valid
-                newRowsToRender[linesFiltered[i]] = true
-            }
+            // const objToFind2 = { id: oldId, name: oldName }
+            // if ((workerMap.get(rowChcked[1]).findIndex(obj => obj.id === objToFind2.id && obj.name === objToFind2.name) != -1) && newWorkerShifts.length <= newWorkerContract) { //need to render only if contract becomes valid
+            //     newRowsToRender[linesFiltered[i]] = true
+            // }
 
             // newRowsToRender[linesFiltered[i]] = true
         }
@@ -522,11 +680,11 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
         var isValid = true;
         var isWarning = false
         for (const color of renderInfo.colors) {
-            if (color == "red" || color == "redorange") {
+            if (color.includes("red")) {
                 isValid = false
             }
 
-            if (color == "orange") {
+            if (color.includes("orange") || color.includes("yellow")) {
                 isWarning = true
             }
         }
@@ -558,9 +716,10 @@ export default function EditResFile2({ initialTable, setInEdit, user, setUser, w
     const finishEdit = async () => {
         var newUser = user
         newUser.algo2Table = initialTable
+        newUser.contracts = contracts
         console.log("initialTable")
         console.log(initialTable)
-        utils.postAlgo2Results(user.token, initialTable, ()=>{})
+        utils.postAlgo2Results(user.token, initialTable, () => { })
         setShiftsPerWorkers(renderInfo.shiftsPerWorkers)
         setUser(newUser)
         setInEdit(false)
