@@ -21,21 +21,22 @@ const validateInputTables = async (req, res) => {
         const info6 = TableValidator.validateTable1SkillsInTable3(table1.table1Content, table3.table3Content)
         const info7 = TableValidator.validateTable1SkillsInTable2(table1.table1Content, table2.table2Content)
 
-        if (!(info1[0] && info2[0] && info3[0] && info4[0] && info5[0] && info6[0] && info6[2] && info7[0] && info7[2])) { //Checking if everything is valid.
+        if (!(info2[0] && info5[0])) { //Checking if everything is valid.
             const errorMsg = {
-                type: "error", msg: (info1[0] ? "" : info1[1] + "\n") +
+                type: "error", msg:
                     (info2[0] ? "" : info2[1] + "\n") +
-                    (info4[0] ? "" : info4[1] + "\n") +
-                    (info5[0] ? "" : info5[1] + "\n") +
-                    (info6[0] ? "" : info6[1] + "\n") +
-                    (info7[0] ? "" : info7[1] + "\n")
+                    (info5[0] ? "" : info5[1] + "\n") 
             }
             res.status(404).send(errorMsg)
-        } else if (!(info3[0] && info6[2] && info7[2])) {
+        } else if (!(info1[0] && info3[0] && info4[0] && info6[0] && info7[0] && info6[2] && info7[2])) {
             const warningMsg = {
                 type: "warning", msg:
+                    (info1[0] ? "" : info1[1] + "\n") +
                     (info3[0] ? "" : info3[1] + "\n") +
+                    (info4[0] ? "" : info4[1] + "\n") +
+                    (info6[0] ? "" : info6[1] + "\n") +
                     (info6[2] ? "" : info6[3] + "\n") +
+                    (info7[0] ? "" : info7[1] + "\n") +
                     (info7[2] ? "" : info7[3] + "\n")
             }
             res.status(404).send(warningMsg)
