@@ -58,7 +58,7 @@ export async function validateInputTables(token) {
     // Show the server's response    
     if (!res.ok) {
         const body = await res.text()
-        return body
+        return JSON.parse(body)
     } 
     return ""
 }

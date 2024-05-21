@@ -13,6 +13,8 @@ import { ExclamationTriangleFill } from 'react-bootstrap-icons';
 function UploadScreen({ user, setUser }) {
   const [showGenerateModal, setShowGenerateModal] = useState(false);
   const [showWarningModal, setShowWarningModal] = useState(false)
+  const [showErrorModal, setShowErrorModal] = useState(false)
+  const [validationError, setValidationError] = useState("")
   const [validationWarning, setValidationWarning] = useState("")
   const [selectedButton, setSelectedButton] = useState("FirstFileButton");
   const [showSubmitAlert, setShowSubmitAlert] = useState(false);
@@ -65,12 +67,17 @@ function UploadScreen({ user, setUser }) {
         setShowSubmitAlert(false);
       }, 2500);
     } else {
-      const warning = await validateInputTables(user.token)
-      console.log("warning")
-      console.log(warning)
-      if (warning != "") {
-        setValidationWarning(warning)
-        setShowWarningModal(true)
+      const res = await validateInputTables(user.token)
+      console.log("res")
+      console.log(res)
+      if (res != "") {
+        if (res.type == "warning") {
+          setValidationWarning(res.msg)
+          setShowWarningModal(true)
+        } else {
+          setValidationError(res.msg)
+          setShowErrorModal(true)
+        }
       } else {
         generate()
       }
@@ -131,6 +138,11 @@ function UploadScreen({ user, setUser }) {
     setUser(newUser)
     navigate("/table")
   }
+  function renderStringWithLineBreaks(inputString) {
+    const lines = inputString.split('\n');
+    return lines.map((line, index) => <div key={index}>{line}</div>);
+  }
+
   return (
     !editInfo.inEdit ? (
       <div id="upload_screen">
@@ -242,7 +254,7 @@ function UploadScreen({ user, setUser }) {
           </Modal.Footer>
         </Modal>
 
-        <Modal show={showWarningModal} onHide={handleCloseWarningModal} centered>
+        {/* <Modal show={showWarningModal} onHide={handleCloseWarningModal} centered>
           <Modal.Header style={{ backgroundColor: '#f8d7da', paddingRight: '1rem' }}>
             <Modal.Title className="text-center w-100" style={{ color: '#721c24' }}>
               <ExclamationTriangleFill style={{ marginRight: '10px' }} /> Warning
@@ -251,7 +263,7 @@ function UploadScreen({ user, setUser }) {
               <span aria-hidden="true">&times;</span>
             </button>
           </Modal.Header>
-          <Modal.Body style={{ backgroundColor: '#f8d7da', color: '#721c24' }}>
+          <Modal.Body style={{ backgroundColor: '#f8d7da', color: '#721c24', whiteSpace: 'pre-wrap' }}>
             {validationWarning}
           </Modal.Body>
           <Modal.Footer style={{ backgroundColor: '#f8d7da', display: 'flex', justifyContent: 'space-between' }}>
@@ -262,7 +274,49 @@ function UploadScreen({ user, setUser }) {
               Generate Anyway
             </Button>
           </Modal.Footer>
+        </Modal> */}
+
+        <Modal show={showWarningModal} onHide={handleCloseWarningModal} centered>
+          <Modal.Header style={{ backgroundColor: '#FCFFA5', paddingRight: '1rem' }}>
+            <Modal.Title className="text-center w-100" style={{ color: '#7F8307' }}>
+              <ExclamationTriangleFill style={{ marginRight: '10px', color: '#7F8307' }} /> Warning
+            </Modal.Title>
+            <button type="button" className="close" onClick={() => setShowWarningModal(false)} aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </Modal.Header>
+          <Modal.Body style={{ backgroundColor: '#FCFFA5', color: '#7F8307', whiteSpace: 'pre-wrap'}}>
+            {validationWarning}
+          </Modal.Body>
+          <Modal.Footer style={{ backgroundColor: '#FCFFA5', display: 'flex', justifyContent: 'space-between' }}>
+            <Button onClick={handleCloseWarningModal} className="mr-auto" style={{backgroundColor: '#7F8307', borderColor: '#7F8307'}}>
+              Ok
+            </Button>
+            <Button variant="danger" onClick={generateAnyway} style={{backgroundColor: '#7F8307', borderColor: '#7F8307'}}>
+              Generate Anyway
+            </Button>
+          </Modal.Footer>
         </Modal>
+
+        <Modal show={showErrorModal} onHide={() => setShowErrorModal(false)} centered>
+          <Modal.Header style={{ backgroundColor: '#f8d7da', paddingRight: '1rem' }}>
+            <Modal.Title className="text-center w-100" style={{ color: '#721c24' }}>
+              <ExclamationTriangleFill style={{ marginRight: '10px' }} /> Error
+            </Modal.Title>
+            <button type="button" className="close" onClick={() => setShowErrorModal(false)} aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </Modal.Header>
+          <Modal.Body style={{ backgroundColor: '#f8d7da', color: '#721c24', whiteSpace: 'pre-wrap' }}>
+            {validationError}
+          </Modal.Body>
+          <Modal.Footer style={{ backgroundColor: '#f8d7da', display: 'flex', justifyContent: 'space-between' }}>
+            <Button variant="danger" onClick={() => setShowErrorModal(false)} className="mr-auto">
+              Ok
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
 
 
       </div>

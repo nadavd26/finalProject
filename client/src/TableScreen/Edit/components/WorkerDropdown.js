@@ -90,7 +90,7 @@ export default function WorkerDropdown({ value, rowIndex, coloumnIndex, workerLi
         option: (provided, state) => {
             let backgroundColor = state.isSelected ? 'lightblue' : state.data.color;
             if (state.isFocused) {
-                backgroundColor = state.data.color === 'red' ? '#f35C84' : 'lightblue'; // Change background color to darker pink for red options, lightblue otherwise
+                backgroundColor = !state.data.color ? '#CCF5F0' : state.data.color.includes('red') ? '#f35C84' : state.data.color.includes('orange') ? '#F59669' : state.data.color.includes('yellow') ? '#F3F569' : state.data.color.includes('green') ? '#1AB621' : '#CCF5F0'; // Change background color to darker pink for red options, lightblue otherwise
             }
             return {
                 ...provided,
