@@ -72,7 +72,7 @@ const validateTable3 = (table) => {
 
 // This function checks that all the skills that are in table 3 are also in table 2.
 const validateTable3SkillsInTable2 = (table2, table3) => {
-    info = [true, "type: warning, msg: The following skills are in table 3 but not in table 2: "]
+    info = [true, "The following skills are in table 3 but not in table 2: "]
     skillsSet = new Set();
     for (const line of table2) {
         skillsSet.add(line[1])
@@ -94,7 +94,7 @@ const validateTable3SkillsInTable2 = (table2, table3) => {
 
 // This function checks that all the skills that are in table 3 are also in table 1.
 const validateTable3SkillsInTable1 = (table1, table3) => {
-    info = [true, "type: error, msg: The following skills are in table 3 but not in table 1: "]
+    info = [true, "The following skills are in table 3 but not in table 1: "]
     skillsSet = new Set();
     for (const line of table1) {
         if (line[2] != "")
@@ -121,7 +121,7 @@ const validateTable3SkillsInTable1 = (table1, table3) => {
 
 // This function checks that all the skills that are in table 2 are also in table 1.
 const validateTable2SkillsInTable1 = (table1, table2) => {
-    info = [true, "type: error, msg: The following skills are in table 2 but not in table 1: "]
+    info = [true, "The following skills are in table 2 but not in table 1: "]
     skillsSet = new Set();
     for (const line of table1) {
         if (line[2] != "")
@@ -148,8 +148,8 @@ const validateTable2SkillsInTable1 = (table1, table2) => {
 
 // This function checks that all the workers in table 1 has a skill that is in the table 3.
 const validateTable1SkillsInTable3 = (table1, table3) => {
-    info = [true, "type: error, msg: The following workers do not have skills in table3: "
-        , true, "type: warning, msg: The following workers have a skill that is not in table3: "]
+    info = [true, "The following workers do not have skills in table3: "
+        , true, "The following workers have a skill that is not in table3: "]
     skillsSet = new Set();
     for (const line of table3) {
         skillsSet.add(line[0])
@@ -177,8 +177,8 @@ const validateTable1SkillsInTable3 = (table1, table3) => {
 
 // This function checks that all the workers in table 1 has a skill that is in the table 2.
 const validateTable1SkillsInTable2 = (table1, table2) => {
-    info = [true, "type: error, msg: The following workers do not have skills in table2: "
-        , true, "type: warning, msg: The following workers have a skill that is not in table2: "]
+    info = [true, "The following workers do not have skills in table2: "
+        , true, "The following workers have a skill that is not in table2: "]
     skillsSet = new Set();
     for (const line of table2) {
         skillsSet.add(line[1])
@@ -206,7 +206,7 @@ const validateTable1SkillsInTable2 = (table1, table2) => {
 
 // This function checks that all the skills that are in table 2 are also in table 3.
 const validateTable2SkillsInTable3 = (table2, table3) => {
-    info = [true, "type: error, msg: The following skills are in table 2 but not in table 3: "]
+    info = [true, "The following skills are in table 2 but not in table 3: "]
     skillsSet = new Set();
     for (const line of table3) {
         skillsSet.add(line[0])
@@ -229,7 +229,7 @@ const validateTable2SkillsInTable3 = (table2, table3) => {
 // This function checks that the requiredNumOfWorkers of every 
 // line in table2 is not more than the actual number of workers. 
 const validateTable2NumOfWorkers = (table1, table2) => {
-    info = [true, "type: error, msg: The following lines in Table2 have a requiredNumOfWorkers value higher than the actual number of workers: "]
+    info = [true, "The following lines in Table2 have a requiredNumOfWorkers value higher than the actual number of workers: "]
     const numOfWorkers = table1.length
     lineIndex = 1
     for (const line of table2) {
