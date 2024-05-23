@@ -20,7 +20,7 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
     const [errorMsg, setErrorMsg] = useState(defaultErrorMsg)
     const token = user.token
     var errorLines = 0
-    var maxWorkers = user.table1 ? user.table.length : 1000000
+    var maxWorkers = user.table1 ? user.table1.length : 1000000
     const sortTableWithErrors = async (table) => {
         const validTable = table.slice(errorLines, table.length)
         const sortedTable = await sortTable(2, validTable, user.token)

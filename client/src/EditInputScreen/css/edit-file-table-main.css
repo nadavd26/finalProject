@@ -9,7 +9,9 @@
   padding: 0;
   box-sizing: border-box;
   background-image: url('../../../public/gradient-background-light-blue.jpg');
-  background-repeat: round;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   height: 100vh;
   width: 100vw;
 }
@@ -105,7 +107,8 @@
 }
 
 #edit-file .blue {
-  background-color: rgb(111, 126, 221);
+  background-color: rgb(60, 60, 60) !important;
+  color: white !important;
 }
 
 #edit-file td.green {

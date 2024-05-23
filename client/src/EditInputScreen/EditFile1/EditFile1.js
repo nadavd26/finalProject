@@ -120,8 +120,8 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
         }
 
         if (errorLines != table.length) {
-            // const newTable = await sortTableWithErrors(table) server
-            // setContent(newTable) server
+            const newTable = await sortTableWithErrors(table)
+            setContent(newTable)
             setContent(table)
         } else {
             setContent(table)
@@ -356,23 +356,21 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
             errorModal.show()
             return
         } else {
-            // const sortedTable = await sortTable(1, content, user.token); server
+            const sortedTable = await sortTable(1, content, user.token);
             var newRowsToRender = {}
             for (let i = 0; i < content.length; i++) {
                 newRowsToRender[i] = true
             }
 
             setRowsToRender(newRowsToRender)
-            //server
-            // setContent(sortedTable) 
-            // const duplicatesId = findDuplicatesId(sortedTable)
-            // if (duplicatesId.length != 0) {
-            //     setErrorMsg("Dupliacted Id's in rows: " + JSON.stringify(duplicatesId))
-            //     errorModal.show()
-            // } else {
-            //     saveModal.show()
-            // }
-            saveModal.show() //remove
+            setContent(sortedTable) 
+            const duplicatesId = findDuplicatesId(sortedTable)
+            if (duplicatesId.length != 0) {
+                setErrorMsg("Dupliacted Id's in rows: " + JSON.stringify(duplicatesId))
+                errorModal.show()
+            } else {
+                saveModal.show()
+            }
             //server
         }
     };
@@ -416,7 +414,7 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
     }
 
     const finishEdit = async () => {
-        // await postInputTable(1, content, token) server
+        await postInputTable(1, content, token)
         setEditInfo({ inEdit: false, errorMsg: "" })
         var newUser = user
         newUser.table1 = content
