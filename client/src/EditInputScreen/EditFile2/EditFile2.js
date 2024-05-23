@@ -20,6 +20,7 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
     const [errorMsg, setErrorMsg] = useState(defaultErrorMsg)
     const token = user.token
     var errorLines = 0
+    var maxWorkers = user.table1 ? user.table.length : 1000000
     const sortTableWithErrors = async (table) => {
         const validTable = table.slice(errorLines, table.length)
         const sortedTable = await sortTable(2, validTable, user.token)
@@ -156,7 +157,7 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
 
             const numOfWorkers = table[i][4]
             const modifiedNumOfWorkers = parseInt(numOfWorkers)
-            if (!isNumberOfWorkersValid(modifiedNumOfWorkers, user.table1 ? user.table.length : 1000000)) {
+            if (!isNumberOfWorkersValid(modifiedNumOfWorkers, maxWorkers)) {
                 // isValid = false
                 // errorsFound[i][4] = true
                 // errorMsg += "line " + (i + 1) + " column 5 " + "invalid number of workers" + "\n"
@@ -198,7 +199,7 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
                 Array.from({ length: csvArray[0].length }, () => false)
             );
             for (let i = 0 ; i < csvArray.length; i++) {
-                initialErrors[i][4] = !isNumberOfWorkersValid(csvArray[i][4], user.table1.length)
+                initialErrors[i][4] = !isNumberOfWorkersValid(csvArray[i][4], maxWorkers)
             }
             setErrors(initialErrors)
         }
@@ -303,7 +304,7 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
                     updatedErrors[rowIndex][columnIndex] = !isSkillValid(value)
                     break;
                 case 4:
-                    updatedErrors[rowIndex][columnIndex] = !isNumberOfWorkersValid(value, user.table1.length)
+                    updatedErrors[rowIndex][columnIndex] = !isNumberOfWorkersValid(value, maxWorkers)
                     break;
                 default:
                     updatedErrors[rowIndex][columnIndex] = false //editing through the day/hour dropdown which is always valid
