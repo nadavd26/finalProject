@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import EditInput from "../EditInputScreen/EditInput";
 import { Modal, Button, ModalBody } from 'react-bootstrap';
 import { validateInputTables } from "../api/InputTableApi";
-import { ExclamationTriangleFill } from 'react-bootstrap-icons';
+import { ExclamationTriangleFill, FileX } from 'react-bootstrap-icons';
 
 
 
@@ -206,7 +206,7 @@ function UploadScreen({ user, setUser }) {
         <div className="btn-container">
           <div className="d-flex justify-content-between mb-3 top-buttons">
             <div className="col-4"></div>
-            <button className="btn btn-success col-4" onClick={handleSubmit}>Generate Results</button>
+            <button className="btn btn-success col-4" style={{position: 'fixed', top: '60%', width: '30%', left: '35%'}} onClick={handleSubmit}>Generate Results</button>
             {/* <button className="btn btn-secondary col-3" data-toggle="modal" data-target="#UploadScreenErrorModal" onClick={handleEdit}>Upload/Edit File</button> */}
             <div className="col-4"></div>
           </div>
