@@ -156,7 +156,7 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
 
             const numOfWorkers = table[i][4]
             const modifiedNumOfWorkers = parseInt(numOfWorkers)
-            if (!isNumberOfWorkersValid(modifiedNumOfWorkers, user.table1.length)) {
+            if (!isNumberOfWorkersValid(modifiedNumOfWorkers, user.table1 ? user.table.length : 1000000)) {
                 // isValid = false
                 // errorsFound[i][4] = true
                 // errorMsg += "line " + (i + 1) + " column 5 " + "invalid number of workers" + "\n"
