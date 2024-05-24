@@ -25,6 +25,7 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
     const [isGenerated, setIsGenerated] = useState(false)
     const [isFiltered, setIsFiltered] = useState(true)
     const [warning, setWarning] = useState(false)
+    const [violations, setViolations] = useState("Warning: Contract Violations Detected")
     var page_size = 8
     const [showBackModal, setShowBackModal] = useState(false)
     const [renderInfo, setRenderInfo] = useState({ table: [["", "", "", "", "", ""]], colors: [], shiftsPerWorkers: {}, isGenerated: false, rowsToRender: {} })
@@ -347,7 +348,7 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
         }
 
         if ((renderInfo.colors[absuluteIndex]).includes("yellow")) {
-            contractMsg = "Minimum hours per week: " + contract.minHours + ", number of hours: " + (contract.assignment) 
+            contractMsg = "Minimum hours per week: " + contract.minHours + ", number of hours: " + (contract.assignment)
         }
 
         console.log("overlapsLineNumbers")
@@ -679,15 +680,42 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
         const saveModal = new window.bootstrap.Modal(document.getElementById('saveModal'));
         var isValid = true;
         var isWarning = false
-        for (const color of renderInfo.colors) {
+        var violations = []
+        for (let i = 0; i < renderInfo.colors.length; i++) {
+            const color = renderInfo.colors[i]
             if (color.includes("red")) {
                 isValid = false
             }
 
-            if (color.includes("orange") || color.includes("yellow")) {
-                isWarning = true
+            // if (color.includes("orange") || color.includes("yellow")) {
+            //     isWarning = true
+            // }
+        }
+
+        for (const contractId in contracts) {
+            if (contracts.hasOwnProperty(contractId)) {
+                const contract = contracts[contractId];
+                const [name, id] = contractId.split('\n');
+                if (contract.assignment < contract.minHours || contract.assignment > contract.maxHours) {
+                    console.log("hshs")
+                    if (violations.length >= 5) {
+                        violations.push("...")
+                        break
+                    }
+                    // violations.push({name: name, id:id, minHours: contract.minHours, maxHours: contract.maxHours, assignment: contract.assignment})
+                    if (contract.assignment < contract.minHours) {
+                        violations.push("name: " + name + " , id: " +id + " , hours missing: " + (contract.minHours  - contract.assignment))
+                    } else {
+                        violations.push("name: " + name + " , id: " +id + " , hours excessing: " + (contract.assignment - contract.maxHours))
+                    }
+                    
+                    isWarning = true
+                }  
             }
         }
+
+        setViolations(violations.join("\n"))
+
 
         setWarning(isWarning)
         if (!isValid) {
@@ -1158,13 +1186,13 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class={`modal-content ${warning ? "modal-warning" : "modal-success"}`}> {/* Add custom class modal-warning or modal-success */}
                             <div class="modal-header">
-                                <h5 class={`modal-title ${warning ? "text-warning" : "text-success"}`} id="saveModalLongTitle">{warning ? "Warning: Contract Violations Detected" : "Changes Saved Successfully"}</h5>
+                                <h5 class={`modal-title ${warning ? "text-warning" : "text-success"}`} id="saveModalLongTitle">{warning ? "There are some contract violations. Are you sure you want to continue?" : "Changes Saved Successfully"}</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class={`modal-body ${warning ? "text-warning" : "text-success"}`}> {/* Add text-warning or text-success for dynamic text color */}
-                                {warning ? "There are some contract violations. Are you sure you want to continue?" : "Your changes have been saved successfully."}
+                            <div class={`modal-body ${warning ? "text-warning" : "text-success"}`} style={{whiteSpace: 'pre-wrap'}}>{/* Add text-warning or text-success for dynamic text color */}
+                                {warning ?violations: "Your changes have been saved successfully."}
                             </div>
                             <div class="modal-footer">
                                 <div className="d-flex justify-content-between w-100">

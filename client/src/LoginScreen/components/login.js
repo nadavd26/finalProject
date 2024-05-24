@@ -12,6 +12,8 @@ const clientId = "697357189642-cv95irflcae6i8dm2nidpvokkqtpv62k.apps.googleuserc
 function Login() {
     const navigate = useNavigate();
     const { user, setUser } = useContext(UserContext);
+    console.log("user")
+    console.log(user)
     const onSuccess = async (res) => {
         console.log("Login SUCCESS! current user: ", res.profileObj);
         const token = await serverGetToken(res.profileObj.googleId, res.profileObj.imageUrl, 

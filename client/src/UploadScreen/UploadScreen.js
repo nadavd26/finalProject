@@ -10,6 +10,7 @@ import { ExclamationTriangleFill, FileX } from 'react-bootstrap-icons';
 import ThirdTableInfo from "./components/ThirdTableInfo";
 import FirstTableInfo from "./components/FirstTableInfo";
 import SecondTableInfo from "./components/SecondTableInfo";
+import Logout from "../components/logout";
 
 
 function UploadScreen({ user, setUser }) {
@@ -157,7 +158,10 @@ function UploadScreen({ user, setUser }) {
   }
 
 
-
+  const handleLogout = () => {
+    setUser(null)
+    navigate("/login")
+  }
 
 
   const tableInfos = () => {
@@ -169,6 +173,7 @@ function UploadScreen({ user, setUser }) {
   return (
     !editInfo.inEdit ? (
       <div id="upload_screen" className="flex-column justify-content-center">
+        <Logout onLogout={handleLogout}></Logout>
         <div className="container-fluid py-3">
           <div className="d-flex justify-content-between mb-3 top-buttons">
             <div className="col-1"></div>
