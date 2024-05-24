@@ -7,11 +7,11 @@ const validateInputTables = async (req, res) => {
     const table2 = await UserService.getTable(req.user.email, req.user.googleId, 2)
     const table3 = await UserService.getTable(req.user.email, req.user.googleId, 3)
     if (JSON.stringify(table1) == JSON.stringify([]))
-        res.status(404).send("Table1 was never set.")
+        res.status(404).send({type: "error", msg:"Table1 was never set."})
     else if (JSON.stringify(table2) == JSON.stringify([]))
-        res.status(404).send("Table2 was never set.")
+        res.status(404).send({type: "error", msg: "Table2 was never set."})
     else if (JSON.stringify(table3) == JSON.stringify([]))
-        res.status(404).send("Table3 was never set.")
+        res.status(404).send({type: "error", msg: "Table3 was never set."})
     else {
         const info1 = TableValidator.validateTable2NumOfWorkers(table1.table1Content, table2.table2Content)
         const info2 = TableValidator.validateTable2SkillsInTable3(table2.table2Content, table3.table3Content)
@@ -50,15 +50,15 @@ const validateTable1Algo1 = async (req, res) => {
     const table1 = await UserService.getTable(req.user.email, req.user.googleId, 1)
     const resultsMap = await ResultsService.getResults1FromDB(req.user._id)
     if (JSON.stringify(table1) == JSON.stringify([]))
-        res.status(404).send("Table1 was never set.")
+        res.status(404).send({type: "error", msg: "Table1 was never set."})
     else if (resultsMap.size === 0) {
-        res.status(404).send("There is no shift schedule in the DB.")
+        res.status(404).send({type: "error", msg: "There is no shift schedule in the DB."})
     } else {
         const info = TableValidator.validateTable1Algo1(table1.table1Content, resultsMap)
         if (info[0]) { //Checking if everything is valid.
             res.sendStatus(200)
         } else {
-            res.status(404).send(info[1])
+            res.status(404).send({type: "error", msg: info[1]})
         }
     }
 }
@@ -67,18 +67,18 @@ const validateAlgo1 = async (req, res) => {
     const table1 = await UserService.getTable(req.user.email, req.user.googleId, 1)
     const resultsMap = await ResultsService.getResults1FromDB(req.user._id)
     if (JSON.stringify(table1) == JSON.stringify([]))
-        res.status(404).send("Table1 was never set.")
+        res.status(404).send({type: "error", msg: "Table1 was never set."})
     else if (resultsMap.size === 0) {
-        res.status(404).send("There is no shift schedule in the DB.")
+        res.status(404).send({type: "error", msg: "There is no shift schedule in the DB."})
     } else {
         const info1 = TableValidator.validateTable1Algo1(table1.table1Content, resultsMap)
-        const info2 = TableValidator.validateTable2NumOfWorkers(table1.table1Content, JSON.parse(req.body.content))
+        const info2 = TableValidator.validateTable2NumOfWorkers(table1.table1Content, JSON.parse(req.body.content)) //This funciton also works for the given table.
         if (info2[0]) {
             res.sendStatus(200)
         } else if (info1[0]) {
-            res.status(404).send("The shift schedule in the DB is valid, but the given one is not.")
+            res.status(404).send({type: "warning", msg: "The shift schedule in the DB is valid, but the given one is not."})
         } else {
-            res.status(404).send("The shift schedule in the DB is valid, but the given one is not.")
+            res.status(404).send({type: "warning", msg: "Both shift schedules, in the DB and the given one, are invalid."})
         }
     }
 }

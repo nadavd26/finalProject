@@ -77,15 +77,22 @@ const validateTable3SkillsInTable2 = (table2, table3) => {
     for (const line of table2) {
         skillsSet.add(line[1])
     }
+    let counter = 0
     for (const line of table3) {
         if (!skillsSet.has(line[0])) {
             if (info[0]) {
                 info[0] = false
                 info[1] += line[0]
                 skillsSet.add(line[0]) // We do not want to write the same skill more than once so we just add it to the set.
+                counter++
             } else {
                 info[1] += ", " + line[0]
                 skillsSet.add(line[0])
+                counter++
+                if (counter == 5) {   // We dont want to inform about more than five at a time.
+                    info[1] += "..."
+                    return info
+                }
             }
         }
     }
@@ -104,15 +111,22 @@ const validateTable3SkillsInTable1 = (table1, table3) => {
         if (line[4] != "")
             skillsSet.add(line[4])
     }
+    let counter = 0
     for (const line of table3) {
         if (!skillsSet.has(line[0])) {
             if (info[0]) {
                 info[0] = false
                 info[1] += line[0]
                 skillsSet.add(line[0])
+                counter++
             } else {
                 info[1] += ", " + line[0]
                 skillsSet.add(line[0])
+                counter++
+                if (counter == 5) {   // We dont want to inform about more than five at a time.
+                    info[1] += "..."
+                    return info
+                }
             }
         }
     }
@@ -131,15 +145,22 @@ const validateTable2SkillsInTable1 = (table1, table2) => {
         if (line[4] != "")
             skillsSet.add(line[4])
     }
+    let counter = 0
     for (const line of table2) {
         if (!skillsSet.has(line[1])) {
             if (info[0]) {
                 info[0] = false
                 info[1] += line[1]
                 skillsSet.add(line[1])
+                counter++
             } else {
                 info[1] += ", " + line[1]
                 skillsSet.add(line[1])
+                counter++
+                if (counter == 5) {   // We dont want to inform about more than five at a time.
+                    info[1] += "..."
+                    return info
+                }
             }
         }
     }
@@ -154,21 +175,35 @@ const validateTable1SkillsInTable3 = (table1, table3) => {
     for (const line of table3) {
         skillsSet.add(line[0])
     }
+    let counter1 = 0
+    let counter2 = 0
     for (const line of table1) {
         if (!skillsSet.has(line[2]) && !skillsSet.has(line[3]) && !skillsSet.has(line[4])) {
             if (info[0]) {
                 info[0] = false
                 info[1] += line[0]
+                counter1++
             } else {
                 info[1] += ", " + line[0]
+                counter1++
+                if (counter1 == 5) {   // We dont want to inform about more than five at a time.
+                    info[1] += "..."
+                    return info
+                }
             }
             // We also want to give a warning about workes that have skills that are not in table3.
         } else if (!skillsSet.has(line[2]) || (!skillsSet.has(line[3]) && line[3] != "") || (!skillsSet.has(line[4]) && line[4] != "")) {
             if (info[2]) {
                 info[2] = false
                 info[3] += line[0]
+                counter2++
             } else {
                 info[3] += ", " + line[0]
+                counter2++
+                if (counter2 == 5) {   // We dont want to inform about more than five at a time.
+                    info[3] += "..."
+                    return info
+                }
             }
         }
     }
@@ -183,21 +218,35 @@ const validateTable1SkillsInTable2 = (table1, table2) => {
     for (const line of table2) {
         skillsSet.add(line[1])
     }
+    let counter1 = 0
+    let counter2 = 0
     for (const line of table1) {
         if (!skillsSet.has(line[2]) && !skillsSet.has(line[3]) && !skillsSet.has(line[4])) {
             if (info[0]) {
                 info[0] = false
                 info[1] += line[0]
+                counter1++
             } else {
                 info[1] += ", " + line[0]
+                counter1++
+                if (counter1 == 5) {   // We dont want to inform about more than five at a time.
+                    info[1] += "..."
+                    return info
+                }
             }
             // We also want to give a warning about workes that have skills that are not in table2.
         } else if (!skillsSet.has(line[2]) || (!skillsSet.has(line[3]) && line[3] != "") || (!skillsSet.has(line[4]) && line[4] != "")) {
             if (info[2]) {
                 info[2] = false
                 info[3] += line[0]
+                counter2++
             } else {
                 info[3] += ", " + line[0]
+                counter2++
+                if (counter2 == 5) {   // We dont want to inform about more than five at a time.
+                    info[3] += "..."
+                    return info
+                }
             }
         }
     }
@@ -211,15 +260,22 @@ const validateTable2SkillsInTable3 = (table2, table3) => {
     for (const line of table3) {
         skillsSet.add(line[0])
     }
+    let counter = 0
     for (const line of table2) {
         if (!skillsSet.has(line[1])) {
             if (info[0]) {
                 info[0] = false
                 info[1] += line[1]
                 skillsSet.add(line[1])
+                counter++
             } else {
                 info[1] += ", " + line[1]
                 skillsSet.add(line[1])
+                counter++
+                if (counter == 5) {   // We dont want to inform about more than five at a time.
+                    info[1] += "..."
+                    return info
+                }
             }
         }
     }
@@ -232,13 +288,20 @@ const validateTable2NumOfWorkers = (table1, table2) => {
     info = [true, "The following lines in Table2 have a requiredNumOfWorkers value higher than the actual number of workers: "]
     const numOfWorkers = table1.length
     lineIndex = 1
+    let counter = 0
     for (const line of table2) {
         if (Number(line[4]) > numOfWorkers) {
             if (info[0]) {
                 info[0] = false
                 info[1] += String(lineIndex)
+                counter++
             } else {
                 info[1] += ", " + String(lineIndex)
+                counter++
+                if (counter == 5) {   // We dont want to inform about more than five at a time.
+                    info[1] += "..."
+                    return info
+                }
             }
         }
         lineIndex++
@@ -251,9 +314,11 @@ const validateTable2NumOfWorkers = (table1, table2) => {
 const validateTable1Algo1 = (table1, resultsMap) => {
     info = [true, "In the following pairs of days and skills there is a line with an amount of workers greater than the actual amount of workers : "]
     const numOfWorkers = table1.length
+    let counter = 0
     for (const [key, value] of resultsMap.entries()) {
         for (const line of value) {
             if (Number(line[4]) > numOfWorkers) {
+                counter++
                 if (info[0]) {
                     info[0] = false
                     info[1] += "(" + key.replace("*", ", ") + ") "  //Replacing the '*' that sepreates the day and skill in the map.
@@ -263,6 +328,10 @@ const validateTable1Algo1 = (table1, resultsMap) => {
                     break
                 }
             }
+        }
+        if (counter == 5) {   // We dont want to inform about more than five at a time.
+            info[1] += "..."
+            return info
         }
     }
     return info

@@ -111,8 +111,8 @@ const formatTable = (tableNum, tableContent) => {
                     line.skill1,
                     line.skill2,
                     line.skill3,
-                    String(line.minHouers),
-                    String(line.maxHouers),
+                    String(line.minHouers) == "null" ? "" : String(line.minHouers),
+                    String(line.maxHouers) == "null" ? "" : String(line.maxHouers),
                 ]);
             case 2:
                 return tableContent.map(line => [
