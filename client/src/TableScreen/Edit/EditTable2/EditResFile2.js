@@ -120,7 +120,7 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
 
     const getWorkerList = () => {
         const workerList = utils.generateWorkerList(user.table1)
-        var res = { options: ["", "+", "-", "$", ...workerList], shownOptions: ["Any", "Any Assigned Shift", "Any Unassigned Shift", "Lines With Conflicts", ...workerList] }
+        var res = { options: ["", "+", "-", "$","^","&", ...workerList], shownOptions: ["Any", "Any Assigned Shift", "Any Unassigned Shift", "Overlaps","Assigned Workers Below Contract", "Assigned Workers Above Contract", ...workerList] }
         return res
     }
 
@@ -919,11 +919,19 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
             if (untilSearch.value != "" && untilSearch.value != until) {
                 goodLine = false
             }
-            if (assignedSearch.value != "" && assignedSearch.value != "+" && assignedSearch.value != "-" && assignedSearch.value != "$" && assignedSearch.value != assigned) {
+            if (assignedSearch.value != "" && assignedSearch.value != "+" && assignedSearch.value != "-" && assignedSearch.value != "$" &&  assignedSearch.value != "^" && assignedSearch.value != "&" && assignedSearch.value != assigned) {
                 goodLine = false
             }
 
-            if (assignedSearch.value == "$" && colors[i] == "white") {
+            if (assignedSearch.value == "$" && !(colors[i].includes("red"))) {
+                goodLine = false
+            }
+
+            if (assignedSearch.value == "^" && !(colors[i].includes("yellow"))) {
+                goodLine = false
+            }
+
+            if (assignedSearch.value == "&" && !(colors[i].includes("orange"))) {
                 goodLine = false
             }
 
