@@ -7,9 +7,9 @@ import { postInputTable } from "../../api/InputTableApi";
 import { csv_to_array, parseTime, isNumberOfWorkersValid, isSkillValid, isIdValid, isNameValid, isContractValid } from "../Utils";
 import { sortTable } from "../../api/InputTableApi";
 
-export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromServer }) {
+export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromServer, scratch }) {
     const [content, setContent] = useState([["", "", "", "", "", "", ""]])
-    const [errors, setErrors] = useState([[true, true, true, false, false, true]])
+    const [errors, setErrors] = useState([[true, true, true, false, false, false, false]])
     const [showErrorModel, setShowErrorModel] = useState(false)
     const [showSuccessModel, setShowSuccessModel] = useState(false)
     const [rowsToRender, setRowsToRender] = useState({})
@@ -146,8 +146,11 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
                 Array.from({ length: csvArray[0].length }, () => false)
             );
 
-            setErrors(falseArray)
+            if (!scratch) {
+                setErrors(falseArray)
+            }
         }
+        
     }, [csvArray, setContent]);
 
     const addRowHandler = () => {
@@ -379,26 +382,28 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
 
 
     const deleteRow = (rowIndex) => {
-        if (rowIndex >= 0 && rowIndex < content.length) {
-            setContent((prevContent) => {
-                const newContent = [...prevContent];
-                newContent.splice(rowIndex, 1);
-                return newContent;
-            })
-
-            setErrors((prevErrors) => {
-                const newErrors = [...prevErrors];
-                newErrors.splice(rowIndex, 1);
-                return newErrors;
-            })
-
-            var newRowsToRender = {}
-            for (let i = 0; i < content.length; i++) {
-                newRowsToRender[i] = true
-            }
-
-            setRowsToRender(newRowsToRender)
-        };
+        if (content.length > 1) {
+            if (rowIndex >= 0 && rowIndex < content.length) {
+                setContent((prevContent) => {
+                    const newContent = [...prevContent];
+                    newContent.splice(rowIndex, 1);
+                    return newContent;
+                })
+    
+                setErrors((prevErrors) => {
+                    const newErrors = [...prevErrors];
+                    newErrors.splice(rowIndex, 1);
+                    return newErrors;
+                })
+    
+                var newRowsToRender = {}
+                for (let i = 0; i < content.length; i++) {
+                    newRowsToRender[i] = true
+                }
+    
+                setRowsToRender(newRowsToRender)
+            };
+        }
     }
 
     const handleErrorModalClose = () => {
