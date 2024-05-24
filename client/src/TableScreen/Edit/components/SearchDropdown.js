@@ -74,7 +74,7 @@ const SearchDropdown = ({ value, shownValue, options, shownOptions, onSelect, wi
     };
 
     return (
-        <>
+        <div style={{color: 'black'}}>
             <Select
                 value={selectedValue !== null ? transformedOptions[selectedValue] : null} // Set the selected value
                 options={transformedOptions} // Set options with labels
@@ -87,7 +87,7 @@ const SearchDropdown = ({ value, shownValue, options, shownOptions, onSelect, wi
             />
             {/* <div>value: {value}</div>
             <div>shownValue: {shownValue}</div> */}
-        </>
+        </div>
     );
 };
 

@@ -61,7 +61,6 @@ export function isCostValid(cost) {
 }
 
 export function isSkillValid(name) {
-    // Check if the skill contains only letters, spaces, apostrophes, and certain special characters
     const isValid = /^[a-zA-Z\s'+\-#\/.]+$/u.test(name);
     return isValid && name.length <= 40;
 }

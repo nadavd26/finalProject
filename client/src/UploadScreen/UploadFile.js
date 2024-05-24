@@ -1,67 +1,69 @@
-import React, { useState } from "react";
-import Upload from "../TableScreen/images/uploadImage.webp";
-import FileAdded from "./FileAdded";
+import React from "react";
+import edit from './Images/edit.webp';
+import upload from './Images/upload.png';
+import scratch from './Images/scratch.png';
+import './css/UploadFile.css';
 
-const UploadFile = ({ file, onFileAdded, user, fileNum, handleEdit }) => {
-    // Destructure the file-related state
+const UploadFile = ({ file, onFileAdded, user, fileNum, handleEdit, handleScratch }) => {
+  const handleFileAdded = (event) => {
+    onFileAdded(event.target.files[0]);
+  };
 
-    const handleFileAdded = (event) => {
-        onFileAdded(event.target.files[0]);
-    };
+  const table = user["table" + fileNum];
 
+  const actionContainerStyle = {
+    display: 'flex',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    width: '100%',
+  };
 
-    const table = user["table"+fileNum]
-    return (
-        <>
-          {(table && table.length !== 0) || file ? (
-            <FileAdded handleEdit={handleEdit} onFileAdded={onFileAdded}></FileAdded>
-          ) : (
-            <>
-              <div className="container">
-                <div className="d-flex justify-content-between mb-3 top-buttons">
-                  <div className="col-4"></div>
-                  <h3 className="justify-content-center col-4">Pick a CSV file to upload:</h3>
-                  <div className="col-4"></div>
-                </div>
-              </div>
-              <div className="container-fluid py-3">
-                <div className="d-flex justify-content-between mb-3">
-                  <div className="col-4"></div>
-                    <div id="inform" className="container col-4">
-                      <form id="file-upload-form" className="uploader">
-                        <input id="file-upload" type="file" name="fileUpload" accept=".csv" onChange={handleFileAdded} />
-                        <label style={{ height: "fit-content" }} htmlFor="file-upload" id="file-drag">
-                          <img src={Upload} alt="Preview" className="upload-image"></img>
-                          <div>Select a csv file</div>
-                          <span id="file-upload-btn" className="btn btn-primary">
-                            Select a file
-                          </span>
-                        </label>
-                      </form>
-                    </div>
-                  <div className="container-fluid py-3">
-                    <div className="col-4"></div>
-                  </div>
-                </div>
-              </div>
-              {/* {isFileAdded && 
-              (
-                <div className="d-flex justify-content-between mb-3 top-buttons">
-                  <div className="col-4"></div>
-                  <span className="badge badge-primary">
-                    {file.name}
-                    <button type="button" className="close" aria-label="Dismiss" onClick={handleFileDelete}>
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </span>
-                  <div className="col-4"></div>
-                </div>
-              )
-              } */}
-            </>
-          )}
-        </>
-      );
-      
-};
+  const editStyle = {
+    display: (table && table.length !== 0) || file ? 'flex' : 'none',
+  };
+
+  const iconStyle = {
+    width: '30px',
+    height: '30px',
+  };
+
+  return (
+    <div className="d-flex justify-content-center align-items-center">
+      <div style={actionContainerStyle}>
+        <div style={{width: "50px", height: "50px"}}>
+          <label htmlFor="file-upload" className="circle-btn" title="Upload CSV File">
+            <img src={upload} style={iconStyle} alt="Upload" />
+            <input
+              id="file-upload"
+              type="file"
+              name="fileUpload"
+              accept=".csv"
+              onChange={handleFileAdded}
+              style={{ display: 'none' }}
+            />
+          </label>
+        </div>
+        <div style={{...editStyle, width: "50px", height: "50px"}}>
+          <button
+            className="circle-btn"
+            onClick={handleEdit}
+            title="Edit Current File"
+          >
+            <img src={edit} style={{width: "50px", height: "30px"}} alt="Edit" />
+          </button>
+        </div>
+        <div style={{width: "50px", height: "50px"}}>
+          <button
+            className="circle-btn"
+            onClick={handleScratch}
+            title="Start From Scratch"
+          >
+            <img src={scratch} style={iconStyle} alt="Start From Scratch" />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default UploadFile;

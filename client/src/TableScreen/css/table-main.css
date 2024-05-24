@@ -95,7 +95,8 @@
 }
 
 #table-screen .blue {
-  background-color: rgba(111, 126, 221, 1);
+  background-color: rgb(60, 60, 60);
+  color: white !important;
 }
 
 #table-screen td.green {

@@ -7,7 +7,7 @@ import { postInputTable } from "../../api/InputTableApi";
 import { csv_to_array, parseTime, isCostValid, isSkillValid } from "../Utils";
 import { sortTable } from "../../api/InputTableApi";
 
-export default function EditFile3({ csvArray, setEditInfo, user, setUser, fromServer }) {
+export default function EditFile3({ csvArray, setEditInfo, user, setUser, fromServer, scratch }) {
     const [content, setContent] = useState([["", "", "", "", ""]])
     const [errors, setErrors] = useState([[true, true, true, true, true]])
     const [showErrorModel, setShowErrorModel] = useState(false)
@@ -197,7 +197,9 @@ export default function EditFile3({ csvArray, setEditInfo, user, setUser, fromSe
                 Array.from({ length: csvArray[0].length }, () => false)
             );
 
-            setErrors(falseArray)
+            if (!scratch) {
+                setErrors(falseArray)
+            }
         }
     }, [csvArray, setContent]);
 
@@ -228,8 +230,8 @@ export default function EditFile3({ csvArray, setEditInfo, user, setUser, fromSe
                 cell.classList.remove("pink")
             }
         }
-        const newEmptyRow = [content[rowIndex][0], content[rowIndex][1], "00:00", "24:00", ""];
-        const newErrorRow = [errors[rowIndex][0], errors[rowIndex][1], false, false, true];
+        const newEmptyRow = [content[rowIndex][0], content[rowIndex][1], "", "", ""];
+        const newErrorRow = [errors[rowIndex][0], errors[rowIndex][1], true, true, true];
         var newRowsToRender = {}
         for (let i = 0; i < content.length; i++) {
             console.log("render all")
@@ -372,32 +374,34 @@ export default function EditFile3({ csvArray, setEditInfo, user, setUser, fromSe
 
 
     const deleteRow = (rowIndex) => {
-        for (let i = 0; i < content.length; i++) {
-            for (let j = 0; j <= 4; j++) {
-                const cell = document.getElementById(`cell-${(i)}-${j}`)
-                cell.classList.remove("pink")
-            }
-        }
-        if (rowIndex >= 0 && rowIndex < content.length) {
-            setContent((prevContent) => {
-                const newContent = [...prevContent];
-                newContent.splice(rowIndex, 1);
-                return newContent;
-            })
-
-            setErrors((prevErrors) => {
-                const newErrors = [...prevErrors];
-                newErrors.splice(rowIndex, 1);
-                return newErrors;
-            })
-
-            var newRowsToRender = {}
+        if (content.length > 1) {
             for (let i = 0; i < content.length; i++) {
-                newRowsToRender[i] = true
+                for (let j = 0; j <= 4; j++) {
+                    const cell = document.getElementById(`cell-${(i)}-${j}`)
+                    cell.classList.remove("pink")
+                }
             }
-
-            setRowsToRender(newRowsToRender)
-        };
+            if (rowIndex >= 0 && rowIndex < content.length) {
+                setContent((prevContent) => {
+                    const newContent = [...prevContent];
+                    newContent.splice(rowIndex, 1);
+                    return newContent;
+                })
+    
+                setErrors((prevErrors) => {
+                    const newErrors = [...prevErrors];
+                    newErrors.splice(rowIndex, 1);
+                    return newErrors;
+                })
+    
+                var newRowsToRender = {}
+                for (let i = 0; i < content.length; i++) {
+                    newRowsToRender[i] = true
+                }
+    
+                setRowsToRender(newRowsToRender)
+            };
+        }
     }
 
     const handleErrorModalClose = () => {
