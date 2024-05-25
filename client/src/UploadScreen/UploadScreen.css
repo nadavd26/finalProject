@@ -269,13 +269,13 @@ p {
 }
 
 .not-uploaded-current-button {
-  background-color: rgb(240, 43, 43);
+  background-color: #DC3545;
   color: black;
   border: 0px;
 }
 
 .uploaded-current-button {
-  background-color: rgb(9, 218, 9);
+  background-color: #28A745;
   color: black;
   border: 0px;
 }

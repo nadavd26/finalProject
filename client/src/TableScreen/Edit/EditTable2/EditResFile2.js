@@ -1046,7 +1046,7 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
 
     const filterButton = () => {
         return (<button onClick={filterButtonHandler} style={{ background: 'white', border: '2px solid black' }}>
-            Apply Serach&nbsp;<img src={search} alt="Search" style={{ width: '25px', height: '25px' }} />
+            Apply Search&nbsp;<img src={search} alt="Search" style={{ width: '25px', height: '25px' }} />
         </button>)
     }
 

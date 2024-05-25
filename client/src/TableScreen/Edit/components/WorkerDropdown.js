@@ -42,6 +42,35 @@ export default function WorkerDropdown({ value, rowIndex, coloumnIndex, workerLi
     // Add a hidden first option
     let options = [];
     if (workerList.length > 0) {
+        // for (let index = 0; index < workerList.length; index++) {
+        //     let worker = workerList[index]
+        //     let prevWorker = options[index-1]
+        //     let prevWorkerColor = prevWorker ? prevWorker.color : ""
+        //     let finalColor = prevWorkerColor == "white" ? "gray" : "white"
+        //     if (worker.color.includes("red")) {
+        //         finalColor = prevWorkerColor.includes("red") ? "pink" : "red"
+        //     } else {
+        //         if (worker.color.includes("orange")) {
+        //             finalColor = prevWorkerColor.includes("orange") ? "brown" : "orange" 
+        //         } else {
+        //             if (worker.color.includes("yellow")) {
+        //                 finalColor = prevWorkerColor.includes("yellow") ? "#FAFF6B" : "yellow" 
+        //             } else {
+        //                 if (worker.color.includes("green")) {
+        //                     finalColor = prevWorkerColor.includes("green") ? "lightblue" : "green" 
+        //                 }
+        //             }
+        //         }
+        //     }
+        //     options.push({
+        //         label: `${worker.name}\n${worker.id}`,
+        //         value: `${worker.name},${worker.id},${worker.color}`,
+        //         color: finalColor
+        //     })
+
+        //     console.log("options")
+        //     console.log(options)
+        // }
         options = workerList.map(worker => {
             // let finalColor = worker.color ? worker.color : "white";
 

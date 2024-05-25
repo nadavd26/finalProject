@@ -173,7 +173,9 @@ function UploadScreen({ user, setUser }) {
   return (
     !editInfo.inEdit ? (
       <div id="upload_screen" className="flex-column justify-content-center">
-        <Logout onLogout={handleLogout}></Logout>
+        <div>
+          <Logout onLogout={handleLogout}></Logout>
+        </div>
         <div className="container-fluid py-3">
           <div className="d-flex justify-content-between mb-3 top-buttons">
             <div className="col-1"></div>
@@ -203,9 +205,9 @@ function UploadScreen({ user, setUser }) {
         </div>
 
 
-        <div id="infoTables" style={{position: "relative", left: "2.5vw", width: "95vw"}}>
-          <h3 style={{ marginBottom: "20px", display: 'flex', justifyContent: 'center' }}>{selectedButton == "FirstFileButton" ? "Worker Info Table" : selectedButton == "SecondFileButton" ? "Requirements table" : "Shifts info table"}</h3>
-          <div style={{marginBottom: "10px"}}>{tableInfos()}</div>
+        <div id="infoTables" style={{ position: "relative", left: "2.5vw", width: "95vw" }}>
+          <h3 style={{ marginBottom: "20px", display: 'flex', justifyContent: 'center'}}>{selectedButton == "FirstFileButton" ? "Worker Info Table" : selectedButton == "SecondFileButton" ? "Requirements Table" : "Shifts Info Table"}</h3>
+          <div style={{ marginBottom: "10px" }}>{tableInfos()}</div>
           {selectedButton === "FirstFileButton" && (
             <UploadFile
               id="uploadFile1"
@@ -240,17 +242,17 @@ function UploadScreen({ user, setUser }) {
             />
           )}
           <div className="btn-container">
-          <div className="d-flex justify-content-between mb-3 top-buttons">
-            <div className="col-4"></div>
-            <button className="btn btn-success col-4" onClick={handleSubmit} style={{marginTop: "40px"}}>Generate Results</button>
-            {/* <button className="btn btn-secondary col-3" data-toggle="modal" data-target="#UploadScreenErrorModal" onClick={handleEdit}>Upload/Edit File</button> */}
-            <div className="col-4"></div>
+            <div className="d-flex justify-content-between mb-3 top-buttons">
+              <div className="col-4"></div>
+              <button className="btn btn-success col-4" onClick={handleSubmit} style={{ marginTop: "40px" }}>Generate Results</button>
+              {/* <button className="btn btn-secondary col-3" data-toggle="modal" data-target="#UploadScreenErrorModal" onClick={handleEdit}>Upload/Edit File</button> */}
+              <div className="col-4"></div>
+            </div>
           </div>
         </div>
-        </div>
 
-          
-        
+
+
         <div className="d-flex justify-content-between mb-3">
           <div className="col-4"></div>
           {showSubmitAlert && <div className="alert alert-danger col-4" role="alert">
@@ -357,7 +359,7 @@ function UploadScreen({ user, setUser }) {
           </Modal.Footer>
         </Modal>
       </div>
-    ) : <EditInput file={currentFile} numOfFile={getFileNumber()} setEditInfo={setEditInfo} user={user} setUser={setUser} setCurrentFile={setCurrentFile} scratch={scratch}/>
+    ) : <EditInput file={currentFile} numOfFile={getFileNumber()} setEditInfo={setEditInfo} user={user} setUser={setUser} setCurrentFile={setCurrentFile} scratch={scratch} />
   );
 }
 

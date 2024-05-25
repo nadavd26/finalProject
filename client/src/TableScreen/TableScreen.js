@@ -316,7 +316,7 @@ function TableScreen({ user, setUser }) {
                                 <TableAlgo2 workersAndShifts={algo2TableState.get.currentWorkersAndShifts} />
                             ) : (
                                 <>
-                                    <TableAlgo2 workersAndShifts={algo2TableState.get.currentWorkersAndShifts} />
+                                    {/* <TableAlgo2 workersAndShifts={algo2TableState.get.currentWorkersAndShifts} /> */}
                                     <Loader speed={5} customText="Calculating..." />
                                 </>
                             )}
