@@ -10,7 +10,7 @@ import { ExclamationTriangleFill, FileX } from 'react-bootstrap-icons';
 import ThirdTableInfo from "./components/ThirdTableInfo";
 import FirstTableInfo from "./components/FirstTableInfo";
 import SecondTableInfo from "./components/SecondTableInfo";
-import Logout from "../components/logout";
+import Logout from "../LoginScreen/components/logout";
 
 
 function UploadScreen({ user, setUser }) {
@@ -173,7 +173,7 @@ function UploadScreen({ user, setUser }) {
   return (
     !editInfo.inEdit ? (
       <div id="upload_screen" className="flex-column justify-content-center">
-        <div>
+        <div style={{position: "relative", left: "1%", top: "1%"}}>
           <Logout onLogout={handleLogout}></Logout>
         </div>
         <div className="container-fluid py-3">
@@ -243,10 +243,10 @@ function UploadScreen({ user, setUser }) {
           )}
           <div className="btn-container">
             <div className="d-flex justify-content-between mb-3 top-buttons">
-              <div className="col-4"></div>
-              <button className="btn btn-success col-4" onClick={handleSubmit} style={{ marginTop: "40px" }}>Generate Results</button>
+              <div className="col-5"></div>
+              <button className="btn btn-success col-2" onClick={handleSubmit} style={{ marginTop: "40px", borderRadius: "15px" }}>Generate Results</button>
               {/* <button className="btn btn-secondary col-3" data-toggle="modal" data-target="#UploadScreenErrorModal" onClick={handleEdit}>Upload/Edit File</button> */}
-              <div className="col-4"></div>
+              <div className="col-5"></div>
             </div>
           </div>
         </div>
