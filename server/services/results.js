@@ -5,6 +5,7 @@ const { spawn } = require('child_process');
 const fs = require('fs');
 const Table = require("../services/tables");
 const { getTableByUserId } = require("./user");
+const { sortResults1Map } = require("./tableSorting");
 //const fs = require('fs').promises; // Using fs.promises for async file operations
 
 //This function runs algorithm 1 and returns the results.
@@ -244,7 +245,7 @@ const transformShiftTablesToMap = async (shiftTables) => {
         ]));
         resultMap.get(key).push(...shiftsData);
     });
-    return resultMap;
+    return sortResults1Map(resultMap);
 }
 
 // This function transforms the user's shiftTables data into a map

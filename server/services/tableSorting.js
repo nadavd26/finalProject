@@ -84,4 +84,28 @@ const compareDays = (day1, day2) => {
     return index1 - index2;
 }
 
-module.exports = { customSort1, customSort2, customSort3, compareTable1Line }
+// This function get the map of the results of algo1, and returns the map sorted.
+const sortResults1Map = (originalMap) => {
+    const sortedKeys = Array.from(originalMap.keys()).sort((keyA, keyB) => {
+        const [dayA, restA] = keyA.split('*');
+        const [dayB, restB] = keyB.split('*');
+    
+        const dayIndexA = days.indexOf(dayA);
+        const dayIndexB = days.indexOf(dayB);
+    
+        // First comparing the days.
+        if (dayIndexA !== dayIndexB) {
+            return dayIndexA - dayIndexB;
+        }
+    
+        // If those are the same day, we compare by the skill.
+        return restA.localeCompare(restB);
+    });
+    const sortedMap = new Map();
+    sortedKeys.forEach(key => {
+        sortedMap.set(key, originalMap.get(key));
+    });
+    return sortedMap
+}
+
+module.exports = { customSort1, customSort2, customSort3, compareTable1Line, sortResults1Map }
