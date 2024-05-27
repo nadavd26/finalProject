@@ -16,6 +16,9 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
     const [wastedHoursKpi, setWastedHoursKpi] = useState(user.currentWastedHours)
     const [initialCost, setInitialCost] = useState(0)
     const [costKpi, setCostKpi] = useState(0)
+    const [initialAppliesToReqs, setInitialAppliesToReqs] = useState(true)
+    const [warningMsg, setWarningMsg] = useState("")
+    const [sumShifts, setSumShifts] = useState([])
     const token = user.token
     console.log("key isssssssssss : " + currentDay + "******" + currentSkill)
     function isNumberOfWorkersValid(numOfWorkers) {
@@ -39,6 +42,42 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
         return cost
     }
 
+    function sumArrays(arr1, arr2) {
+        const maxLength = Math.max(arr1.length, arr2.length);
+        const result = new Array(maxLength).fill(0);
+
+        for (let i = 0; i < maxLength; i++) {
+            const val1 = arr1[i] !== undefined ? arr1[i] : 0;
+            const val2 = arr2[i] !== undefined ? arr2[i] : 0;
+            result[i] = val1 + val2;
+        }
+
+        return result;
+    }
+
+    function subArrays(arr1, arr2) {
+        const maxLength = Math.max(arr1.length, arr2.length);
+        const result = new Array(maxLength).fill(0);
+
+        for (let i = 0; i < maxLength; i++) {
+            const val1 = arr1[i] !== undefined ? arr1[i] : 0;
+            const val2 = arr2[i] !== undefined ? arr2[i] : 0;
+            result[i] = val1 - val2;
+        }
+
+        return result;
+    }
+
+
+    function doesApply(reqs, sumShifts) {
+        for (let j = 0; j < 48; j++) {
+            if (reqs[j] > sumShifts[j]) {
+                return false
+            }
+        }
+
+        return true
+    }
     useEffect(() => {
         setContent(initialTable.map(row => [...row]))
         var newRowsToRender = {}
@@ -49,6 +88,29 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
         var initCost = calcCost()
         setInitialCost(initCost)
         setCostKpi(initCost)
+        const reqs = user.currentRequestArray
+        console.log("reqs")
+        console.log(reqs)
+
+        var sumShifts = []
+        for (let i = 0; i < initialTable.length; i++) {
+            const line = initialTable[i]
+            var shiftsArray = hoursToArrayNumber(line[2], line[3], parseInt(line[4]))
+            sumShifts = sumArrays(sumShifts, shiftsArray)
+        }
+
+        setSumShifts(sumShifts)
+
+        console.log("sumShifts")
+        console.log(sumShifts)
+        var applies = doesApply(reqs, sumShifts)
+
+        console.log("applies")
+        console.log(applies)
+
+        if (!applies) {
+            setInitialAppliesToReqs(false)
+        }
     }, []);
 
     useEffect(() => {
@@ -76,12 +138,12 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
         return hoursArray;
     };
 
-    const computeWastedHours = (reqs, line) => {
+    const computeWastedHours = (reqs, shiftsArray) => {
         // console.log("reqs")
         // console.log(reqs)
         // console.log("line")
         // console.log(line)
-        var shiftsArray = hoursToArrayNumber(line[2], line[3], parseInt(line[4]))
+
         let sum = 0;
         for (let i = 0; i < 48; i++)
             sum += Math.max(0, shiftsArray[i] - reqs[i])
@@ -117,8 +179,11 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
         var newRow = updatedContent[rowIndex]
         var oldRow = [...newRow]
         oldRow[4] = oldValue
-        var wastedHoursReduce = computeWastedHours(user.currentRequestArray, oldRow)
-        var wastedHoursAdd = computeWastedHours(user.currentRequestArray, newRow)
+        var newShiftsArray = hoursToArrayNumber(newRow[2], newRow[3], parseInt(newRow[4]))
+        var oldShiftsArray = hoursToArrayNumber(oldRow[2], oldRow[3], parseInt(oldRow[4]))
+        var wastedHoursReduce = computeWastedHours(user.currentRequestArray, oldShiftsArray)
+        var wastedHoursAdd = computeWastedHours(user.currentRequestArray, newShiftsArray)
+        setSumShifts(prevSumShifts => subArrays(sumArrays(prevSumShifts, newShiftsArray), oldShiftsArray))
         setWastedHoursKpi(prevWastedHours => prevWastedHours - wastedHoursReduce + wastedHoursAdd)
         var newRowsToRender = {}
         newRowsToRender[rowIndex] = true
@@ -132,17 +197,20 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
     const handleSave = async () => {
         const errorModal = new window.bootstrap.Modal(document.getElementById('errModal'));
         const saveModal = new window.bootstrap.Modal(document.getElementById('saveModal'));
+        const warningModal = new window.bootstrap.Modal(document.getElementById('warningModal'));
+
 
         var isValid = true;
         if (content.length === 0) {
             isValid = false;
         }
         content.forEach((row, index) => {
-            const workerCell = document.getElementById("cell-"+index+"-"+4)
+            const workerCell = document.getElementById("cell-" + index + "-" + 4)
             if (workerCell.classList.contains("red")) {
                 isValid = false
             }
         });
+        var warningMsg = ""
         console.log("isValid")
         console.log(isValid)
         if (!isValid) {
@@ -150,12 +218,32 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
             errorModal.show()
             return
         } else {
-            saveModal.show()
+            if (initialAppliesToReqs && !doesApply(user.currentRequestArray, sumShifts)) {
+                warningMsg += "- The previous allocation of employees meets the requirements, whereas the current one does not."
+            }
+            if (((costKpi + wastedHoursKpi) > (initialCost + intialWastedHours))) {
+                if (warningMsg != "") {
+                    warningMsg += "\n"
+                }
+                warningMsg += "- Average of the measures has been reduced."
+            }
+            if (warningMsg != "") {
+                warningMsg += "\nDo you want to continue?"
+                setWarningMsg(warningMsg)
+                warningModal.show()
+            } else {
+                saveModal.show()
+            }
         }
     };
 
     const handleErrorModalClose = () => {
         const errorModal = new window.bootstrap.Modal(document.getElementById('errModal'));
+        errorModal.hide()
+    };
+
+    const handleWarningModalClose = () => {
+        const errorModal = new window.bootstrap.Modal(document.getElementById('warningModal'));
         errorModal.hide()
     };
 
@@ -196,7 +284,7 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
                     <div className="col-12">
                         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#backModal" onClick={handleBack}>Back</button>
                         <span style={{ position: "fixed", left: "9.7%", top: "1%" }}><Kpi name={"Cost"} value={costKpi} initialValue={initialCost} description={"Total cost of shifts where day is " + initialTable[0][0] + " and skill is " + initialTable[0][1]} maxWidth={"30.8vw"}></Kpi></span>
-                        <span style={{ position: "fixed", left: "41.5%", top: "1%"}}><Kpi name={"Wasted Hours"} value={wastedHoursKpi} initialValue={intialWastedHours} description={"Total wasted hours as there are more assigned workers than the demand at some half hour where day is " + initialTable[0][0] + " and skill is " + initialTable[0][1]} maxWidth={"30.8vw"}></Kpi></span>
+                        <span style={{ position: "fixed", left: "41.5%", top: "1%" }}><Kpi name={"Wasted Hours"} value={wastedHoursKpi} initialValue={intialWastedHours} description={"Total wasted hours as there are more assigned workers than the demand at some half hour where day is " + initialTable[0][0] + " and skill is " + initialTable[0][1]} maxWidth={"30.8vw"}></Kpi></span>
                         <span style={{ position: "fixed", left: "73.3%", top: "1%" }}><Kpi name={"Avg"} value={(costKpi + wastedHoursKpi) / 2} initialValue={(intialWastedHours + initialCost) / 2} description={"Average of the measures where day is " + initialTable[0][0] + " and skill is " + initialTable[0][1]} maxWidth={"25.7vw"}></Kpi></span>
                     </div>
                 </div>
@@ -257,7 +345,7 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
                     </div>
                 </div>
             )}
-            {true && (
+            {/* {true && (
                 <div className={`modal fade show ${((costKpi + wastedHoursKpi) > (initialCost + intialWastedHours)) ? 'modal-warning' : 'modal-success'}`} id="saveModal" tabIndex="-1" role="dialog" aria-labelledby="saveModal" aria-hidden="true" onHide={handleSuccessModalClose}>
                     <div className="modal-dialog modal-dialog-centered" role="document">
                         <div className={`modal-content ${(costKpi + wastedHoursKpi) > (initialCost + intialWastedHours) ? 'modal-warning' : 'modal-success'}`}>
@@ -286,7 +374,64 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
                         </div>
                     </div>
                 </div>
+            )} */}
+            {true && (
+                <div className="modal fade show modal-success" id="saveModal" tabIndex="-1" role="dialog" aria-labelledby="saveModal" aria-hidden="true" onHide={handleSuccessModalClose}>
+                    <div className="modal-dialog modal-dialog-centered" role="document">
+                        <div className="modal-content modal-success">
+                            <div className="modal-header">
+                                <h5 className="modal-title text-success" id="saveModalLongTitle">Success!</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body text-success">
+                                Your changes have been saved successfully.
+                            </div>
+                            <div className="modal-footer">
+                                <div className="col-4" />
+                                <div className="col-2">
+                                    <button type="button" className="btn btn-success" data-dismiss="modal" onClick={finishEdit}>Finish</button>
+                                </div>
+                                <div className="col-2">
+                                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Keep Editing</button>
+                                </div>
+                                <div className="col-4" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
             )}
+
+            {true && (
+                <div className="modal fade show modal-warning" id="warningModal" tabIndex="-1" role="dialog" aria-labelledby="saveModal" aria-hidden="true" onHide={handleWarningModalClose}>
+                    <div className="modal-dialog modal-dialog-centered" role="document">
+                        <div className="modal-content modal-warning">
+                            <div className="modal-header">
+                                <h5 className="modal-title text-warning" id="saveModalLongTitle">Warning!</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body text-warning" style={{ whiteSpace: 'pre-wrap' }}>
+                                {warningMsg}
+                            </div>
+                            <div className="modal-footer">
+                                <div className="col-4" />
+                                <div className="col-2">
+                                    <button type="button" className="btn btn-warning" data-dismiss="modal" onClick={finishEdit}>Finish</button>
+                                </div>
+                                <div className="col-2">
+                                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Keep Editing</button>
+                                </div>
+                                <div className="col-4" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+
 
         </div>)
 }
