@@ -24,6 +24,7 @@ function UploadScreen({ user, setUser }) {
   const [showSubmitAlert, setShowSubmitAlert] = useState(false);
   const [currentFile, setCurrentFile] = useState(null)
   const [scratch, setScratch] = useState(false)
+  
   const [editInfo, setEditInfo] = useState({ inEdit: false, errorMsg: "" })
   const navigate = useNavigate();
   const handleCloseGenerateModal = () => {
@@ -184,6 +185,8 @@ function UploadScreen({ user, setUser }) {
       {selectedButton == "FirstFileButton" ? <FirstTableInfo></FirstTableInfo> : selectedButton == "SecondFileButton" ? <SecondTableInfo></SecondTableInfo> : <ThirdTableInfo></ThirdTableInfo>}
     </div>)
   }
+
+
 
   return (
     !editInfo.inEdit ? (
@@ -373,6 +376,8 @@ function UploadScreen({ user, setUser }) {
             </Button>
           </Modal.Footer>
         </Modal>
+
+        
       </div>
     ) : <EditInput file={currentFile} numOfFile={getFileNumber()} setEditInfo={setEditInfo} user={user} setUser={setUser} setCurrentFile={setCurrentFile} scratch={scratch} />
   );

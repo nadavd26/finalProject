@@ -16,6 +16,9 @@ import Loader from "../../conponenets/Loader";
 import SearchDropdown from "../components/SearchDropdown";
 import filterTableLoader from "../components/FilterTableLoader";
 import FilterTableLoader from "../components/FilterTableLoader";
+import { Modal, Button, Container } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 
 export default function EditResFile2({ initialTable, contracts, setInEdit, user, setUser, workerMap, shiftsInfo, shiftsPerWorkers, setShiftsPerWorkers, finishCallback }) {
     console.log("contracts")
@@ -35,6 +38,7 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
     const [untilSearch, setUntilSearch] = useState({ value: "", shownValue: "Until" });
     const [assignedSearch, setAssignedSearch] = useState({ value: "", shownValue: "Worker" });
     const [shiftIndexSearch, setShiftIndexSearch] = useState({ value: "", shownValue: "Shift Number" });
+    const [colorsModalShow, setColorsModalShow] = useState(false)
     const [options, setOptions] = useState({
         day: { options: [], shownOptions: [] },
         skill: { options: [], shownOptions: [] },
@@ -120,7 +124,7 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
 
     const getWorkerList = () => {
         const workerList = utils.generateWorkerList(user.table1)
-        var res = { options: ["", "+", "-", "$","^","&", ...workerList], shownOptions: ["Any", "Any Assigned Shift", "Any Unassigned Shift", "Overlaps","Assigned Workers Below Contract", "Assigned Workers Above Contract", ...workerList] }
+        var res = { options: ["", "+", "-", "$", "^", "&", ...workerList], shownOptions: ["Any", "Any Assigned Shift", "Any Unassigned Shift", "Overlaps", "Assigned Workers Below Contract", "Assigned Workers Above Contract", ...workerList] }
         return res
     }
 
@@ -704,13 +708,13 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
                     }
                     // violations.push({name: name, id:id, minHours: contract.minHours, maxHours: contract.maxHours, assignment: contract.assignment})
                     if (contract.assignment < contract.minHours) {
-                        violations.push("name: " + name + " , id: " +id + " , hours missing: " + (contract.minHours  - contract.assignment))
+                        violations.push("name: " + name + " , id: " + id + " , hours missing: " + (contract.minHours - contract.assignment))
                     } else {
-                        violations.push("name: " + name + " , id: " +id + " , hours excessing: " + (contract.assignment - contract.maxHours))
+                        violations.push("name: " + name + " , id: " + id + " , hours excessing: " + (contract.assignment - contract.maxHours))
                     }
-                    
+
                     isWarning = true
-                }  
+                }
             }
         }
 
@@ -919,7 +923,7 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
             if (untilSearch.value != "" && untilSearch.value != until) {
                 goodLine = false
             }
-            if (assignedSearch.value != "" && assignedSearch.value != "+" && assignedSearch.value != "-" && assignedSearch.value != "$" &&  assignedSearch.value != "^" && assignedSearch.value != "&" && assignedSearch.value != assigned) {
+            if (assignedSearch.value != "" && assignedSearch.value != "+" && assignedSearch.value != "-" && assignedSearch.value != "$" && assignedSearch.value != "^" && assignedSearch.value != "&" && assignedSearch.value != assigned) {
                 goodLine = false
             }
 
@@ -1051,6 +1055,12 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
     }
 
 
+    const squareStyle = {
+        width: '20px',
+        height: '20px',
+        display: 'inline-block',
+        marginRight: '10px'
+    };
 
     return (
         <div id="edit-file">
@@ -1063,7 +1073,19 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
                     <div className="col-2 d-flex justify-content-center" style={{ marginBottom: "20px" }}>
                         {filterButton()}
                     </div>
-                    <div className="col-5"></div>
+                    <div className="col-4"></div>
+                    <div className="col-1">
+                        <Button
+                            variant="info"
+                            style={{ width: "50px", backgroundColor: "white", border: "none" }}
+                            onClick={()=>setColorsModalShow(true)}
+                        >
+                            <FontAwesomeIcon
+                                icon={faQuestionCircle}
+                                style={{ color: "black", fontSize: "24px" }}
+                            />
+                        </Button>
+                    </div>
                 </div>
                 <div className="col-12" style={{ position: "fixed", top: "8%", left: "0%" }}>
                     {renderInfo.isGenerated && (<Table indexSearchElement={indexSearchElement} linesFiltered={linesFiltered} content={renderInfo.table} start={currentIndex} pageSize={page_size} colors={renderInfo.colors} rowsToRender={renderInfo.rowsToRender} shiftsPerWorker={renderInfo.shiftsPerWorkers}
@@ -1098,6 +1120,9 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
                     <div className="col-2">
                     </div>
                 </div>
+
+
+
             </div>
 
             {!isGenerated && <Loader speed={5} customText="Calculating..." />}
@@ -1199,8 +1224,8 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class={`modal-body ${warning ? "text-warning" : "text-success"}`} style={{whiteSpace: 'pre-wrap'}}>{/* Add text-warning or text-success for dynamic text color */}
-                                {warning ?violations: "Your changes have been saved successfully."}
+                            <div class={`modal-body ${warning ? "text-warning" : "text-success"}`} style={{ whiteSpace: 'pre-wrap' }}>{/* Add text-warning or text-success for dynamic text color */}
+                                {warning ? violations : "Your changes have been saved successfully."}
                             </div>
                             <div class="modal-footer">
                                 <div className="d-flex justify-content-between w-100">
@@ -1214,7 +1239,37 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
             )}
 
 
-
+            <Modal show={colorsModalShow} onHide={() => setColorsModalShow(false)} centered>
+                <Modal.Header>
+                    <Modal.Title>Colors Information</Modal.Title>
+                    <button type="button" className="close" onClick={() => setColorsModalShow(false)} aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </Modal.Header>
+                <Modal.Body>
+                    <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                        <div style={{ ...squareStyle, backgroundColor: 'red' }}></div>
+                        <span>Overlapping lines</span>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                        <div style={{ ...squareStyle, backgroundColor: 'orange' }}></div>
+                        <span>More hours than contract allows to</span>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                        <div style={{ ...squareStyle, backgroundColor: 'yellow' }}></div>
+                        <span>Less hours than contract allows to</span>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <div style={{ ...squareStyle, backgroundColor: 'green' }}></div>
+                        <span>Recommended - selecting the worker fulfills his contract</span>
+                    </div>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setColorsModalShow(false)}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
 
         </div>)
 }
