@@ -22,7 +22,7 @@ const validateInputTables = async (req, res) => {
         const info7 = TableValidator.validateTable1SkillsInTable2(table1.table1Content, table2.table2Content)
         const info8 = await TableValidator.getTableBit(req.user._id, 2)
         const info9 = await TableValidator.getTableBit(req.user._id, 3)
-        if (!(info2[0] && info5[0] && !info8 && !info9)) { //Checking if everything is valid.
+        if (!(info2[0] && info5[0])) { //Checking if everything is valid.
             const errorMsg = {
                 type: "error", msg:
                     (info2[0] ? "" : info2[1] + "\n") +
@@ -42,7 +42,7 @@ const validateInputTables = async (req, res) => {
             }
             res.status(404).send(warningMsg)
         } else {
-            res.sendStatus(200)
+            res.status(200).send({ type: "success", msg: "", changed: info8 || info9 })
         }
     }
 }
@@ -58,10 +58,10 @@ const validateTable1Algo1 = async (req, res) => {
         const info = TableValidator.validateTable1Algo1(table1.table1Content, resultsMap)
         const info2 = await TableValidator.getTableBit(req.user._id, 1)
         const info3 = await TableValidator.getTableBit(req.user._id, 4)
-        if (info[0] && !info2 && !info3) { //Checking if everything is valid.
-            res.sendStatus(200)
+        if (info[0]) { //Checking if everything is valid.
+            res.status(200).send({ type: "success", msg: "", changed: info2 || info3 })
         } else {
-            res.status(404).send({ type: "error", msg: info[0] ? "" : info[1], changed: info2 || info3 })
+            res.status(404).send({ type: "warning", msg: info[0] ? "" : info[1], changed: info2 || info3 })
         }
     }
 }

@@ -316,22 +316,41 @@ const validateTable2NumOfWorkers = (table1, table2) => {
     return info;
 }
 
+const numOfWorkersWithSkill = (table1, skill) => {
+    let counter = 0
+    table1.forEach(element => {
+        if(skill == element[2] || skill || element[3] || skill == element[4]) {
+            counter++
+        }
+    });
+    return counter
+}
+
+const numOfWorkersNeededWithSkill = (arr) => {
+    let max = -1;
+    arr.forEach(element => {
+        if(max < Number(element[4]))
+            max = Number(element[4])
+    })
+    return max
+}
+
 //This function checks that in each pair of day and skill, the amount of workes is 
 //not more than the actual amount of workers that are in Table1.
 const validateTable1Algo1 = (table1, resultsMap) => {
-    info = [true, "In the following pairs of days and skills there is a line with an amount of workers greater than the actual amount of workers : "]
-    const numOfWorkers = table1.length
+    info = [true, "In the following pairs of days and skills there is a line with an amount of workers greater than the actual amount of workers with that skill : "]
     let counter = 0
     for (const [key, value] of resultsMap.entries()) {
         for (const line of value) {
+            const numOfWorkers = numOfWorkersWithSkill(table1, value[1])
             if (Number(line[4]) > numOfWorkers) {
                 counter++
                 if (info[0]) {
                     info[0] = false
-                    info[1] += "(" + key.replace("*", ", ") + ") "  //Replacing the '*' that sepreates the day and skill in the map.
+                    info[1] += "(" + key.replace("*", ", ") + ") : " + numOfWorkersNeededWithSkill(value) + " workers with this skill needed."  //Replacing the '*' that sepreates the day and skill in the map.
                     break                                           //We want to add each pair only once.
                 } else {
-                    info[1] += ", " + "(" + key.replace("*", ", ") + ") "
+                    info[1] += ", " + "(" + key.replace("*", ", ") + ")  : " + numOfWorkersNeededWithSkill(value) + " workers with this skill needed."
                     break
                 }
             }
