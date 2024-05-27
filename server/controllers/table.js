@@ -10,7 +10,7 @@ const setTable = async (req, res) => {
             if (req.params.tableNum != 1 && req.params.tableNum != 2 && req.params.tableNum != 3) {
                 res.status(404).send("Invalid table number.")
             } else {
-                await UserService.setTable(req.user.email, req.user.googleId, content, req.params.tableNum)
+                await UserService.setTable(req.user.email, req.user.googleId, content, req.params.tableNum, req.user._id)
                 res.sendStatus(200)
             }
         }

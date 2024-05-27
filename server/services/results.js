@@ -6,6 +6,7 @@ const fs = require('fs');
 const Table = require("../services/tables");
 const { getTableByUserId } = require("./user");
 const { sortResults1Map } = require("./tableSorting");
+const TableValidator = require("../services/tableValidator")
 //const fs = require('fs').promises; // Using fs.promises for async file operations
 
 //This function runs algorithm 1 and returns the results.
@@ -105,7 +106,7 @@ const getResults2 = async (userId) => {
                     ];
                     results2Map[capitalizedDayOfWeek].push(transformedEntry); //Adding this to the map.
                 }
-                if(entry[4] != 0)
+                if (entry[4] != 0)
                     id++; // Increment the unique ID for the next entry
             });
         }
@@ -179,6 +180,9 @@ const saveResults = async (results, userId) => {
     }
     // Populating the shift lines for each shift table
     await user.populate('shiftTables.shifts');
+    await TableValidator.setTableBit(userId, 4, true) //Setting the relevant bit to indicate that the results changed.
+    await TableValidator.setTableBit(userId, 2, false) //Resetting the bits to indicate that those tables are relevant to the current results.
+    await TableValidator.setTableBit(userId, 3, false)
     return await transformShiftTablesToMap(user.shiftTables);
 }
 
@@ -211,6 +215,8 @@ const saveResults2 = async (results, userId) => {
             }
         }
         await user.save();
+        await TableValidator.setTableBit(userId, 1, false) //Resetting the bits to indicate that those tables are relevant to the current results.
+        await TableValidator.setTableBit(userId, 4, false)
     }
 }
 
@@ -344,6 +350,9 @@ const editResults = async (newData, userId) => {
             });
         }
         await user.save()
+        await TableValidator.setTableBit(userId, 4, true) //Setting the relevant bit to indicate that the results changed.
+        //await TableValidator.setTableBit(userId, 2, false) //Resetting the bits to indicate that those tables are relevant to the current results.
+        //await TableValidator.setTableBit(userId, 3, false)
     }
 }
 
@@ -398,6 +407,8 @@ const editResults2 = async (req, userId) => {
     await editResults2OfDay(req.body.Thursday, "Thursday", userId)
     await editResults2OfDay(req.body.Friday, "Friday", userId)
     await editResults2OfDay(req.body.Saturday, "Saturday", userId)
+    //await TableValidator.setTableBit(userId, 1, false) //Resetting the bits to indicate that those tables are relevant to the current results.
+    //await TableValidator.setTableBit(userId, 4, false)
 }
 
 

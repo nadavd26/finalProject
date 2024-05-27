@@ -1,4 +1,11 @@
+const User = require("../models/user");
 const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+const bitFields = {
+    1: 'table1Bit',
+    2: 'table2Bit',
+    3: 'table3Bit',
+    4: 'shiftTablesBit'
+};
 
 //The function checks if the given argument is one of the days of the week(case insensetive)
 const isDayOfWeek = (day) => {
@@ -337,4 +344,43 @@ const validateTable1Algo1 = (table1, resultsMap) => {
     return info
 }
 
-module.exports = { validateTable1, validateTable2, validateTable3, validateTable2SkillsInTable3, validateTable3SkillsInTable2, validateTable2NumOfWorkers, validateTable1Algo1, validateTable3SkillsInTable1, validateTable2SkillsInTable1, validateTable1SkillsInTable3, validateTable1SkillsInTable2 }
+//This function returns the value of the bit of the given table index(shiftsTable is 4).
+const getTableBit = async (userId, tableNumber) => {
+    const bitField = bitFields[tableNumber];
+    if (!bitField) {
+        throw new Error('Invalid table number: ' + tableNumber + '. Must be between 1 and 4.');
+    }
+    try {
+        const user = await User.findById(userId).select(bitField);
+        if (!user) {
+            throw new Error("User not found");
+        }
+        return user[bitField];
+    } catch (error) {
+        throw error;
+    }
+}
+
+const setTableBit = async (userId, tableNumber, newValue) => {
+    const bitField = bitFields[tableNumber];
+    if (!bitField) {
+        throw new Error('Invalid table number: ' + tableNumber + '. Must be between 1 and 4.');
+    }
+    try {
+        const update = {};
+        update[bitField] = newValue;
+        const result = await User.findByIdAndUpdate(
+            userId,
+            update,
+            { new: true } // Return the updated document
+        );
+        if (!result) {
+            throw new Error("User not found");
+        }
+        return result;
+    } catch (error) {
+        throw error;
+    }
+};
+
+module.exports = { validateTable1, validateTable2, validateTable3, validateTable2SkillsInTable3, validateTable3SkillsInTable2, validateTable2NumOfWorkers, validateTable1Algo1, validateTable3SkillsInTable1, validateTable2SkillsInTable1, validateTable1SkillsInTable3, validateTable1SkillsInTable2, getTableBit, setTableBit }

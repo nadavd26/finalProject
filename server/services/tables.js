@@ -31,7 +31,7 @@ const removeLinesByIds = async (tableNum, tableLineIDsToDelete) => {
     }
 }
 //This function updates the relvant table in the db for the relvant user.
-const updateTable = async (tableNum, tableContent, email, googleId) => {
+const updateTable = async (tableNum, tableContent, email, googleId, userId) => {
     try {
         const tableField = `table${tableNum}`;
         switch (tableNum) {
@@ -54,6 +54,7 @@ const updateTable = async (tableNum, tableContent, email, googleId) => {
                     { email, googleId },
                     { $addToSet: { [tableField]: { $each: tableLines1 } } }
                 );
+                await tableValidator.setTableBit(userId, 1, true) //Setting the relevant bit to indicate that the table changed.
                 break;
             case 2:
                 const tableLines2 = [];
@@ -74,7 +75,7 @@ const updateTable = async (tableNum, tableContent, email, googleId) => {
                     { email, googleId },
                     { $addToSet: { [tableField]: { $each: tableLines2 } } }
                 );
-                break;
+                await tableValidator.setTableBit(userId, 2, true)
             case 3:
                 const tableLines3 = [];
                 for (const lineData of tableContent) {
@@ -92,6 +93,7 @@ const updateTable = async (tableNum, tableContent, email, googleId) => {
                     { email, googleId },
                     { $addToSet: { [tableField]: { $each: tableLines3 } } }
                 );
+                await tableValidator.setTableBit(userId, 3, true)
                 break;
             default:
                 console.log("Invalid table number.")
