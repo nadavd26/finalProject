@@ -13,6 +13,8 @@ import { useEditInfoState } from "./states/EditInfo";
 import { useTableAlgo1State } from "./states/TableAlgo1State";
 import EditResFile1 from "./Edit/EditTable1/EditResFile1";
 import { Modal, Button } from 'react-bootstrap';
+import { ExclamationTriangleFill, FileX } from 'react-bootstrap-icons';
+
 
 import SkillDropdown from "./conponenets/SkillDropdown";
 import * as utils from './Utils'
@@ -22,13 +24,16 @@ import GraphMemo from "./conponenets/Graph";
 // every boolean array is 48 cells, starting from 7:00, ending at 23:30
 
 function TableScreen({ user, setUser }) {
-    const [showDeviationModal, setShowDeviationModal] = useState(false);
-    const [showWarningModal, setShowWarningModal] = useState(false);
+    const [showGenerateModal, setShowGenerateModal] = useState(false);
     const [reqs, setReqs] = useState(undefined)
     const [shifts, setShifts] = useState(undefined)
-    const handleCloseWarningModal = () => {
-        setShowWarningModal(false);
+    const handleCloseGenerateModal = () => {
+        setShowGenerateModal(false);
     };
+    const [table1Algo1Changed, setTable1Algo1Changed] = useState(false)
+    const [validationWarning, setValidationWarning] = useState("")
+    const [showWarningModal, setShowWarningModal] = useState(false)
+
     const navigate = useNavigate();
     const tableScreenState = useTableScreenState();
     const algo2TableState = useTableAlgo2State();
@@ -157,7 +162,7 @@ function TableScreen({ user, setUser }) {
     //     setUser(newUser)
     //     tableScreenState.setIs1Generated(true)
     // }
-    async function generateResults2(algo2table ,fromDb) {
+    async function generateResults2(algo2table, fromDb) {
         var newUser = user
         if (!algo2table) {
             newUser.contracts = []
@@ -167,8 +172,8 @@ function TableScreen({ user, setUser }) {
         // console.log(JSON.stringify(res))
         if (!algo2table) {
             newUser.contracts = utils.generateContracts(user.table1, res)
-            console.log( "newUser.contracts")
-            console.log( newUser.contracts)
+            console.log("newUser.contracts")
+            console.log(newUser.contracts)
         }
         newUser.algo2Table = res
         const ui = utils.generateAlgoGraphicResults(res)
@@ -198,11 +203,15 @@ function TableScreen({ user, setUser }) {
         }
 
         if (num == 2 && !tableScreenState.get.is2Generated) {
-            if (user.table1Changed || user.tableAlgo1Changed) {
-                tableScreenState.setTableNum(num)
-                await generateResults2(false, false);
+            const validate = await utils.validateAlgo1Table1(user.token)
+            setTable1Algo1Changed(validate.changed)
+            console.log("validate")
+            console.log(validate)
+            if (validate.type == "success") {
+                await generateAnyway(validate.changed)
             } else {
                 setShowWarningModal(true)
+                setValidationWarning(validate.msg)
             }
             return
         }
@@ -216,14 +225,24 @@ function TableScreen({ user, setUser }) {
 
     const generateAgain = async () => {
         tableScreenState.setTableNum(2)
-        setShowWarningModal(false)
+        setShowGenerateModal(false)
         await generateResults2(false, false);
     }
 
     const proceedCurrent = async () => {
         tableScreenState.setTableNum(2)
-        setShowWarningModal(false)
+        setShowGenerateModal(false)
         await generateResults2(false, true);
+    }
+
+    const generateAnyway = async (changed) => {
+        setShowWarningModal(false)
+        if (changed) {
+            tableScreenState.setTableNum(2)
+            await generateResults2(false, false);
+        } else {
+            setShowGenerateModal(true)
+        }
     }
 
     useEffect(() => {
@@ -266,7 +285,7 @@ function TableScreen({ user, setUser }) {
     }
 
     async function table2finishEditCallback() {
-        await generateResults2(user.algo2Table,true)
+        await generateResults2(user.algo2Table, true)
     }
 
     //i want to pass a deep copy to EditResFile2 and because json.parse does not parse sets, i need to convert them to array, parse and then convert back to sets 
@@ -365,10 +384,10 @@ function TableScreen({ user, setUser }) {
                     </div>
 
                 </div>
-                <Modal show={showWarningModal} onHide={handleCloseWarningModal} centered>
+                <Modal show={showGenerateModal} onHide={handleCloseGenerateModal} centered>
                     <Modal.Header style={{ paddingRight: '1rem' }}>
                         <Modal.Title className="text-center w-100">Which Results To Choose?</Modal.Title>
-                        <button type="button" className="close" onClick={() => setShowWarningModal(false)} aria-label="Close">
+                        <button type="button" className="close" onClick={() => setShowGenerateModal(false)} aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </Modal.Header>
@@ -381,6 +400,29 @@ function TableScreen({ user, setUser }) {
                         </Button>
                     </Modal.Footer>
                 </Modal>
+
+                <Modal show={showWarningModal} onHide={() => setShowWarningModal(false)} centered>
+                    <Modal.Header style={{ backgroundColor: '#FCFFA5', paddingRight: '1rem' }}>
+                        <Modal.Title className="text-center w-100" style={{ color: '#7F8307' }}>
+                            <ExclamationTriangleFill style={{ marginRight: '10px', color: '#7F8307' }} /> Warning
+                        </Modal.Title>
+                        <button type="button" className="close" onClick={() => setShowWarningModal(false)} aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </Modal.Header>
+                    <Modal.Body style={{ backgroundColor: '#FCFFA5', color: '#7F8307', whiteSpace: 'pre-wrap' }}>
+                        {validationWarning}
+                    </Modal.Body>
+                    <Modal.Footer style={{ backgroundColor: '#FCFFA5', display: 'flex', justifyContent: 'space-between' }}>
+                        <Button onClick={() => setShowWarningModal(false)} className="mr-auto" style={{ backgroundColor: '#7F8307', borderColor: '#7F8307' }}>
+                            Ok
+                        </Button>
+                        <Button variant="danger" onClick={() => generateAnyway(table1Algo1Changed)} style={{ backgroundColor: '#7F8307', borderColor: '#7F8307' }}>
+                            Generate Anyway
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+
             </div>
         ) : <>{editComponent}</>
     );

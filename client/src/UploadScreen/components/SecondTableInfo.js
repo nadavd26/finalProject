@@ -30,7 +30,7 @@ const SecondTableInfo = () => {
                                 </td>
                                 <td style={bodyStyle}>- Use only letters, spaces, quotes, hyphens, pound signs, slashes, and dots. <br></br>
                                     - Keep it under 40 characters in length.</td>
-                                <td style={bodyStyle}>- 00:00 to 23:00 <br></br>- Jumps of 30 minutes</td>
+                                <td style={bodyStyle}>- 00:00 to 23:30 <br></br>- Jumps of 30 minutes</td>
                                 <td style={bodyStyle}>- 00:30 to 24:00 <br></br>- Jumps of 30 minutes</td>
                                 <td style={bodyStyle}>- Positive Integer <br></br>- Smaller than the total number of workers</td>
                             </tbody>

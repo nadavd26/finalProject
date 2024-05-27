@@ -151,6 +151,22 @@ export function generateDayList(table) {
     return uniqueDays;
 }
 
+export async function validateAlgo1Table1(token) {
+    const table1algo1url = 'http://localhost:12345/Validation/validateTable1Algo1'
+    const res = await fetch(table1algo1url, {
+        'method': 'get',
+        'headers': {
+            'Content-Type': 'application/json',
+            'authorization': 'bearer ' + token
+        }
+    });
+
+    // Show the server's response    
+    const body = await res.text()
+    console.log("body")
+    console.log(body)
+    return JSON.parse(body)
+}
 
 function generateShiftList(table) {
     // console.log("Input table:");
@@ -487,14 +503,14 @@ export function postAlgo2Results(token, data, callback) {
         },
         body: JSON.stringify(data)
     })
-    .then(response => {
-        if (response.ok) {
-            callback(true);
-        } else {
-            callback(false);
-        }
-    })
-    .catch(() => callback(false));
+        .then(response => {
+            if (response.ok) {
+                callback(true);
+            } else {
+                callback(false);
+            }
+        })
+        .catch(() => callback(false));
 }
 
 
@@ -512,24 +528,24 @@ export function generateAlgo1Results(token, getFromDatabase, callback) {
             'authorization': 'Bearer ' + token
         },
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-    })
-    .then(responseData => {
-        // Convert the responseData to a Map object
-        const resultMap = new Map();
-        for (const key in responseData) {
-            resultMap.set(key, responseData[key]);
-        }
-        callback(resultMap); // Call the callback with the result
-    })
-    .catch(error => {
-        console.error("Error fetching results:", error);
-        callback(null, error); // Call the callback with an error
-    });
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(responseData => {
+            // Convert the responseData to a Map object
+            const resultMap = new Map();
+            for (const key in responseData) {
+                resultMap.set(key, responseData[key]);
+            }
+            callback(resultMap); // Call the callback with the result
+        })
+        .catch(error => {
+            console.error("Error fetching results:", error);
+            callback(null, error); // Call the callback with an error
+        });
 }
 
 // export async function generateAlgo1Results(token, getFromDatabase) {
@@ -631,7 +647,7 @@ export function generateContracts(table1, tableAlgo2) {
         const name = row[1]
         const minHours = row[5]
         const maxHours = row[6]
-        contracts[name+"\n"+id] = {minHours: !minHours || minHours.length == 0? 0 : minHours, maxHours: !maxHours || maxHours.length == 0? 169 : maxHours, assignment: 0}
+        contracts[name + "\n" + id] = { minHours: !minHours || minHours.length == 0 ? 0 : minHours, maxHours: !maxHours || maxHours.length == 0 ? 169 : maxHours, assignment: 0 }
     }
 
     var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]

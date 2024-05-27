@@ -19,6 +19,7 @@ function UploadScreen({ user, setUser }) {
   const [showErrorModal, setShowErrorModal] = useState(false)
   const [validationError, setValidationError] = useState("")
   const [validationWarning, setValidationWarning] = useState("")
+  const [table2Table3Changed, setTable2Table3Changed] = useState(false)
   const [selectedButton, setSelectedButton] = useState("FirstFileButton");
   const [showSubmitAlert, setShowSubmitAlert] = useState(false);
   const [currentFile, setCurrentFile] = useState(null)
@@ -72,9 +73,10 @@ function UploadScreen({ user, setUser }) {
       }, 2500);
     } else {
       const res = await validateInputTables(user.token)
+      setTable2Table3Changed(res.changed)
       console.log("res")
       console.log(res)
-      if (res != "") {
+      if (res.type != "success") {
         if (res.type == "warning") {
           setValidationWarning(res.msg)
           setShowWarningModal(true)
@@ -83,13 +85,13 @@ function UploadScreen({ user, setUser }) {
           setShowErrorModal(true)
         }
       } else {
-        generate()
+        generate(table2Table3Changed)
       }
     }
   }
 
-  const generate = () => {
-    if (user.table2Changed || user.table3Changed) {
+  const generate = (changed) => {
+    if (changed) {
       generateAgain()
     } else {
       setShowGenerateModal(true);
@@ -98,7 +100,7 @@ function UploadScreen({ user, setUser }) {
 
   const generateAnyway = () => {
     setShowWarningModal(false)
-    generate()
+    generate(table2Table3Changed)
   }
 
   const handleEdit = () => {
@@ -159,9 +161,22 @@ function UploadScreen({ user, setUser }) {
 
 
   const handleLogout = () => {
-    setUser(null)
-    navigate("/login")
-  }
+    // Clear the user context
+    setUser(null);
+    
+    // Navigate to login page
+    navigate("/login");
+
+    // Sign out the user from Google
+    const auth2 = window.gapi.auth2.getAuthInstance();
+    if (auth2) {
+        auth2.signOut().then(() => {
+            console.log("User signed out from Google");
+            auth2.disconnect();
+        });
+    }
+};
+
 
 
   const tableInfos = () => {

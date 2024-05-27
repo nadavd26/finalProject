@@ -19,7 +19,7 @@ export async function getInputTable(tableNum, token) {
 }
 
 export async function postInputTable(tableNum, table, token) {
-    const data = {content : JSON.stringify(table)}
+    const data = { content: JSON.stringify(table) }
     const res = await fetch('http://localhost:12345/Table/' + tableNum, {
         'method': 'post',
         'headers': {
@@ -31,7 +31,7 @@ export async function postInputTable(tableNum, table, token) {
 }
 
 export async function sortTable(tableNum, table, token) {
-    const data = {content : JSON.stringify(table)}
+    const data = { content: JSON.stringify(table) }
     const res = await fetch('http://localhost:12345/Table/sort/' + tableNum, {
         'method': 'post',
         'headers': {
@@ -56,9 +56,10 @@ export async function validateInputTables(token) {
     });
 
     // Show the server's response    
-    if (!res.ok) {
-        const body = await res.text()
-        return JSON.parse(body)
-    } 
-    return ""
+
+    const body = await res.text()
+    console.log("body")
+    console.log(body)
+    return JSON.parse(body)
+
 }
