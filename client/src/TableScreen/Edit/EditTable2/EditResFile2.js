@@ -122,9 +122,11 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
         const errorModal = new window.bootstrap.Modal(document.getElementById('errModal'));
         setErrorMsg(defaultErrorMsg)
         const saveModal = new window.bootstrap.Modal(document.getElementById('saveModal'));
-        var { isValid, isWarning, violations } = model.getStatus(renderInfo.colors, contracts)
-        setViolations(violations.join("\n"))
-        setWarning(isWarning)
+        var {isValid, isViolation, violations, isUnassigned} = model.getStatus(renderInfo.table, renderInfo.colors, contracts)
+        var warningMsg = isUnassigned ? "There are some unassigned shifts.\n" : ""
+        warningMsg += violations.join("\n")
+        setViolations(warningMsg)
+        setWarning(isViolation || isUnassigned)
         if (!isValid) {
             setErrorMsg(defaultErrorMsg)
             errorModal.show()
@@ -571,7 +573,7 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class={`modal-content ${warning ? "modal-warning" : "modal-success"}`}> {/* Add custom class modal-warning or modal-success */}
                             <div class="modal-header">
-                                <h5 class={`modal-title ${warning ? "text-warning" : "text-success"}`} id="saveModalLongTitle">{warning ? "There are some contract violations. Are you sure you want to continue?" : "Changes Saved Successfully"}</h5>
+                                <h5 class={`modal-title ${warning ? "text-warning" : "text-success"}`} id="saveModalLongTitle">{warning ? "Warning" : "Changes Saved Successfully"}</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>

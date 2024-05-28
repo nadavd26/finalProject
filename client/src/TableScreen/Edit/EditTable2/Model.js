@@ -76,10 +76,11 @@ export function filter(table, daySearch, skillSearch, fromSearch, untilSearch, a
  * @property {boolean} isWarning - Indicates if there are any contract assignments that violate their hour constraints.
  * @property {Array<string>} violations - An array of violation descriptions if any contract assignments are outside their specified hour constraints.
  */
-export function getStatus(colors, contracts) {
+export function getStatus(table, colors, contracts) {
     var isValid = true;
-    var isWarning = false
+    var isViolation = false
     var violations = []
+    var isUnassigned = false
     for (let i = 0; i < colors.length; i++) {
         const color = colors[i]
         if (color.includes("red")) {
@@ -97,19 +98,28 @@ export function getStatus(colors, contracts) {
                     violations.push("...")
                     break
                 }
+                if(violations.length == 0) {
+                    violations.push("There are some contract violations")
+                }
                 // violations.push({name: name, id:id, minHours: contract.minHours, maxHours: contract.maxHours, assignment: contract.assignment})
                 if (contract.assignment < contract.minHours) {
-                    violations.push("name: " + name + " , id: " + id + " , hours missing: " + (contract.minHours - contract.assignment))
+                    violations.push("- name: " + name + " , id: " + id + " , hours missing: " + (contract.minHours - contract.assignment))
                 } else {
-                    violations.push("name: " + name + " , id: " + id + " , hours excessing: " + (contract.assignment - contract.maxHours))
+                    violations.push("- name: " + name + " , id: " + id + " , hours excessing: " + (contract.assignment - contract.maxHours))
                 }
 
-                isWarning = true
+                isViolation = true
             }
         }
     }
 
-    return {isValid, isWarning, violations}
+    for(let i = 0; i < table.length; i++) {
+        if(table[i][4] == "") {
+            isUnassigned = true
+        }
+    }
+
+    return {isValid, isViolation, violations, isUnassigned}
 }
 
 function getAbsuluteIndex(relativeIndex, initialTable, day) {

@@ -18,67 +18,38 @@ export default function WorkerDropdown({ value, rowIndex, coloumnIndex, workerLi
             }
         }
     }
-    // if (color == "redorange" || color == "redyellow" || color == "redorangeyellow") {
-    //     finalColor = "red"
-    // }
-
-    // if (color == "orangeyellow") {
-    //     finalColor = "orange"
-    // }
     var startIndex = value == "" ? 0 : 1
     var shownValue = value
     if (value == "") {
         shownValue = "not selected";
     }
-    // function concatenateArray10Times(arr) {
-    //     let result = [];
-    //     for (let i = 0; i < 100; i++) {
-    //         result = result.concat(arr);
-    //     }
-    //     return result;
-    // }
 
-    // workerList = concatenateArray10Times(workerList)
-    // Add a hidden first option
+    function getOrder(worker) {
+        if (worker.color.includes("red")) {
+            return 5
+        }
+
+        if (worker.color.includes("orange")) {
+            return 4
+        }
+
+        if (worker.color.includes("yellow")) {
+            return 2
+        }
+
+        if (worker.color.includes("green")) {
+            return 1
+        }
+        
+        return 3 //white
+    }
+    workerList.sort((a, b) => {
+        return getOrder(a) - getOrder(b)
+    });
+
     let options = [];
     if (workerList.length > 0) {
-        // for (let index = 0; index < workerList.length; index++) {
-        //     let worker = workerList[index]
-        //     let prevWorker = options[index-1]
-        //     let prevWorkerColor = prevWorker ? prevWorker.color : ""
-        //     let finalColor = prevWorkerColor == "white" ? "gray" : "white"
-        //     if (worker.color.includes("red")) {
-        //         finalColor = prevWorkerColor.includes("red") ? "pink" : "red"
-        //     } else {
-        //         if (worker.color.includes("orange")) {
-        //             finalColor = prevWorkerColor.includes("orange") ? "brown" : "orange" 
-        //         } else {
-        //             if (worker.color.includes("yellow")) {
-        //                 finalColor = prevWorkerColor.includes("yellow") ? "#FAFF6B" : "yellow" 
-        //             } else {
-        //                 if (worker.color.includes("green")) {
-        //                     finalColor = prevWorkerColor.includes("green") ? "lightblue" : "green" 
-        //                 }
-        //             }
-        //         }
-        //     }
-        //     options.push({
-        //         label: `${worker.name}\n${worker.id}`,
-        //         value: `${worker.name},${worker.id},${worker.color}`,
-        //         color: finalColor
-        //     })
-
-        //     console.log("options")
-        //     console.log(options)
-        // }
         options = workerList.map(worker => {
-            // let finalColor = worker.color ? worker.color : "white";
-
-            // if (worker.color == "redorange" || worker.color == "redyellow" || worker.color == "redorangeyellow") {
-            //     finalColor = "red";
-            // } else if (worker.color == "orangeyellow") {
-            //     finalColor = "orange";
-            // }
             let finalColor = worker.color ? worker.color : "white";
             if (worker.color.includes("red")) {
                 finalColor = "red"
