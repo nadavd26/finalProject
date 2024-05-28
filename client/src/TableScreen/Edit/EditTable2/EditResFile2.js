@@ -4,6 +4,7 @@ import '../css/bootstrap.min.css'
 import '../css/edit-file-table-main.css'
 import '../css/perfect-scrollbar.css'
 import * as utils from '../../Utils'
+import * as editAlgo2Utils from './Utils'
 import overlapImg from '../Images/overlap.png'
 import contractImg from '../Images/contract.png'
 import infoImg from '../Images/info.png'
@@ -19,6 +20,8 @@ import FilterTableLoader from "../components/FilterTableLoader";
 import { Modal, Button, Container } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
+import * as algo2api from '../../../api/Algo2Api'
+import * as model from './Model'
 
 export default function EditResFile2({ initialTable, contracts, setInEdit, user, setUser, workerMap, shiftsInfo, shiftsPerWorkers, setShiftsPerWorkers, finishCallback }) {
     console.log("contracts")
@@ -59,33 +62,6 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
     const defaultErrorMsg = "There are workers who work in 2 diffrent shifts at the same time."
     const [errorMsg, setErrorMsg] = useState(defaultErrorMsg)
     const token = user.token
-    function initialColors() {
-        var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-        var colors = []
-        for (let i = 0; i < days.length; i++) {
-            const table = initialTable[days[i]]
-            for (let j = 0; j < table.length; j++) {
-                const row = table[j]
-                const assigned = row[4]
-                const contract = contracts[assigned]
-                if (contract) {
-                    if (contract.minHours > contract.assignment) {
-                        colors.push("yellow")
-                    } else {
-                        if (contract.maxHours < contract.assignment) {
-                            colors.push("orange")
-                        } else { //valid
-                            colors.push("white")
-                        }
-                    }
-                } else {
-                    colors.push("white")
-                }
-            }
-        }
-
-        return colors
-    }
     useEffect(() => {
         const newTable = [
             ...initialTable.Sunday,
@@ -96,15 +72,15 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
             ...initialTable.Friday,
             ...initialTable.Saturday
         ];
-        var newColors = initialColors()
+        var newColors = model.initialColors(initialTable, contracts)
 
         var newOptions = options
-        newOptions.day = getDayOptions()
-        newOptions.skill = getSkillOptions()
-        newOptions.assigned = getWorkerList()
-        newOptions.shiftIndex = getShiftList(newTable)
-        newOptions.from = getFromTimeList()
-        newOptions.until = getUntilTimeList()
+        newOptions.day = model.getDayOptions()
+        newOptions.skill = model.getSkillOptions(user.skillList)
+        newOptions.assigned = model.getWorkerList(user.table1)
+        newOptions.shiftIndex = model.getShiftList(newTable)
+        newOptions.from = model.getFromTimeList()
+        newOptions.until = model.getUntilTimeList()
 
         setLinesFiltered(Array.from({ length: newTable.length }, (_, index) => index))
         setRenderInfo({ table: newTable, colors: newColors, shiftsPerWorkers: shiftsPerWorkers, isGenerated: true, rowsToRender: {} })
@@ -112,255 +88,8 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
         setIsGenerated(true)
     }, []);
 
-    const getDayOptions = () => {
-        return { options: ["", "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"], shownOptions: ["Any", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"] }
-    }
-
-    const getSkillOptions = () => {
-        const skillList = user.skillList
-        var res = { options: ["", ...skillList], shownOptions: ["Any", ...skillList] }
-        return res
-    }
-
-    const getWorkerList = () => {
-        const workerList = utils.generateWorkerList(user.table1)
-        var res = { options: ["", "+", "-", "$", "^", "&", ...workerList], shownOptions: ["Any", "Any Assigned Shift", "Any Unassigned Shift", "Overlaps", "Assigned Workers Below Contract", "Assigned Workers Above Contract", ...workerList] }
-        return res
-    }
-
-    const getShiftList = (newTable) => {
-        const uniqueShiftsShown = new Set();
-        for (let i = 0; i < newTable.length; i++) {
-            const shift = newTable[i][5];
-            uniqueShiftsShown.add(shift + 1);
-        }
-
-        const shifts = Array.from(uniqueShiftsShown)
-        var res = { options: ["", ...(shifts)], shownOptions: ["Any", ...(shifts)] };
-        console.log("res");
-        console.log(res); // Log the result
-        return res;
-    };
-
-    const getFromTimeList = () => {
-        const fromTimeList = [
-            "00:00", "00:30",
-            "01:00", "01:30",
-            "02:00", "02:30",
-            "03:00", "03:30",
-            "04:00", "04:30",
-            "05:00", "05:30",
-            "06:00", "06:30",
-            "07:00", "07:30",
-            "08:00", "08:30",
-            "09:00", "09:30",
-            "10:00", "10:30",
-            "11:00", "11:30",
-            "12:00", "12:30",
-            "13:00", "13:30",
-            "14:00", "14:30",
-            "15:00", "15:30",
-            "16:00", "16:30",
-            "17:00", "17:30",
-            "18:00", "18:30",
-            "19:00", "19:30",
-            "20:00", "20:30",
-            "21:00", "21:30",
-            "22:00", "22:30",
-            "23:00", "23:30"
-        ];
-
-        const res = { options: ["", ...fromTimeList], shownOptions: ["Any", ...fromTimeList] }
-        return res
-
-    }
-
-    const getUntilTimeList = () => {
-        const UntilTimeList = [
-            "00:30",
-            "01:00", "01:30",
-            "02:00", "02:30",
-            "03:00", "03:30",
-            "04:00", "04:30",
-            "05:00", "05:30",
-            "06:00", "06:30",
-            "07:00", "07:30",
-            "08:00", "08:30",
-            "09:00", "09:30",
-            "10:00", "10:30",
-            "11:00", "11:30",
-            "12:00", "12:30",
-            "13:00", "13:30",
-            "14:00", "14:30",
-            "15:00", "15:30",
-            "16:00", "16:30",
-            "17:00", "17:30",
-            "18:00", "18:30",
-            "19:00", "19:30",
-            "20:00", "20:30",
-            "21:00", "21:30",
-            "22:00", "22:30",
-            "23:00", "23:30", "24:00"
-        ];
-
-        const res = { options: ["", ...UntilTimeList], shownOptions: ["Any", ...UntilTimeList] }
-        return res
-
-    }
-
-
-
-    function getColor(id, name, day, row, contracts) {
-        const white = "white"
-        const red = "red"
-        const yellow = "yellow"
-        const orange = "orange"
-        const green = "green"
-        var color = white
-        const shiftSet = utils.getShiftsForWorker((renderInfo.shiftsPerWorkers)[day], id, name);
-        // const shiftsWorker = getShifts(name + "\n" + id, shiftsPerWorkers)
-        // console.log("shiftsWorker" + shiftsWorker)
-        const contract = contracts[name + "\n" + id]
-        // console.log("numShifts")
-        // console.log(numShifts)
-        if (contract.assignment + utils.calculateHours(row[2], row[3]) < contract.minHours) { //selecting worker violates contract
-            color = yellow
-        } else {
-            if (contract.assignment < contract.minHours) {
-                color = green
-            }
-        }
-        if (utils.calculateHours(row[2], row[3]) + contract.assignment > contract.maxHours) { //selecting worker violates contract
-            if (color != white) {
-                color = orange + color
-            } else {
-                color = orange
-            }
-        }
-        for (const relativeIndex of shiftSet) {
-            const absuluteIndex = getAbsuluteIndex(relativeIndex, day)
-            const shiftRow = (renderInfo.table)[absuluteIndex];
-
-            if (utils.checkOverlap(shiftRow[2], shiftRow[3], row[2], row[3])) {
-                if (color != white) {
-                    return red + color
-                }
-                return red
-            }
-        }
-        return color; // Return "white" if no overlap is found
-    }
-
-
-    function firstIndex(day) {
-        var sum = 0;
-        if (day === "Sunday") {
-            return sum;
-        }
-        sum += initialTable.Sunday.length;
-        if (day === "Monday") {
-            return sum;
-        }
-        sum += initialTable.Monday.length;
-        if (day === "Tuesday") {
-            return sum;
-        }
-        sum += initialTable.Tuesday.length;
-        if (day === "Wednesday") {
-            return sum;
-        }
-        sum += initialTable.Wednesday.length;
-        if (day === "Thursday") {
-            return sum;
-        }
-        sum += initialTable.Thursday.length;
-        if (day === "Friday") {
-            return sum;
-        }
-        sum += initialTable.Friday.length;
-        if (day === "Saturday") {
-            return sum;
-        }
-    }
-
-    function getShifts(worker, shiftsPerWorkers) {
-        var shifts = []
-        // const parts = inputString.split(',');
-        // const worker = parts.slice(0, 2).join('\n');
-        // console.log("worker")
-        // console.log(worker)
-        var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-        for (let i = 0; i < days.length; i++) {
-            var length = 0
-            var workersDay = shiftsPerWorkers[days[i]]
-            // console.log("workersDay")
-            // console.log(workersDay)
-            if (!!workersDay) {
-                var workerDay = workersDay[worker]
-                // console.log("workerDay")
-                // console.log(workerDay)
-                if (!!workerDay) {
-                    workerDay.forEach((element) => shifts.push(getAbsuluteIndex(element, days[i])))
-                }
-            }
-        }
-
-        return shifts
-    }
-
-
-
-
-    function capitalizeFirstLetter(str) {
-        return str.charAt(0).toUpperCase() + str.slice(1);
-    }
-
     function getLineInfo(absuluteIndex) {
-        var overlapsLineNumbers = []
-        var contractMsg = "No Contract Violation"
-        const row = (renderInfo.table)[absuluteIndex]
-        const day = capitalizeFirstLetter(row[0])
-        const worker = row[4]
-        if (renderInfo.colors[absuluteIndex].includes("red")) {
-            const shiftsId = row[5]
-            const shiftEntry = shiftsInfo[day][shiftsId]
-            const overlaps = shiftEntry.overlaps
-            for (const overlapId of overlaps) {
-                if (overlapId == shiftsId) {
-                    continue //same shift does not count as overlap
-                }
-                var overlapEntry = shiftsInfo[day][overlapId]
-                var start = getAbsuluteIndex(overlapEntry.start, day)
-                var end = getAbsuluteIndex(overlapEntry.end, day)
-                for (let i = start; i <= end; i++) {
-                    if ((renderInfo.table)[i][4] == worker) {
-                        overlapsLineNumbers.push(i + 1) //numbers start from 1, not from 0
-                    }
-                }
-            }
-        }
-
-        const contract = contracts[worker]
-
-        if ((renderInfo.colors[absuluteIndex]).includes("orange")) {
-            var workerShifts = getShifts(worker, shiftsPerWorkers, 1)
-            workerShifts = workerShifts.filter(item => item != (absuluteIndex))
-            workerShifts = workerShifts.map((item, index) => item + 1);
-            workerShifts.sort((a, b) => a - b);
-            var otherAss = workerShifts.join(", ")
-            contractMsg = "Maximum hours per week: " + contract.maxHours + ", number of hours: " + (contract.assignment) + "." + (otherAss != [] ? ("\nOther assigments of this worker at indexes: " + otherAss) : " Number of shifts: 1")
-        }
-
-        if ((renderInfo.colors[absuluteIndex]).includes("yellow")) {
-            contractMsg = "Minimum hours per week: " + contract.minHours + ", number of hours: " + (contract.assignment)
-        }
-
-        console.log("overlapsLineNumbers")
-        console.log(overlapsLineNumbers)
-        var overlapMsg = "No overlapping shifts"
-        if (overlapsLineNumbers.length > 0) {
-            overlapMsg = "Overlapping shifts of this shift (index " + (absuluteIndex + 1) + ") at indexes: " + overlapsLineNumbers.join(", ")
-        }
+        const {overlapMsg, contractMsg} = model.getLineInfo(absuluteIndex, renderInfo.table, renderInfo.colors, shiftsInfo, contracts, shiftsPerWorkers, initialTable)
         setOverlapInfo(overlapMsg)
         setContractInfo(contractMsg)
         const infoModal = new window.bootstrap.Modal(document.getElementById('infoModal'));
@@ -369,311 +98,22 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
     }
 
     function generateWorkerList(rowIndex, day) {
-        const row = (renderInfo.table)[rowIndex]
-        // console.log("row")
-        // console.log(row)
-        const skill = row[1];
-        if (workerMap.has(skill)) {
-            const workerList = workerMap.get(skill);
-            const unavaliableWorkers = []
-            const start = (shiftsInfo[day][row[5]]).start + firstIndex(day)
-            const end = (shiftsInfo[day][row[5]]).end + firstIndex(day)
-            for (let i = start; i <= end; i++) {
-                const nameId = ((renderInfo.table))[i][4]
-                const [name, id] = (nameId).split("\n")
-                unavaliableWorkers.push({ name: name, id: id })
-            }
-            const filteredWorkerList = workerList.filter(worker => {
-                return !unavaliableWorkers.some(unavailable => {
-                    return unavailable.id === worker.id;
-                });
-            });
-            const transformedWorkerList = [];
-            const [name, id] = row[4].split("\n");
-            // console.log("filteredWorkerList")
-            // console.log(filteredWorkerList)
-            for (let i = 0; i < filteredWorkerList.length; i++) {
-                const worker = filteredWorkerList[i]
-                transformedWorkerList.push({
-                    id: worker.id, // Assuming the worker object has an id property
-                    name: worker.name, // Assuming the worker object has a name property
-                    color: getColor(worker.id, worker.name, day, row, contracts)
-                });
-            }
-            // console.log("transformedWorkerList")
-            // console.log(transformedWorkerList)
-            return transformedWorkerList; // Return the transformed worker list
-        } else {
-            // If the skill does not exist in the workerMap, return an empty list
-            return [];
-        }
+        return model.generateWorkerList(rowIndex, day, renderInfo.table, workerMap, shiftsInfo, contracts, renderInfo.shiftsPerWorkers, initialTable)
     }
 
-    function getAbsuluteIndex(relativeIndex, day) {
-        return firstIndex(day) + relativeIndex
-    }
-
-    function getRelativeIndex(absuluteIndex, day) {
-        return absuluteIndex - firstIndex(day)
-    }
-
-
-    function addColor(start, newColor) {
-        return start + newColor
-    }
-
-    function removeColor(start, colorToRemove) {
-        // Use the replace method with a regular expression and the global flag to remove all instances
-        const regex = new RegExp(colorToRemove, 'g');
-        var res = start.replace(regex, '');
-        if (!res || res.length == 0) {
-            return "white"
-        }
-
-        return res
-    }
 
     function handleCellEdit(newWorker, rowIndex) {
-        const row = (renderInfo.table)[rowIndex]
-        console.log("row")
-        console.log(row)
-        const day = capitalizeFirstLetter(row[0])
-        var newTable = renderInfo.table
-        const oldColor = (renderInfo.colors)[rowIndex]
-        var newColors = renderInfo.colors
-        var newRowsToRender = {}
-        const [newName = "", newId = "", newColor = "white"] = newWorker.split(",")
-        const [oldName, oldId] = (row[4]).split("\n")
-        const oldWorker = oldName + "\n" + oldId
-        const newContracts = contracts
-        console.log("newContracts")
-        console.log(newContracts)
-        console.log("oldWorker")
-        console.log(oldWorker)
-        console.log("newWorker")
-        console.log(newWorker)
-        console.log(" newContracts[oldWorker]")
-        console.log(newContracts[oldWorker])
-        console.log("newContracts[newWorker]")
-        console.log(newContracts[newName + "\n" + newId])
-        if (newContracts.hasOwnProperty(oldWorker)) { //maybe ""
-            newContracts[oldWorker].assignment -= utils.calculateHours(row[2], row[3])
-        }
-
-        if (newContracts.hasOwnProperty(newName + "\n" + newId)) {
-            newContracts[newName + "\n" + newId].assignment += utils.calculateHours(row[2], row[3])
-        }
-        const oldWorkerContract = newContracts[oldWorker]
-        const newWorkerContract = newContracts[newName + "\n" + newId]
-        console.log("newContracts")
-        console.log(newContracts)
-        var newShiftPerWorkersDay = newName != "" ? utils.addShiftToWorker((renderInfo.shiftsPerWorkers)[day], newId, newName, getRelativeIndex(rowIndex, day)) : (renderInfo.shiftsPerWorkers)[day]
-        utils.removeShiftFromWorker(newShiftPerWorkersDay, oldId, oldName, getRelativeIndex(rowIndex, day))
-        var newShiftPerWorkers = renderInfo.shiftsPerWorkers
-        newShiftPerWorkers[day] = newShiftPerWorkersDay
-        var oldWorkerShifts = getShifts(oldWorker, newShiftPerWorkers)
-        newTable[rowIndex][4] = (newName == "") ? "" : newName + "\n" + newId
-        newColors[rowIndex] = newColor
-        if (newColor.includes("red")) { //checking for overlapping shifts to color in red
-            const shiftsOfNewWorker = utils.getShiftsForWorker((renderInfo.shiftsPerWorkers)[day], newId, newName)
-            for (const relativeIndex of shiftsOfNewWorker) {
-                const absuluteIndex = getAbsuluteIndex(relativeIndex, day)
-                const from = (renderInfo.table)[absuluteIndex][2]
-                const until = (renderInfo.table)[absuluteIndex][3]
-                if (utils.checkOverlap(from, until, row[2], row[3])) { //overlaps with some shift of new worker
-                    // if (newColors[absuluteIndex] == "orange") {
-                    //     newColors[absuluteIndex] = "redorange"
-                    // } else {
-                    //     newColors[absuluteIndex] = "red"
-                    // }
-
-                    if (newColors[absuluteIndex] != "white" && !((newColors[absuluteIndex]).includes("red"))) {
-                        newColors[absuluteIndex] = "red" + newColors[absuluteIndex]
-                    }
-                    if (newColors[absuluteIndex] == "white") {
-                        newColors[absuluteIndex] = "red"
-                    }
-                }
-            }
-        }
-
-        if (oldColor.includes("red")) {//removing the overlaps of the old worker
-            const shiftsOfOldWorker = utils.getShiftsForWorker(newShiftPerWorkersDay, oldId, oldName)
-            for (const relativeIndex of shiftsOfOldWorker) {
-                // console.log("relativeIndex")
-                // console.log(relativeIndex)
-                const absuluteIndex = getAbsuluteIndex(relativeIndex, day)
-                const from = (renderInfo.table)[absuluteIndex][2]
-                const until = (renderInfo.table)[absuluteIndex][3]
-                if (utils.checkOverlap(from, until, row[2], row[3])) {
-                    //found overlap, now need to check this is the only overlap in order to color it a "white"
-                    var found = false
-                    const shiftsOfOldWorker2 = shiftsOfOldWorker
-                    for (const relativeIndex2 of shiftsOfOldWorker2) {
-                        if (relativeIndex2 != relativeIndex) { //check overlap for other shift that isnt the shift we are checking
-                            const absuluteIndex2 = getAbsuluteIndex(relativeIndex2, day)
-                            const from2 = (renderInfo.table)[absuluteIndex2][2]
-                            const until2 = (renderInfo.table)[absuluteIndex2][3]
-                            if (utils.checkOverlap(from, until, from2, until2)) {
-                                found = true
-                            }
-                        }
-                    }
-
-                    if (!found) { //only overlap it has it is with the original shift
-                        newColors[absuluteIndex] = removeColor(newColors[absuluteIndex], "red")
-                        // if (newColors[absuluteIndex] == "redorange") {
-                        //     newColors[absuluteIndex] = "orange"
-                        // }
-                        // else {
-                        //     newColors[absuluteIndex] = "white"
-                        // }
-                    }
-                }
-            }
-        }
-
-
-        const parts = newWorker.split(',');
-        const newWorkerString = parts.slice(0, 2).join('\n');
-        var newWorkerShifts = getShifts(newWorkerString, newShiftPerWorkers)
-        // if (newColor.includes("orange")) {
-        //     for (let i = 0; i < newWorkerShifts.length; i++) {
-        //         const absuluteIndex = newWorkerShifts[i]
-        //         // if (newColors[absuluteIndex] == "white") {
-        //         //     newColors[absuluteIndex] = "orange"
-        //         // }
-        //         // if (newColors[absuluteIndex] == "red") {
-        //         //     newColors[absuluteIndex] = "redorange"
-        //         // }
-        //         newColors[absuluteIndex] = addColor(newColors[absuluteIndex], "orange")
-        //     }
-        // }
-
-        // if (newColor.includes("yellow")) {
-        //     for (let i = 0; i < newWorkerShifts.length; i++) {
-        //         const absuluteIndex = newWorkerShifts[i]
-        //         // if (newColors[absuluteIndex] == "white") {
-        //         //     newColors[absuluteIndex] = "orange"
-        //         // }
-        //         // if (newColors[absuluteIndex] == "red") {
-        //         //     newColors[absuluteIndex] = "redorange"
-        //         // }
-        //         newColors[absuluteIndex] = addColor(newColors[absuluteIndex], "yellow")
-        //     }
-        // }
-
-        if (newColor.includes("orange")) {
-            // for (let i = 0; i < newWorkerShifts.length; i++) {
-            //     const absuluteIndex = newWorkerShifts[i]
-            //     newColors[absuluteIndex] = addColor(newColors[absuluteIndex], "orange")
-            // }
-        }
-
-        for (let i = 0; i < newWorkerShifts.length; i++) {
-            const absuluteIndex = newWorkerShifts[i]
-            if (newWorkerContract.assignment <= newWorkerContract.maxHours && newWorkerContract.assignment >= newWorkerContract.minHours) { //valid
-                newColors[absuluteIndex] = removeColor(newColors[absuluteIndex], "yellow")
-                newColors[absuluteIndex] = removeColor(newColors[absuluteIndex], "orange")
-            }
-
-            if (newWorkerContract.assignment < newWorkerContract.minHours) { //too less hours
-                newColors[absuluteIndex] = addColor(newColors[absuluteIndex], "yellow")
-            }
-
-            if (newWorkerContract.assignment > newWorkerContract.maxHours) { //too much
-                newColors[absuluteIndex] = addColor(newColors[absuluteIndex], "orange")
-            }
-        }
-
-        if (newColor.includes("green")) {
-            newColors[rowIndex] = removeColor(newColors[rowIndex], "green")
-        }
-
-
-        console.log("oldWorker")
-        console.log(oldWorker)
-        // console.log("oldWorkerShifts")
-        //     console.log(oldWorkerShifts)
-        for (let i = 0; i < oldWorkerShifts.length; i++) {
-            const absuluteIndex = oldWorkerShifts[i]
-            if (oldWorkerContract.assignment <= oldWorkerContract.maxHours && oldWorkerContract.assignment >= oldWorkerContract.minHours) { //valid
-                newColors[absuluteIndex] = removeColor(newColors[absuluteIndex], "yellow")
-                newColors[absuluteIndex] = removeColor(newColors[absuluteIndex], "orange")
-            }
-
-            if (oldWorkerContract.assignment < oldWorkerContract.minHours) { //too less hours
-                newColors[absuluteIndex] = addColor(newColors[absuluteIndex], "yellow")
-            }
-
-            if (oldWorkerContract.assignment > oldWorkerContract.maxHours) { //too much
-                newColors[absuluteIndex] = addColor(newColors[absuluteIndex], "orange")
-            }
-        }
-
-        // if (oldColor.includes("orange")) { //now cheking if the removed worker obeys the contract
-        //     console.log("old worker orange")
-        //     console.log("oldWorkerShifts")
-        //     console.log(oldWorkerShifts)
-        //     if (oldWorkerContract.assignment <= oldWorkerContract.maxHours) { //removing this shift makes the contract below maxHours
-        //         for (let i = 0; i < oldWorkerShifts.length; i++) {
-        //             const absuluteIndex = oldWorkerShifts[i]
-        //             console.log("absuluteIndex")
-        //             console.log(absuluteIndex)
-        //             // if (newColors[absuluteIndex] == "orange") {
-        //             //     newColors[absuluteIndex] = "white"
-        //             // }
-        //             // if (newColors[absuluteIndex] == "redorange") {
-        //             //     newColors[absuluteIndex] = "red"
-        //             // }
-        //             newColors[absuluteIndex] = removeColor(newColors[absuluteIndex], "orange")
-        //             newRowsToRender[absuluteIndex] = true
-        //         }
-        //     }
-        // }
-
-        // if(oldWorkerContract.assignment <= oldWorkerContract.maxHours && oldWorkerContract.assignment >= oldWorkerContract.minHours) {
-        //     if (!(oldColor.includes("yellow"))) {
-
-        //     }
-        // }
-
-
+        const {newTable, newColors, newShiftPerWorkers} = model.edit(renderInfo.table,initialTable,rowIndex, renderInfo.colors, newWorker, contracts, renderInfo.shiftsPerWorkers)
         var newRowsToRender = {}
         var length = linesFiltered.length
         var endOfPage = Math.min(page_size + currentIndex - 1, length - 1)
         for (let i = currentIndex; i <= endOfPage; i++) {
             let absuluteIndex = linesFiltered[i]
             let rowChcked = renderInfo.table[absuluteIndex]
-            // if (capitalizeFirstLetter(rowChcked[0]) == day && (utils.checkOverlap(rowChcked[2], rowChcked[3], row[2], row[3]))) {
-            //     newRowsToRender[linesFiltered[i]] = true
-            // }
-
             newRowsToRender[linesFiltered[i]] = true
-
-            // console.log("workerMap.get(rowChcked[1])")
-            // console.log(workerMap.get(rowChcked[1]))
-            // console.log("{id: newId, name: newName}")
-            // console.log({id: newId, name: newName})
-            // console.log("workerMap.get(rowChcked[1]).indexOf({id: newId, name: newName})")
-            // console.log(workerMap.get(rowChcked[1]).indexOf({id: newId, name: newName}))
-            // const objToFind = { id: newId, name: newName }
-            // if ((workerMap.get(rowChcked[1]).findIndex(obj => obj.id === objToFind.id && obj.name === objToFind.name) != -1) && newWorkerShifts.length >= newWorkerContract) { //need to render only if contract violation
-            //     newRowsToRender[linesFiltered[i]] = true
-            // }
-
-            // const objToFind2 = { id: oldId, name: oldName }
-            // if ((workerMap.get(rowChcked[1]).findIndex(obj => obj.id === objToFind2.id && obj.name === objToFind2.name) != -1) && newWorkerShifts.length <= newWorkerContract) { //need to render only if contract becomes valid
-            //     newRowsToRender[linesFiltered[i]] = true
-            // }
-
-            // newRowsToRender[linesFiltered[i]] = true
         }
-
         console.log("newColors")
         console.log(newColors)
-        //rendering copies of the same shift
-        //rendering overlapping rows of this row
         setRenderInfo({ table: newTable, colors: newColors, shiftsPerWorkers: newShiftPerWorkers, isGenerated: true, rowsToRender: newRowsToRender })
     }
 
@@ -682,45 +122,8 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
         const errorModal = new window.bootstrap.Modal(document.getElementById('errModal'));
         setErrorMsg(defaultErrorMsg)
         const saveModal = new window.bootstrap.Modal(document.getElementById('saveModal'));
-        var isValid = true;
-        var isWarning = false
-        var violations = []
-        for (let i = 0; i < renderInfo.colors.length; i++) {
-            const color = renderInfo.colors[i]
-            if (color.includes("red")) {
-                isValid = false
-            }
-
-            // if (color.includes("orange") || color.includes("yellow")) {
-            //     isWarning = true
-            // }
-        }
-
-        for (const contractId in contracts) {
-            if (contracts.hasOwnProperty(contractId)) {
-                const contract = contracts[contractId];
-                const [name, id] = contractId.split('\n');
-                if (contract.assignment < contract.minHours || contract.assignment > contract.maxHours) {
-                    console.log("hshs")
-                    if (violations.length >= 5) {
-                        violations.push("...")
-                        break
-                    }
-                    // violations.push({name: name, id:id, minHours: contract.minHours, maxHours: contract.maxHours, assignment: contract.assignment})
-                    if (contract.assignment < contract.minHours) {
-                        violations.push("name: " + name + " , id: " + id + " , hours missing: " + (contract.minHours - contract.assignment))
-                    } else {
-                        violations.push("name: " + name + " , id: " + id + " , hours excessing: " + (contract.assignment - contract.maxHours))
-                    }
-
-                    isWarning = true
-                }
-            }
-        }
-
+        var { isValid, isWarning, violations } = model.getStatus(renderInfo.colors, contracts)
         setViolations(violations.join("\n"))
-
-
         setWarning(isWarning)
         if (!isValid) {
             setErrorMsg(defaultErrorMsg)
@@ -751,7 +154,7 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
         newUser.contracts = contracts
         console.log("initialTable")
         console.log(initialTable)
-        utils.postAlgo2Results(user.token, initialTable, () => { })
+        algo2api.postAlgo2Results(user.token, initialTable, () => { })
         setShiftsPerWorkers(renderInfo.shiftsPerWorkers)
         setUser(newUser)
         setInEdit(false)
@@ -819,7 +222,6 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
         document.getElementById('searchIndexInput').value = '';
     }
 
-
     const lastPage = () => {
         var length = linesFiltered.length
         var newCurrentIndex = Math.floor(length / page_size) * page_size
@@ -842,7 +244,7 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
     const changeCurrentIndex = () => {
         var num = parseInt(searchedIndex)
         num = num - 1
-        var indexNum = utils.binarySearch(linesFiltered, num)
+        var indexNum = editAlgo2Utils.binarySearch(linesFiltered, num)
         var length = linesFiltered.length
 
         if (indexNum < 0 || indexNum >= renderInfo.table.length) {
@@ -903,69 +305,24 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
 
     const filterTable = async () => {
         await utils.sleep(1)
-        var newLinesFiltered = []
         var newRowsToRender = {}
         const table = renderInfo.table
         const colors = renderInfo.colors
-        for (let i = 0; i < table.length; i++) {
-            var goodLine = true
-            const [day, skill, from, until, assigned, shiftIndex] = table[i]
-
-            if (daySearch.value != "" && daySearch.value != day) {
-                goodLine = false
-            }
-            if (skillSearch.value != "" && skillSearch.value != skill) {
-                goodLine = false
-            }
-            if (fromSearch.value != "" && fromSearch.value != from) {
-                goodLine = false
-            }
-            if (untilSearch.value != "" && untilSearch.value != until) {
-                goodLine = false
-            }
-            if (assignedSearch.value != "" && assignedSearch.value != "+" && assignedSearch.value != "-" && assignedSearch.value != "$" && assignedSearch.value != "^" && assignedSearch.value != "&" && assignedSearch.value != assigned) {
-                goodLine = false
-            }
-
-            if (assignedSearch.value == "$" && !(colors[i].includes("red"))) {
-                goodLine = false
-            }
-
-            if (assignedSearch.value == "^" && !(colors[i].includes("yellow"))) {
-                goodLine = false
-            }
-
-            if (assignedSearch.value == "&" && !(colors[i].includes("orange"))) {
-                goodLine = false
-            }
-
-            if (assignedSearch.value == "+" && assigned == "") {
-                goodLine = false
-            }
-
-            if (assignedSearch.value == "-" && assigned != "") {
-                goodLine = false
-            }
-            if (shiftIndexSearch.value != "" && shiftIndexSearch.value - 1 != shiftIndex) {
-                goodLine = false
-            }
-
-            if (goodLine) {
-                newLinesFiltered.push(i)
-                newRowsToRender[i] = true
-            }
-        }
+        var newLinesFiltered = model.filter(table, daySearch, skillSearch, fromSearch, untilSearch, assignedSearch, shiftIndexSearch, colors)
         setCurrentIndex(0)
         setSearchedIndex('')
         document.getElementById('searchIndexInput').value = '';
+        for (let lineInd of newLinesFiltered) {
+            newRowsToRender[lineInd] = true
+        }
         setLinesFiltered(newLinesFiltered)
         setRenderInfo(prevRenderInfo => ({
             ...prevRenderInfo,
             rowsToRender: newRowsToRender
         }));
-
         setIsFiltered(true)
     }
+
 
     const searchDayElement = (width) => {
         return (<SearchDropdown value={daySearch.value} shownValue={daySearch.shownValue} options={options.day.options} shownOptions={options.day.shownOptions} onSelect={changeSelectedDay} width={width} />)
@@ -1078,7 +435,7 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
                         <Button
                             variant="info"
                             style={{ width: "50px", backgroundColor: "white", border: "none" }}
-                            onClick={()=>setColorsModalShow(true)}
+                            onClick={() => setColorsModalShow(true)}
                         >
                             <FontAwesomeIcon
                                 icon={faQuestionCircle}
@@ -1162,11 +519,6 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
                 </div>
             </div>
 
-
-
-
-
-
             {showBackModal && (
                 <div class="modal fade show" id="backModal" tabindex="-1" role="dialog" aria-labelledby="backModal" aria-hidden="true" onHide={handleBackModalClose}>
                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -1237,7 +589,6 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
                     </div>
                 </div>
             )}
-
 
             <Modal show={colorsModalShow} onHide={() => setColorsModalShow(false)} centered>
                 <Modal.Header>

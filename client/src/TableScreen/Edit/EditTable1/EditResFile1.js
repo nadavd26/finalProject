@@ -5,6 +5,7 @@ import '../css/edit-file-table-main.css'
 import '../css/perfect-scrollbar.css'
 import * as utils from '../../Utils'
 import Kpi from "../components/Kpi";
+import * as algo1api from '../../../api/Algo1Api'
 
 export default function EditResFile1({ initialTable, setInEdit, user, setUser, currentDay, currentSkill, setWorksPerShift, finishCallback }) {
     const [content, setContent] = useState([["", "", "", "", ""]])
@@ -263,7 +264,7 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
         newUser.algo1Table = map
         newUser.tableAlgo1Changed = true
         setWorksPerShift(content)
-        await utils.postAlgo1Res(content, user.token)
+        await algo1api.postAlgo1Res(content, user.token)
         setUser(newUser)
         setInEdit(false)
         finishCallback()

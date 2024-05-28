@@ -14,7 +14,8 @@ import { useTableAlgo1State } from "./states/TableAlgo1State";
 import EditResFile1 from "./Edit/EditTable1/EditResFile1";
 import { Modal, Button } from 'react-bootstrap';
 import { ExclamationTriangleFill, FileX } from 'react-bootstrap-icons';
-
+import * as algo1api from '../api/Algo1Api'
+import * as algo2api from '../api/Algo2Api'
 
 import SkillDropdown from "./conponenets/SkillDropdown";
 import * as utils from './Utils'
@@ -102,7 +103,7 @@ function TableScreen({ user, setUser }) {
             tableScreenState.setIs1Generated(true)
             console.log("finish callback")
         }
-        utils.generateAlgo1Results(user.token, user.tableAlgo1FromDb, algo1Callback)
+        algo1api.generateAlgo1Results(user.token, user.tableAlgo1FromDb, algo1Callback)
 
         // console.log("res")
         // console.log(res)
@@ -167,7 +168,7 @@ function TableScreen({ user, setUser }) {
         if (!algo2table) {
             newUser.contracts = []
         }
-        const res = algo2table ? algo2table : await utils.generateAlgo2Results(user.token, fromDb)
+        const res = algo2table ? algo2table : await algo2api.generateAlgo2Results(user.token, fromDb)
         // console.log("res")
         // console.log(JSON.stringify(res))
         if (!algo2table) {
@@ -203,7 +204,7 @@ function TableScreen({ user, setUser }) {
         }
 
         if (num == 2 && !tableScreenState.get.is2Generated) {
-            const validate = await utils.validateAlgo1Table1(user.token)
+            const validate = await algo1api.validateAlgo1Table1(user.token)
             setTable1Algo1Changed(validate.changed)
             console.log("validate")
             console.log(validate)
