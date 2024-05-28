@@ -316,10 +316,37 @@ const validateTable2NumOfWorkers = (table1, table2) => {
     return info;
 }
 
+// This function checks that the requiredNumOfWorkers of every 
+// line in table2 is not more than the actual number of workers with that skill. 
+const validateTable2NumOfWorkersWithSkill = (table1, table2) => {
+    info = [true, "The following lines in Table2 have a requiredNumOfWorkers value higher than the actual number of workers with that skill: "]
+    lineIndex = 1
+    let counter = 0
+    for (const line of table2) {
+        const numOfWorkers = numOfWorkersWithSkill(table1, line[1])
+        if (Number(line[4]) > numOfWorkers) {
+            if (info[0]) {
+                info[0] = false
+                info[1] += String(lineIndex)
+                counter++
+            } else {
+                info[1] += ", " + String(lineIndex)
+                counter++
+                if (counter == 5) {   // We dont want to inform about more than five at a time.
+                    info[1] += "..."
+                    return info
+                }
+            }
+        }
+        lineIndex++
+    }
+    return info;
+}
+
 const numOfWorkersWithSkill = (table1, skill) => {
     let counter = 0
     table1.forEach(element => {
-        if(skill == element[2] || skill || element[3] || skill == element[4]) {
+        if(skill == element[2] || skill == element[3] || skill == element[4]) {
             counter++
         }
     });
@@ -342,15 +369,15 @@ const validateTable1Algo1 = (table1, resultsMap) => {
     let counter = 0
     for (const [key, value] of resultsMap.entries()) {
         for (const line of value) {
-            const numOfWorkers = numOfWorkersWithSkill(table1, value[1])
+            const numOfWorkers = numOfWorkersWithSkill(table1, line[1])
             if (Number(line[4]) > numOfWorkers) {
                 counter++
                 if (info[0]) {
                     info[0] = false
-                    info[1] += "(" + key.replace("*", ", ") + ") : " + numOfWorkersNeededWithSkill(value) + " workers with this skill needed."  //Replacing the '*' that sepreates the day and skill in the map.
+                    info[1] += "(" + key.replace("*", ", ") + ") : " + numOfWorkersNeededWithSkill(value) + " workers with this skill needed"  //Replacing the '*' that sepreates the day and skill in the map.
                     break                                           //We want to add each pair only once.
                 } else {
-                    info[1] += ", " + "(" + key.replace("*", ", ") + ")  : " + numOfWorkersNeededWithSkill(value) + " workers with this skill needed."
+                    info[1] += ", " + "(" + key.replace("*", ", ") + ")  : " + numOfWorkersNeededWithSkill(value) + " workers with this skill needed"
                     break
                 }
             }
@@ -402,4 +429,4 @@ const setTableBit = async (userId, tableNumber, newValue) => {
     }
 };
 
-module.exports = { validateTable1, validateTable2, validateTable3, validateTable2SkillsInTable3, validateTable3SkillsInTable2, validateTable2NumOfWorkers, validateTable1Algo1, validateTable3SkillsInTable1, validateTable2SkillsInTable1, validateTable1SkillsInTable3, validateTable1SkillsInTable2, getTableBit, setTableBit }
+module.exports = { validateTable1, validateTable2, validateTable3, validateTable2SkillsInTable3, validateTable3SkillsInTable2, validateTable2NumOfWorkers, validateTable1Algo1, validateTable3SkillsInTable1, validateTable2SkillsInTable1, validateTable1SkillsInTable3, validateTable1SkillsInTable2, getTableBit, setTableBit, validateTable2NumOfWorkersWithSkill }
