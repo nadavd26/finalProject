@@ -44,11 +44,11 @@ function generateShifts(scheduleData) {
         var endIndex = timeIndexMap[end] - 1
         let shifts = workerShiftsMap.get(workerID);
         if (!shifts) {
-            shifts = new Array(48).fill(false);
+            shifts = new Array(48).fill({isWorking: false, skill: ""});
             workerShiftsMap.set(workerID, shifts);
         }
         for (let i = startIndex; i <= endIndex; i++) {
-            shifts[i] = true;
+            shifts[i] = {isWorking: true, skill: skill}
         }
     });
 

@@ -72,7 +72,7 @@ function TableAlgo2({ workersAndShifts }) {
                                         <th className="cell100 last-columns blue">23:30</th>
                                     </tr>
                                     {workersAndShifts.map((workerData, index) => (
-                                        <ShiftsRow
+                                        <ShiftsRow 
                                             key={index}
                                             {...workerData}
                                             defaultColor={index % 2 === 0 ? 'white' : 'gray'}

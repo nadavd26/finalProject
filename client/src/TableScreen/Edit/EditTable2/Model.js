@@ -15,6 +15,16 @@ import * as utils from '../../Utils'
  */
 export function filter(table, daySearch, skillSearch, fromSearch, untilSearch, assignedSearch, shiftIndexSearch, colors) {
     var newLinesFiltered = []
+    const timeIndexMap = {
+        "00:00": 0, "00:30": 1, "01:00": 2, "01:30": 3, "02:00": 4, "02:30": 5,
+        "03:00": 6, "03:30": 7, "04:00": 8, "04:30": 9, "05:00": 10, "05:30": 11,
+        "06:00": 12, "06:30": 13, "07:00": 14, "07:30": 15, "08:00": 16, "08:30": 17,
+        "09:00": 18, "09:30": 19, "10:00": 20, "10:30": 21, "11:00": 22, "11:30": 23,
+        "12:00": 24, "12:30": 25, "13:00": 26, "13:30": 27, "14:00": 28, "14:30": 29,
+        "15:00": 30, "15:30": 31, "16:00": 32, "16:30": 33, "17:00": 34, "17:30": 35,
+        "18:00": 36, "18:30": 37, "19:00": 38, "19:30": 39, "20:00": 40, "20:30": 41,
+        "21:00": 42, "21:30": 43, "22:00": 44, "22:30": 45, "23:00": 46, "23:30": 47, "24:00": 48
+    };
     for (let i = 0; i < table.length; i++) {
         var goodLine = true
         const [day, skill, from, until, assigned, shiftIndex] = table[i]
@@ -25,10 +35,10 @@ export function filter(table, daySearch, skillSearch, fromSearch, untilSearch, a
         if (skillSearch.value != "" && skillSearch.value != skill) {
             goodLine = false
         }
-        if (fromSearch.value != "" && fromSearch.value != from) {
+        if (fromSearch.value != "" && timeIndexMap[fromSearch.value] > timeIndexMap[from]) {
             goodLine = false
         }
-        if (untilSearch.value != "" && untilSearch.value != until) {
+        if (untilSearch.value != "" && timeIndexMap[untilSearch.value] < timeIndexMap[until]) {
             goodLine = false
         }
         if (assignedSearch.value != "" && assignedSearch.value != "+" && assignedSearch.value != "-" && assignedSearch.value != "$" && assignedSearch.value != "^" && assignedSearch.value != "&" && assignedSearch.value != assigned) {
@@ -562,13 +572,16 @@ export function getWorkerList(workersTable) {
 }
 
 export function getShiftList(table){
+    const uniqueShiftsInfo = new Set();
     const uniqueShiftsShown = new Set();
     for (let i = 0; i < table.length; i++) {
         const shift = table[i][5];
+        // uniqueShiftsInfo.add((shift + 1) + " " + table[i][0] + " " + table[i][1] + " " + table[i][2] + " " + table[i][3])
         uniqueShiftsShown.add(shift + 1);
     }
 
     const shifts = Array.from(uniqueShiftsShown)
+    // const shiftsInfo = Array.from(uniqueShiftsInfo)
     var res = { options: ["", ...(shifts)], shownOptions: ["Any", ...(shifts)] };
     console.log("res");
     console.log(res); // Log the result
