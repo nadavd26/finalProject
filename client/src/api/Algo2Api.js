@@ -1,6 +1,8 @@
-export async function generateAlgo2Results(token, getFromDatabase) {
+export async function generateAlgo2Results(token, getFromDatabase, autoComplete) {
     var data = "?getFromDatabase="
     data += getFromDatabase ? "true" : "false"
+    // data += "?autoComplete="
+    // data += autoComplete ? "true" : "false"
 
     try {
         const url = "http://localhost:12345/Results/GetResults2" + data;

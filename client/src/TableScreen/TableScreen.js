@@ -163,12 +163,12 @@ function TableScreen({ user, setUser }) {
     //     setUser(newUser)
     //     tableScreenState.setIs1Generated(true)
     // }
-    async function generateResults2(algo2table, fromDb) {
+    async function generateResults2(algo2table, fromDb, autoComplete) {
         var newUser = user
         if (!algo2table) {
             newUser.contracts = []
         }
-        const res = algo2table ? algo2table : await algo2api.generateAlgo2Results(user.token, fromDb)
+        const res = algo2table ? algo2table : await algo2api.generateAlgo2Results(user.token, fromDb, autoComplete)
         // console.log("res")
         // console.log(JSON.stringify(res))
         if (!algo2table) {
@@ -266,6 +266,11 @@ function TableScreen({ user, setUser }) {
         return newObj;
     }
 
+    const autoComplete = async () => {
+        tableScreenState.setIs2Generated(false)
+        await generateResults2(false, false, true)
+    }
+
     function arraysToSets(obj) {
         const newObj = {};
         for (const key in obj) {
@@ -318,13 +323,23 @@ function TableScreen({ user, setUser }) {
                         <div className="col-1"></div>
                         <button className={`btn ${tableScreenState.get.tableNum === 2 ? 'btn-secondary' : 'btn-primary'} col-4`} onClick={() => changeTable(1)}>Amount of employees required for each shift</button>
                         <button className={`btn ${tableScreenState.get.tableNum === 1 ? 'btn-secondary' : 'btn-primary'} col-4`} onClick={() => changeTable(2)}>Allocation of employees</button>
-                        <button className="btn btn-success col-2" onClick={backToUpload}>
+                        <button className="btn btn-success col-1" onClick={backToUpload}>
                             <img src={Upload} alt="Upload" className="upload-image" />
                         </button>
+                        <Button
+                            variant="primary"
+                            style={{
+                                display: tableScreenState.get.tableNum === 2 && tableScreenState.get.is2Generated ? "block" : "none"
+                            }}
+                            onClick={autoComplete}
+                        >
+                            Auto Complete
+                        </Button>
                         <div className="col-1"></div>
                     </div>
                     {tableScreenState.get.tableNum === 2 ? (
                         <div>
+
                             <div className="row" style={{ position: "relative", top: "6vh" }}>
                                 <div className="col-3"></div>
                                 <div className="col-6 text-center">
