@@ -1,4 +1,4 @@
-export async function generateAlgo2Results(token, getFromDatabase, autoComplete) {
+export async function generateAlgo2Results(token, getFromDatabase, autoComplete, empty) {
     var data = "?getFromDatabase="
     data += getFromDatabase ? "true" : "false"
     // data += "?autoComplete="

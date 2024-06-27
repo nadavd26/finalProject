@@ -163,12 +163,12 @@ function TableScreen({ user, setUser }) {
     //     setUser(newUser)
     //     tableScreenState.setIs1Generated(true)
     // }
-    async function generateResults2(algo2table, fromDb, autoComplete) {
+    async function generateResults2(algo2table, fromDb, autoComplete, empty) {
         var newUser = user
         if (!algo2table) {
             newUser.contracts = []
         }
-        const res = algo2table ? algo2table : await algo2api.generateAlgo2Results(user.token, fromDb, autoComplete)
+        const res = algo2table ? algo2table : await algo2api.generateAlgo2Results(user.token, fromDb, autoComplete, empty)
         // console.log("res")
         // console.log(JSON.stringify(res))
         if (!algo2table) {
@@ -227,20 +227,20 @@ function TableScreen({ user, setUser }) {
     const generateAgain = async () => {
         tableScreenState.setTableNum(2)
         setShowGenerateModal(false)
-        await generateResults2(false, false);
+        await generateResults2(false, false, false, false);
     }
 
     const proceedCurrent = async () => {
         tableScreenState.setTableNum(2)
         setShowGenerateModal(false)
-        await generateResults2(false, true);
+        await generateResults2(false, true, false, false);
     }
 
     const generateAnyway = async (changed) => {
         setShowWarningModal(false)
         if (changed) {
             tableScreenState.setTableNum(2)
-            await generateResults2(false, false);
+            await generateResults2(false, false, false, false);
         } else {
             setShowGenerateModal(true)
         }
@@ -268,7 +268,12 @@ function TableScreen({ user, setUser }) {
 
     const autoComplete = async () => {
         tableScreenState.setIs2Generated(false)
-        await generateResults2(false, false, true)
+        await generateResults2(false, false, true, false)
+    }
+
+    const clear = async () => {
+        tableScreenState.setIs2Generated(false)
+        await generateResults2(false, false, false, true)
     }
 
     function arraysToSets(obj) {
@@ -291,7 +296,7 @@ function TableScreen({ user, setUser }) {
     }
 
     async function table2finishEditCallback() {
-        await generateResults2(user.algo2Table, true)
+        await generateResults2(user.algo2Table, true, false, false)
     }
 
     //i want to pass a deep copy to EditResFile2 and because json.parse does not parse sets, i need to convert them to array, parse and then convert back to sets 
@@ -334,6 +339,15 @@ function TableScreen({ user, setUser }) {
                             onClick={autoComplete}
                         >
                             Auto Complete
+                        </Button>
+                        <Button
+                            variant="danger"
+                            style={{
+                                display: tableScreenState.get.tableNum === 2 && tableScreenState.get.is2Generated ? "block" : "none"
+                            }}
+                            onClick={clear}
+                        >
+                            Clear
                         </Button>
                         <div className="col-1"></div>
                     </div>
