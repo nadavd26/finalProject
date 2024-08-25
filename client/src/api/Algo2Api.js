@@ -1,14 +1,20 @@
 export async function generateAlgo2Results(token, getFromDatabase, autoComplete, empty) {
     var data = "?getFromDatabase="
     data += getFromDatabase ? "true" : "false"
-    // data += "?autoComplete="
-    // data += autoComplete ? "true" : "false"
+    //old
+        // data += "?autoComplete="
+        // data += autoComplete ? "true" : "false"
+        // data += "?empty="
+        // data += empty ? "true" : "false"
+    //new
+        data += "&autoComplete=" + (autoComplete ? "true" : "false");
+        data += "&empty=" + (empty ? "true" : "false");
 
     try {
         const url = "http://localhost:12345/Results/GetResults2" + data;
         const response = await fetch(url, {
             method: 'GET',
-            headers: {
+            headers: { 
                 'Content-Type': 'application/json',
                 'authorization': 'bearer ' + token
             },
