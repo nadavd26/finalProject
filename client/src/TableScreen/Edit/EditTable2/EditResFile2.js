@@ -13,7 +13,7 @@ import left from '../Images/left.png'
 import search from '../Images/search.webp'
 import start from '../Images/start.png'
 import end from '../Images/end.png'
-import Loader from "../../components/Loader";
+import Loader from "../../../components/Loader";
 import SearchDropdown from "../components/SearchDropdown";
 import filterTableLoader from "../components/FilterTableLoader";
 import FilterTableLoader from "../components/FilterTableLoader";

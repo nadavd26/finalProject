@@ -3,7 +3,7 @@ import FreeEditCell from '../components/FreeEditCell';
 import NonEditableCell from "../components/NonEditableCell";
 import React from "react";
 const TableRow = ({ row, isNumberOfWorkersValid, rowIndex, onCellEdit, shouldRender}) => {
-    // console.log("row " + (rowIndex + 1) +" is rendererd" + " " + row)
+    console.log("row " + (rowIndex + 1) +" is rendererd" + " " + row)
     const cell = document.getElementById(`cell-${rowIndex}-${4}`)
     var cellValue = row[4]
     if (cell != null && cell.innerText != "") {
@@ -20,6 +20,7 @@ const TableRow = ({ row, isNumberOfWorkersValid, rowIndex, onCellEdit, shouldRen
                 <NonEditableCell value={row[2]} rowIndex={rowIndex} columnIndex={2}  />
                 <NonEditableCell value={row[3]} rowIndex={rowIndex} columnIndex={3}  />
                 <FreeEditCell value={row[4]} rowIndex={rowIndex} columnIndex={4} isValid={isNumberOfWorkersValid(cellValue)} onEdit={onCellEdit}/>
+                <NonEditableCell value={row[5]} rowIndex={rowIndex} columnIndex={5}  />
             </tr >
         </>
     );

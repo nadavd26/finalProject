@@ -6,7 +6,7 @@ import './css/perfect-scrollbar.css'
 import Dropdown from "./components/Dropdown";
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom'
-import Loader from "./components/Loader";
+import Loader from "../components/Loader";
 import { useTableScreenState } from "./states/TableScreenState";
 import { useTableAlgo2State } from "./states/TableAlgo2State";
 import { useEditInfoState } from "./states/EditInfo";

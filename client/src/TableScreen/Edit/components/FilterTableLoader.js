@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Loader from "../../components/Loader";
+import Loader from "../../../components/Loader";
 
 class FilterTableLoader extends Component {
     constructor(props) {

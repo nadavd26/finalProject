@@ -1,5 +1,5 @@
 import React from "react";
-import '../css/loader.css'
+import './loader.css'
 
 export default function Loader(props) {
     // Calculate width based on text length

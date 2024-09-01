@@ -63,6 +63,8 @@ function subArrays(arr1, arr2) {
 
 export default function EditResFile1({ initialTable, setInEdit, user, setUser, currentDay, currentSkill, setWorksPerShift, finishCallback }) {
     const [content, setContent] = useState([["", "", "", "", ""]])
+    // console.log("initialTable")
+    // console.log(initialTable)
     const [showBackModal, setShowBackModal] = useState(false)
     const defaultErrorMsg = "Assigned Number Of Workers is a non-negative integer and cannot be bigger than the total amount of workers"
     const [errorMsg, setErrorMsg] = useState(defaultErrorMsg)
