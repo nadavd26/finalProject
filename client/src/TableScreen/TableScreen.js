@@ -3,10 +3,10 @@ import Upload from './images/uploadImage.webp'
 import './css/bootstrap.min.css'
 import './css/table-main.css'
 import './css/perfect-scrollbar.css'
-import Dropdown from "./conponenets/Dropdown";
+import Dropdown from "./components/Dropdown";
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom'
-import Loader from "./conponenets/Loader";
+import Loader from "./components/Loader";
 import { useTableScreenState } from "./states/TableScreenState";
 import { useTableAlgo2State } from "./states/TableAlgo2State";
 import { useEditInfoState } from "./states/EditInfo";
@@ -17,10 +17,10 @@ import { ExclamationTriangleFill, FileX } from 'react-bootstrap-icons';
 import * as algo1api from '../api/Algo1Api'
 import * as algo2api from '../api/Algo2Api'
 
-import SkillDropdown from "./conponenets/SkillDropdown";
+import SkillDropdown from "./components/SkillDropdown";
 import * as utils from './Utils'
 import EditResFile2 from "./Edit/EditTable2/EditResFile2";
-import GraphMemo from "./conponenets/Graph";
+import GraphMemo from "./components/Graph";
 // expecting json: {"Sunday" : [{"worker":"name1", "shifts":[true, true, false, ...]}, {"worker":"name2", "shifts":[true, true, false, ...]}, ....], ... , "Saturday" : ...}
 // every boolean array is 48 cells, starting from 7:00, ending at 23:30
 

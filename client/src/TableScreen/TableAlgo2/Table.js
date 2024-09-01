@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import ShiftsRow from '../conponenets/ShiftsRow';
+import ShiftsRow from '../components/ShiftsRow';
 import { Modal, Button, Col } from 'react-bootstrap';
 import { useState } from 'react';
 //expecting json: [{"name":"name1", "shifts":[true, true, false, ...]}, {"name":"name2", "shifts":[true, true, false, ...]}, ....]
