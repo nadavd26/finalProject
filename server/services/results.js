@@ -11,6 +11,7 @@ const TableValidator = require("../services/tableValidator")
 
 //This function runs algorithm 1 and returns the results.
 const getResults1 = async (reqs, shifts, userId) => {
+    console.log("Generating results1;")
     const shiftsJson = JSON.stringify(shifts);
     const reqsJson = JSON.stringify(reqs);
     const shiftsFileName = `./algorithm/shifts${userId}.json`;
@@ -76,6 +77,8 @@ const getResults1 = async (reqs, shifts, userId) => {
 
 //This function runs algorithm 1 and returns the results.
 const getResults2 = async (userId) => {
+    console.log("Getting results2;")
+
     // Creating an empty map with all the days as keys.
     let results2Map = {
         Sunday: [],
@@ -117,6 +120,7 @@ const getResults2 = async (userId) => {
 
 //This function deletes every all the shift tables and lines of the user. 
 const deleteCurrentResults = async (userId) => {
+    console.log("Deleting results1;")
     const user = await User.findById(userId)
     // Going through each shift table.
     for (const shiftTable of user.shiftTables) {
@@ -132,6 +136,7 @@ const deleteCurrentResults = async (userId) => {
 
 //This function deletes all the assigned shift tables and lines of the user. 
 const deleteCurrentResults2 = async (userId) => {
+    console.log("Deleting results2;")
     const user = await User.findById(userId)
     // Going through each assigned shift table.
     for (const assignedShiftTable of user.assignedShiftTables) {
@@ -147,6 +152,7 @@ const deleteCurrentResults2 = async (userId) => {
 
 //This funciton gets the results and saves them in the database.
 const saveResults = async (results, userId) => {
+    console.log("Saving results1;")
     sortedResults = Table.sortTable(results, 2) //Same sorting as for table2.
     await deleteCurrentResults(userId)
     const user = await User.findById(userId)
@@ -188,6 +194,7 @@ const saveResults = async (results, userId) => {
 
 //This funciton gets the results of algorithm2 and saves them in the database.
 const saveResults2 = async (results, userId) => {
+    console.log("Saving results2;")
     await deleteCurrentResults2(userId)
     const user = await User.findById(userId)
     const assignedShiftLines = [];
@@ -221,11 +228,13 @@ const saveResults2 = async (results, userId) => {
 }
 
 const getResults1FromDB = async (userId) => {
+    console.log("Getting results1 from DB;")
     const user = await User.findById(userId)
     await user.populate('shiftTables.shifts');
     return await transformShiftTablesToMap(user.shiftTables);
 }
 const getResults2FromDB = async (userId) => {
+    console.log("Getting results2 from DB;")
     const user = await User.findById(userId)
     await user.populate('assignedShiftTables.assignedShifts');
     return await transformAssignedShiftTablesToMap(user.assignedShiftTables);
@@ -274,7 +283,8 @@ const transformAssignedShiftTablesToMap = async (assignedShiftTables) => {
             assignedShift.startTime,
             assignedShift.finishTime,
             assignedShift.assignedWorkerName,
-            assignedShift.shiftId
+            assignedShift.shiftId,
+            assignedShift.id
         ]));
         resultMap.get(key).push(...assignedShiftsData);
     });
@@ -307,6 +317,7 @@ function getShiftCost(skill, day, startTime, finishTime, table3) {
 
 //This function updates the results. It assumes that they all lines share the same day and skill.
 const editResults = async (newData, userId) => {
+    console.log("Editting results1;")
     const keyDay = newData[0][0]
     const keySkill = newData[0][1]
     const user = await User.findById(userId)
@@ -400,15 +411,38 @@ const editResults2OfDay = async (newData, day, userId) => {
     }
 }
 const editResults2 = async (req, userId) => {
+    const editInfo = req.body
+    for(const [assignedShiftLineId, workerId] of Object.entries(editInfo)) {
+        //TODO: Update worker name and not only ID, validation.
+        const assignedShiftLine = await AssignedShiftLine.findOne({id: assignedShiftLineId})
+        const workerName = await getWorkerNameByWorkerId(userId, workerId)
+        if(workerName === '') {
+            throw new Error("There was no worker with the following ID: " + workerId)
+        }
+        assignedShiftLine.assignedWorkerName = workerId + '\n' + workerName;
+        await assignedShiftLine.save()        
+    }
+    /*console.log("Editting results2;")
     await editResults2OfDay(req.body.Sunday, "Sunday", userId)
     await editResults2OfDay(req.body.Monday, "Monday", userId)
     await editResults2OfDay(req.body.Tuesday, "Tuesday", userId)
     await editResults2OfDay(req.body.Wednesday, "Wednesday", userId)
     await editResults2OfDay(req.body.Thursday, "Thursday", userId)
     await editResults2OfDay(req.body.Friday, "Friday", userId)
-    await editResults2OfDay(req.body.Saturday, "Saturday", userId)
+    await editResults2OfDay(req.body.Saturday, "Saturday", userId)*/
     //await TableValidator.setTableBit(userId, 1, false) //Resetting the bits to indicate that those tables are relevant to the current results.
     //await TableValidator.setTableBit(userId, 4, false)
+}
+
+//This functino returns the worker with the given ID. If there is no worker with that ID, it returns an empty string.
+const getWorkerNameByWorkerId = async (userId, workerId) => {
+    const table1 = await getTableByUserId(userId, 1)
+    for(const line of table1.table1Content) {
+        if(line[0] === workerId) {
+            return line[1]
+        }
+    }
+    return ''
 }
 
 

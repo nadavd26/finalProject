@@ -292,7 +292,7 @@ const validateTable2SkillsInTable3 = (table2, table3) => {
 // This function checks that the requiredNumOfWorkers of every 
 // line in table2 is not more than the actual number of workers. 
 const validateTable2NumOfWorkers = (table1, table2) => {
-    info = [true, "The following lines in Table2 have a requiredNumOfWorkers value higher than the actual number of workers: "]
+    info = [true, "The following lines in Table2 have a required number of workers value higher than the actual number of workers: "]
     const numOfWorkers = table1.length
     lineIndex = 1
     let counter = 0
@@ -319,7 +319,7 @@ const validateTable2NumOfWorkers = (table1, table2) => {
 // This function checks that the requiredNumOfWorkers of every 
 // line in table2 is not more than the actual number of workers with that skill. 
 const validateTable2NumOfWorkersWithSkill = (table1, table2) => {
-    info = [true, "The following lines in Table2 have a requiredNumOfWorkers value higher than the actual number of workers with that skill: "]
+    info = [true, "The following lines in Table2 have a required number of workers value higher than the actual number of workers with that skill: "]
     lineIndex = 1
     let counter = 0
     for (const line of table2) {
