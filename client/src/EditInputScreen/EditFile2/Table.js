@@ -28,10 +28,12 @@ const TableRows = ({ content, errors, onCellEdit,  onRowDelete, onRowAdd, rowsTo
         if (initialRender && content.length != 0) {
             console.log("rendering chunks")
             let i = 0;
+            let counter = 0;
             const delay = 1; // Adjust this delay as needed
-            const chunkSize = 9; // Number of rows to render per chunk
+            const chunkSize = 20; // Number of rows to render per chunk
             const renderChunk = () => {
-                if (i < content.length) {
+                if (i < content.length && counter < 1) {
+                    counter++
                     const newRows = [];
                     for (let index = i; index < i + chunkSize && index < content.length; index++) {
                         const rowMap = content[index];
