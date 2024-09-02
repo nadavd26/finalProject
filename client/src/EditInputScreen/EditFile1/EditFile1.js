@@ -65,7 +65,7 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
             if (table[i].length != 7) {
                 isValid = false
                 setEditInfo({ inEdit: false, errorMsg: "Line " + (i + 1) + " The table must be 7 columns (some can be empty but still need 6 commas)" })
-                return
+                return {returnTable : [], returnErrors : []}
             }
             const id = table[i][0]
             if (!isIdValid(id)) {
