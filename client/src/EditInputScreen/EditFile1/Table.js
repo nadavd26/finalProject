@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import TableRowMemo from './TableRow'
+import Loader from "../../components/Loader";
 const TableRows = ({ content, errors, onCellEdit, onRowDelete, onRowAdd, rowsToRender, initialRender, initialRenderUpdate }) => {
     const [renderedRows, setRenderedRows] = useState([]);
     var initRend = useRef(initialRender)
@@ -64,8 +65,15 @@ const TableRows = ({ content, errors, onCellEdit, onRowDelete, onRowAdd, rowsToR
     }, [content])
     return (
         <>
+            {initialRender && (
+                <div>
+                    <Loader speed={5} customText="Loading Table..." />
+                </div>
+            )}
             {renderedRows}
         </>
+
+
     );
 }
 //first row : [{name : , validate : function}, ....]
