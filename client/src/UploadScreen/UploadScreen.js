@@ -24,7 +24,7 @@ function UploadScreen({ user, setUser }) {
   const [showSubmitAlert, setShowSubmitAlert] = useState(false);
   const [currentFile, setCurrentFile] = useState(null)
   const [scratch, setScratch] = useState(false)
-  
+
   const [editInfo, setEditInfo] = useState({ inEdit: false, errorMsg: "" })
   const navigate = useNavigate();
   const handleCloseGenerateModal = () => {
@@ -166,19 +166,19 @@ function UploadScreen({ user, setUser }) {
   const handleLogout = () => {
     // Clear the user context
     setUser(null);
-    
+
     // Navigate to login page
     navigate("/login");
 
     // Sign out the user from Google
     const auth2 = window.gapi.auth2.getAuthInstance();
     if (auth2) {
-        auth2.signOut().then(() => {
-            console.log("User signed out from Google");
-            auth2.disconnect();
-        });
+      auth2.signOut().then(() => {
+        console.log("User signed out from Google");
+        auth2.disconnect();
+      });
     }
-};
+  };
 
 
 
@@ -193,7 +193,7 @@ function UploadScreen({ user, setUser }) {
   return (
     !editInfo.inEdit ? (
       <div id="upload_screen" className="flex-column justify-content-center">
-        <div style={{position: "relative", left: "1%", top: "1%"}}>
+        <div style={{ position: "relative", left: "1%", top: "1%" }}>
           <Logout onLogout={handleLogout}></Logout>
         </div>
         <div className="container-fluid py-3">
@@ -226,7 +226,7 @@ function UploadScreen({ user, setUser }) {
 
 
         <div id="infoTables" style={{ position: "relative", left: "2.5vw", width: "95vw" }}>
-          <h3 style={{ marginBottom: "20px", display: 'flex', justifyContent: 'center'}}>{selectedButton == "FirstFileButton" ? "Worker Info Table" : selectedButton == "SecondFileButton" ? "Requirements Table" : "Shifts Info Table"}</h3>
+          <h3 style={{ marginBottom: "20px", display: 'flex', justifyContent: 'center' }}>{selectedButton == "FirstFileButton" ? "Worker Info Table" : selectedButton == "SecondFileButton" ? "Requirements Table" : "Shifts Info Table"}</h3>
           <div style={{ marginBottom: "10px" }}>{tableInfos()}</div>
           {selectedButton === "FirstFileButton" && (
             <UploadFile
@@ -261,25 +261,37 @@ function UploadScreen({ user, setUser }) {
               handleScratch={handleScratch}
             />
           )}
-          <div className="btn-container">
-            <div className="d-flex justify-content-between mb-3 top-buttons">
-              <div className="col-5"></div>
-              <button className="btn btn-success col-2" onClick={handleSubmit} style={{ marginTop: "40px", borderRadius: "15px" }}>Generate Results</button>
-              {/* <button className="btn btn-secondary col-3" data-toggle="modal" data-target="#UploadScreenErrorModal" onClick={handleEdit}>Upload/Edit File</button> */}
-              <div className="col-5"></div>
-            </div>
-          </div>
-        </div>
 
+<div className="btn-container" style={{ position: "relative" }}>
+    <div className="d-flex justify-content-between mb-3 top-buttons">
+        <div className="col-5"></div>
+        <button className="btn btn-success col-2" onClick={handleSubmit} style={{ marginTop: "40px", borderRadius: "15px" }}>
+            Generate Results
+        </button>
+        <div className="col-5"></div>
+    </div>
 
-
-        <div className="d-flex justify-content-between mb-3">
-          <div className="col-4"></div>
-          {showSubmitAlert && <div className="alert alert-danger col-4" role="alert">
+    {showSubmitAlert && (
+        <div className="alert alert-danger col-4 text-center" role="alert" style={{ 
+            position: "absolute", 
+            top: "35px", // Adjusted to cover the button more completely
+            left: "50%", 
+            transform: "translateX(-50%)",
+            zIndex: 1, // Ensure the alert is on top
+            height: "auto", // Ensure the alert height matches or exceeds the button height
+            padding: "10px 0" // Add padding to make the alert visually comfortable
+        }}>
             Can't Generate Results without all input files.
-          </div>}
-          <div className="col-4"></div>
         </div>
+    )}
+</div>
+
+
+        </div>
+
+
+
+
 
         {editInfo.errorMsg != "" && <div class="modal fade show" id="UploadScreenErrorModal" tabindex="-1" role="dialog" aria-labelledby="errorModal" aria-hidden="true" onHide={handleErrorModalClose}>
           <div class="modal-dialog modal-dialog-centered" role="document">
@@ -379,7 +391,7 @@ function UploadScreen({ user, setUser }) {
           </Modal.Footer>
         </Modal>
 
-        
+
       </div>
     ) : <EditInput file={currentFile} numOfFile={getFileNumber()} setEditInfo={setEditInfo} user={user} setUser={setUser} setCurrentFile={setCurrentFile} scratch={scratch} />
   );

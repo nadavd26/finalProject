@@ -3,7 +3,6 @@ import TableRowMemo from './TableRow'
 import Loader from "../../components/Loader";
 const TableRows = ({ content, errors, onCellEdit, onRowDelete, onRowAdd, rowsToRender, initialRender, initialRenderUpdate }) => {
     const [renderedRows, setRenderedRows] = useState([]);
-    var initRend = useRef(initialRender)
     const render_all = () => {
         //regular rendering
         console.log("rendering all")
@@ -72,8 +71,6 @@ const TableRows = ({ content, errors, onCellEdit, onRowDelete, onRowAdd, rowsToR
             )}
             {renderedRows}
         </>
-
-
     );
 }
 //first row : [{name : , validate : function}, ....]

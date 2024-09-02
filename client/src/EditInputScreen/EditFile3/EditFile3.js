@@ -8,8 +8,12 @@ import { csv_to_array, parseTime, isCostValid, isSkillValid } from "../Utils";
 import { sortTable } from "../../api/InputTableApi";
 
 export default function EditFile3({ csvArray, setEditInfo, user, setUser, fromServer, scratch }) {
-    const [content, setContent] = useState([["", "", "", "", ""]])
-    const [errors, setErrors] = useState([[true, true, true, true, true]])
+    const [content, setContent] = useState([])
+    const [errors, setErrors] = useState([])
+    const [initialRender, setInitialRender] = useState(!scratch)
+    function initialRenderUpdate(newRef) {
+        setInitialRender(newRef)
+    };
     const [showErrorModel, setShowErrorModel] = useState(false)
     const [showSuccessModel, setShowSuccessModel] = useState(false)
     const [showBackModal, setShowBackModal] = useState(false)
@@ -55,7 +59,7 @@ export default function EditFile3({ csvArray, setEditInfo, user, setUser, fromSe
             if (table[i].length != 5) {
                 isValid = false
                 setEditInfo({ inEdit: false, errorMsg: "Line " + (i+1) + " The table must be 5 columns (some can be empty but still need 4 commas)" })
-                return
+                return {returnTable : [], returnErrors : []}
             }
 
             const skill = table[i][0]
@@ -171,36 +175,56 @@ export default function EditFile3({ csvArray, setEditInfo, user, setUser, fromSe
             }
         }
 
+        var returnTable = []
         if (errorLines != table.length) {
             const newTable = await sortTableWithErrors(table)
-            setContent(newTable)
+            returnTable = newTable
         } else {
-            setContent(table)
+            returnTable = table
         }
-        setErrors(errorsFound)
+        var returnErrors = errorsFound
+        return { returnTable, returnErrors }
     }
 
 
     useEffect(() => {
         console.log("content")
         console.log(content)
+        console.log("initialRender")
+        console.log(initialRender)
     }, [content])
 
     useEffect(() => {
-        if (csvArray.length > 0 && fromServer == false) {
-            initAndCheck(csvArray);
-        }
-
-        if (fromServer == true) {
-            setContent(csvArray)
-            const falseArray = Array.from({ length: csvArray.length }, () =>
-                Array.from({ length: csvArray[0].length }, () => false)
-            );
-
-            if (!scratch) {
-                setErrors(falseArray)
+        var table = []
+        var errors = []
+        const load_data = async() => {
+            if (csvArray.length > 0 && fromServer == false) {
+                const { returnTable, returnErrors } = await initAndCheck(csvArray);
+                console.log("returnTable")
+                console.log(returnTable)
+                table = returnTable
+                errors = returnErrors
             }
+    
+            if (fromServer == true) {
+                const falseArray = Array.from({ length: csvArray.length }, () =>
+                    Array.from({ length: csvArray[0].length }, () => false)
+                );
+                table = csvArray
+                errors = falseArray
+            }
+    
+            if (scratch == true) {
+                table = [["", "", "", "", ""]]
+                errors = [[true, true, true, true, true]]
+            }
+    
+            console.log("table")
+            console.log(table)
+            setContent(table)
+            setErrors(errors)
         }
+        load_data()
     }, [csvArray, setContent]);
 
     const addRowHandler = () => {
@@ -437,16 +461,16 @@ export default function EditFile3({ csvArray, setEditInfo, user, setUser, fromSe
         <div id="edit-file">
             <div className="container-fluid py-3">
                 <div className="col-1" style={{position: "fixed", top: "1%" ,height: "3%"}}>
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#backModal" onClick={handleBack}>Back</button>
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#backModal" onClick={handleBack} disabled={initialRender}>Back</button>
                 </div>
                 <div className="col-11"></div>
-                <Table content={content} onCellEdit={handleCellEdit} onRowDelete={deleteRow} errors={errors} onRowAdd={onRowAdd} rowsToRender={rowsToRender}></Table>
+                <Table content={content} onCellEdit={handleCellEdit} onRowDelete={deleteRow} errors={errors} onRowAdd={onRowAdd} rowsToRender={rowsToRender} initialRender={initialRender} initialRenderUpdate={initialRenderUpdate}></Table>
                 <div className="row"><br /></div>
                 <div className="row down-buttons"  style={{position: "fixed", top: "90%", width: "100%"}}>
                     <div className="col-3"></div>
                     <button className="btn btn-success col-3" onClick={handleSave}
-                        data-toggle="modal" >Save</button>
-                    <button className="btn btn-secondary col-3" onClick={addRowHandler} >Add Row</button>
+                        data-toggle="modal" disabled={initialRender}>Save</button>
+                    <button className="btn btn-secondary col-3" onClick={addRowHandler} disabled={initialRender}>Add Row</button>
                     <div className="col-3"></div>
                 </div>
             </div>

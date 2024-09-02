@@ -1,4 +1,4 @@
-export default function DayCell({ value, rowIndex, coloumnIndex, isValid, onEdit }) {
+export default function DayCell({ value, rowIndex, coloumnIndex, isValid, onEdit, enableEdit}) {
     const handleOnBlur = () => {
         document.getElementById(`cell-${rowIndex}-${coloumnIndex}`).classList.remove("focused-cell");
     }
@@ -8,7 +8,7 @@ export default function DayCell({ value, rowIndex, coloumnIndex, isValid, onEdit
     };
     return <td id={`cell-${rowIndex}-${coloumnIndex}`} className={`cell100 last-columns ${isValid ? 'red' : ''}`} onBlur={handleOnBlur}
         onFocus={handleFocus}>
-        <select id={`selectDay-${rowIndex}`} value={value} onChange={(e) => onEdit(rowIndex, coloumnIndex, e.target.value)}>
+        <select id={`selectDay-${rowIndex}`} value={value} onChange={(e) => onEdit(rowIndex, coloumnIndex, e.target.value)} disabled={!enableEdit}>
             {["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"].includes(value) ? (
                 <>
                     <option value="sunday">Sunday</option>

@@ -885,4 +885,5 @@ Tuesday,f,02:30,04:00,48
 Tuesday,f,12:00,12:30,37
 Saturday,b,22:30,23:00,33
 Monday,b,14:30,21:30,37
-Thursday,b,21:30,22:30,35
+Thursday,b,21:aa30,22:30aaa,-35
+a,a,a,a,a

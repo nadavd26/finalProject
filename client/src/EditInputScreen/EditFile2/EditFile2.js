@@ -8,8 +8,8 @@ import { csv_to_array, parseTime, isNumberOfWorkersValid, isSkillValid } from ".
 import { sortTable } from "../../api/InputTableApi";
 
 export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromServer, scratch }) {
-    const [content, setContent] = useState([["", "", "", "", ""]])
-    const [errors, setErrors] = useState([[true, true, true, true, true]])
+    const [content, setContent] = useState([])
+    const [errors, setErrors] = useState([])
     const [initialRender, setInitialRender] = useState(!scratch)
     function initialRenderUpdate(newRef) {
         setInitialRender(newRef)
@@ -60,7 +60,7 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
             if (table[i].length != 5) {
                 isValid = false
                 setEditInfo({ inEdit: false, errorMsg: "Line " + (i + 1) + " The table must be 5 columns (some can be empty but still need 4 commas)" })
-                return
+                return { returnTable : [], returnErrors: [] }
             }
             table[i][0] = (table[i][0]).toLowerCase()
             const day = table[i][0]
@@ -174,41 +174,64 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
                 handleLineError(i)
             }
         }
+        var returnTable = []
         if (errorLines != table.length) {
             const newTable = await sortTableWithErrors(table)
-            setContent(newTable)
+            // setContent(newTable)
+            returnTable = newTable
         } else {
-            setContent(table)
+            returnTable = table
+            // setContent(table)
         }
 
-        setErrors(errorsFound)
+        var returnErrors = errorsFound
+        // setErrors(errorsFound)
+        return {returnTable, returnErrors}
     }
 
     //debug
     useEffect(() => {
         console.log("content")
         console.log(content)
+        console.log("initialRender")
+        console.log(initialRender)
     }, [content])
 
 
     useEffect(() => {
-        if (csvArray.length > 0 && fromServer == false) {
-            initAndCheck(csvArray);
-        }
-
-        if (fromServer == true) {
-            setContent(csvArray)
-            var initialErrors = Array.from({ length: csvArray.length }, () =>
-                Array.from({ length: csvArray[0].length }, () => false)
-            );
-            for (let i = 0; i < csvArray.length; i++) {
-                initialErrors[i][4] = !isNumberOfWorkersValid(csvArray[i][4], maxWorkers)
+        var table = []
+        var errors = []
+        const load_data = async() => {
+            if (csvArray.length > 0 && fromServer == false) {
+                const { returnTable, returnErrors } = await initAndCheck(csvArray);
+                console.log("returnTable")
+                console.log(returnTable)
+                table = returnTable
+                errors = returnErrors
             }
-
-            if (!scratch) {
-                setErrors(initialErrors)
+    
+            if (fromServer == true) {
+                var initialErrors = Array.from({ length: csvArray.length }, () =>
+                    Array.from({ length: csvArray[0].length }, () => false)
+                );
+                for (let i = 0; i < csvArray.length; i++) {
+                    initialErrors[i][4] = !isNumberOfWorkersValid(csvArray[i][4], maxWorkers)
+                }
+                table = csvArray
+                errors = initialErrors
             }
+    
+            if (scratch == true) {
+                table = [["", "", "", "", ""]]
+                errors = [[true, true, true, true, true]]
+            }
+    
+            console.log("table")
+            console.log(table)
+            setContent(table)
+            setErrors(errors)
         }
+        load_data()
     }, [csvArray, setContent]);
 
     const addRowHandler = () => {
@@ -465,17 +488,17 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
         <div id="edit-file">
             <div className="container-fluid py-3">
                 <div className="col-1" style={{ position: "fixed", top: "1%", height: "3%" }}>
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#backModal" onClick={handleBack}>Back</button>
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#backModal" onClick={handleBack} disabled={initialRender}>Back</button>
                 </div>
                 <div className="col-11"></div>
                 <Table content={content} onCellEdit={handleCellEdit} onRowDelete={deleteRow} errors={errors}
-                    isNumberOfWorkersValid={isNumberOfWorkersValid} isSkillValid={isSkillValid} onRowAdd={onRowAdd} rowsToRender={rowsToRender}></Table>
+                    isNumberOfWorkersValid={isNumberOfWorkersValid} isSkillValid={isSkillValid} onRowAdd={onRowAdd} rowsToRender={rowsToRender} initialRender={initialRender} initialRenderUpdate={initialRenderUpdate}></Table>
                 <div className="row"><br /></div>
                 <div className="row down-buttons" style={{ position: "fixed", top: "90%", width: "100%" }}>
                     <div className="col-3"></div>
-                    <button className="btn btn-success col-3" onClick={handleSave}
+                    <button className="btn btn-success col-3" onClick={handleSave} disabled={initialRender}
                         data-toggle="modal" >Save</button>
-                    <button className="btn btn-secondary col-3" onClick={addRowHandler} >Add Row</button>
+                    <button className="btn btn-secondary col-3" onClick={addRowHandler} disabled={initialRender}>Add Row</button>
                     <div className="col-3"></div>
                 </div>
             </div>

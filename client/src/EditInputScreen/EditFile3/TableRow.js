@@ -5,7 +5,7 @@ import TimeCell from '../components/TimeCell';
 import RowActionCell from '../components/RowActionCell';
 import { adjustTime } from "../Utils";
 import React from "react";
-const TableRow = ({ row, rowErrors, rowIndex, onCellEdit, onRowDelete, onRowAdd, shouldRender }) => {
+const TableRow = ({ row, rowErrors, rowIndex, onCellEdit, onRowDelete, onRowAdd, shouldRender, enableEdit }) => {
     console.log("render worker num " + (rowIndex + 1))
 
     const handleDeleteRow = () => {
@@ -34,21 +34,21 @@ const TableRow = ({ row, rowErrors, rowIndex, onCellEdit, onRowDelete, onRowAdd,
                     </button>
                 </td> */}
 
-                <RowActionCell onRowDelete={handleDeleteRow} onRowAdd={handleAddRow} rowIndex={rowIndex}/>
+                <RowActionCell onRowDelete={handleDeleteRow} onRowAdd={handleAddRow} rowIndex={rowIndex} enableEdit={enableEdit}/>
 
 
-                <FreeEditCell value={row[0]} rowIndex={rowIndex} columnIndex={0} isValid={rowErrors[0]} onEdit={onCellEdit}/>
+                <FreeEditCell value={row[0]} rowIndex={rowIndex} columnIndex={0} isValid={rowErrors[0]} onEdit={onCellEdit} enableEdit={enableEdit}/>
 
-                <DayCell value={row[1]} rowIndex={rowIndex} coloumnIndex={1} isValid={rowErrors[1]} onEdit={onCellEdit} />
+                <DayCell value={row[1]} rowIndex={rowIndex} coloumnIndex={1} isValid={rowErrors[1]} onEdit={onCellEdit} enableEdit={enableEdit}/>
 
 
-                <TimeCell value={row[2]} rowIndex={rowIndex} columnIndex={2} isValid={rowErrors[2]} minTime={minFromHour}
+                <TimeCell value={row[2]} rowIndex={rowIndex} columnIndex={2} isValid={rowErrors[2]} minTime={minFromHour} enableEdit={enableEdit}
                     maxTime={maxFromHour} onEdit={onCellEdit} />
 
-                <TimeCell value={row[3]} rowIndex={rowIndex} columnIndex={3} isValid={rowErrors[3]} minTime={minUntilHour}
+                <TimeCell value={row[3]} rowIndex={rowIndex} columnIndex={3} isValid={rowErrors[3]} minTime={minUntilHour} enableEdit={enableEdit}
                     maxTime={maxUntilHour} onEdit={onCellEdit} />
 
-                <FreeEditCell value={row[4]} rowIndex={rowIndex} columnIndex={4} isValid={rowErrors[4]} onEdit={onCellEdit}/>
+                <FreeEditCell value={row[4]} rowIndex={rowIndex} columnIndex={4} isValid={rowErrors[4]} onEdit={onCellEdit} enableEdit={enableEdit}/>
 
             </tr >
         </>
