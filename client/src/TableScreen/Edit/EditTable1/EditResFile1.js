@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Table from "./Table";
 import '../css/bootstrap.min.css'
 import '../css/edit-file-table-main.css'
@@ -7,28 +7,95 @@ import * as utils from '../../Utils'
 import Kpi from "../components/Kpi";
 import * as algo1api from '../../../api/Algo1Api'
 
+const computeWastedHours = (reqs, shiftsArray) => {
+    let sum = 0;
+    for (let i = 0; i < 48; i++)
+        sum += Math.max(0, shiftsArray[i] - reqs[i])
+    return sum / 2
+}
+const hourToIndex = (hour) => {
+    if (typeof hour !== 'string') {
+        // Handle the case where hour is not a string
+        return -1; // or any other default value
+    }
+    const [hours, minutes] = hour.split(':');
+    return hours * 2 + (minutes === '30' ? 1 : 0);
+};
+const hoursToArrayNumber = (startHour, endHour, num) => {
+    const start = hourToIndex(startHour);
+    let end = hourToIndex(endHour);
+    if (end === 0) {
+        end = 48;
+    }
+    const hoursArray = Array.from({ length: 48 }, (_, i) => (start <= i && i < end) ? num : 0);
+    return hoursArray;
+};
+
+function sumArrays(arr1, arr2) {
+    console.log("sum array arr1")
+    console.log(arr1)
+    console.log("sum array arr2")
+    console.log(arr2)
+    const maxLength = Math.max(arr1.length, arr2.length);
+    const result = new Array(maxLength).fill(0);
+
+    for (let i = 0; i < maxLength; i++) {
+        const val1 = arr1[i] !== undefined ? arr1[i] : 0;
+        const val2 = arr2[i] !== undefined ? arr2[i] : 0;
+        result[i] = val1 + val2;
+    }
+
+    return result;
+}
+
+function subArrays(arr1, arr2) {
+    const maxLength = Math.max(arr1.length, arr2.length);
+    const result = new Array(maxLength).fill(0);
+
+    for (let i = 0; i < maxLength; i++) {
+        const val1 = arr1[i] !== undefined ? arr1[i] : 0;
+        const val2 = arr2[i] !== undefined ? arr2[i] : 0;
+        result[i] = val1 - val2;
+    }
+
+    return result;
+}
+
 export default function EditResFile1({ initialTable, setInEdit, user, setUser, currentDay, currentSkill, setWorksPerShift, finishCallback }) {
     const [content, setContent] = useState([["", "", "", "", ""]])
+    // console.log("initialTable")
+    // console.log(initialTable)
     const [showBackModal, setShowBackModal] = useState(false)
     const defaultErrorMsg = "Assigned Number Of Workers is a non-negative integer and cannot be bigger than the total amount of workers"
     const [errorMsg, setErrorMsg] = useState(defaultErrorMsg)
     const [rowsToRender, setRowsToRender] = useState({})
-    var intialWastedHours = user.currentWastedHours
-    const [wastedHoursKpi, setWastedHoursKpi] = useState(user.currentWastedHours)
-    const [initialCost, setInitialCost] = useState(0)
+    var initialSumShifts = useRef([])
+    var sumShifts = useRef([])
+
+
+    
+    const [wastedHoursKpi, setWastedHoursKpi] = useState(0)
+    var intialWastedHours = useRef(0)
+
+
+
+    var initialCost = useRef(0)
     const [costKpi, setCostKpi] = useState(0)
-    const [initialAppliesToReqs, setInitialAppliesToReqs] = useState(true)
+    var initialAppliesToReqs = useRef(true)
     const [warningMsg, setWarningMsg] = useState("")
-    const [sumShifts, setSumShifts] = useState([])
+
+
+
+
     const token = user.token
-    console.log("key isssssssssss : " + currentDay + "******" + currentSkill)
+    // console.log("key isssssssssss : " + currentDay + "******" + currentSkill)
     function isNumberOfWorkersValid(numOfWorkers) {
         if (numOfWorkers === "") {
             return false
         }
         const parsedValue = Number(numOfWorkers);
-        console.log("parsedValue")
-        console.log(parsedValue)
+        // console.log("parsedValue")
+        // console.log(parsedValue)
         return Number.isInteger(parsedValue) && parsedValue >= 0 && parsedValue <= user.table1.length;
     };
 
@@ -38,36 +105,12 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
             var costShift = initialTable[i][5]
             cost = cost + (costShift * initialTable[i][4])
         }
-        console.log("cost")
-        console.log(cost)
+        // console.log("cost")
+        // console.log(cost)
         return cost
     }
 
-    function sumArrays(arr1, arr2) {
-        const maxLength = Math.max(arr1.length, arr2.length);
-        const result = new Array(maxLength).fill(0);
 
-        for (let i = 0; i < maxLength; i++) {
-            const val1 = arr1[i] !== undefined ? arr1[i] : 0;
-            const val2 = arr2[i] !== undefined ? arr2[i] : 0;
-            result[i] = val1 + val2;
-        }
-
-        return result;
-    }
-
-    function subArrays(arr1, arr2) {
-        const maxLength = Math.max(arr1.length, arr2.length);
-        const result = new Array(maxLength).fill(0);
-
-        for (let i = 0; i < maxLength; i++) {
-            const val1 = arr1[i] !== undefined ? arr1[i] : 0;
-            const val2 = arr2[i] !== undefined ? arr2[i] : 0;
-            result[i] = val1 - val2;
-        }
-
-        return result;
-    }
 
 
     function doesApply(reqs, sumShifts) {
@@ -80,6 +123,18 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
         return true
     }
     useEffect(() => {
+        var initialSumShiftsTemp = []
+        for (let i = 0; i < initialTable.length; i++) {
+            const line = initialTable[i]
+            var shiftsArray = hoursToArrayNumber(line[2], line[3], parseInt(line[4]))
+            initialSumShiftsTemp = sumArrays(initialSumShiftsTemp, shiftsArray)
+        }
+        initialSumShifts.current = initialSumShiftsTemp
+        sumShifts.current = initialSumShiftsTemp
+
+        var intialWastedHoursTemp = computeWastedHours(user.currentRequestArray, initialSumShiftsTemp)
+        setWastedHoursKpi(intialWastedHoursTemp)
+        intialWastedHours.current =  intialWastedHoursTemp
         setContent(initialTable.map(row => [...row]))
         var newRowsToRender = {}
         for (let i = 0; i < initialTable.length; i++) {
@@ -87,76 +142,38 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
         }
         setRowsToRender(newRowsToRender)
         var initCost = calcCost()
-        setInitialCost(initCost)
+        initialCost.current = (initCost)
         setCostKpi(initCost)
         const reqs = user.currentRequestArray
-        console.log("reqs")
-        console.log(reqs)
+        var applies = doesApply(reqs, sumShifts.current)
 
-        var sumShifts = []
-        for (let i = 0; i < initialTable.length; i++) {
-            const line = initialTable[i]
-            var shiftsArray = hoursToArrayNumber(line[2], line[3], parseInt(line[4]))
-            sumShifts = sumArrays(sumShifts, shiftsArray)
-        }
-
-        setSumShifts(sumShifts)
-
-        console.log("sumShifts")
-        console.log(sumShifts)
-        var applies = doesApply(reqs, sumShifts)
-
-        console.log("applies")
-        console.log(applies)
+        // console.log("applies")
+        // console.log(applies)
 
         if (!applies) {
-            setInitialAppliesToReqs(false)
+            initialAppliesToReqs.current = false
         }
     }, []);
 
     useEffect(() => {
-        console.log("content")
-        console.log(content)
+        // console.log("content")
+        // console.log(content)
     }, [content])
 
-    const hourToIndex = (hour) => {
-        if (typeof hour !== 'string') {
-            // Handle the case where hour is not a string
-            return -1; // or any other default value
-        }
-        const [hours, minutes] = hour.split(':');
-        return hours * 2 + (minutes === '30' ? 1 : 0);
-    };
+
 
     // Convert hours to array number
-    const hoursToArrayNumber = (startHour, endHour, num) => {
-        const start = hourToIndex(startHour);
-        let end = hourToIndex(endHour);
-        if (end === 0) {
-            end = 48;
-        }
-        const hoursArray = Array.from({ length: 48 }, (_, i) => (start <= i && i < end) ? num : 0);
-        return hoursArray;
-    };
 
-    const computeWastedHours = (reqs, shiftsArray) => {
-        // console.log("reqs")
-        // console.log(reqs)
-        // console.log("line")
-        // console.log(line)
 
-        let sum = 0;
-        for (let i = 0; i < 48; i++)
-            sum += Math.max(0, shiftsArray[i] - reqs[i])
-        return sum / 2
-    }
 
 
     const handleCellEdit = (rowIndex, columnIndex, value, oldValue) => {
-        console.log("value")
-        console.log(value)
-        console.log("oldValue")
-        console.log(oldValue)
+        // console.log("value")
+        // console.log(value)
+        // console.log("oldValue")
+        // console.log(oldValue)
+        console.log("sumShifts")
+        console.log(sumShifts)
         if (value == oldValue) {
             var newRowsToRender = {}
             newRowsToRender[rowIndex] = true
@@ -164,7 +181,7 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
             return
         }
         if (!isNumberOfWorkersValid(value)) {
-            console.log("not valud")
+            // console.log("not valud")
             var newRowsToRender = {}
             newRowsToRender[rowIndex] = true
             var updatedContent = content
@@ -184,14 +201,23 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
         var oldShiftsArray = hoursToArrayNumber(oldRow[2], oldRow[3], parseInt(oldRow[4]))
         var wastedHoursReduce = computeWastedHours(user.currentRequestArray, oldShiftsArray)
         var wastedHoursAdd = computeWastedHours(user.currentRequestArray, newShiftsArray)
-        setSumShifts(prevSumShifts => subArrays(sumArrays(prevSumShifts, newShiftsArray), oldShiftsArray))
-        setWastedHoursKpi(prevWastedHours => prevWastedHours - wastedHoursReduce + wastedHoursAdd)
+        
+        var newSumShifts = subArrays(sumArrays(sumShifts.current, newShiftsArray), oldShiftsArray)
+        console.log("newSumShifts")
+        console.log(newSumShifts)
+        // setSumShifts(prevSumShifts => subArrays(sumArrays(prevSumShifts, newShiftsArray), oldShiftsArray))
+        var newWastedKpi = computeWastedHours(user.currentRequestArray, newSumShifts)
+        console.log("newWastedKpi")
+        console.log(newWastedKpi)
+        
         var newRowsToRender = {}
         newRowsToRender[rowIndex] = true
         setRowsToRender(newRowsToRender)
         setContent(updatedContent);
-        console.log("content")
-        console.log(content)
+        sumShifts.current = newSumShifts
+        setWastedHoursKpi(newWastedKpi)
+        // console.log("content")
+        // console.log(content)
     };
 
 
@@ -212,17 +238,17 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
             }
         });
         var warningMsg = ""
-        console.log("isValid")
-        console.log(isValid)
+        // console.log("isValid")
+        // console.log(isValid)
         if (!isValid) {
             setErrorMsg(defaultErrorMsg)
             errorModal.show()
             return
         } else {
-            if (initialAppliesToReqs && !doesApply(user.currentRequestArray, sumShifts)) {
+            if (initialAppliesToReqs && !doesApply(user.currentRequestArray, sumShifts.current)) {
                 warningMsg += "- The previous allocation of employees meets the requirements, whereas the current one does not."
             }
-            if (((costKpi + wastedHoursKpi) > (initialCost + intialWastedHours))) {
+            if (((costKpi + wastedHoursKpi) > (initialCost.current + intialWastedHours.current))) {
                 if (warningMsg != "") {
                     warningMsg += "\n"
                 }
@@ -284,9 +310,9 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
                 <div className="row" style={{ position: "fixed", top: "1%", height: "3%" }}>
                     <div className="col-12">
                         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#backModal" onClick={handleBack}>Back</button>
-                        <span style={{ position: "fixed", left: "9.7%", top: "1%" }}><Kpi name={"Cost"} value={costKpi} initialValue={initialCost} description={"Total cost of shifts where day is " + initialTable[0][0] + " and skill is " + initialTable[0][1]} maxWidth={"30.8vw"}></Kpi></span>
-                        <span style={{ position: "fixed", left: "41.5%", top: "1%" }}><Kpi name={"Wasted Hours"} value={wastedHoursKpi} initialValue={intialWastedHours} description={"Total wasted hours as there are more assigned workers than the demand at some half hour where day is " + initialTable[0][0] + " and skill is " + initialTable[0][1]} maxWidth={"30.8vw"}></Kpi></span>
-                        <span style={{ position: "fixed", left: "73.3%", top: "1%" }}><Kpi name={"Avg"} value={(costKpi + wastedHoursKpi) / 2} initialValue={(intialWastedHours + initialCost) / 2} description={"Average of the measures where day is " + initialTable[0][0] + " and skill is " + initialTable[0][1]} maxWidth={"25.7vw"}></Kpi></span>
+                        <span style={{ position: "fixed", left: "9.7%", top: "1%" }}><Kpi name={"Cost"} value={costKpi} initialValue={initialCost.current} description={"Total cost of shifts where day is " + initialTable[0][0] + " and skill is " + initialTable[0][1]} maxWidth={"30.8vw"}></Kpi></span>
+                        <span style={{ position: "fixed", left: "41.5%", top: "1%" }}><Kpi name={"Wasted Hours"} value={wastedHoursKpi} initialValue={intialWastedHours.current} description={"Total wasted hours as there are more assigned workers than the demand at some half hour where day is " + initialTable[0][0] + " and skill is " + initialTable[0][1]} maxWidth={"30.8vw"}></Kpi></span>
+                        <span style={{ position: "fixed", left: "73.3%", top: "1%" }}><Kpi name={"Avg"} value={(costKpi + wastedHoursKpi) / 2} initialValue={(intialWastedHours.current + initialCost.current) / 2} description={"Average of the measures where day is " + initialTable[0][0] + " and skill is " + initialTable[0][1]} maxWidth={"25.7vw"}></Kpi></span>
                     </div>
                 </div>
                 <Table content={content} onCellEdit={handleCellEdit} isNumberOfWorkersValid={isNumberOfWorkersValid} rowsToRender={rowsToRender}></Table>
@@ -346,36 +372,6 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
                     </div>
                 </div>
             )}
-            {/* {true && (
-                <div className={`modal fade show ${((costKpi + wastedHoursKpi) > (initialCost + intialWastedHours)) ? 'modal-warning' : 'modal-success'}`} id="saveModal" tabIndex="-1" role="dialog" aria-labelledby="saveModal" aria-hidden="true" onHide={handleSuccessModalClose}>
-                    <div className="modal-dialog modal-dialog-centered" role="document">
-                        <div className={`modal-content ${(costKpi + wastedHoursKpi) > (initialCost + intialWastedHours) ? 'modal-warning' : 'modal-success'}`}>
-                            <div className="modal-header">
-                                <h5 className={`modal-title ${(costKpi + wastedHoursKpi) > (initialCost + intialWastedHours) ? 'text-warning' : 'text-success'}`} id="saveModalLongTitle">{((costKpi + wastedHoursKpi) > (initialCost + intialWastedHours)) ? 'Warning!' : 'Success!'}</h5>
-                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div className={`modal-body ${(costKpi + wastedHoursKpi) > (initialCost + intialWastedHours) ? 'text-warning' : 'text-success'}`}>
-                                {((costKpi + wastedHoursKpi) >= (initialCost + intialWastedHours)) ?
-                                    "Avg of the measures has been reduced, do you want to save the changes?" :
-                                    "Your changes have been saved successfully."
-                                }
-                            </div>
-                            <div className="modal-footer">
-                                <div className="col-4" />
-                                <div className="col-2">
-                                    <button type="button" className={`btn ${((costKpi + wastedHoursKpi) > (initialCost + intialWastedHours)) ? 'btn-warning' : 'btn-success'}`} data-dismiss="modal" onClick={finishEdit}>Finish</button>
-                                </div>
-                                <div className="col-2">
-                                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Keep Editing</button>
-                                </div>
-                                <div className="col-4" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )} */}
             {true && (
                 <div className="modal fade show modal-success" id="saveModal" tabIndex="-1" role="dialog" aria-labelledby="saveModal" aria-hidden="true" onHide={handleSuccessModalClose}>
                     <div className="modal-dialog modal-dialog-centered" role="document">

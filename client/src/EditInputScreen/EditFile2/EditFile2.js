@@ -10,6 +10,10 @@ import { sortTable } from "../../api/InputTableApi";
 export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromServer, scratch }) {
     const [content, setContent] = useState([["", "", "", "", ""]])
     const [errors, setErrors] = useState([[true, true, true, true, true]])
+    const [initialRender, setInitialRender] = useState(!scratch)
+    function initialRenderUpdate(newRef) {
+        setInitialRender(newRef)
+    };
     const [showErrorModel, setShowErrorModel] = useState(false)
     const [showSuccessModel, setShowSuccessModel] = useState(false)
     const [showBackModal, setShowBackModal] = useState(false)
@@ -170,7 +174,6 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
                 handleLineError(i)
             }
         }
-
         if (errorLines != table.length) {
             const newTable = await sortTableWithErrors(table)
             setContent(newTable)

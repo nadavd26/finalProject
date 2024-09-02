@@ -75,7 +75,7 @@ function UploadScreen({ user, setUser }) {
     } else {
       const res = await validateInputTables(user.token)
       setTable2Table3Changed(res.changed)
-      console.log("res")
+      console.log("res handle submit")
       console.log(res)
       if (res.type != "success") {
         if (res.type == "warning") {
@@ -86,7 +86,9 @@ function UploadScreen({ user, setUser }) {
           setShowErrorModal(true)
         }
       } else {
-        generate(table2Table3Changed)
+        console.log("table2Table3Changed")
+        console.log(table2Table3Changed)
+        generate(res.changed)
       }
     }
   }

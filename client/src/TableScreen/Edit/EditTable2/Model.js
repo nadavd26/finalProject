@@ -103,7 +103,7 @@ export function getStatus(table, colors, contracts) {
             const contract = contracts[contractId];
             const [name, id] = contractId.split('\n');
             if (contract.assignment < contract.minHours || contract.assignment > contract.maxHours) {
-                console.log("hshs")
+                // console.log("hshs")
                 if (violations.length >= 5) {
                     violations.push("...")
                     break
@@ -227,30 +227,41 @@ function addColor(start, newColor) {
  * @property {Array<string>} newColors - The updated colors after the edit.
  * @property {Object} newShiftPerWorkers - The updated shifts per workers after the edit.
  */
-export function edit(table,initialTable,rowIndex, colors, newWorker, contracts, shiftsPerWorkers) {
-    console.log("table")
-    console.log(table)
+export function edit(table,initialTable,rowIndex, colors, newWorker, contracts, shiftsPerWorkers, changeInfo) {
+    // console.log("table")
+    // console.log(table)
     const row = (table)[rowIndex]
     console.log("row")
     console.log(row)
+    
     const day = editAlgo2Utils.capitalizeFirstLetter(row[0])
     var newTable = table
     const oldColor = (colors)[rowIndex]
     var newColors = colors
+    
     const [newName = "", newId = "", newColor = "white"] = newWorker.split(",")
+    //chanegInfo
+    var newChangeInfo = changeInfo
+    var max = 100
+    var min  = 1
+    var id = Math.floor(Math.random() * (max - min + 1)) + min; //row[6]
+    newChangeInfo[id] = newName == "" ? "" : newName + "\n" + newId
+    console.log("newChangeInfo")
+    console.log(newChangeInfo)
+    //end changeInfo
     const [oldName, oldId] = (row[4]).split("\n")
     const oldWorker = oldName + "\n" + oldId
     const newContracts = contracts
-    console.log("newContracts")
-    console.log(newContracts)
-    console.log("oldWorker")
-    console.log(oldWorker)
-    console.log("newWorker")
-    console.log(newWorker)
-    console.log(" newContracts[oldWorker]")
-    console.log(newContracts[oldWorker])
-    console.log("newContracts[newWorker]")
-    console.log(newContracts[newName + "\n" + newId])
+    // console.log("newContracts")
+    // console.log(newContracts)
+    // console.log("oldWorker")
+    // console.log(oldWorker)
+    // console.log("newWorker")
+    // console.log(newWorker)
+    // console.log(" newContracts[oldWorker]")
+    // console.log(newContracts[oldWorker])
+    // console.log("newContracts[newWorker]")
+    // console.log(newContracts[newName + "\n" + newId])
     if (newContracts.hasOwnProperty(oldWorker)) { //maybe ""
         newContracts[oldWorker].assignment -= utils.calculateHours(row[2], row[3])
     }
@@ -260,8 +271,8 @@ export function edit(table,initialTable,rowIndex, colors, newWorker, contracts, 
     }
     const oldWorkerContract = newContracts[oldWorker]
     const newWorkerContract = newContracts[newName + "\n" + newId]
-    console.log("newContracts")
-    console.log(newContracts)
+    // console.log("newContracts")
+    // console.log(newContracts)
     var newShiftPerWorkersDay = newName != "" ? editAlgo2Utils.addShiftToWorker((shiftsPerWorkers)[day], newId, newName, getRelativeIndex(rowIndex,initialTable,day)) : (shiftsPerWorkers)[day]
     editAlgo2Utils.removeShiftFromWorker(newShiftPerWorkersDay, oldId, oldName, getRelativeIndex(rowIndex,initialTable,day))
     var newShiftPerWorkers = shiftsPerWorkers
@@ -355,7 +366,7 @@ export function edit(table,initialTable,rowIndex, colors, newWorker, contracts, 
         }
     }
 
-    return {newTable, newColors, newShiftPerWorkers}
+    return {newTable, newColors, newShiftPerWorkers, newChangeInfo}
 }
 
 function getColor(id, name, day, row, contracts, shiftsPerWorkers, table, initialTable) {
@@ -512,8 +523,8 @@ export function getLineInfo(absuluteIndex, table, colors, shiftsInfo, contracts,
         contractMsg = "Minimum hours per week: " + contract.minHours + ", number of hours: " + (contract.assignment)
     }
 
-    console.log("overlapsLineNumbers")
-    console.log(overlapsLineNumbers)
+    // console.log("overlapsLineNumbers")
+    // console.log(overlapsLineNumbers)
     var overlapMsg = "No overlapping shifts"
     if (overlapsLineNumbers.length > 0) {
         overlapMsg = "Overlapping shifts of this shift (index " + (absuluteIndex + 1) + ") at indexes: " + overlapsLineNumbers.join(", ")
@@ -583,8 +594,8 @@ export function getShiftList(table){
     const shifts = Array.from(uniqueShiftsShown)
     // const shiftsInfo = Array.from(uniqueShiftsInfo)
     var res = { options: ["", ...(shifts)], shownOptions: ["Any", ...(shifts)] };
-    console.log("res");
-    console.log(res); // Log the result
+    // console.log("res");
+    // console.log(res); // Log the result
     return res;
 };
 

@@ -34,7 +34,9 @@ export async function generateAlgo2Results(token, getFromDatabase, autoComplete,
     }
 }
 
-export function postAlgo2Results(token, data, callback) {
+export function postAlgo2Results(token, data,changeInfo, callback) {
+    console.log("changeInfo")
+    console.log(changeInfo)
     fetch('http://localhost:12345/Results/GetResults2', {
         method: 'POST',
         headers: {

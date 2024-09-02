@@ -6,117 +6,88 @@ export default function WorkerDropdown({ value, rowIndex, coloumnIndex, workerLi
     const buttonStyle = {
         visibility: color === 'white' ? 'hidden' : 'visible'
     };
-    var finalColor = color ? color : "white"
-    if (color.includes("red")) {
-        finalColor = "red"
-    } else {
-        if (color.includes("orange")) {
-            finalColor = "orange"
-        } else {
-            if (color.includes("yellow")) {
-                finalColor = "yellow"
-            }
-        }
+
+    let finalColor = "white";
+    if (color) {
+        if (color.includes("red")) finalColor = "red";
+        else if (color.includes("orange")) finalColor = "orange";
+        else if (color.includes("yellow")) finalColor = "yellow";
     }
-    var startIndex = value == "" ? 0 : 1
-    var shownValue = value
-    if (value == "") {
-        shownValue = "not selected";
-    }
+
+    const startIndex = value === "" ? 0 : 1;
+    const shownValue = value === "" ? "not selected" : value;
 
     function getOrder(worker) {
-        if (worker.color.includes("red")) {
-            return 5
-        }
-
-        if (worker.color.includes("orange")) {
-            return 4
-        }
-
-        if (worker.color.includes("yellow")) {
-            return 2
-        }
-
-        if (worker.color.includes("green")) {
-            return 1
-        }
-        
-        return 3 //white
+        if (worker.color.includes("red")) return 5;
+        if (worker.color.includes("orange")) return 4;
+        if (worker.color.includes("yellow")) return 2;
+        if (worker.color.includes("green")) return 1;
+        return 3; // white
     }
-    workerList.sort((a, b) => {
-        return getOrder(a) - getOrder(b)
-    });
 
-    let options = [];
-    if (workerList.length > 0) {
-        options = workerList.map(worker => {
-            let finalColor = worker.color ? worker.color : "white";
-            if (worker.color.includes("red")) {
-                finalColor = "red"
-            } else {
-                if (worker.color.includes("orange")) {
-                    finalColor = "orange"
-                } else {
-                    if (worker.color.includes("yellow")) {
-                        finalColor = "yellow"
-                    }
-                }
-            }
+    workerList.sort((a, b) => getOrder(a) - getOrder(b));
 
-            return {
-                label: `${worker.name}\n${worker.id}`,
-                value: `${worker.name},${worker.id},${worker.color}`,
-                color: finalColor
-            };
-        });
-
-    } else {
-        // Add a non-clickable option when workerList is empty
-        options = [{
+    let options = workerList.length > 0
+        ? workerList.map(worker => ({
+            label: `${worker.name}\n${worker.id}`,
+            value: `${worker.name},${worker.id},${worker.color}`,
+            color: worker.color || "white"
+        }))
+        : [{
             label: "Not enough workers",
             value: "",
             isDisabled: true,
-            color: 'lightgray' // Set color to light gray
+            color: 'lightgray'
         }];
-    }
 
-    // Add a hidden first option
     const hiddenOption = { label: "Hidden Option", value: "", isHidden: true };
     const optionsWithHidden = [hiddenOption, ...options];
-    // const hiddenOption = { label: "Hidden Option", value: "", isHidden: true };
-    // const optionsWithHidden = [hiddenOption, ...workerList.map(worker => ({ label: `${worker.name}\n${worker.id}`, value: `${worker.name},${worker.id},${worker.color}`, color: worker.color }))];
 
     const customStyles = {
         option: (provided, state) => {
             let backgroundColor = state.isSelected ? 'lightblue' : state.data.color;
             if (state.isFocused) {
-                backgroundColor = !state.data.color ? '#CCF5F0' : state.data.color.includes('red') ? '#f35C84' : state.data.color.includes('orange') ? '#F59669' : state.data.color.includes('yellow') ? '#F3F569' : state.data.color.includes('green') ? '#1AB621' : '#CCF5F0'; // Change background color to darker pink for red options, lightblue otherwise
+                backgroundColor = !state.data.color
+                    ? '#CCF5F0'
+                    : state.data.color.includes('red')
+                        ? '#f35C84'
+                        : state.data.color.includes('orange')
+                            ? '#F59669'
+                            : state.data.color.includes('yellow')
+                                ? '#F3F569'
+                                : state.data.color.includes('green')
+                                    ? '#1AB621'
+                                    : '#CCF5F0';
             }
             return {
                 ...provided,
                 backgroundColor: backgroundColor,
-                color: 'black', // Set text color to black for all options
-                display: state.data.isHidden ? 'none' : 'block', // Hide the hidden option
+                color: 'black',
+                display: state.data.isHidden ? 'none' : 'block',
             };
         },
         control: (provided) => ({
             ...provided,
-            backgroundColor: value == "" ? 'white' : 'lightblue',
-            border: '1px solid black', // Add border to the control
+            backgroundColor: value === "" ? 'white' : 'lightblue',
+            border: '1px solid black',
             width: '100%',
         }),
         dropdownIndicator: (provided) => ({
             ...provided,
-            color: 'black', // Change color of the dropdown indicator to black
+            color: 'black',
         }),
         clearIndicator: (provided) => ({
             ...provided,
-            color: 'black', // Change color of the clear indicator (x) to black
+            color: 'black',
         }),
         indicatorSeparator: (provided) => ({
             ...provided,
-            backgroundColor: 'black', // Change color of the vertical line to black
+            backgroundColor: 'black',
         }),
+    };
+
+    const filterOption = (option, searchString) => {
+        return option.label.toLowerCase().includes(searchString.toLowerCase());
     };
 
     return (
@@ -126,25 +97,23 @@ export default function WorkerDropdown({ value, rowIndex, coloumnIndex, workerLi
                     <Select
                         id={`selectWorker-${rowIndex}`}
                         value={value === "" ? { label: "not selected", value: "" } : { label: shownValue, value }}
-                        onChange={(selectedOption) => onCellEdit(selectedOption ? selectedOption.value : "", rowIndex)} // Handle null value for clearing
-                        options={optionsWithHidden} // Use the options array with the hidden first option
-                        styles={customStyles} // Apply custom styles
-                        isClearable // Make the Select component clearable
-                        menuPosition="fixed" // Ensure menu is positioned fixed to the bottom of the select input
+                        onChange={(selectedOption) => onCellEdit(selectedOption ? selectedOption.value : "", rowIndex)}
+                        options={optionsWithHidden}
+                        styles={customStyles}
+                        isClearable
+                        menuPosition="fixed"
                         menuShouldBlockScroll={true}
-                    // closeMenuOnScroll={true}
+                        filterOption={filterOption} // Apply custom filter function
                     />
-
                 </div>
                 <button
                     className="border-0 p-0 no-outline actionButton"
                     onClick={() => getLineInfo(rowIndex)}
-                    style={buttonStyle} // Apply button style dynamically and add margin
+                    style={buttonStyle}
                 >
                     <img src={info} alt="Info Icon" className="img-fluid actionImage worker-dropdown" />
                 </button>
             </div>
         </td>
     );
-
 }

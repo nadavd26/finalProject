@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Table from "./Table";
 import '../css/bootstrap.min.css'
 import '../css/edit-file-table-main.css'
@@ -8,8 +8,13 @@ import { csv_to_array, parseTime, isNumberOfWorkersValid, isSkillValid, isIdVali
 import { sortTable } from "../../api/InputTableApi";
 
 export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromServer, scratch }) {
-    const [content, setContent] = useState([["", "", "", "", "", "", ""]])
-    const [errors, setErrors] = useState([[true, true, true, false, false, false, false]])
+    const [content, setContent] = useState([])
+    const [initialRender, setInitialRender] = useState(!scratch)
+    function initialRenderUpdate(newRef) {
+        setInitialRender(newRef)
+    };
+
+    const [errors, setErrors] = useState([])
     const [showErrorModel, setShowErrorModel] = useState(false)
     const [showSuccessModel, setShowSuccessModel] = useState(false)
     const [rowsToRender, setRowsToRender] = useState({})
@@ -119,38 +124,58 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
             }
         }
 
+        var returnTable = []
         if (errorLines != table.length) {
             const newTable = await sortTableWithErrors(table)
-            setContent(newTable)
-            setContent(table)
+            returnTable = newTable
         } else {
-            setContent(table)
+            returnTable = table
         }
-        setErrors(errorsFound)
+        var returnErrors = errorsFound
+        console.log("return tab;le init chec")
+        console.log(returnTable)
+        return { returnTable, returnErrors }
     }
 
 
     useEffect(() => {
         console.log("content")
         console.log(content)
+        console.log("initialRender")
+        console.log(initialRender)
     }, [content])
 
     useEffect(() => {
-        if (csvArray.length > 0 && fromServer == false) {
-            initAndCheck(csvArray);
-        }
-
-        if (fromServer == true) {
-            setContent(csvArray)
-            const falseArray = Array.from({ length: csvArray.length }, () =>
-                Array.from({ length: csvArray[0].length }, () => false)
-            );
-
-            if (!scratch) {
-                setErrors(falseArray)
+        var table = []
+        var errors = []
+        const load_data = async() => {
+            if (csvArray.length > 0 && fromServer == false) {
+                const { returnTable, returnErrors } = await initAndCheck(csvArray);
+                console.log("returnTable")
+                console.log(returnTable)
+                table = returnTable
+                errors = returnErrors
             }
+    
+            if (fromServer == true) {
+                const falseArray = Array.from({ length: csvArray.length }, () =>
+                    Array.from({ length: csvArray[0].length }, () => false)
+                );
+                table = csvArray
+                errors = falseArray
+            }
+    
+            if (scratch == true) {
+                table = [["", "", "", "", "", "", ""]]
+                errors = [[true, true, true, false, false, false, false]]
+            }
+    
+            console.log("table")
+            console.log(table)
+            setContent(table)
+            setErrors(errors)
         }
-        
+        load_data()
     }, [csvArray, setContent]);
 
     const addRowHandler = () => {
@@ -366,7 +391,7 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
             }
 
             setRowsToRender(newRowsToRender)
-            setContent(sortedTable) 
+            setContent(sortedTable)
             const duplicatesId = findDuplicatesId(sortedTable)
             if (duplicatesId.length != 0) {
                 setErrorMsg("Dupliacted Id's in rows: " + JSON.stringify(duplicatesId))
@@ -389,18 +414,18 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
                     newContent.splice(rowIndex, 1);
                     return newContent;
                 })
-    
+
                 setErrors((prevErrors) => {
                     const newErrors = [...prevErrors];
                     newErrors.splice(rowIndex, 1);
                     return newErrors;
                 })
-    
+
                 var newRowsToRender = {}
                 for (let i = 0; i < content.length; i++) {
                     newRowsToRender[i] = true
                 }
-    
+
                 setRowsToRender(newRowsToRender)
             };
         }
@@ -443,13 +468,13 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
                 </div>
                 <div className="col-11"></div>
                 <Table content={content} onCellEdit={handleCellEdit} onRowDelete={deleteRow} errors={errors}
-                    isNumberOfWorkersValid={isNumberOfWorkersValid} isSkillValid={isSkillValid} onRowAdd={onRowAdd} rowsToRender={rowsToRender}></Table>
+                    isNumberOfWorkersValid={isNumberOfWorkersValid} isSkillValid={isSkillValid} onRowAdd={onRowAdd} rowsToRender={rowsToRender} initialRender={initialRender} initialRenderUpdate={initialRenderUpdate}></Table>
                 <div className="row"><br /></div>
                 <div className="row down-buttons" style={{ position: "fixed", top: "90%", width: "100%" }}>
                     <div className="col-3"></div>
-                    <button className="btn btn-success col-3" onClick={handleSave}
+                    <button className="btn btn-success col-3" onClick={handleSave} disabled={initialRender}
                         data-toggle="modal" >Save</button>
-                    <button className="btn btn-secondary col-3" onClick={addRowHandler} >Add Row</button>
+                    <button className="btn btn-secondary col-3" onClick={addRowHandler} disabled={initialRender}>Add Row</button>
                     <div className="col-3"></div>
                 </div>
             </div>

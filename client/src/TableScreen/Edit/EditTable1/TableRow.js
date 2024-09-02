@@ -9,8 +9,8 @@ const TableRow = ({ row, isNumberOfWorkersValid, rowIndex, onCellEdit, shouldRen
     if (cell != null && cell.innerText != "") {
         cellValue = cell.innerText
     }
-    console.log("cellValue")
-    console.log(cellValue)
+    // console.log("cellValue")
+    // console.log(cellValue)
 
     return (
         <>
@@ -20,6 +20,7 @@ const TableRow = ({ row, isNumberOfWorkersValid, rowIndex, onCellEdit, shouldRen
                 <NonEditableCell value={row[2]} rowIndex={rowIndex} columnIndex={2}  />
                 <NonEditableCell value={row[3]} rowIndex={rowIndex} columnIndex={3}  />
                 <FreeEditCell value={row[4]} rowIndex={rowIndex} columnIndex={4} isValid={isNumberOfWorkersValid(cellValue)} onEdit={onCellEdit}/>
+                <NonEditableCell value={row[5]} rowIndex={rowIndex} columnIndex={5}  />
             </tr >
         </>
     );
