@@ -5,8 +5,10 @@ import TimeCell from '../components/TimeCell';
 import RowActionCell from '../components/RowActionCell';
 import React from "react";
 import { adjustTime } from "../Utils";
-const TableRow = ({ row, rowErrors, rowIndex, onCellEdit, onRowDelete, onRowAdd, shouldRender }) => {
-    console.log("render worker num " + row[0])
+const TableRow = ({ row, rowErrors, rowIndex, onCellEdit, onRowDelete, onRowAdd, shouldRender, enableEdit }) => {
+    // console.log("render row num " + rowIndex)
+    // console.log("rowErrors " + rowIndex)
+    // console.log(rowErrors)
     const handleDeleteRow = () => {
         onRowDelete(rowIndex)
     }
@@ -33,21 +35,21 @@ const TableRow = ({ row, rowErrors, rowIndex, onCellEdit, onRowDelete, onRowAdd,
                     </button>
                 </td> */}
 
-                <RowActionCell onRowDelete={handleDeleteRow} onRowAdd={handleAddRow} rowIndex={rowIndex}/>
+                <RowActionCell onRowDelete={handleDeleteRow} onRowAdd={handleAddRow} rowIndex={rowIndex} enableEdit={enableEdit}/>
 
-                <FreeEditCell value={row[0]} rowIndex={rowIndex} columnIndex={0} isValid={rowErrors[0]} onEdit={onCellEdit} />
+                <FreeEditCell value={row[0]} rowIndex={rowIndex} columnIndex={0} isValid={rowErrors[0]} onEdit={onCellEdit} enableEdit={enableEdit}/>
 
-                <FreeEditCell value={row[1]} rowIndex={rowIndex} columnIndex={1} isValid={rowErrors[1]} onEdit={onCellEdit}/>
+                <FreeEditCell value={row[1]} rowIndex={rowIndex} columnIndex={1} isValid={rowErrors[1]} onEdit={onCellEdit} enableEdit={enableEdit}/>
 
-                <FreeEditCell value={row[2]} rowIndex={rowIndex} columnIndex={2} isValid={rowErrors[2]} onEdit={onCellEdit}/>
+                <FreeEditCell value={row[2]} rowIndex={rowIndex} columnIndex={2} isValid={rowErrors[2]} onEdit={onCellEdit} enableEdit={enableEdit}/>
 
-                <FreeEditCell value={row[3]} rowIndex={rowIndex} columnIndex={3} isValid={rowErrors[3]} onEdit={onCellEdit}/>
+                <FreeEditCell value={row[3]} rowIndex={rowIndex} columnIndex={3} isValid={rowErrors[3]} onEdit={onCellEdit} enableEdit={enableEdit}/>
 
-                <FreeEditCell value={row[4]} rowIndex={rowIndex} columnIndex={4} isValid={rowErrors[4]} onEdit={onCellEdit}/>
+                <FreeEditCell value={row[4]} rowIndex={rowIndex} columnIndex={4} isValid={rowErrors[4]} onEdit={onCellEdit} enableEdit={enableEdit}/>
 
-                <FreeEditCell value={row[5]} rowIndex={rowIndex} columnIndex={5} isValid={rowErrors[5]} onEdit={onCellEdit}/>
+                <FreeEditCell value={row[5]} rowIndex={rowIndex} columnIndex={5} isValid={rowErrors[5]} onEdit={onCellEdit} enableEdit={enableEdit}/>
 
-                <FreeEditCell value={row[6]} rowIndex={rowIndex} columnIndex={6} isValid={rowErrors[6]} onEdit={onCellEdit}/>
+                <FreeEditCell value={row[6]} rowIndex={rowIndex} columnIndex={6} isValid={rowErrors[6]} onEdit={onCellEdit} enableEdit={enableEdit}/>
             </tr >
         </>
     );
