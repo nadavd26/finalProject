@@ -242,10 +242,8 @@ export function edit(table,initialTable,rowIndex, colors, newWorker, contracts, 
     const [newName = "", newId = "", newColor = "white"] = newWorker.split(",")
     //chanegInfo
     var newChangeInfo = changeInfo
-    var max = 100
-    var min  = 1
-    var id = Math.floor(Math.random() * (max - min + 1)) + min; //row[6]
-    newChangeInfo[id] = newName == "" ? "" : newName + "\n" + newId
+    var rowId = row[6]
+    newChangeInfo[rowId] = newId == "" ? "" : newId
     console.log("newChangeInfo")
     console.log(newChangeInfo)
     //end changeInfo

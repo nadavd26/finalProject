@@ -43,7 +43,7 @@ export function postAlgo2Results(token, data,changeInfo, callback) {
             'Content-Type': 'application/json',
             'authorization': 'Bearer ' + token
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(changeInfo)
     })
         .then(response => {
             if (response.ok) {
