@@ -412,15 +412,19 @@ const editResults2OfDay = async (newData, day, userId) => {
 }
 const editResults2 = async (req, userId) => {
     const editInfo = req.body
-    for(const [assignedShiftLineId, workerId] of Object.entries(editInfo)) {
-        //TODO: Update worker name and not only ID, validation.
-        const assignedShiftLine = await AssignedShiftLine.findOne({id: assignedShiftLineId})
-        const workerName = await getWorkerNameByWorkerId(userId, workerId)
-        if(workerName === '') {
-            throw new Error("There was no worker with the following ID: " + workerId)
+    console.log(editInfo)
+    for (const [assignedShiftLineId, workerId] of Object.entries(editInfo)) {
+        const assignedShiftLine = await AssignedShiftLine.findOne({ id: assignedShiftLineId })
+        if (workerId === '') { //When its empty it means that the assigned worker needs to be deleted.
+            assignedShiftLine.assignedWorkerName = '';
+        } else { //Otherwise we assign the the worker with the given ID.
+            const workerName = await getWorkerNameByWorkerId(userId, workerId)
+            if (workerName === '') {
+                throw new Error("There was no worker with the following ID: " + workerId)
+            }
+            assignedShiftLine.assignedWorkerName = workerName + '\n' + workerId;
         }
-        assignedShiftLine.assignedWorkerName = workerId + '\n' + workerName;
-        await assignedShiftLine.save()        
+        await assignedShiftLine.save()
     }
     /*console.log("Editting results2;")
     await editResults2OfDay(req.body.Sunday, "Sunday", userId)
@@ -437,8 +441,8 @@ const editResults2 = async (req, userId) => {
 //This functino returns the worker with the given ID. If there is no worker with that ID, it returns an empty string.
 const getWorkerNameByWorkerId = async (userId, workerId) => {
     const table1 = await getTableByUserId(userId, 1)
-    for(const line of table1.table1Content) {
-        if(line[0] === workerId) {
+    for (const line of table1.table1Content) {
+        if (line[0] === workerId) {
             return line[1]
         }
     }
