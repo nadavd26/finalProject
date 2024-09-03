@@ -97,7 +97,14 @@ export default function WorkerDropdown({ value, rowIndex, coloumnIndex, workerLi
     };
 
     const filterOption = (option, searchString) => {
-        return option.label.toLowerCase().includes(searchString.toLowerCase());
+        let optionLabel = option.label;
+        
+        if (optionLabel.includes("\n")) {
+            const [name, id] = optionLabel.split("\n");
+            optionLabel = `${name} ${id}`;
+        }
+    
+        return optionLabel.toLowerCase().includes(searchString.toLowerCase());
     };
 
     return (
