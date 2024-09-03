@@ -346,7 +346,18 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
         return (<SearchDropdown value={untilSearch.value} shownValue={untilSearch.shownValue} options={options.until.options} shownOptions={options.until.shownOptions} onSelect={changeSelectedUntil} width={width} />)
     }
     const searchAssignedElement = (width) => {
-        return (<SearchDropdown value={assignedSearch.value} shownValue={assignedSearch.shownValue} options={options.assigned.options} shownOptions={options.assigned.shownOptions} onSelect={changeSelectedWorker} width={width} />)
+        const filterOption = (option, searchString) => {
+            let optionLabel = option.label;
+            
+            if (optionLabel.includes("\n")) {
+                const [name, id] = optionLabel.split("\n");
+                optionLabel = `${name} ${id}`;
+            }
+        
+            return optionLabel.toLowerCase().includes(searchString.toLowerCase());
+        };
+        
+        return (<SearchDropdown value={assignedSearch.value} shownValue={assignedSearch.shownValue} options={options.assigned.options} shownOptions={options.assigned.shownOptions} onSelect={changeSelectedWorker} width={width} filterOption={filterOption}/>)
     }
 
     const searchShiftIndexElement = (width) => {

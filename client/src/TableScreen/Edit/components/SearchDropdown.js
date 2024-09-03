@@ -1,7 +1,7 @@
 import React from 'react';
 import Select from 'react-select';
 
-const SearchDropdown = ({ value, shownValue, options, shownOptions, onSelect, width }) => {
+const SearchDropdown = ({ value, shownValue, options, shownOptions, onSelect, width, filterOption }) => {
     // Define a function to format the option label
     const formatOptionLabel = (option) => {
         const label = shownOptions[option.value];
@@ -29,6 +29,11 @@ const SearchDropdown = ({ value, shownValue, options, shownOptions, onSelect, wi
             // If selectedOption is null, set the value to the index of the first option and call onSelect with its index
             onSelect(0);
         }
+    };
+
+    // Default filterOption function if none is provided
+    const defaultFilterOption = (option, searchInput) => {
+        return option.label.toLowerCase().includes(searchInput.toLowerCase());
     };
 
     const customStyles = {
@@ -84,9 +89,8 @@ const SearchDropdown = ({ value, shownValue, options, shownOptions, onSelect, wi
                 isClearable // Enable the clearable option
                 styles={customStyles} // Apply custom styles
                 menuShouldBlockScroll={true}
+                filterOption={filterOption || defaultFilterOption} // Use provided filterOption or fallback to default
             />
-            {/* <div>value: {value}</div>
-            <div>shownValue: {shownValue}</div> */}
         </div>
     );
 };
