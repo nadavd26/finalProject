@@ -31,11 +31,6 @@ const SearchDropdown = ({ value, shownValue, options, shownOptions, onSelect, wi
         }
     };
 
-    // Default filterOption function if none is provided
-    const defaultFilterOption = (option, searchInput) => {
-        return option.label.toLowerCase().includes(searchInput.toLowerCase());
-    };
-
     const customStyles = {
         option: (provided, state) => ({
             ...provided,
@@ -53,8 +48,8 @@ const SearchDropdown = ({ value, shownValue, options, shownOptions, onSelect, wi
             width: width !== undefined ? width : '100%',
             margin: '0px',
             padding: '0px',
-             // Set padding to 0
-             // Set width to either the specified value or 100%
+            // Set padding to 0
+            // Set width to either the specified value or 100%
         }),
         indicatorSeparator: (provided) => ({
             ...provided,
@@ -74,12 +69,12 @@ const SearchDropdown = ({ value, shownValue, options, shownOptions, onSelect, wi
             padding: '0px',
             marginRight: '0px',
             width: '100%',
-             // Add margin on the right // Center items vertically
+            // Add margin on the right // Center items vertically
         }),
     };
 
     return (
-        <div style={{color: 'black'}}>
+        <div style={{ color: 'black' }}>
             <Select
                 value={selectedValue !== null ? transformedOptions[selectedValue] : null} // Set the selected value
                 options={transformedOptions} // Set options with labels
@@ -89,7 +84,7 @@ const SearchDropdown = ({ value, shownValue, options, shownOptions, onSelect, wi
                 isClearable // Enable the clearable option
                 styles={customStyles} // Apply custom styles
                 menuShouldBlockScroll={true}
-                filterOption={filterOption || defaultFilterOption} // Use provided filterOption or fallback to default
+                {...(filterOption !== undefined ? { filterOption } : {})} // Conditionally include filterOption
             />
         </div>
     );
