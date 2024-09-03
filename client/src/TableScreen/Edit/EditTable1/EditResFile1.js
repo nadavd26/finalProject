@@ -13,6 +13,15 @@ const computeWastedHours = (reqs, shiftsArray) => {
         sum += Math.max(0, shiftsArray[i] - reqs[i])
     return sum / 2
 }
+
+const computeMissingHours = (reqs, shiftsArray) => {
+    let sum = 0;
+    for (let i = 0; i < 48; i++)
+        sum += Math.max(0, reqs[i] - shiftsArray[i])
+    return sum / 2
+}
+
+
 const hourToIndex = (hour) => {
     if (typeof hour !== 'string') {
         // Handle the case where hour is not a string
@@ -77,7 +86,8 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
     const [wastedHoursKpi, setWastedHoursKpi] = useState(0)
     var intialWastedHours = useRef(0)
 
-
+    const [missingHoursKpi, setMissingHoursKpi] = useState(0)
+    var intialMissingHours = useRef(0)
 
     var initialCost = useRef(0)
     const [costKpi, setCostKpi] = useState(0)
@@ -135,6 +145,12 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
         var intialWastedHoursTemp = computeWastedHours(user.currentRequestArray, initialSumShiftsTemp)
         setWastedHoursKpi(intialWastedHoursTemp)
         intialWastedHours.current = intialWastedHoursTemp
+
+        var intialMissingHoursTemp = computeMissingHours(user.currentRequestArray, initialSumShiftsTemp)
+        setMissingHoursKpi(intialMissingHoursTemp)
+        intialMissingHours.current = intialMissingHoursTemp
+
+
         setContent(initialTable.map(row => [...row]))
         var newRowsToRender = {}
         for (let i = 0; i < initialTable.length; i++) {
@@ -199,14 +215,13 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
         oldRow[4] = oldValue
         var newShiftsArray = hoursToArrayNumber(newRow[2], newRow[3], parseInt(newRow[4]))
         var oldShiftsArray = hoursToArrayNumber(oldRow[2], oldRow[3], parseInt(oldRow[4]))
-        var wastedHoursReduce = computeWastedHours(user.currentRequestArray, oldShiftsArray)
-        var wastedHoursAdd = computeWastedHours(user.currentRequestArray, newShiftsArray)
 
         var newSumShifts = subArrays(sumArrays(sumShifts.current, newShiftsArray), oldShiftsArray)
         console.log("newSumShifts")
         console.log(newSumShifts)
         // setSumShifts(prevSumShifts => subArrays(sumArrays(prevSumShifts, newShiftsArray), oldShiftsArray))
         var newWastedKpi = computeWastedHours(user.currentRequestArray, newSumShifts)
+        var newMissKpi = computeMissingHours(user.currentRequestArray, newSumShifts)
         console.log("newWastedKpi")
         console.log(newWastedKpi)
 
@@ -216,6 +231,7 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
         setContent(updatedContent);
         sumShifts.current = newSumShifts
         setWastedHoursKpi(newWastedKpi)
+        setMissingHoursKpi(newMissKpi)
         // console.log("content")
         // console.log(content)
     };
@@ -310,9 +326,10 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
                 <div className="row" style={{ position: "fixed", top: "1%", height: "3%" }}>
                     <div className="col-12">
                         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#backModal" onClick={handleBack}>Back</button>
-                        <span style={{ position: "fixed", left: "9.7%", top: "1%" }}><Kpi name={"Cost"} value={costKpi} initialValue={initialCost.current} description={"Total cost of shifts where day is " + initialTable[0][0] + " and skill is " + initialTable[0][1]} maxWidth={"30.8vw"}></Kpi></span>
-                        <span style={{ position: "fixed", left: "41.5%", top: "1%" }}><Kpi name={"Wasted Hours"} value={wastedHoursKpi} initialValue={intialWastedHours.current} description={"Total wasted hours as there are more assigned workers than the demand at some half hour where day is " + initialTable[0][0] + " and skill is " + initialTable[0][1]} maxWidth={"30.8vw"}></Kpi></span>
-                        <span style={{ position: "fixed", left: "73.3%", top: "1%" }}><Kpi name={"Avg"} value={(costKpi + wastedHoursKpi) / 2} initialValue={(intialWastedHours.current + initialCost.current) / 2} description={"Average of the measures where day is " + initialTable[0][0] + " and skill is " + initialTable[0][1]} maxWidth={"25.7vw"}></Kpi></span>
+                        <span style={{ position: "fixed", left: "6.5%", top: "1%" }}><Kpi name={"Cost"} value={costKpi} initialValue={initialCost.current} description={"Total cost of shifts where day is " + initialTable[0][0] + " and skill is " + initialTable[0][1]} maxWidth={"30.8vw"}></Kpi></span>
+                        <span style={{ position: "fixed", left: "25.5%", top: "1%" }}><Kpi name={"Wasted Hours"} value={wastedHoursKpi} initialValue={intialWastedHours.current} description={"Total wasted hours as there are MORE assigned workers than the demand at some half hour where day is " + initialTable[0][0] + " and skill is " + initialTable[0][1]} maxWidth={"30.8vw"}></Kpi></span>
+                        <span style={{ position: "fixed", left: "48.5%", top: "1%" }}><Kpi name={"Missing Hours"} value={missingHoursKpi} initialValue={intialMissingHours.current} description={"Total missing hours as there are LESS assigned workers than the demand at some half hour where day is " + initialTable[0][0] + " and skill is " + initialTable[0][1]}></Kpi></span>
+                        <span style={{ position: "fixed", left: "71.5%", top: "1%" }}><Kpi name={"Avg Missing&Wasted"} value={(missingHoursKpi + wastedHoursKpi) / 2} initialValue={(intialWastedHours.current + intialMissingHours.current) / 2} description={"Average of the missing hours and wasted hours measures where day is " + initialTable[0][0] + " and skill is " + initialTable[0][1]} maxWidth={"25.7vw"}></Kpi></span>
                     </div>
                 </div>
 
@@ -321,17 +338,11 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
                     <Table content={content} onCellEdit={handleCellEdit} isNumberOfWorkersValid={isNumberOfWorkersValid} rowsToRender={rowsToRender} />
                 </div>
 
-                <div style={{ position: "fixed", bottom: "5%", left: "50%", transform: "translateX(-50%)" }}>
-                    <button className="btn btn-success" onClick={handleSave} style={{ fontSize: "2.2vh", width: "150px" }}>
+                <div style={{ position: "fixed", bottom: "4%", left: "50%", transform: "translateX(-50%)" }}>
+                    <button className="btn btn-success" onClick={handleSave} style={{ fontSize: "2.2vh", width: "150px" }}> 
                         Save
                     </button>
                 </div>
-
-
-
-
-
-
 
             </div>
             {showBackModal && (
