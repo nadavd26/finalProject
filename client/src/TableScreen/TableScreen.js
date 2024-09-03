@@ -325,17 +325,64 @@ function TableScreen({ user, setUser }) {
         !editInfoState.get.inEdit ? (
             <div id="table-screen" style={{ maxHeight: "100vh" }}>
                 <div className="container-fluid py-3" >
-                    <div className="d-flex justify-content-between mb-3 top-buttons" style={{ position: "fixed", top: "1%", height: "7%", width: "100%" }}>
-                        <div className="col-1"></div>
-                        <button className={`btn ${tableScreenState.get.tableNum === 2 ? 'btn-secondary' : 'btn-primary'} col-4`} onClick={() => changeTable(1)}>Amount of employees required for each shift</button>
-                        <button className={`btn ${tableScreenState.get.tableNum === 1 ? 'btn-secondary' : 'btn-primary'} col-4`} onClick={() => changeTable(2)}>Allocation of employees</button>
-                        <button className="btn btn-success col-1" onClick={backToUpload} disabled={(!tableScreenState.get.is2Generated && tableScreenState.get.tableNum === 2) || (tableScreenState.get.tableNum === 1 && !tableScreenState.get.is1Generated)}>
-                            <img src={Upload} alt="Upload" className="upload-image" />
+
+
+                    <div className="d-flex justify-content-center mb-3 top-buttons" style={{ position: "fixed", top: "1%", height: "7%", width: "100%" }}>
+                        <button
+                            className={`btn ${tableScreenState.get.tableNum === 2 ? 'btn-secondary' : 'btn-primary'} col-4`}
+                            onClick={() => changeTable(1)}
+                            style={{ margin: "0 5px" }} // Adjust the margin value as needed
+                        >
+                            Amount of employees required for each shift
                         </button>
+                        <button
+                            className={`btn ${tableScreenState.get.tableNum === 1 ? 'btn-secondary' : 'btn-primary'} col-4`}
+                            onClick={() => changeTable(2)}
+                            style={{ margin: "0 5px" }} // Adjust the margin value as needed
+                        >
+                            Allocation of employees
+                        </button>
+
+
+                        <button
+    className="btn btn-success col-1"
+    onClick={backToUpload}
+    disabled={(!tableScreenState.get.is2Generated && tableScreenState.get.tableNum === 2) || (tableScreenState.get.tableNum === 1 && !tableScreenState.get.is1Generated)}
+    style={{ 
+        margin: "0 5px", // Adjust the margin value as needed
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: "0", // Remove default padding
+        width: "auto", // Adjust width as needed
+        height: "auto", // Adjust height as needed
+        maxWidth: "100%", // Ensures the button doesn't exceed its container
+        maxHeight: "100%", // Ensures the button doesn't exceed its container
+        overflow: "hidden", // Prevents overflow of image
+    }}
+>
+    <img 
+        src={Upload} 
+        alt="Upload"
+        style={{ 
+            maxWidth: "100%", // Increase to make the image a bit larger
+            maxHeight: "100%", // Increase to make the image a bit larger
+            width: "auto", // Maintain aspect ratio
+            height: "auto", // Maintain aspect ratio
+            display: "block", // Remove any extra space around the image
+        }} 
+    />
+</button>
+
+
+
+
+
                         <Button
                             variant="primary"
                             style={{
-                                display: tableScreenState.get.tableNum === 2 && tableScreenState.get.is2Generated ? "block" : "none"
+                                display: tableScreenState.get.tableNum === 2 && tableScreenState.get.is2Generated ? "block" : "none",
+                                margin: "0 5px" // Adjust the margin value as needed
                             }}
                             onClick={autoComplete}
                         >
@@ -344,14 +391,16 @@ function TableScreen({ user, setUser }) {
                         <Button
                             variant="danger"
                             style={{
-                                display: tableScreenState.get.tableNum === 2 && tableScreenState.get.is2Generated ? "block" : "none"
+                                display: tableScreenState.get.tableNum === 2 && tableScreenState.get.is2Generated ? "block" : "none",
+                                margin: "0 5px" // Adjust the margin value as needed
                             }}
                             onClick={clear}
                         >
                             Clear
                         </Button>
-                        <div className="col-1"></div>
                     </div>
+
+
                     {tableScreenState.get.tableNum === 2 ? (
                         <div>
 
