@@ -24,10 +24,6 @@ import * as algo2api from '../../../api/Algo2Api'
 import * as model from './Model'
 
 export default function EditResFile2({ initialTable, contracts, setInEdit, user, setUser, workerMap, shiftsInfo, shiftsPerWorkers, setShiftsPerWorkers, finishCallback }) {
-    // console.log("contracts")
-    // console.log(JSON.stringify(contracts))
-    console.log("initialTable")
-    console.log(initialTable)
     const [currentIndex, setCurrentIndex] = useState(0)
     const [searchedIndex, setSearchedIndex] = useState('')
     const [isGenerated, setIsGenerated] = useState(false)
@@ -56,12 +52,6 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
     const [overlapInfo, setOverlapInfo] = useState("")
     const [contractInfo, setContractInfo] = useState("")
     const [changeInfo, setChangeInfo] = useState({})
-    // console.log("shiftsInfo")
-    // console.log(shiftsInfo)
-    // console.log("workerMap")
-    // console.log(workerMap)
-    // console.log("shiftsPerWorkers")
-    // console.log(shiftsPerWorkers)
     const defaultErrorMsg = "There are workers who work in 2 diffrent shifts at the same time."
     const [errorMsg, setErrorMsg] = useState(defaultErrorMsg)
     const token = user.token
@@ -92,7 +82,7 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
     }, []);
 
     function getLineInfo(absuluteIndex) {
-        const {overlapMsg, contractMsg} = model.getLineInfo(absuluteIndex, renderInfo.table, renderInfo.colors, shiftsInfo, contracts, shiftsPerWorkers, initialTable)
+        const { overlapMsg, contractMsg } = model.getLineInfo(absuluteIndex, renderInfo.table, renderInfo.colors, shiftsInfo, contracts, shiftsPerWorkers, initialTable)
         setOverlapInfo(overlapMsg)
         setContractInfo(contractMsg)
         const infoModal = new window.bootstrap.Modal(document.getElementById('infoModal'));
@@ -106,7 +96,7 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
 
 
     function handleCellEdit(newWorker, rowIndex) {
-        const {newTable, newColors, newShiftPerWorkers, newChangeInfo} = model.edit(renderInfo.table,initialTable,rowIndex, renderInfo.colors, newWorker, contracts, renderInfo.shiftsPerWorkers, changeInfo)
+        const { newTable, newColors, newShiftPerWorkers, newChangeInfo } = model.edit(renderInfo.table, initialTable, rowIndex, renderInfo.colors, newWorker, contracts, renderInfo.shiftsPerWorkers, changeInfo)
         var newRowsToRender = {}
         var length = linesFiltered.length
         var endOfPage = Math.min(page_size + currentIndex - 1, length - 1)
@@ -115,8 +105,6 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
             let rowChcked = renderInfo.table[absuluteIndex]
             newRowsToRender[linesFiltered[i]] = true
         }
-        // console.log("newColors")
-        // console.log(newColors)
         setRenderInfo({ table: newTable, colors: newColors, shiftsPerWorkers: newShiftPerWorkers, isGenerated: true, rowsToRender: newRowsToRender })
         setChangeInfo(newChangeInfo)
     }
@@ -126,7 +114,7 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
         const errorModal = new window.bootstrap.Modal(document.getElementById('errModal'));
         setErrorMsg(defaultErrorMsg)
         const saveModal = new window.bootstrap.Modal(document.getElementById('saveModal'));
-        var {isValid, isViolation, violations, isUnassigned} = model.getStatus(renderInfo.table, renderInfo.colors, contracts)
+        var { isValid, isViolation, violations, isUnassigned } = model.getStatus(renderInfo.table, renderInfo.colors, contracts)
         var warningMsg = isUnassigned ? "There are some unassigned shifts.\n" : ""
         warningMsg += violations.join("\n")
         setViolations(warningMsg)
@@ -158,9 +146,7 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
         var newUser = user
         newUser.algo2Table = initialTable
         newUser.contracts = contracts
-        // console.log("initialTable")
-        // console.log(initialTable)
-        algo2api.postAlgo2Results(user.token, initialTable, changeInfo,() => { })
+        algo2api.postAlgo2Results(user.token, initialTable, changeInfo, () => { })
         setShiftsPerWorkers(renderInfo.shiftsPerWorkers)
         setUser(newUser)
         setInEdit(false)
@@ -348,16 +334,16 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
     const searchAssignedElement = (width) => {
         const filterOption = (option, searchString) => {
             let optionLabel = option.label;
-            
+
             if (optionLabel.includes("\n")) {
                 const [name, id] = optionLabel.split("\n");
                 optionLabel = `${name} ${id}`;
             }
-        
+
             return optionLabel.toLowerCase().includes(searchString.toLowerCase());
         };
-        
-        return (<SearchDropdown value={assignedSearch.value} shownValue={assignedSearch.shownValue} options={options.assigned.options} shownOptions={options.assigned.shownOptions} onSelect={changeSelectedWorker} width={width} filterOption={filterOption}/>)
+
+        return (<SearchDropdown value={assignedSearch.value} shownValue={assignedSearch.shownValue} options={options.assigned.options} shownOptions={options.assigned.shownOptions} onSelect={changeSelectedWorker} width={width} filterOption={filterOption} />)
     }
 
     const searchShiftIndexElement = (width) => {
@@ -487,13 +473,13 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
                     <div className="col-2"></div>
                 </div>
                 <br></br>
-                
+
                 <div className="row" style={{ position: "fixed", bottom: "5%", width: "100%", display: "flex", justifyContent: "center" }}>
-    <button className="btn btn-success" onClick={handleSave}
-        data-toggle="modal" style={{ width: "140px", height: "40px", fontSize: "18px" }}>
-        Save
-    </button>
-</div>
+                    <button className="btn btn-success" onClick={handleSave}
+                        data-toggle="modal" style={{ width: "140px", height: "40px", fontSize: "18px" }}>
+                        Save
+                    </button>
+                </div>
 
 
 

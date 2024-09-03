@@ -1,7 +1,6 @@
 import React from 'react';
 import TableRowMemo from './TableRow';
 // import TableRow from './TableRow';
-//first row : [{name : , validate : function}, ....]
 const TableRows = ({ content, isNumberOfWorkersValid, onCellEdit, rowsToRender}) => {
     
     return (

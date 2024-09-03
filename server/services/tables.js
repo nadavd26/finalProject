@@ -24,7 +24,7 @@ const removeLinesByIds = async (tableNum, tableLineIDsToDelete) => {
                 });
                 break;
             default:
-                console.log("Invalid table number.")
+                
         }
     } catch (err) {
         throw err
@@ -96,7 +96,7 @@ const updateTable = async (tableNum, tableContent, email, googleId, userId) => {
                 await tableValidator.setTableBit(userId, 3, true)
                 break;
             default:
-                console.log("Invalid table number.")
+                
         }
     } catch (err) {
         throw err
@@ -133,7 +133,7 @@ const formatTable = (tableNum, tableContent) => {
                     line.cost.toString(),
                 ]);
             default:
-                console.log("Invalid table number.")
+                
         }
     } catch (err) {
         throw err
@@ -154,7 +154,7 @@ const sortTable = (table, tableNum) => {
         case 3:
             return table.sort(tableSorter.customSort3)
         default:
-            console.log("Invalid table number.")
+            
     }
 }
 //Validating the table with the relevant validation function.
@@ -167,7 +167,7 @@ const validateTable = (table, tableNum) => {
         case 3:
             return tableValidator.validateTable3(table)
         default:
-            console.log("Invalid table number.")
+            
     }
 }
 module.exports = { removeLinesByIds, updateTable, formatTable, sortTable, validateTable }

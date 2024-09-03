@@ -2,25 +2,7 @@ export async function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function generateShiftArray(shifts) {
-    const shiftArray = new Array(48).fill(false);
-    shifts.forEach(shift => {
-        const startTime = shift.start.split(':').map(Number);
-        const endTime = shift.end.split(':').map(Number);
-
-        const startIndex = (startTime[0] * 2) + (startTime[1] / 30);
-        const endIndex = (endTime[0] * 2) + (endTime[1] / 30);
-
-        for (let i = startIndex; i < endIndex; i++) {
-            shiftArray[Math.floor(i)] = true;
-        }
-    });
-    return shiftArray;
-}
-
 function generateShifts(scheduleData) {
-    // console.log("scheduleData")
-    // console.log(scheduleData)
     const workersAndShifts = [];
     const timeIndexMap = {
         "00:00": 0, "00:30": 1, "01:00": 2, "01:30": 3, "02:00": 4, "02:30": 5,
@@ -90,16 +72,7 @@ export function generateWorkerMap(table) {
             workerMap.get(skill3).push({ id, name });
         }
     }
-    // console.log("worker map : " + mapToString(workerMap))
     return workerMap;
-}
-
-function mapToString(map) {
-    let str = '';
-    map.forEach((value, key) => {
-        str += `${key}: ${JSON.stringify(value)}\n`; // Assuming key and value are strings
-    });
-    return str;
 }
 
 export function generateDayList(table) {
@@ -112,8 +85,6 @@ export function generateDayList(table) {
 }
 
 function generateShiftList(table) {
-    // console.log("Input table:");
-    // console.log(table);
     const shifts = {};
     let currentShiftId = null;
     let currentShiftStartIndex = null;
@@ -162,8 +133,6 @@ function generateShiftList(table) {
     if (currentShiftId !== null) {
         shifts[currentShiftId].end = table.length - 1;
     }
-    // console.log("Shift list:");
-    // console.log(shifts);
     return shifts;
 }
 

@@ -7,25 +7,6 @@ export default function FileAdded({ handleEdit, onFileAdded }) {
         onFileAdded(event.target.files[0]);
     };
 
-    const containerStyle = {
-        display: 'flex',
-        position: 'fixed',
-        left: '20%',
-        width: '60vw',
-        height: '60%',
-        flexDirection: 'column',
-        alignItems: 'center',
-        padding: '20px',
-        backgroundColor: 'white',
-        borderRadius: '8px',
-        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-        margin: 'auto',
-    };
-
-    const headerStyle = {
-        marginBottom: '20px',
-    };
-
     const contentStyle = {
         display: 'flex',
         justifyContent: 'space-around',
@@ -45,8 +26,6 @@ export default function FileAdded({ handleEdit, onFileAdded }) {
         height: 'auto',
         marginBottom: '10px',
     };
-
-    const editStyle = {position: 'fixed', left: '41%', top: '22.5%'}
 
     return (
         <div>

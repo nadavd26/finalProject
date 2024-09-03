@@ -1,20 +1,14 @@
 export async function generateAlgo2Results(token, getFromDatabase, autoComplete, empty) {
     var data = "?getFromDatabase="
     data += getFromDatabase ? "true" : "false"
-    //old
-        // data += "?autoComplete="
-        // data += autoComplete ? "true" : "false"
-        // data += "?empty="
-        // data += empty ? "true" : "false"
-    //new
-        data += "&autoComplete=" + (autoComplete ? "true" : "false");
-        data += "&empty=" + (empty ? "true" : "false");
+    data += "&autoComplete=" + (autoComplete ? "true" : "false");
+    data += "&empty=" + (empty ? "true" : "false");
 
     try {
         const url = "http://localhost:12345/Results/GetResults2" + data;
         const response = await fetch(url, {
             method: 'GET',
-            headers: { 
+            headers: {
                 'Content-Type': 'application/json',
                 'authorization': 'bearer ' + token
             },
@@ -25,8 +19,8 @@ export async function generateAlgo2Results(token, getFromDatabase, autoComplete,
         }
 
         const responseData = await response.json(); // Parse JSON response
-        console.log("responseData")
-        console.log(responseData)
+
+
         return responseData
     } catch (error) {
         console.error("Error fetching results:", error);
@@ -34,9 +28,9 @@ export async function generateAlgo2Results(token, getFromDatabase, autoComplete,
     }
 }
 
-export function postAlgo2Results(token, data,changeInfo, callback) {
-    console.log("changeInfo")
-    console.log(changeInfo)
+export function postAlgo2Results(token, data, changeInfo, callback) {
+
+
     fetch('http://localhost:12345/Results/GetResults2', {
         method: 'POST',
         headers: {

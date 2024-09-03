@@ -1,6 +1,6 @@
 export default function NonEditableCell({ value, rowIndex, shiftIndex, columnIndex, color, additionalClass, style }) {
     // Define the styles outside of the JSX
-    // console.log("color" + color)
+    // 
     const cellStyle = columnIndex === 0 ? { borderLeftWidth: '1px' } : { borderLeftWidth: '0px' };
     var finalColor = color ? color : "white"
     if (color) {
@@ -18,7 +18,7 @@ export default function NonEditableCell({ value, rowIndex, shiftIndex, columnInd
     }
 
     
-    // console.log("finalcolor " + finalColor)
+    // 
     
 
     const merge = { ...cellStyle, ...style }

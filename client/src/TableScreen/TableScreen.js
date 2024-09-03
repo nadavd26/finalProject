@@ -41,9 +41,9 @@ function TableScreen({ user, setUser }) {
     const algo2TableState = useTableAlgo2State();
     const tableAlgo1State = useTableAlgo1State()
     const editInfoState = useEditInfoState()
-    console.log(reqs)
-    console.log("user")
-    console.log(user)
+
+
+
     function switchDay(day) {
         if ((tableScreenState.get.tableNum == 1 && !tableScreenState.get.is1Generated) || (tableScreenState.get.tableNum == 2 && !tableScreenState.get.is2Generated)) {
             return
@@ -57,11 +57,7 @@ function TableScreen({ user, setUser }) {
             const key = utils.getKey(day, tableAlgo1State.get.currentSkill)
             const key1 = utils.getKey(day, tableAlgo1State.get.currentSkill, true)
             setShifts(((user.algo1Table).get(key)))
-            console.log("key1")
-            console.log(key1)
             var newReq = ((user.daySkillReqMap).get(key1))
-            console.log("newReq")
-            console.log(newReq)
             setReqs(newReq)
         }
     }
@@ -73,15 +69,9 @@ function TableScreen({ user, setUser }) {
         tableAlgo1State.setCurrentSkill(skill)
         const key = utils.getKey(tableScreenState.get.currentDay, skill)
         const key1 = utils.getKey(tableScreenState.get.currentDay, skill, true)
-        console.log("key1")
-        console.log(key1)
-        // console.log("key " + key)
         setShifts(((user.algo1Table).get(key)))
         var newReq = ((user.daySkillReqMap).get(key1))
-        console.log("newReq")
-        console.log(newReq)
         setReqs(newReq)
-        // console.log("res " + ((user.algo1Table).get(key)))
     }
 
     function handleEdit() {
@@ -93,7 +83,7 @@ function TableScreen({ user, setUser }) {
 
 
     function generateResults1() {
-        console.log("gen res 1")
+
         var newUser = user
         var newReq = []
         const algo1Callback = (res) => {
@@ -102,16 +92,10 @@ function TableScreen({ user, setUser }) {
             setShifts(newWorkersPerShift)
             setReqs(newReq)
             tableScreenState.setIs1Generated(true)
-            console.log("finish callback")
+
         }
         algo1api.generateAlgo1Results(user.token, user.tableAlgo1FromDb, algo1Callback)
-
-        // console.log("res")
-        // console.log(res)
         const newDaySkillReqMap = utils.generateReqSkillDayMap(user.table2)
-        console.log("newDaySkillReqMap")
-        console.log(newDaySkillReqMap)
-        // newUser.algo1Table = res
         newUser.daySkillReqMap = newDaySkillReqMap
         newUser.skillList = utils.getSkillSet(user.table2)
         const startSkill = (newUser.skillList)[0]
@@ -120,79 +104,35 @@ function TableScreen({ user, setUser }) {
         const key = utils.getKey("sunday", startSkill)
         const key1 = utils.getKey("sunday", startSkill, true)
         tableAlgo1State.setKey(key)
-        // var newWorkersPerShift = res.get(key)
         newReq = newDaySkillReqMap.get(key1)
-        console.log("newDaySkillReqMap")
-        console.log(newDaySkillReqMap)
-        console.log("newReq")
-        console.log(newReq)
-
         var workerMap = utils.generateWorkerMap(user.table1)
-        // console.log("worker map : " +workerMap)
         tableScreenState.setWorkerMap(workerMap)
-        // tableAlgo1State.setWorksPerShift(newWorkersPerShift)
         setUser(newUser)
-        console.log("finish code")
-        // tableScreenState.setIs1Generated(true)
-    }
-    // async function generateResults1() {
 
-    //     const res = await utils.generateAlgo1Results(user.token, user.tableAlgo1FromDb)
-    //     console.log("res")
-    //     console.log(res)
-    //     const newDaySkillReqMap = utils.generateReqSkillDayMap(user.table2)
-    //     console.log("newDaySkillReqMap")
-    //     console.log(newDaySkillReqMap)
-    //     var newUser = user
-    //     newUser.algo1Table = res
-    //     newUser.daySkillReqMap = newDaySkillReqMap
-    //     newUser.skillList = utils.getSkillSet(user.table2)
-    //     const startSkill = (newUser.skillList)[0]
-    //     tableAlgo1State.setCurrentSkill(startSkill)
-    //     tableAlgo1State.setOtherSkills((utils.removeElementAtIndex(newUser.skillList, 0)))
-    //     const key = utils.getKey("sunday", startSkill)
-    //     const key1 = utils.getKey("sunday", startSkill, true)
-    //     tableAlgo1State.setKey(key)
-    //     var newWorkersPerShift = res.get(key)
-    //     var newReq = newDaySkillReqMap.get(key1)
-    //     console.log("newDaySkillReqMap")
-    //     console.log(newDaySkillReqMap)
-    //     console.log("newReq")
-    //     console.log(newReq)
-    //     tableAlgo1State.setReq(newReq)
-    //     tableAlgo1State.setWorksPerShift(newWorkersPerShift)
-    //     setUser(newUser)
-    //     tableScreenState.setIs1Generated(true)
-    // }
+    }
+
     async function generateResults2(algo2table, fromDb, autoComplete, empty) {
         var newUser = user
         if (!algo2table) {
             newUser.contracts = []
         }
         const res = algo2table ? algo2table : await algo2api.generateAlgo2Results(user.token, fromDb, autoComplete, empty)
-        // console.log("res")
-        // console.log(JSON.stringify(res))
         if (!algo2table) {
             newUser.contracts = utils.generateContracts(user.table1, res)
-            console.log("newUser.contracts")
-            console.log(newUser.contracts)
+
+
         }
         newUser.algo2Table = res
         const ui = utils.generateAlgoGraphicResults(res)
         newUser.algo2Graphic = ui
         var shifts = utils.generateAlgoShifts(res)
-        // console.log("shifts")
-        // console.log(shifts)
-
-        // console.log("ui")
-        // console.log(JSON.stringify(ui))
         setUser(newUser)
         algo2TableState.setShiftsInfo(shifts)
         var shiftsPerWorkers = utils.generateShiftsPerWorker(res)
         algo2TableState.setShiftsPerWorkers(shiftsPerWorkers)
         algo2TableState.setCurrentWorkersAndShifts((user.algo2Graphic)[tableScreenState.get.currentDay])
-        console.log("newUser")
-        console.log(newUser)
+
+
         tableScreenState.setIs2Generated(true)
     }
 
@@ -207,8 +147,8 @@ function TableScreen({ user, setUser }) {
         if (num == 2 && !tableScreenState.get.is2Generated) {
             const validate = await algo1api.validateAlgo1Table1(user.token)
             setTable1Algo1Changed(validate.changed)
-            console.log("validate")
-            console.log(validate)
+
+
             if (validate.type == "success") {
                 await generateAnyway(validate.changed)
             } else {
@@ -248,7 +188,7 @@ function TableScreen({ user, setUser }) {
     }
 
     useEffect(() => {
-        console.log("geneneen")
+
         generateResults1();
     }, []);
 
@@ -345,34 +285,34 @@ function TableScreen({ user, setUser }) {
 
 
                         <button
-    className="btn btn-success col-1"
-    onClick={backToUpload}
-    disabled={(!tableScreenState.get.is2Generated && tableScreenState.get.tableNum === 2) || (tableScreenState.get.tableNum === 1 && !tableScreenState.get.is1Generated)}
-    style={{ 
-        margin: "0 5px", // Adjust the margin value as needed
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        padding: "0", // Remove default padding
-        width: "auto", // Adjust width as needed
-        height: "auto", // Adjust height as needed
-        maxWidth: "100%", // Ensures the button doesn't exceed its container
-        maxHeight: "100%", // Ensures the button doesn't exceed its container
-        overflow: "hidden", // Prevents overflow of image
-    }}
->
-    <img 
-        src={Upload} 
-        alt="Upload"
-        style={{ 
-            maxWidth: "100%", // Increase to make the image a bit larger
-            maxHeight: "100%", // Increase to make the image a bit larger
-            width: "auto", // Maintain aspect ratio
-            height: "auto", // Maintain aspect ratio
-            display: "block", // Remove any extra space around the image
-        }} 
-    />
-</button>
+                            className="btn btn-success col-1"
+                            onClick={backToUpload}
+                            disabled={(!tableScreenState.get.is2Generated && tableScreenState.get.tableNum === 2) || (tableScreenState.get.tableNum === 1 && !tableScreenState.get.is1Generated)}
+                            style={{
+                                margin: "0 5px", // Adjust the margin value as needed
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                padding: "0", // Remove default padding
+                                width: "auto", // Adjust width as needed
+                                height: "auto", // Adjust height as needed
+                                maxWidth: "100%", // Ensures the button doesn't exceed its container
+                                maxHeight: "100%", // Ensures the button doesn't exceed its container
+                                overflow: "hidden", // Prevents overflow of image
+                            }}
+                        >
+                            <img
+                                src={Upload}
+                                alt="Upload"
+                                style={{
+                                    maxWidth: "100%", // Increase to make the image a bit larger
+                                    maxHeight: "100%", // Increase to make the image a bit larger
+                                    width: "auto", // Maintain aspect ratio
+                                    height: "auto", // Maintain aspect ratio
+                                    display: "block", // Remove any extra space around the image
+                                }}
+                            />
+                        </button>
 
 
 

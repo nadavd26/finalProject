@@ -6,9 +6,6 @@ import RowActionCell from '../components/RowActionCell';
 import React from "react";
 import { adjustTime } from "../Utils";
 const TableRow = ({ row, rowErrors, rowIndex, onCellEdit, onRowDelete, onRowAdd, shouldRender, enableEdit }) => {
-    // console.log("render row num " + rowIndex)
-    // console.log("rowErrors " + rowIndex)
-    // console.log(rowErrors)
     const handleDeleteRow = () => {
         onRowDelete(rowIndex)
     }
@@ -17,23 +14,9 @@ const TableRow = ({ row, rowErrors, rowIndex, onCellEdit, onRowDelete, onRowAdd,
         onRowAdd(rowIndex)
     }
 
-
-
-    var minFromHour = "00:00";
-    var maxFromHour = rowErrors[3] ? "23:30" : adjustTime(row[3], false)
-    var minUntilHour = rowErrors[2] ? "00:30" : adjustTime(row[2], true)
-    var maxUntilHour = "24:00";
-
-
-
     return (
         <>
             <tr className="row100 body last-rows" id="table-row">
-                {/* <td id="deleteRow" className='cell100 first-column static-position '>
-                    <button className="border-0 p-0 no-outline" onClick={handleDeleteRow} id="deleteBtn">
-                        <img src={rowDeleteImage} alt="Image" className="img-fluid" id="deleteImg" />
-                    </button>
-                </td> */}
 
                 <RowActionCell onRowDelete={handleDeleteRow} onRowAdd={handleAddRow} rowIndex={rowIndex} enableEdit={enableEdit}/>
 

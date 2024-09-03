@@ -30,7 +30,6 @@ function UploadScreen({ user, setUser }) {
   const handleCloseGenerateModal = () => {
     setShowGenerateModal(false);
   };
-  // console.log("upload screen user: "  + JSON.stringify(user) + "token: " + user.token)
   useEffect(() => {
     if (editInfo.errorMsg !== "") {
       const modal = new window.bootstrap.Modal(document.getElementById('UploadScreenErrorModal'));
@@ -75,8 +74,8 @@ function UploadScreen({ user, setUser }) {
     } else {
       const res = await validateInputTables(user.token)
       setTable2Table3Changed(res.changed)
-      console.log("res handle submit")
-      console.log(res)
+
+
       if (res.type != "success") {
         if (res.type == "warning") {
           setValidationWarning(res.msg)
@@ -86,8 +85,8 @@ function UploadScreen({ user, setUser }) {
           setShowErrorModal(true)
         }
       } else {
-        console.log("table2Table3Changed")
-        console.log(table2Table3Changed)
+
+
         generate(res.changed)
       }
     }
@@ -174,7 +173,7 @@ function UploadScreen({ user, setUser }) {
     const auth2 = window.gapi.auth2.getAuthInstance();
     if (auth2) {
       auth2.signOut().then(() => {
-        console.log("User signed out from Google");
+
         auth2.disconnect();
       });
     }
@@ -262,29 +261,29 @@ function UploadScreen({ user, setUser }) {
             />
           )}
 
-<div className="btn-container" style={{ position: "relative" }}>
-    <div className="d-flex justify-content-between mb-3 top-buttons">
-        <div className="col-5"></div>
-        <button className="btn btn-success col-2" onClick={handleSubmit} style={{ marginTop: "40px", borderRadius: "15px" }}>
-            Generate Results
-        </button>
-        <div className="col-5"></div>
-    </div>
+          <div className="btn-container" style={{ position: "relative" }}>
+            <div className="d-flex justify-content-between mb-3 top-buttons">
+              <div className="col-5"></div>
+              <button className="btn btn-success col-2" onClick={handleSubmit} style={{ marginTop: "40px", borderRadius: "15px" }}>
+                Generate Results
+              </button>
+              <div className="col-5"></div>
+            </div>
 
-    {showSubmitAlert && (
-        <div className="alert alert-danger col-4 text-center" role="alert" style={{ 
-            position: "absolute", 
-            top: "35px", // Adjusted to cover the button more completely
-            left: "50%", 
-            transform: "translateX(-50%)",
-            zIndex: 1, // Ensure the alert is on top
-            height: "auto", // Ensure the alert height matches or exceeds the button height
-            padding: "10px 0" // Add padding to make the alert visually comfortable
-        }}>
-            Can't Generate Results without all input files.
-        </div>
-    )}
-</div>
+            {showSubmitAlert && (
+              <div className="alert alert-danger col-4 text-center" role="alert" style={{
+                position: "absolute",
+                top: "35px", // Adjusted to cover the button more completely
+                left: "50%",
+                transform: "translateX(-50%)",
+                zIndex: 1, // Ensure the alert is on top
+                height: "auto", // Ensure the alert height matches or exceeds the button height
+                padding: "10px 0" // Add padding to make the alert visually comfortable
+              }}>
+                Can't Generate Results without all input files.
+              </div>
+            )}
+          </div>
 
 
         </div>
@@ -327,28 +326,6 @@ function UploadScreen({ user, setUser }) {
             </Button>
           </Modal.Footer>
         </Modal>
-
-        {/* <Modal show={showWarningModal} onHide={handleCloseWarningModal} centered>
-          <Modal.Header style={{ backgroundColor: '#f8d7da', paddingRight: '1rem' }}>
-            <Modal.Title className="text-center w-100" style={{ color: '#721c24' }}>
-              <ExclamationTriangleFill style={{ marginRight: '10px' }} /> Warning
-            </Modal.Title>
-            <button type="button" className="close" onClick={() => setShowWarningModal(false)} aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </Modal.Header>
-          <Modal.Body style={{ backgroundColor: '#f8d7da', color: '#721c24', whiteSpace: 'pre-wrap' }}>
-            {validationWarning}
-          </Modal.Body>
-          <Modal.Footer style={{ backgroundColor: '#f8d7da', display: 'flex', justifyContent: 'space-between' }}>
-            <Button variant="danger" onClick={handleCloseWarningModal} className="mr-auto">
-              Ok
-            </Button>
-            <Button variant="danger" onClick={generateAnyway}>
-              Generate Anyway
-            </Button>
-          </Modal.Footer>
-        </Modal> */}
 
         <Modal show={showWarningModal} onHide={handleCloseWarningModal} centered>
           <Modal.Header style={{ backgroundColor: '#FCFFA5', paddingRight: '1rem' }}>

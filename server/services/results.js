@@ -11,7 +11,7 @@ const TableValidator = require("../services/tableValidator")
 
 //This function runs algorithm 1 and returns the results.
 const getResults1 = async (reqs, shifts, userId) => {
-    console.log("Generating results1;")
+    
     const shiftsJson = JSON.stringify(shifts);
     const reqsJson = JSON.stringify(reqs);
     const shiftsFileName = `./algorithm/shifts${userId}.json`;
@@ -77,7 +77,7 @@ const getResults1 = async (reqs, shifts, userId) => {
 
 //This function runs algorithm 1 and returns the results.
 const getResults2 = async (userId) => {
-    console.log("Getting results2;")
+    
 
     // Creating an empty map with all the days as keys.
     let results2Map = {
@@ -120,7 +120,7 @@ const getResults2 = async (userId) => {
 
 //This function deletes every all the shift tables and lines of the user. 
 const deleteCurrentResults = async (userId) => {
-    console.log("Deleting results1;")
+    
     const user = await User.findById(userId)
     // Going through each shift table.
     for (const shiftTable of user.shiftTables) {
@@ -136,7 +136,7 @@ const deleteCurrentResults = async (userId) => {
 
 //This function deletes all the assigned shift tables and lines of the user. 
 const deleteCurrentResults2 = async (userId) => {
-    console.log("Deleting results2;")
+    
     const user = await User.findById(userId)
     // Going through each assigned shift table.
     for (const assignedShiftTable of user.assignedShiftTables) {
@@ -152,7 +152,7 @@ const deleteCurrentResults2 = async (userId) => {
 
 //This funciton gets the results and saves them in the database.
 const saveResults = async (results, userId) => {
-    console.log("Saving results1;")
+    
     sortedResults = Table.sortTable(results, 2) //Same sorting as for table2.
     await deleteCurrentResults(userId)
     const user = await User.findById(userId)
@@ -194,7 +194,7 @@ const saveResults = async (results, userId) => {
 
 //This funciton gets the results of algorithm2 and saves them in the database.
 const saveResults2 = async (results, userId) => {
-    console.log("Saving results2;")
+    
     await deleteCurrentResults2(userId)
     const user = await User.findById(userId)
     const assignedShiftLines = [];
@@ -228,13 +228,13 @@ const saveResults2 = async (results, userId) => {
 }
 
 const getResults1FromDB = async (userId) => {
-    console.log("Getting results1 from DB;")
+    
     const user = await User.findById(userId)
     await user.populate('shiftTables.shifts');
     return await transformShiftTablesToMap(user.shiftTables);
 }
 const getResults2FromDB = async (userId) => {
-    console.log("Getting results2 from DB;")
+    
     const user = await User.findById(userId)
     await user.populate('assignedShiftTables.assignedShifts');
     return await transformAssignedShiftTablesToMap(user.assignedShiftTables);
@@ -317,7 +317,7 @@ function getShiftCost(skill, day, startTime, finishTime, table3) {
 
 //This function updates the results. It assumes that they all lines share the same day and skill.
 const editResults = async (newData, userId) => {
-    console.log("Editting results1;")
+    
     const keyDay = newData[0][0]
     const keySkill = newData[0][1]
     const user = await User.findById(userId)
@@ -412,7 +412,7 @@ const editResults2OfDay = async (newData, day, userId) => {
 }
 const editResults2 = async (req, userId) => {
     const editInfo = req.body
-    console.log(editInfo)
+    
     for (const [assignedShiftLineId, workerId] of Object.entries(editInfo)) {
         const assignedShiftLine = await AssignedShiftLine.findOne({ id: assignedShiftLineId })
         if (workerId === '') { //When its empty it means that the assigned worker needs to be deleted.
@@ -426,7 +426,7 @@ const editResults2 = async (req, userId) => {
         }
         await assignedShiftLine.save()
     }
-    /*console.log("Editting results2;")
+    /*
     await editResults2OfDay(req.body.Sunday, "Sunday", userId)
     await editResults2OfDay(req.body.Monday, "Monday", userId)
     await editResults2OfDay(req.body.Tuesday, "Tuesday", userId)

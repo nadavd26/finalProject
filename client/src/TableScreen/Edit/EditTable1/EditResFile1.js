@@ -41,10 +41,6 @@ const hoursToArrayNumber = (startHour, endHour, num) => {
 };
 
 function sumArrays(arr1, arr2) {
-    console.log("sum array arr1")
-    console.log(arr1)
-    console.log("sum array arr2")
-    console.log(arr2)
     const maxLength = Math.max(arr1.length, arr2.length);
     const result = new Array(maxLength).fill(0);
 
@@ -72,8 +68,6 @@ function subArrays(arr1, arr2) {
 
 export default function EditResFile1({ initialTable, setInEdit, user, setUser, currentDay, currentSkill, setWorksPerShift, finishCallback }) {
     const [content, setContent] = useState([["", "", "", "", ""]])
-    // console.log("initialTable")
-    // console.log(initialTable)
     const [showBackModal, setShowBackModal] = useState(false)
     const defaultErrorMsg = "Assigned Number Of Workers is a non-negative integer and cannot be bigger than the total amount of workers"
     const [errorMsg, setErrorMsg] = useState(defaultErrorMsg)
@@ -93,19 +87,12 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
     const [costKpi, setCostKpi] = useState(0)
     var initialAppliesToReqs = useRef(true)
     const [warningMsg, setWarningMsg] = useState("")
-
-
-
-
     const token = user.token
-    // console.log("key isssssssssss : " + currentDay + "******" + currentSkill)
     function isNumberOfWorkersValid(numOfWorkers) {
         if (numOfWorkers === "") {
             return false
         }
         const parsedValue = Number(numOfWorkers);
-        // console.log("parsedValue")
-        // console.log(parsedValue)
         return Number.isInteger(parsedValue) && parsedValue >= 0 && parsedValue <= user.table1.length;
     };
 
@@ -115,13 +102,8 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
             var costShift = initialTable[i][5]
             cost = cost + (costShift * initialTable[i][4])
         }
-        // console.log("cost")
-        // console.log(cost)
         return cost
     }
-
-
-
 
     function doesApply(reqs, sumShifts) {
         for (let j = 0; j < 48; j++) {
@@ -162,34 +144,15 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
         setCostKpi(initCost)
         const reqs = user.currentRequestArray
         var applies = doesApply(reqs, sumShifts.current)
-
-        // console.log("applies")
-        // console.log(applies)
-
         if (!applies) {
             initialAppliesToReqs.current = false
         }
     }, []);
 
-    useEffect(() => {
-        // console.log("content")
-        // console.log(content)
-    }, [content])
-
-
-
-    // Convert hours to array number
-
 
 
 
     const handleCellEdit = (rowIndex, columnIndex, value, oldValue) => {
-        // console.log("value")
-        // console.log(value)
-        // console.log("oldValue")
-        // console.log(oldValue)
-        console.log("sumShifts")
-        console.log(sumShifts)
         if (value == oldValue) {
             var newRowsToRender = {}
             newRowsToRender[rowIndex] = true
@@ -197,7 +160,7 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
             return
         }
         if (!isNumberOfWorkersValid(value)) {
-            // console.log("not valud")
+            // 
             var newRowsToRender = {}
             newRowsToRender[rowIndex] = true
             var updatedContent = content
@@ -217,13 +180,12 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
         var oldShiftsArray = hoursToArrayNumber(oldRow[2], oldRow[3], parseInt(oldRow[4]))
 
         var newSumShifts = subArrays(sumArrays(sumShifts.current, newShiftsArray), oldShiftsArray)
-        console.log("newSumShifts")
-        console.log(newSumShifts)
-        // setSumShifts(prevSumShifts => subArrays(sumArrays(prevSumShifts, newShiftsArray), oldShiftsArray))
+
+
         var newWastedKpi = computeWastedHours(user.currentRequestArray, newSumShifts)
         var newMissKpi = computeMissingHours(user.currentRequestArray, newSumShifts)
-        console.log("newWastedKpi")
-        console.log(newWastedKpi)
+
+
 
         var newRowsToRender = {}
         newRowsToRender[rowIndex] = true
@@ -232,8 +194,6 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
         sumShifts.current = newSumShifts
         setWastedHoursKpi(newWastedKpi)
         setMissingHoursKpi(newMissKpi)
-        // console.log("content")
-        // console.log(content)
     };
 
 
@@ -254,8 +214,6 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
             }
         });
         var warningMsg = ""
-        // console.log("isValid")
-        // console.log(isValid)
         if (!isValid) {
             setErrorMsg(defaultErrorMsg)
             errorModal.show()
@@ -339,7 +297,7 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
                 </div>
 
                 <div style={{ position: "fixed", bottom: "4%", left: "50%", transform: "translateX(-50%)" }}>
-                    <button className="btn btn-success" onClick={handleSave} style={{ fontSize: "2.2vh", width: "150px" }}> 
+                    <button className="btn btn-success" onClick={handleSave} style={{ fontSize: "2.2vh", width: "150px" }}>
                         Save
                     </button>
                 </div>

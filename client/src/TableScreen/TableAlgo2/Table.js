@@ -10,8 +10,8 @@ function TableAlgo2({ workersAndShifts }) {
         setShowModal(workersAndShifts.length == 0)
     }
     ,[workersAndShifts])
-    console.log("workersAndShifts")
-    console.log(workersAndShifts)
+    
+    
     return (
         <>
             <div className="container-table100">

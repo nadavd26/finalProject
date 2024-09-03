@@ -132,18 +132,11 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
             returnTable = table
         }
         var returnErrors = errorsFound
-        console.log("return tab;le init chec")
-        console.log(returnTable)
+        
+        
         return { returnTable, returnErrors }
     }
 
-
-    useEffect(() => {
-        console.log("content")
-        console.log(content)
-        console.log("initialRender")
-        console.log(initialRender)
-    }, [content])
 
     useEffect(() => {
         var table = []
@@ -151,8 +144,8 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
         const load_data = async() => {
             if (csvArray.length > 0 && fromServer == false) {
                 const { returnTable, returnErrors } = await initAndCheck(csvArray);
-                console.log("returnTable")
-                console.log(returnTable)
+                
+                
                 table = returnTable
                 errors = returnErrors
             }
@@ -168,10 +161,7 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
             if (scratch == true) {
                 table = [["", "", "", "", "", "", ""]]
                 errors = [[true, true, true, false, false, false, false]]
-            }
-    
-            console.log("table")
-            console.log(table)
+            }  
             setContent(table)
             setErrors(errors)
         }
@@ -183,7 +173,7 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
         const newErrorRow = [true, true, true, false, false, false, false]
         var newRowsToRender = {}
         for (let i = 0; i < content.length; i++) {
-            console.log("render all")
+            
             newRowsToRender[i] = true
         }
 
@@ -198,7 +188,7 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
 
         var newRowsToRender = {}
         for (let i = 0; i < content.length; i++) {
-            console.log("render all")
+            
             newRowsToRender[i] = true
         }
 
@@ -238,7 +228,7 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
                 updatedErrors[rowIndex][columnIndex] = !isNameValid(updatedContent[rowIndex][columnIndex])
                 break;
             case 2: //skill1
-                console.log("skill1")
+                
                 updatedErrors[rowIndex][columnIndex] = !isSkillValid(updatedContent[rowIndex][columnIndex])
                 if (value != "") {
                     if (value == skill2) {
@@ -262,20 +252,20 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
                 }
                 break;
             case 3: //skill2
-                console.log("skill2")
-                console.log("updatedErrors[rowIndex] case 3 a")
-                console.log(updatedErrors[rowIndex])
+                
+                
+                
                 updatedErrors[rowIndex][columnIndex] = !isSkillValid(updatedContent[rowIndex][columnIndex]) && (updatedContent[rowIndex][columnIndex] != "")
-                console.log("updatedErrors[rowIndex] case 3")
-                console.log(updatedErrors[rowIndex])
+                
+                
                 if (value == "") {
-                    console.log("skill2 empty")
+                    
                     if (skill3 != "") {
-                        console.log("skill3 not emty")
+                        
                         updatedErrors[rowIndex][3] = true
                     }
                 } else {
-                    console.log("skill2 not empty")
+                    
                     if (value == skill1) { //duplicate skill
                         updatedErrors[rowIndex][3] = true
                     }
@@ -291,7 +281,7 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
                 break;
 
             case 4: //skill3
-                console.log("skill3")
+                
                 updatedErrors[rowIndex][columnIndex] = !isSkillValid(updatedContent[rowIndex][columnIndex]) && (updatedContent[rowIndex][columnIndex] != "")
                 if (value != "") {
                     if (updatedContent[rowIndex][3] == "") {
@@ -339,8 +329,8 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
                 break
         }
 
-        console.log("updatedErrors[rowIndex]")
-        console.log(updatedErrors[rowIndex])
+        
+        
         var newRowsToRender = {}
         newRowsToRender[rowIndex] = true
         setRowsToRender(newRowsToRender)

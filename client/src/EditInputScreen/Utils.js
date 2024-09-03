@@ -18,7 +18,7 @@ export function csvToArray(data, delimiter = ',', omitFirstRow = false) {
 }
 
 export function parseTime(inputTime) {
-    // console.log("input time: " + inputTime)
+    // 
     const trimmedTime = inputTime.trim();
     if (trimmedTime === "24:00") {
         return trimmedTime
@@ -47,8 +47,8 @@ export function isNumberOfWorkersValid(numOfWorkers, maxWorkers) {
         return false
     }
     const parsedValue = Number(numOfWorkers);
-    // console.log("parsedValue")
-    // console.log(parsedValue)
+    // 
+    // 
     return Number.isInteger(parsedValue) && parsedValue >= 0 && parsedValue <= maxWorkers;
 };
 

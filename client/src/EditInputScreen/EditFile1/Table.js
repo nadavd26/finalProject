@@ -4,9 +4,6 @@ import Loader from "../../components/Loader";
 const TableRows = ({ content, errors, onCellEdit, onRowDelete, onRowAdd, rowsToRender, initialRender, initialRenderUpdate }) => {
     const [renderedRows, setRenderedRows] = useState([]);
     const render_all = () => {
-        //regular rendering
-        console.log("rendering all")
-        console.log(rowsToRender)
         const allRows = content.map((rowMap, index) => (
             <TableRowMemo
                 rowIndex={index}
@@ -24,7 +21,7 @@ const TableRows = ({ content, errors, onCellEdit, onRowDelete, onRowAdd, rowsToR
     }
     useEffect(() => {
         if (initialRender && content.length != 0) {
-            console.log("rendering chunks")
+            
             let i = 0;
             let counter = 0
             const delay = 1; // Adjust this delay as needed

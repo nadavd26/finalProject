@@ -64,19 +64,12 @@ export default function EditFile3({ csvArray, setEditInfo, user, setUser, fromSe
 
             const skill = table[i][0]
             if (!isSkillValid(skill)) {
-                // isValid = false
-                // errorsFound[i][1] = true
-                // errorMsg += "line " + (i + 1) + " column 2 " + "invalid skill" + "\n"
                 handleError(i, 0)
             }
 
             table[i][1] = (table[i][1]).toLowerCase()
             const day = table[i][1]
             if (day != "sunday" && day != "monday" && day != "tuesday" && day != "wednesday" && day != "thursday" && day != "friday" && day != "saturday") {
-                // isValid = false
-                // swap_lines(i, errorLines)
-                // errorLines++
-                // errorsFound[i][0] = true
                 handleError(i, 1)
                 errorMsg += "line " + (i + 1) + " column 1 " + "invalid day" + "\n"
             }
@@ -87,32 +80,20 @@ export default function EditFile3({ csvArray, setEditInfo, user, setUser, fromSe
             const formatFrom = parseTime(from)
             if (!formatFrom) {
                 fromTimeValid = false
-                // errorsFound[i][2] = true
-                // isValid = false
-                // errorMsg += "line " + (i + 1) + " column 3 " + "invalid from hour" + "\n"
                 handleError(i, 2)
             } else {
                 table[i][2] = formatFrom
             }
             if (fromTimeValid) {
                 if (formatFrom[4] != "0" || (formatFrom[3] != "0" && formatFrom[3] != "3")) {
-                    // errorMsg += "line " + (i + 1) + " column 3 " + "time interval is 30 minutes" + "\n"
-                    // isValid = false
-                    // errorsFound[i][2] = true
                     handleError(i, 2)
                 }
 
                 if (formatFrom < "00:00") {
-                    // errorMsg += "line " + (i + 1) + " column 3 " + "min from time is 00:00" + "\n"
-                    // isValid = false
-                    // errorsFound[i][2] = true
                     handleError(i, 2)
                 }
 
                 if (formatFrom > "23:30") {
-                    // errorMsg += "line " + (i + 1) + " column 3 " + "max from time is 23:30" + "\n"
-                    // isValid = false
-                    // errorsFound[i][2] = true
                     handleError(i, 2)
                 }
             }
@@ -120,10 +101,7 @@ export default function EditFile3({ csvArray, setEditInfo, user, setUser, fromSe
             const until = table[i][3]
             const formatUntil = parseTime(until)
             if (!formatUntil) {
-                // isValid = false
                 untilTimeValid = false
-                // errorsFound[i][3] = true
-                // errorMsg += "line " + (i + 1) + " column 4 " + "invalid until hour" + "\n"
                 handleError(i, 3)
             } else {
                 table[i][3] = formatUntil
@@ -131,29 +109,18 @@ export default function EditFile3({ csvArray, setEditInfo, user, setUser, fromSe
 
             if (untilTimeValid) {
                 if (formatUntil[4] != "0" || (formatUntil[3] != "0" && formatUntil[3] != "3")) {
-                    // errorMsg += "line " + (i + 1) + " column 4 " + "time interval is 30 minutes" + "\n"
-                    // errorsFound[i][3] = true
                     handleError(i, 3)
                 }
 
                 if (formatUntil > "24:00") {
-                    // errorMsg += "line " + (i + 1) + " column 4 " + "max until time is 24:00" + "\n"
-                    // isValid = false
-                    // errorsFound[i][3] = true
                     handleError(i, 3)
                 }
 
                 if (formatUntil < "00:30") {
-                    // errorMsg += "line " + (i + 1) + " column 4 " + "min until time is 00:30" + "\n"
-                    // isValid = false
-                    // errorsFound[i][3] = true
                     handleError(i, 3)
                 }
 
                 if (fromTimeValid && formatFrom >= formatUntil) {
-                    // errorMsg += "line " + (i + 1) + " column 3 and 4 " + "until time is before or equal from time" + "\n"
-                    // isValid = false
-                    // errorsFound[i][3] = true
                     handleError(i, 3)
                     errorsFound[i][2] = true
                 }
@@ -162,9 +129,6 @@ export default function EditFile3({ csvArray, setEditInfo, user, setUser, fromSe
             const cost = table[i][4]
             const modifiedCost = parseInt(cost)
             if (!isCostValid(modifiedCost)) {
-                // isValid = false
-                // errorsFound[i][4] = true
-                // errorMsg += "line " + (i + 1) + " column 5 " + "invalid number of workers" + "\n"
                 handleError(i, 4)
             } else {
                 table[i][4] = modifiedCost
@@ -188,10 +152,10 @@ export default function EditFile3({ csvArray, setEditInfo, user, setUser, fromSe
 
 
     useEffect(() => {
-        console.log("content")
-        console.log(content)
-        console.log("initialRender")
-        console.log(initialRender)
+        
+        
+        
+        
     }, [content])
 
     useEffect(() => {
@@ -200,8 +164,8 @@ export default function EditFile3({ csvArray, setEditInfo, user, setUser, fromSe
         const load_data = async() => {
             if (csvArray.length > 0 && fromServer == false) {
                 const { returnTable, returnErrors } = await initAndCheck(csvArray);
-                console.log("returnTable")
-                console.log(returnTable)
+                
+                
                 table = returnTable
                 errors = returnErrors
             }
@@ -219,8 +183,8 @@ export default function EditFile3({ csvArray, setEditInfo, user, setUser, fromSe
                 errors = [[true, true, true, true, true]]
             }
     
-            console.log("table")
-            console.log(table)
+            
+            
             setContent(table)
             setErrors(errors)
         }
@@ -238,7 +202,7 @@ export default function EditFile3({ csvArray, setEditInfo, user, setUser, fromSe
         const newErrorRow = [true, true, true, true, true]
         var newRowsToRender = {}
         for (let i = 0; i < content.length; i++) {
-            console.log("render all")
+            
             newRowsToRender[i] = true
         }
 
@@ -258,7 +222,7 @@ export default function EditFile3({ csvArray, setEditInfo, user, setUser, fromSe
         const newErrorRow = [errors[rowIndex][0], errors[rowIndex][1], true, true, true];
         var newRowsToRender = {}
         for (let i = 0; i < content.length; i++) {
-            console.log("render all")
+            
             newRowsToRender[i] = true
         }
 
@@ -369,29 +333,6 @@ export default function EditFile3({ csvArray, setEditInfo, user, setUser, fromSe
         } else {
             saveModal.show()
         }
-
-
-
-        // if (isValid) {
-        //     // Perform sorting operation
-
-        //     if (sortedTable.length % 2 === 1) {
-        //         // Update content state after sorting
-        //         setContent(sortedTable);
-
-        //         // Show success modal
-        //         setShowSuccessModel(true);
-        //         setShowErrorModel(false);
-        //     } else {
-        //         // Show error modal
-        //         setShowSuccessModel(false);
-        //         setShowErrorModel(true);
-        //     }
-        // } else {
-        //     // Show error modal if the data is not valid
-        //     setShowSuccessModel(false);
-        //     setShowErrorModel(true);
-        // }
     };
 
 

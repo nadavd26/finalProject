@@ -13,7 +13,6 @@ function Logout({ onLogout }) {
                 clientId={clientId}
                 buttonText={"Logout"}
                 onLogoutSuccess={onLogout}
-                onFailure={(err) => console.log('Logout failed: ', err)}
                 render={renderProps => (
                     <button
                         onClick={renderProps.onClick}

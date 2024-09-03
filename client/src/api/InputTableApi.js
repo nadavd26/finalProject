@@ -58,8 +58,8 @@ export async function validateInputTables(token) {
     // Show the server's response    
 
     const body = await res.text()
-    console.log("body")
-    console.log(body)
+    
+    
     return JSON.parse(body)
 
 }

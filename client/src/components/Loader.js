@@ -3,7 +3,7 @@ import './loader.css'
 
 export default function Loader(props) {
     // Calculate width based on text length
-    const textWidth = props.customText ? props.customText.length * 5 : 0; // Adjust the multiplier as needed
+    const textWidth = props.customText ? props.customText.length * 5 : 0;
 
     // Set the width dynamically based on text length
     const containerStyle = {

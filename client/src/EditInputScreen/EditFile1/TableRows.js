@@ -1,5 +1,4 @@
 import TableRowMemo from "./TableRow";
-//first row : [{name : , validate : function}, ....]
 export default function TableRows({ content, errors, onCellEdit,  onRowDelete, onRowAdd}) {
     return (
         content.map((rowMap, index) => (
