@@ -73,7 +73,7 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
     var sumShifts = useRef([])
 
 
-    
+
     const [wastedHoursKpi, setWastedHoursKpi] = useState(0)
     var intialWastedHours = useRef(0)
 
@@ -134,7 +134,7 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
 
         var intialWastedHoursTemp = computeWastedHours(user.currentRequestArray, initialSumShiftsTemp)
         setWastedHoursKpi(intialWastedHoursTemp)
-        intialWastedHours.current =  intialWastedHoursTemp
+        intialWastedHours.current = intialWastedHoursTemp
         setContent(initialTable.map(row => [...row]))
         var newRowsToRender = {}
         for (let i = 0; i < initialTable.length; i++) {
@@ -201,7 +201,7 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
         var oldShiftsArray = hoursToArrayNumber(oldRow[2], oldRow[3], parseInt(oldRow[4]))
         var wastedHoursReduce = computeWastedHours(user.currentRequestArray, oldShiftsArray)
         var wastedHoursAdd = computeWastedHours(user.currentRequestArray, newShiftsArray)
-        
+
         var newSumShifts = subArrays(sumArrays(sumShifts.current, newShiftsArray), oldShiftsArray)
         console.log("newSumShifts")
         console.log(newSumShifts)
@@ -209,7 +209,7 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
         var newWastedKpi = computeWastedHours(user.currentRequestArray, newSumShifts)
         console.log("newWastedKpi")
         console.log(newWastedKpi)
-        
+
         var newRowsToRender = {}
         newRowsToRender[rowIndex] = true
         setRowsToRender(newRowsToRender)
@@ -315,15 +315,24 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
                         <span style={{ position: "fixed", left: "73.3%", top: "1%" }}><Kpi name={"Avg"} value={(costKpi + wastedHoursKpi) / 2} initialValue={(intialWastedHours.current + initialCost.current) / 2} description={"Average of the measures where day is " + initialTable[0][0] + " and skill is " + initialTable[0][1]} maxWidth={"25.7vw"}></Kpi></span>
                     </div>
                 </div>
-                <Table content={content} onCellEdit={handleCellEdit} isNumberOfWorkersValid={isNumberOfWorkersValid} rowsToRender={rowsToRender}></Table>
-                <div className="row down-buttons" style={{ position: "fixed", top: "90%", width: "100%" }}>
-                    <div className="col-4">
-                    </div>
-                    <button className="btn btn-success col-4" onClick={handleSave}
-                        data-toggle="modal" style={{ fontSize: "2.7vh" }}>Save</button>
-                    <div className="col-4">
-                    </div>
+
+
+                <div style={{ position: "fixed", top: "10%", left: "0", right: "0", bottom: "15%", overflowY: "auto", maxHeight: "75%" }}>
+                    <Table content={content} onCellEdit={handleCellEdit} isNumberOfWorkersValid={isNumberOfWorkersValid} rowsToRender={rowsToRender} />
                 </div>
+
+                <div style={{ position: "fixed", bottom: "5%", left: "50%", transform: "translateX(-50%)" }}>
+                    <button className="btn btn-success" onClick={handleSave} style={{ fontSize: "2.2vh", width: "150px" }}>
+                        Save
+                    </button>
+                </div>
+
+
+
+
+
+
+
             </div>
             {showBackModal && (
                 <div class="modal fade show" id="backModal" tabindex="-1" role="dialog" aria-labelledby="backModal" aria-hidden="true" onHide={handleBackModalClose}>

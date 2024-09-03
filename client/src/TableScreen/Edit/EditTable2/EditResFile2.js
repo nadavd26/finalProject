@@ -476,13 +476,15 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
                     <div className="col-2"></div>
                 </div>
                 <br></br>
-                <div className="row" style={{ position: "fixed", top: "93%", width: "100%" }}>
-                    <div className="col-2"></div>
-                    <button className="btn btn-success col-8" onClick={handleSave}
-                        data-toggle="modal" style={{ position: "fixed", width: "30%", height: "4%", left: "35%", fontSize: "15px", minHeight: "35px" }}>Save</button>
-                    <div className="col-2">
-                    </div>
-                </div>
+                
+                <div className="row" style={{ position: "fixed", bottom: "5%", width: "100%", display: "flex", justifyContent: "center" }}>
+    <button className="btn btn-success" onClick={handleSave}
+        data-toggle="modal" style={{ width: "140px", height: "40px", fontSize: "18px" }}>
+        Save
+    </button>
+</div>
+
+
 
 
 

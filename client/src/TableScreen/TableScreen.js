@@ -1,5 +1,6 @@
 import TableAlgo2 from "./TableAlgo2/Table";
 import Upload from './images/uploadImage.webp'
+import edit from './images/edit.webp';
 import './css/bootstrap.min.css'
 import './css/table-main.css'
 import './css/perfect-scrollbar.css'
@@ -328,7 +329,7 @@ function TableScreen({ user, setUser }) {
                         <div className="col-1"></div>
                         <button className={`btn ${tableScreenState.get.tableNum === 2 ? 'btn-secondary' : 'btn-primary'} col-4`} onClick={() => changeTable(1)}>Amount of employees required for each shift</button>
                         <button className={`btn ${tableScreenState.get.tableNum === 1 ? 'btn-secondary' : 'btn-primary'} col-4`} onClick={() => changeTable(2)}>Allocation of employees</button>
-                        <button className="btn btn-success col-1" onClick={backToUpload}>
+                        <button className="btn btn-success col-1" onClick={backToUpload} disabled={(!tableScreenState.get.is2Generated && tableScreenState.get.tableNum === 2) || (tableScreenState.get.tableNum === 1 && !tableScreenState.get.is1Generated)}>
                             <img src={Upload} alt="Upload" className="upload-image" />
                         </button>
                         <Button
@@ -407,11 +408,17 @@ function TableScreen({ user, setUser }) {
                             </div>)}
                         </>
                     )}
+
+
                     <div className="d-flex justify-content-between fixed-bottom mb-3" style={{ marginBottom: "1000px" }}>
-                        <div className="col-4"></div>
-                        <button className="btn btn-secondary col-4" onClick={() => handleEdit()}>Edit</button>
-                        <div className="col-4"></div>
+                        <div className="col-5"></div>
+                        <button className="btn btn-light col-1 d-flex align-items-center justify-content-center p-0" onClick={() => handleEdit()} style={{ height: "50px", fontSize: "1.2rem" }}>
+                            <img src={edit} style={{ height: "80%", aspectRatio: "1 / 1", objectFit: "contain" }} alt="Edit" />
+                            <span className="ms-2">Edit</span>
+                        </button>
+                        <div className="col-5"></div>
                     </div>
+
 
                 </div>
                 <Modal show={showGenerateModal} onHide={handleCloseGenerateModal} centered>

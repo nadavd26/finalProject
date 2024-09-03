@@ -45,7 +45,7 @@ def random_workers(total_workers):
     return random.randint(1, total_workers)
 
 def random_cost():
-    return random.randint(1, 999999)
+    return random.randint(50, 100)
 
 def generate_skills_array(num_skills):
     return [generate_name() for _ in range(num_skills)]
@@ -192,4 +192,4 @@ def main(num_skills, num_lines_1, num_lines_2, num_lines_3):
     generate_csv_2(skills_array, num_lines_2, 'csv2.csv', 'csv1.csv')
 
 # Example usage:
-main(num_skills=50, num_lines_1=1000, num_lines_2=1000, num_lines_3=1000)
+main(num_skills=10, num_lines_1=100, num_lines_2=2000, num_lines_3=1000)

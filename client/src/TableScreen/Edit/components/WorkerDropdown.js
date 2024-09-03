@@ -45,7 +45,17 @@ export default function WorkerDropdown({ value, rowIndex, coloumnIndex, workerLi
 
     const customStyles = {
         option: (provided, state) => {
-            let backgroundColor = state.isSelected ? 'lightblue' : state.data.color;
+            let backgroundColor = !state.data.color
+            ? 'white'
+            : state.data.color.includes('red')
+                ? 'red'
+                : state.data.color.includes('orange')
+                    ? 'orange'
+                    : state.data.color.includes('yellow')
+                        ? 'yellow'
+                        : state.data.color.includes('green')
+                            ? 'green'
+                            : 'white';
             if (state.isFocused) {
                 backgroundColor = !state.data.color
                     ? '#CCF5F0'
