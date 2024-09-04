@@ -28,9 +28,7 @@ export async function generateAlgo2Results(token, getFromDatabase, autoComplete,
     }
 }
 
-export function postAlgo2Results(token, data, changeInfo, callback) {
-
-
+export function postAlgo2Results(token, changeInfo, callback) {
     fetch('http://localhost:12345/Results/GetResults2', {
         method: 'POST',
         headers: {
@@ -47,4 +45,8 @@ export function postAlgo2Results(token, data, changeInfo, callback) {
             }
         })
         .catch(() => callback(false));
+}
+
+export function getTableInfomarion(token) {
+    return token
 }

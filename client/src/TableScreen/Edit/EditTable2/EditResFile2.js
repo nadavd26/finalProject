@@ -1,27 +1,27 @@
-import { useEffect, useMemo, useState } from "react";
-import Table from "./Table";
-import '../css/bootstrap.min.css'
-import '../css/edit-file-table-main.css'
-import '../css/perfect-scrollbar.css'
-import * as utils from '../../Utils'
-import * as editAlgo2Utils from './Utils'
-import overlapImg from '../Images/overlap.png'
-import contractImg from '../Images/contract.png'
-import infoImg from '../Images/info.png'
-import right from '../Images/right.png'
-import left from '../Images/left.png'
-import search from '../Images/search.webp'
-import start from '../Images/start.png'
-import end from '../Images/end.png'
-import Loader from "../../../components/Loader";
-import SearchDropdown from "../components/SearchDropdown";
-import filterTableLoader from "../components/FilterTableLoader";
-import FilterTableLoader from "../components/FilterTableLoader";
-import { Modal, Button, Container } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
-import * as algo2api from '../../../api/Algo2Api'
-import * as model from './Model'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useEffect, useState } from "react";
+import { Button, Modal } from 'react-bootstrap';
+import * as algo2api from '../../../api/Algo2Api';
+import Loader from "../../../components/Loader";
+import * as utils from '../../Utils';
+import FilterTableLoader from "../components/FilterTableLoader";
+import SearchDropdown from "../components/SearchDropdown";
+import '../css/bootstrap.min.css';
+import '../css/edit-file-table-main.css';
+import '../css/perfect-scrollbar.css';
+import contractImg from '../Images/contract.png';
+import end from '../Images/end.png';
+import infoImg from '../Images/info.png';
+import left from '../Images/left.png';
+import overlapImg from '../Images/overlap.png';
+import right from '../Images/right.png';
+import search from '../Images/search.webp';
+import start from '../Images/start.png';
+import * as model from './Model';
+import Table from "./Table";
+import saveImg from '../Images/save.png'
+import * as editAlgo2Utils from './Utils';
 
 export default function EditResFile2({ initialTable, contracts, setInEdit, user, setUser, workerMap, shiftsInfo, shiftsPerWorkers, setShiftsPerWorkers, finishCallback }) {
     const [currentIndex, setCurrentIndex] = useState(0)
@@ -30,7 +30,7 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
     const [isFiltered, setIsFiltered] = useState(true)
     const [warning, setWarning] = useState(false)
     const [violations, setViolations] = useState("Warning: Contract Violations Detected")
-    var page_size = 8
+    var page_size = 11
     const [showBackModal, setShowBackModal] = useState(false)
     const [renderInfo, setRenderInfo] = useState({ table: [["", "", "", "", "", ""]], colors: [], shiftsPerWorkers: {}, isGenerated: false, rowsToRender: {} })
     const [daySearch, setDaySearch] = useState({ value: "", shownValue: "Day" });
@@ -146,7 +146,7 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
         var newUser = user
         newUser.algo2Table = initialTable
         newUser.contracts = contracts
-        algo2api.postAlgo2Results(user.token, initialTable, changeInfo, () => { })
+        algo2api.postAlgo2Results(user.token, changeInfo, () => { })
         setShiftsPerWorkers(renderInfo.shiftsPerWorkers)
         setUser(newUser)
         setInEdit(false)
@@ -452,38 +452,28 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
                         workerMap={workerMap} shiftsInfo={shiftsInfo} onCellEdit={handleCellEdit} generateWorkerList={generateWorkerList} getLineInfo={getLineInfo} searchDayElement={searchDayElement}
                         searchSkillElement={searchSkillElement} searchFromElement={searchFromElement} searchUntilElement={searchUntilElement} searchAssignedElement={searchAssignedElement} searchShiftIndexElement={searchShiftIndexElement}></Table>)}
                 </div>
-                <br></br>
-                <div className="row" style={{ position: "fixed", top: "86.5%", width: "100%" }}>
+
+                <div className="row" style={{ position: "fixed", top: "87%", width: "100%", display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <div className="col-2"></div>
                     <div className="col-8" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <button onClick={firstPage} disabled={currentIndex === 0} style={{ background: 'white', border: '2px solid black' }}>
-                            <img src={end} alt="End" style={{ width: '25px', height: '25px', filter: currentIndex === 0 ? 'blur(2px)' : 'none' }} />
+                            <img src={end} alt="End" style={{ width: '40px', height: '40px', maxWidth: "2.2vw", maxHeight: "2.2vw", filter: currentIndex === 0 ? 'blur(2px)' : 'none' }} />
                         </button>
                         <button onClick={prevPage} disabled={currentIndex === 0} style={{ background: 'white', border: '2px solid black' }}>
-                            <img src={left} alt="Left" style={{ width: '25px', height: '25px', filter: currentIndex === 0 ? 'blur(2px)' : 'none' }} />
+                            <img src={left} alt="Left" style={{ width: '40px', height: '40px', maxWidth: "2.2vw", maxHeight: "2.2vw", filter: currentIndex === 0 ? 'blur(2px)' : 'none' }} />
                         </button>
                         <button onClick={nextPage} disabled={currentIndex + page_size >= linesFiltered.length} style={{ background: 'white', border: '2px solid black' }}>
-                            <img src={right} alt="Right" style={{ width: '25px', height: '25px', filter: currentIndex + page_size >= linesFiltered.length ? 'blur(2px)' : 'none' }} />
+                            <img src={right} alt="Right" style={{ width: '40px', height: '40px', maxWidth: "2.2vw", maxHeight: "2.2vw", filter: currentIndex + page_size >= linesFiltered.length ? 'blur(2px)' : 'none' }} />
                         </button>
                         <button onClick={lastPage} disabled={currentIndex + page_size >= linesFiltered.length} style={{ background: 'white', border: '2px solid black' }}>
-                            <img src={start} alt="Start" style={{ width: '25px', height: '25px', filter: currentIndex + page_size >= linesFiltered.length ? 'blur(2px)' : 'none' }} />
+                            <img src={start} alt="Start" style={{ width: '40px', height: '40px', maxWidth: "2.2vw", maxHeight: "2.2vw", filter: currentIndex + page_size >= linesFiltered.length ? 'blur(2px)' : 'none' }} />
+                        </button>
+                        <button className="btn btn-success" onClick={handleSave} data-toggle="modal" style={{ marginLeft: '5px', height: '46px', maxHeight: '2.6vw', width: '45px', maxWidth: '2.6vw', padding: '0', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '2px solid black' }}>
+                            <img src={saveImg} alt="Save" style={{ width: '70%', height: '70%', objectFit: 'contain' }} />
                         </button>
                     </div>
-
                     <div className="col-2"></div>
                 </div>
-                <br></br>
-
-                <div className="row" style={{ position: "fixed", bottom: "5%", width: "100%", display: "flex", justifyContent: "center" }}>
-                    <button className="btn btn-success" onClick={handleSave}
-                        data-toggle="modal" style={{ width: "140px", height: "40px", fontSize: "18px" }}>
-                        Save
-                    </button>
-                </div>
-
-
-
-
 
             </div>
 

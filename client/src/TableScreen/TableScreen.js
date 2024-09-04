@@ -1,27 +1,27 @@
-import TableAlgo2 from "./TableAlgo2/Table";
-import Upload from './images/uploadImage.webp'
-import edit from './images/edit.webp';
-import './css/bootstrap.min.css'
-import './css/table-main.css'
-import './css/perfect-scrollbar.css'
-import Dropdown from "./components/Dropdown";
-import { useState, useEffect } from "react";
-import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from "react";
+import { Button, Modal } from 'react-bootstrap';
+import { AppIndicator, ExclamationTriangleFill } from 'react-bootstrap-icons';
+import { useNavigate } from 'react-router-dom';
+import * as algo1api from '../api/Algo1Api';
+import * as algo2api from '../api/Algo2Api';
 import Loader from "../components/Loader";
-import { useTableScreenState } from "./states/TableScreenState";
-import { useTableAlgo2State } from "./states/TableAlgo2State";
+import EditResFile1 from "./Edit/EditTable1/EditResFile1";
+import EditResFile2 from "./Edit/EditTable2/EditResFile2";
+import TableAlgo2 from "./TableAlgo2/Table";
+import * as utils from './Utils';
+import Dropdown from "./components/Dropdown";
+import GraphMemo from "./components/Graph";
+import SkillDropdown from "./components/SkillDropdown";
+import './css/bootstrap.min.css';
+import './css/perfect-scrollbar.css';
+import './css/table-main.css';
+import edit from './images/edit.webp';
+import Upload from './images/uploadImage.webp';
 import { useEditInfoState } from "./states/EditInfo";
 import { useTableAlgo1State } from "./states/TableAlgo1State";
-import EditResFile1 from "./Edit/EditTable1/EditResFile1";
-import { Modal, Button } from 'react-bootstrap';
-import { ExclamationTriangleFill, FileX } from 'react-bootstrap-icons';
-import * as algo1api from '../api/Algo1Api'
-import * as algo2api from '../api/Algo2Api'
-
-import SkillDropdown from "./components/SkillDropdown";
-import * as utils from './Utils'
-import EditResFile2 from "./Edit/EditTable2/EditResFile2";
-import GraphMemo from "./components/Graph";
+import { useTableAlgo2State } from "./states/TableAlgo2State";
+import { useTableScreenState } from "./states/TableScreenState";
+import infoImg from './images/info.png'
 // expecting json: {"Sunday" : [{"worker":"name1", "shifts":[true, true, false, ...]}, {"worker":"name2", "shifts":[true, true, false, ...]}, ....], ... , "Saturday" : ...}
 // every boolean array is 48 cells, starting from 7:00, ending at 23:30
 
@@ -32,6 +32,9 @@ function TableScreen({ user, setUser }) {
     const handleCloseGenerateModal = () => {
         setShowGenerateModal(false);
     };
+    const [showInfo2Modal, setShowInfo2Modal] = useState(false)
+    const [infoTable2, setInfoTable2] = useState("")
+
     const [table1Algo1Changed, setTable1Algo1Changed] = useState(false)
     const [validationWarning, setValidationWarning] = useState("")
     const [showWarningModal, setShowWarningModal] = useState(false)
@@ -261,68 +264,64 @@ function TableScreen({ user, setUser }) {
     const backToUpload = () => {
         navigate("/upload")
     }
+
+    const showInfoTable2 = () => {
+        const info2 = algo2api.getTableInfomarion(user.token)
+        setInfoTable2(info2)
+        setShowInfo2Modal(true)
+    }
+
+    const buttonsHeight = "2.7rem"
     return (
         !editInfoState.get.inEdit ? (
             <div id="table-screen" style={{ maxHeight: "100vh" }}>
                 <div className="container-fluid py-3" >
-
-
-                    <div className="d-flex justify-content-center mb-3 top-buttons" style={{ position: "fixed", top: "1%", height: "7%", width: "100%" }}>
+                    <div className="d-flex justify-content-center mb-3" style={{ position: "fixed", top: "1%", left: "2%", height: "7%", width: "96%" }}>
                         <button
                             className={`btn ${tableScreenState.get.tableNum === 2 ? 'btn-secondary' : 'btn-primary'} col-4`}
                             onClick={() => changeTable(1)}
-                            style={{ margin: "0 5px" }} // Adjust the margin value as needed
+                            style={{ margin: "0 5px", height: buttonsHeight }} // Adjust the margin value as needed
                         >
                             Amount of employees required for each shift
                         </button>
                         <button
                             className={`btn ${tableScreenState.get.tableNum === 1 ? 'btn-secondary' : 'btn-primary'} col-4`}
                             onClick={() => changeTable(2)}
-                            style={{ margin: "0 5px" }} // Adjust the margin value as needed
+                            style={{ margin: "0 5px", height: buttonsHeight }} // Adjust the margin value as needed
                         >
                             Allocation of employees
                         </button>
 
 
-                        <button
-                            className="btn btn-success col-1"
-                            onClick={backToUpload}
-                            disabled={(!tableScreenState.get.is2Generated && tableScreenState.get.tableNum === 2) || (tableScreenState.get.tableNum === 1 && !tableScreenState.get.is1Generated)}
+
+                        <Button
+                            variant="success"
                             style={{
-                                margin: "0 5px", // Adjust the margin value as needed
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                padding: "0", // Remove default padding
-                                width: "auto", // Adjust width as needed
-                                height: "auto", // Adjust height as needed
-                                maxWidth: "100%", // Ensures the button doesn't exceed its container
-                                maxHeight: "100%", // Ensures the button doesn't exceed its container
-                                overflow: "hidden", // Prevents overflow of image
+                                display: tableScreenState.get.tableNum === 2 && tableScreenState.get.is2Generated ? "block" : "none",
+                                width: buttonsHeight, // Set width using relative units
+                                height: buttonsHeight, // Keep height equal to width
+                                padding: 0, // Ensure no padding inside the button
+                                margin: "0 0.3rem", // Adjust the margin using relative units
                             }}
+                            onClick={backToUpload}
                         >
                             <img
-                                src={Upload}
-                                alt="Upload"
+                                src={Upload} // Replace with your image source
+                                alt="Info"
                                 style={{
-                                    maxWidth: "100%", // Increase to make the image a bit larger
-                                    maxHeight: "100%", // Increase to make the image a bit larger
-                                    width: "auto", // Maintain aspect ratio
-                                    height: "auto", // Maintain aspect ratio
-                                    display: "block", // Remove any extra space around the image
+                                    width: "80%", // Make the image fill the button
+                                    height: "80%", // Keep the image square
+                                    objectFit: "contain", // Ensure the image fits within the button
                                 }}
                             />
-                        </button>
-
-
-
-
+                        </Button>
 
                         <Button
                             variant="primary"
                             style={{
                                 display: tableScreenState.get.tableNum === 2 && tableScreenState.get.is2Generated ? "block" : "none",
-                                margin: "0 5px" // Adjust the margin value as needed
+                                margin: "0 5px",  // Adjust the margin value as needed
+                                height: buttonsHeight
                             }}
                             onClick={autoComplete}
                         >
@@ -332,11 +331,34 @@ function TableScreen({ user, setUser }) {
                             variant="danger"
                             style={{
                                 display: tableScreenState.get.tableNum === 2 && tableScreenState.get.is2Generated ? "block" : "none",
-                                margin: "0 5px" // Adjust the margin value as needed
+                                margin: "0 5px", // Adjust the margin value as needed
+                                height: buttonsHeight
                             }}
                             onClick={clear}
                         >
                             Clear
+                        </Button>
+
+                        <Button
+                            variant="warning"
+                            style={{
+                                display: tableScreenState.get.tableNum === 2 && tableScreenState.get.is2Generated ? "block" : "none",
+                                width: buttonsHeight, // Set width using relative units
+                                height: buttonsHeight, // Keep height equal to width
+                                padding: 0, // Ensure no padding inside the button
+                                margin: "0 0.3rem", // Adjust the margin using relative units
+                            }}
+                            onClick={showInfoTable2}
+                        >
+                            <img
+                                src={infoImg} // Replace with your image source
+                                alt="Info"
+                                style={{
+                                    width: "80%", // Make the image fill the button
+                                    height: "80%", // Keep the image square
+                                    objectFit: "contain", // Ensure the image fits within the button
+                                }}
+                            />
                         </Button>
                     </div>
 
@@ -355,7 +377,6 @@ function TableScreen({ user, setUser }) {
                                 <TableAlgo2 workersAndShifts={algo2TableState.get.currentWorkersAndShifts} />
                             ) : (
                                 <>
-                                    {/* <TableAlgo2 workersAndShifts={algo2TableState.get.currentWorkersAndShifts} /> */}
                                     <Loader speed={5} customText="Calculating..." />
                                 </>
                             )}
@@ -380,8 +401,6 @@ function TableScreen({ user, setUser }) {
                                     </div>
                                     <div className="col-3"></div>
                                 </div>
-
-
                                 <br></br>
                                 <div className="row" >
                                     <div className="col-1"></div>
@@ -389,8 +408,6 @@ function TableScreen({ user, setUser }) {
                                         <GraphMemo reqs={!(reqs) ? [] : reqs} shifts={!(shifts) ? [] : shifts} skill={tableAlgo1State.get.currentSkill} day={tableScreenState.get.currentDay} user={user} setUser={setUser}></GraphMemo>
                                     </div>
                                     <div className="col-1">
-                                        {/* <div>reqs {JSON.stringify(!(tableAlgo1State.get.req) ? [] : tableAlgo1State.get.req)}</div>
-                                        <div>shifts {JSON.stringify(!(tableAlgo1State.get.worksPerShift) ? [] : tableAlgo1State.get.worksPerShift)}</div> */}
                                     </div>
                                 </div>
                                 <br></br>
@@ -399,14 +416,33 @@ function TableScreen({ user, setUser }) {
                     )}
 
 
-                    <div className="d-flex justify-content-between fixed-bottom mb-3" style={{ marginBottom: "1000px" }}>
-                        <div className="col-5"></div>
-                        <button className="btn btn-light col-1 d-flex align-items-center justify-content-center p-0" onClick={() => handleEdit()} style={{ height: "50px", fontSize: "1.2rem" }}>
-                            <img src={edit} style={{ height: "80%", aspectRatio: "1 / 1", objectFit: "contain" }} alt="Edit" />
-                            <span className="ms-2">Edit</span>
-                        </button>
-                        <div className="col-5"></div>
+                    <div className="d-flex justify-content-center fixed-bottom mb-3" style={{ position: "fixed", top: "90.5%", width: "100%" }}>
+                        <Button
+                            variant="warning"
+                            style={{
+                                backgroundColor: "white",
+                                border: "1px solid #ddd",
+                                padding: 0,
+                                width: "2.5vw",
+                                height: "2.5vw",
+                                minWidth: "45px",
+                                minHeight: "45px",
+                                margin: "0 0.3rem",
+                            }}
+                            onClick={handleEdit}
+                        >
+                            <img
+                                src={edit}
+                                alt="Edit"
+                                style={{
+                                    width: "100%", 
+                                    height: "100%", 
+                                    objectFit: "contain", 
+                                }}
+                            />
+                        </Button>
                     </div>
+
 
 
                 </div>
@@ -448,6 +484,24 @@ function TableScreen({ user, setUser }) {
                         </Button>
                     </Modal.Footer>
                 </Modal>
+
+                <Modal show={showInfo2Modal} onHide={() => setShowInfo2Modal(false)} centered>
+                    <Modal.Header>
+                        <Modal.Title>Assignment Information</Modal.Title>
+                        <button type="button" className="close" onClick={() => setShowInfo2Modal(false)} aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </Modal.Header>
+                    <Modal.Body style={{ maxHeight: 'calc(100vh - 210px)', overflowY: 'auto', overflowWrap: 'break-word' }}>
+                        {infoTable2}
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={() => setShowInfo2Modal(false)}>
+                            Close
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+
 
             </div>
         ) : <>{editComponent}</>
