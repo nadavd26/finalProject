@@ -449,10 +449,6 @@ shift_dict = {shift["id"]: shift for shift in shift_requirements}
 
 
 # Helper Functions
-def has_skill(employee, skill):
-    return skill in [employee["skill1"], employee["skill2"], employee["skill3"]]
-
-
 def get_shift_by_id(shift_id, shift_requirements):
     return next(
         (shift for shift in shift_requirements if shift["id"] == shift_id), None
@@ -524,7 +520,7 @@ def generate_random_schedule(fixed_schedule, employees, shift_requirements):
             found_shift = False
             for shift in random_shift_requirements:
                 if (
-                    has_skill(employee, shift["skill"])
+                    shift["skill"] in employee["skills"]
                     and shift_worker_count[shift["id"]] < shift["required_workers"]
                     and not any(
                         shifts_overlap(shift, existing_shift)
@@ -557,7 +553,7 @@ def generate_random_schedule(fixed_schedule, employees, shift_requirements):
                 ).seconds / 3600
                 if (
                     current_hours + additional_hours <= employee["max_hours"]
-                    and has_skill(employee, shift["skill"])
+                    and shift["skill"] in employee["skills"]
                     and shift_worker_count[shift["id"]] < shift["required_workers"]
                     and not any(
                         shifts_overlap(shift, existing_shift)
@@ -731,7 +727,7 @@ def print_schedule(schedule, shift_requirements, employees):
     employee_schedules = {
         emp["id"]: {
             "name": emp["name"],
-            "skills": [emp["skill1"], emp["skill2"], emp["skill3"]],
+            "skills": emp["skills"],
             "min_hours": emp["min_hours"],
             "max_hours": emp["max_hours"],
             "shifts": [],
@@ -797,6 +793,33 @@ def print_shift_details(schedule, shift_requirements):
             print("-" * 30)
 
 
+def update_employees(employees):
+    # Maximum hours in a week
+    MAX_WEEK_HOURS = 24 * 7
+
+    for employee in employees:
+        # Set min_hours to 0 if it's None
+        if employee["min_hours"] is None:
+            employee["min_hours"] = 0
+
+        # Set max_hours to 24*7 (168) if it's None
+        if employee["max_hours"] is None:
+            employee["max_hours"] = MAX_WEEK_HOURS
+
+        # Combine skill1, skill2, skill3 into a skills array, filtering out empty strings
+        skills = [
+            employee[key] for key in ["skill1", "skill2", "skill3"] if employee[key]
+        ]
+        employee["skills"] = skills
+
+        # Remove the old skill keys
+        employee.pop("skill1", None)
+        employee.pop("skill2", None)
+        employee.pop("skill3", None)
+
+    return employees
+
+
 if __name__ == "__main__":
     start_time = time.time()  # Start timing
     # best_solution = genetic_algorithm(
@@ -805,6 +828,7 @@ if __name__ == "__main__":
     # )
     # print(f"Best solution found: {best_solution}")
     employees = generate_employees(100)
+    employees = update_employees(employees)
     pop = initialize_population_par(100, fixed_schedule, employees, shift_requirements)
     print_schedule(pop[1], shift_requirements, employees)
     print_shift_details(pop[1], shift_requirements)

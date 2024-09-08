@@ -1,8 +1,6 @@
 import random
 from datetime import datetime, timedelta
-from collections import defaultdict
-import sys
-import json
+
 
 # Input 1 - the fixed schedule (before the autocomplete)
 fixed_schedule = [
@@ -147,7 +145,7 @@ employees = [
         "skill2": "",
         "skill3": "",
         "min_hours": 21,
-        "max_hours": 31,
+        "max_hours": None,
     },
     {
         "id": 1,
@@ -155,7 +153,7 @@ employees = [
         "skill1": "WIFI Technician",
         "skill2": "Cable Technician",
         "skill3": "",
-        "min_hours": 11,
+        "min_hours": None,
         "max_hours": 40,
     },
     {
@@ -192,7 +190,7 @@ employees = [
         "skill2": "TV Technician",
         "skill3": "WIFI Technician",
         "min_hours": 15,
-        "max_hours": 36,
+        "max_hours": None,
     },
     {
         "id": 6,
@@ -243,10 +241,6 @@ employees = [
 
 
 # Helper Functions ----------------------------------------------------
-def has_skill(employee, skill):
-    return skill in [employee["skill1"], employee["skill2"], employee["skill3"]]
-
-
 def get_shift_by_id(shift_id, shift_requirements):
     return next(
         (shift for shift in shift_requirements if shift["id"] == shift_id), None
@@ -305,7 +299,7 @@ def generate_random_schedule(fixed_schedule, employees, shift_requirements):
             appropriate_shifts = [
                 shift
                 for shift in shift_requirements
-                if has_skill(employee, shift["skill"])
+                if shift["skill"] in employee["skills"]
                 and len([s for s in schedule if s["shift_id"] == shift["id"]])
                 < shift["required_workers"]
                 and not any(
@@ -336,7 +330,7 @@ def generate_random_schedule(fixed_schedule, employees, shift_requirements):
             appropriate_shifts = [
                 shift
                 for shift in shift_requirements
-                if has_skill(employee, shift["skill"])
+                if shift["skill"] in employee["skills"]
                 and len([s for s in schedule if s["shift_id"] == shift["id"]])
                 < shift["required_workers"]
                 and not any(
@@ -366,7 +360,36 @@ def generate_random_schedule(fixed_schedule, employees, shift_requirements):
     return schedule
 
 
+def update_employees(employees):
+    # Maximum hours in a week
+    MAX_WEEK_HOURS = 24 * 7
+
+    for employee in employees:
+        # Set min_hours to 0 if it's None
+        if employee["min_hours"] is None:
+            employee["min_hours"] = 0
+
+        # Set max_hours to 24*7 (168) if it's None
+        if employee["max_hours"] is None:
+            employee["max_hours"] = MAX_WEEK_HOURS
+
+        # Combine skill1, skill2, skill3 into a skills array, filtering out empty strings
+        skills = [
+            employee[key] for key in ["skill1", "skill2", "skill3"] if employee[key]
+        ]
+        print(skills[0])
+        employee["skills"] = skills
+
+        # Remove the old skill keys
+        employee.pop("skill1", None)
+        employee.pop("skill2", None)
+        employee.pop("skill3", None)
+
+    return employees
+
+
 if __name__ == "__main__":
+    employees = update_employees(employees)
     print(generate_random_schedule(fixed_schedule, employees, shift_requirements))
 
 # output_example = [
