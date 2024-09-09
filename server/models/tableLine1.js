@@ -22,10 +22,10 @@ const TableLine1 = new Schema(
         skill3: {
             type: String,
         },
-        minHouers: {
+        min_hours: {
             type: Number,
         },
-        maxHouers: {
+        max_hours: {
             type: Number,
         },
     },

@@ -44,8 +44,8 @@ const updateTable = async (tableNum, tableContent, email, googleId, userId) => {
                         skill1: lineData[2],
                         skill2: lineData[3],
                         skill3: lineData[4],
-                        minHouers: lineData[5],
-                        maxHouers: lineData[6],
+                        min_hours: lineData[5],
+                        max_hours: lineData[6],
                     });
                     const savedLine = await tableLine1.save();
                     tableLines1.push(savedLine._id);
@@ -113,8 +113,8 @@ const formatTable = (tableNum, tableContent) => {
                     line.skill1,
                     line.skill2,
                     line.skill3,
-                    String(line.minHouers) == "null" ? "" : String(line.minHouers),
-                    String(line.maxHouers) == "null" ? "" : String(line.maxHouers),
+                    String(line.min_hours) == "null" ? "" : String(line.min_hours),
+                    String(line.max_hours) == "null" ? "" : String(line.max_hours),
                 ]);
             case 2:
                 return tableContent.map(line => [
