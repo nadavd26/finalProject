@@ -47,6 +47,16 @@ export function postAlgo2Results(token, changeInfo, callback) {
         .catch(() => callback(false));
 }
 
-export function getTableInfomarion(token) {
-    return token
+export async function getTableInfomarion(token) {
+    const res = await fetch('http://localhost:12345/Table/resTable2Info', {
+        'method': 'get',
+        'headers': {
+            'Content-Type': 'application/json',
+            'authorization': 'bearer ' + token
+        }
+    });
+
+    const body = await res.text()
+    console.log(body)
+    return body
 }

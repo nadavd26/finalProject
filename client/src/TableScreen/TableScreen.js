@@ -265,8 +265,8 @@ function TableScreen({ user, setUser }) {
         navigate("/upload")
     }
 
-    const showInfoTable2 = () => {
-        const info2 = algo2api.getTableInfomarion(user.token)
+    const showInfoTable2 = async () => {
+        const info2 = await algo2api.getTableInfomarion(user.token)
         setInfoTable2(info2)
         setShowInfo2Modal(true)
     }
