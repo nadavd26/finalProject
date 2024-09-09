@@ -226,7 +226,7 @@ const getResults2 = async (userId, autoComplete) => {
     const user = await User.findById(userId).populate('table1').populate('shiftTables.shifts').populate('assignedShiftTables.assignedShifts');
     //First parameter fot the second algorithm. If autoComplete is off, then it's just an empty array.
     //Otherwise it is set according to the current results in the DB.
-    const toAutoComplete = autoComplete ? getAssignedLines(user.assignedShiftTables) : []
+    const toAutoComplete = autoComplete === "true" ? getAssignedLines(user.assignedShiftTables) : []
     console.log("toAutoComplete :", toAutoComplete)
     const results1 = transformShiftTablesToArray(user.shiftTables) //Third parameter for the second algorithm.
     console.log("Results1: ", results1)
