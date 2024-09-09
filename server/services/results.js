@@ -42,8 +42,12 @@ const getResults1 = async (reqs, shifts, userId) => {
             // Handle process exit
             algorithm1.on('close', (code) => {
                 // Delete JSON files after use
-                /*fs.unlink(shiftsFileName);
-                fs.unlink(reqsFileName);*/
+                fs.unlink(shiftsFileName, (err) => {
+                    if (err) console.error(`Error deleting shifts file: ${err}`);
+                });
+                fs.unlink(reqsFileName, (err) => {
+                    if (err) console.error(`Error deleting reqs file: ${err}`);
+                });
                 try {
                     const outputArray = JSON.parse(outputBuffer); // Parse accumulated data
                     resolve(outputArray); // Resolve the promise with the output
@@ -152,9 +156,15 @@ const runAlgo2 = async (fixedSchedule, employees, shiftRequirements, userId) => 
             // Handle process exit
             algorithm2.on('close', (code) => {
                 // Delete JSON files after use
-                /*fs.unlink(fixedScheduleFileName);
-                fs.unlink(employeesFileName);
-                fs.unlink(shiftRequirementsFileName);*/
+                fs.unlink(fixedScheduleFileName, (err) => {
+                    if (err) console.error(`Error deleting fixedSchedule file: ${err}`);
+                });
+                fs.unlink(employeesFileName, (err) => {
+                    if (err) console.error(`Error deleting employees file: ${err}`);
+                });
+                fs.unlink(shiftRequirementsFileName, (err) => {
+                    if (err) console.error(`Error deleting shiftRequirements file: ${err}`);
+                });
                 try {
                     const outputArray = JSON.parse(outputBuffer); // Parse accumulated data
                     resolve(outputArray); // Resolve the promise with the output
