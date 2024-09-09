@@ -291,13 +291,10 @@ function TableScreen({ user, setUser }) {
                         >
                             Allocation of employees
                         </button>
-
-
-
                         <Button
                             variant="success"
                             style={{
-                                display: tableScreenState.get.tableNum === 2 && tableScreenState.get.is2Generated ? "block" : "none",
+                                display: (tableScreenState.get.tableNum === 2 && tableScreenState.get.is2Generated) || (tableScreenState.get.tableNum === 1 && tableScreenState.get.is1Generated) ? "block" : "none",
                                 width: buttonsHeight, // Set width using relative units
                                 height: buttonsHeight, // Keep height equal to width
                                 padding: 0, // Ensure no padding inside the button
