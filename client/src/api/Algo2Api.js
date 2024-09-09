@@ -48,7 +48,7 @@ export function postAlgo2Results(token, changeInfo, callback) {
 }
 
 export async function getTableInfomarion(token) {
-    const res = await fetch('http://localhost:12345/Table/resTable2Info', {
+    const res = await fetch('http://localhost:12345/Validation//validateAlgo2', {
         'method': 'get',
         'headers': {
             'Content-Type': 'application/json',

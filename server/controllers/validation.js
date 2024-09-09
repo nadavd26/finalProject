@@ -69,4 +69,23 @@ const validateTable1Algo1 = async (req, res) => {
     }
 }
 
-module.exports = { validateInputTables, validateTable1Algo1 }
+const validateAlgo2 = async (req, res) => {
+    const userId = req.user._id
+    console.log(userId)
+    const info1 = await TableValidator.validateAlgo2MinHours(userId)
+    console.log(info1)
+    const info2 = await TableValidator.validateAlgo2MaxHours(userId)
+    const info3 = await TableValidator.validateAlgo2ShiftWorkersRequirement(userId)
+    if (!(info1[0] && info2[0] && info3[0])) { //Checking if everything is valid.
+        const errorMsg =
+                (info1[0] ? "" : info1[1] + "\n") +
+                (info2[0] ? "" : info2[1] + "\n") +
+                (info3[0] ? "" : info3[1] + "\n")
+        console.log(errorMsg)
+        res.send(errorMsg)
+    } else {
+        res.send('No issues were found.')
+    }
+}
+
+module.exports = { validateInputTables, validateTable1Algo1, validateAlgo2 }

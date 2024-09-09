@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const ResultsHelper = require("./resultsHelperFuncs")
 const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 const bitFields = {
     1: 'table1Bit',
@@ -429,4 +430,149 @@ const setTableBit = async (userId, tableNumber, newValue) => {
     }
 };
 
-module.exports = { validateTable1, validateTable2, validateTable3, validateTable2SkillsInTable3, validateTable3SkillsInTable2, validateTable2NumOfWorkers, validateTable1Algo1, validateTable3SkillsInTable1, validateTable2SkillsInTable1, validateTable1SkillsInTable3, validateTable1SkillsInTable2, getTableBit, setTableBit, validateTable2NumOfWorkersWithSkill }
+const checkResults2 = async (userId) => {
+    const user = await User.findById(userId).populate('table1').populate('shiftTables.shifts').populate('assignedShiftTables.assignedShifts');
+    const employeeHoursWorked = await ResultsHelper.getEmployeesHoursWorkedDict(userId)
+    const table1 = user['table1'] || [];
+    const results2 = ResultsHelper.getAssignedLines(user.assignedShiftTables)
+    const transformedResults2 = ResultsHelper.transformToShiftEmployeesMap(results2)
+    const results1 = ResultsHelper.transformShiftTablesToArray(user.shiftTables)
+    //Check min_hours
+    info1 = [true, "The following employees work less hour than required in their contracts: "]
+    let counter = 0
+    for (const line1 of table1) {
+        const minHours = line1['min_hours'] === null ? 0 : line1['min_hours'] //this value might be null, in this case we'll consider it as 0: no value will be less than that.
+        if (employeeHoursWorked[line1['id']] < minHours) {
+            if (info1[0]) {
+                info1[0] = false
+                info1[1] += String(line1['id'])
+            } else {
+                info1[1] += ', ' + String(line1['id'])
+            }
+            counter++
+            if (counter == 5) {   // We dont want to inform about more than five at a time.
+                info1[1] += "..."
+                break
+            }
+        }
+    }
+    console.log(info1)
+    info2 = [true, "The following employees work more hour than required in their contracts: "]
+    counter = 0
+    for (const line1 of table1) {
+        const maxHours = line1['max_hours'] === null ? Number.MAX_SAFE_INTEGER : line1['max_hours'] //this value might be null, in this case we'll consider it as MAX_SAFE_INTEGER : no value will be greater than that.
+        if (employeeHoursWorked[line1['id']] > maxHours) {
+            if (info2[0]) {
+                info2[0] = false
+                info2[1] += String(line1['id'])
+            } else {
+                info2[1] += ', ' + String(line1['id'])
+            }
+            counter++
+            if (counter == 5) {   // We dont want to inform about more than five at a time.
+                info2[1] += "..."
+                break
+            }
+        }
+    }
+    console.log(info2)
+    info3 = [true, "The following shfits have less workers than required: "]
+    counter = 0
+    for (const line1 of results1) {
+        if ((transformedResults2.get(line1['id'])).length < line1['required_workers']) {
+            if (info3[0]) {
+                info3[0] = false
+                info3[1] += String(line1['id'])
+            } else {
+                info3[1] += ', ' + String(line1['id'])
+            }
+            counter++
+            if (counter == 5) {   // We dont want to inform about more than five at a time.
+                info3[1] += "..."
+                break
+            }
+        }
+    }
+    console.log(info3)
+}
+
+//This function checks if there are workers that work less hours than what's required in their contracts.
+const validateAlgo2MinHours = async (userId) => {
+    const user = await User.findById(userId).populate('table1').populate('shiftTables.shifts').populate('assignedShiftTables.assignedShifts');
+    const employeeHoursWorked = await ResultsHelper.getEmployeesHoursWorkedDict(userId)
+    const table1 = user['table1'] || [];
+    info = [true, "The following employees work less hours than required in their contracts: "]
+    let counter = 0
+    for (const line1 of table1) {
+        const minHours = line1['min_hours'] === null ? 0 : line1['min_hours'] //this value might be null, in this case we'll consider it as 0: no value will be less than that.
+        if (employeeHoursWorked[line1['id']] < minHours) {
+            if (info[0]) {
+                info[0] = false
+                info[1] += String(line1['id'])
+            } else {
+                info[1] += ', ' + String(line1['id'])
+            }
+            counter++
+            if (counter == 5) {   // We dont want to inform about more than five at a time.
+                info[1] += "..."
+                return info
+            }
+        }
+    }
+    return info
+}
+
+//This function checks if there are workers that work more hours than the limit in their contracts.
+const validateAlgo2MaxHours = async (userId) => {
+    const user = await User.findById(userId).populate('table1').populate('shiftTables.shifts').populate('assignedShiftTables.assignedShifts');
+    const employeeHoursWorked = await ResultsHelper.getEmployeesHoursWorkedDict(userId)
+    const table1 = user['table1'] || [];
+    info = [true, "The following employees work more hours than the limit in their contracts: "]
+    let counter = 0
+    for (const line1 of table1) {
+        const maxHours = line1['max_hours'] === null ? Number.MAX_SAFE_INTEGER : line1['max_hours'] //this value might be null, in this case we'll consider it as MAX_SAFE_INTEGER : no value will be greater than that.
+        if (employeeHoursWorked[line1['id']] > maxHours) {
+            if (info[0]) {
+                info[0] = false
+                info[1] += String(line1['id'])
+            } else {
+                info[1] += ', ' + String(line1['id'])
+            }
+            counter++
+            if (counter == 5) {   // We dont want to inform about more than five at a time.
+                info[1] += "..."
+                return info
+            }
+        }
+    }
+    return info
+}
+
+//This function checks whether there are shifts that have less workers than their required workers field.
+const validateAlgo2ShiftWorkersRequirement = async (userId) => {
+    const user = await User.findById(userId).populate('table1').populate('shiftTables.shifts').populate('assignedShiftTables.assignedShifts');
+    const results2 = ResultsHelper.getAssignedLines(user.assignedShiftTables)
+    const transformedResults2 = ResultsHelper.transformToShiftEmployeesMap(results2)
+    const results1 = ResultsHelper.transformShiftTablesToArray(user.shiftTables)
+    info = [true, "The following shfits have less workers than required: "]
+    counter = 0
+    const idsDict = await ResultsHelper.transformAssignedShiftTablesToIdsDict(user.assignedShiftTables)
+    for (const line1 of results1) {
+        if ((transformedResults2.get(line1['id'])).length < line1['required_workers']) {
+            if (info[0]) {
+                info[0] = false
+                info[1] += idsDict[String(line1['id'])]
+            } else {
+                info[1] += ', ' + idsDict[String(line1['id'])]
+            }
+            counter++
+            if (counter == 5) {   // We dont want to inform about more than five at a time.
+                info[1] += "..."
+                return info
+            }
+        }
+    }
+    return info
+}
+
+module.exports = { validateTable1, validateTable2, validateTable3, validateTable2SkillsInTable3, validateTable3SkillsInTable2, validateTable2NumOfWorkers, validateTable1Algo1, validateTable3SkillsInTable1, validateTable2SkillsInTable1, validateTable1SkillsInTable3, validateTable1SkillsInTable2, getTableBit, setTableBit, validateTable2NumOfWorkersWithSkill, validateAlgo2MinHours, validateAlgo2MaxHours, validateAlgo2ShiftWorkersRequirement }

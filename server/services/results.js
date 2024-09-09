@@ -5,8 +5,8 @@ const { spawn } = require('child_process');
 const fs = require('fs');
 const Table = require("../services/tables");
 const { getTableByUserId } = require("./user");
-const { sortResults1Map } = require("./tableSorting");
 const TableValidator = require("../services/tableValidator")
+const ResultsHelper = require("../services/resultsHelperFuncs")
 //const fs = require('fs').promises; // Using fs.promises for async file operations
 
 //This function runs algorithm 1 and returns the results.
@@ -205,36 +205,20 @@ const runAlgo2 = async (fixedSchedule, employees, shiftRequirements, userId) => 
 
 }
 
-const transformToShiftMap = (data) => {
-    const shiftMap = new Map();
-
-    data.forEach(({ shift_id, emp_id }) => {
-        // If the shift_id is not in the map, initialize it with an empty array
-        if (!shiftMap.has(shift_id)) {
-            shiftMap.set(shift_id, []);
-        }
-
-        // Push the emp_id into the array associated with the shift_id key
-        shiftMap.get(shift_id).push(emp_id);
-    });
-
-    return shiftMap;
-};
-
 //This function runs algorithm 1 and returns the results.
 const getResults2 = async (userId, autoComplete) => {
     const user = await User.findById(userId).populate('table1').populate('shiftTables.shifts').populate('assignedShiftTables.assignedShifts');
     //First parameter fot the second algorithm. If autoComplete is off, then it's just an empty array.
     //Otherwise it is set according to the current results in the DB.
-    const toAutoComplete = autoComplete === "true" ? getAssignedLines(user.assignedShiftTables) : []
+    const toAutoComplete = autoComplete === "true" ? ResultsHelper.getAssignedLines(user.assignedShiftTables) : []
     console.log("toAutoComplete :", toAutoComplete)
-    const results1 = transformShiftTablesToArray(user.shiftTables) //Third parameter for the second algorithm.
+    const results1 = ResultsHelper.transformShiftTablesToArray(user.shiftTables) //Third parameter for the second algorithm.
     console.log("Results1: ", results1)
     const table1 = user['table1'] || [];  //Second parameter for the second algorithm.
     console.log("Table1: ", table1)
     const results2 = await runAlgo2(toAutoComplete, table1, results1, userId);
     console.log(results2)
-    const transformedResults2 = transformToShiftMap(results2)
+    const transformedResults2 = ResultsHelper.transformToShiftEmployeesMap(results2)
     console.log(transformedResults2)
     // Creating an empty map with all the days as keys.
     let results2Map = {
@@ -248,7 +232,7 @@ const getResults2 = async (userId, autoComplete) => {
     };
     let id = 0; //Creating id that will be uniqe for each value.
     const inputMap = await getResults1FromDB(userId)
-    const employeesMap = await getWorkerNamesMapByUserId(userId)
+    const employeesMap = await ResultsHelper.getWorkerNamesMapByUserId(table1)
     // Populating the newMap with values from the inputMap
     for (let [key, value] of inputMap) {
         let dayOfWeek = key.split('*')[0]; //Getting the day, which is supposed to be before the '*'.
@@ -329,7 +313,7 @@ const saveResults = async (results, userId) => {
             startTime: line[2],
             finishTime: line[3],
             numOfWorkers: line[4],
-            cost: getShiftCost(line[1], line[0], line[2], line[3], table3.table3Content)
+            cost: ResultsHelper.getShiftCost(line[1], line[0], line[2], line[3], table3.table3Content)
         });
         const savedLine = await shiftLine.save();
         //Checking whether there already is a table of this pair of day and skill.
@@ -353,7 +337,7 @@ const saveResults = async (results, userId) => {
     await TableValidator.setTableBit(userId, 4, true) //Setting the relevant bit to indicate that the results changed.
     await TableValidator.setTableBit(userId, 2, false) //Resetting the bits to indicate that those tables are relevant to the current results.
     await TableValidator.setTableBit(userId, 3, false)
-    return await transformShiftTablesToMap(user.shiftTables);
+    return await ResultsHelper.transformShiftTablesToMap(user.shiftTables);
 }
 
 //This funciton gets the results of algorithm2 and saves them in the database.
@@ -397,112 +381,13 @@ const getResults1FromDB = async (userId) => {
 
     const user = await User.findById(userId)
     await user.populate('shiftTables.shifts');
-    return await transformShiftTablesToMap(user.shiftTables);
+    return await ResultsHelper.transformShiftTablesToMap(user.shiftTables);
 }
 const getResults2FromDB = async (userId) => {
 
     const user = await User.findById(userId)
     await user.populate('assignedShiftTables.assignedShifts');
-    return await transformAssignedShiftTablesToMap(user.assignedShiftTables);
-}
-
-// This function transforms the user's shiftTables data into a map
-const transformShiftTablesToMap = async (shiftTables) => {
-    const resultMap = new Map();
-    // Iterate over each shift table in the user's data
-    shiftTables.forEach(shiftTable => {
-        const key = getKey(shiftTable.day, shiftTable.skill); // Form the key using day and skill
-        if (!resultMap.has(key)) {
-            resultMap.set(key, []); // Initialize an empty array for the key if it doesn't exist
-        }
-        // Push the shifts data into the array for the corresponding key
-        const shiftsData = shiftTable.shifts.map(shift => ([
-            shiftTable.day,
-            shiftTable.skill,
-            shift.startTime,
-            shift.finishTime,
-            shift.numOfWorkers,
-            shift.cost,
-            shift.id2
-        ]));
-        resultMap.get(key).push(...shiftsData);
-    });
-    return sortResults1Map(resultMap);
-}
-
-const transformShiftTablesToArray = (shiftTables) => {
-    const resultArray = [];
-    // Iterate over each shift table in the user's data
-    shiftTables.forEach(shiftTable => {
-        // Map each shift to an array containing the relevant shift details
-        const shiftsData = shiftTable.shifts.map(shift => ({
-            "id": shift.id2,
-            "skill": shiftTable.skill,
-            "day": shiftTable.day,
-            "start_time": shift.startTime,
-            "end_time": shift.finishTime,
-            "required_workers": shift.numOfWorkers,
-            "cost": shift.cost
-        }));
-
-        // Push all the mapped shift data into the resultArray
-        resultArray.push(...shiftsData);
-    });
-
-    return resultArray;
-};
-
-// This function transforms the user's shiftTables data into a map
-const transformAssignedShiftTablesToMap = async (assignedShiftTables) => {
-    const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    const resultMap = new Map();
-    daysOfWeek.forEach(day => {
-        resultMap.set(day, []);
-    });
-    // Iterate over each assgined shift table in the user's data
-    assignedShiftTables.forEach(assignedShiftTable => {
-        const key = assignedShiftTable.day
-        if (!resultMap.has(key)) {
-            resultMap.set(key, []); // Initialize an empty array for the key if it doesn't exist
-        }
-        // Push the assigned shifts data into the array for the corresponding key
-        const assignedShiftsData = assignedShiftTable.assignedShifts.map(assignedShift => ([
-            assignedShift.day,
-            assignedShift.skill,
-            assignedShift.startTime,
-            assignedShift.finishTime,
-            assignedShift.assignedWorkerName,
-            assignedShift.shiftId,
-            assignedShift.id
-        ]));
-        resultMap.get(key).push(...assignedShiftsData);
-    });
-    return resultMap;
-}
-
-const getAssignedLines = (assignedShiftTables) => {
-    const resultArray = [];
-    // Iterate over each shift table in the user's data
-    assignedShiftTables.forEach(assignedShiftTable => {
-        // Map each shift to an array containing the relevant shift details
-        const assignedShiftsData = assignedShiftTable.assignedShifts.filter(assignedShift => assignedShift.workerId != '')
-            .map(assignedShift => ({
-                "shift_id": assignedShift.realShiftId,
-                "emp_id": assignedShift.workerId
-            }));
-
-        // Push all the mapped shift data into the resultArray
-        resultArray.push(...assignedShiftsData);
-    });
-    return resultArray;
-};
-
-function getKey(day, skill, req) {
-    if (!req) {
-        return (day).toLowerCase() + "*" + skill
-    }
-
-    return skill + "" + (day).toLowerCase()
+    return await ResultsHelper.transformAssignedShiftTablesToMap(user.assignedShiftTables);
 }
 
 //Calculating the cost of the shift according to table 3. 
@@ -513,13 +398,6 @@ function getKey(day, skill, req) {
             return shift.numOfWorkers * line[4]
     }
 }*/
-//Getting the cost of a single shift according to table3.
-function getShiftCost(skill, day, startTime, finishTime, table3) {
-    for (line3 of table3) {
-        if (line3[0] == skill && line3[1] == day && line3[2] == startTime && line3[3] == finishTime)
-            return line3[4]
-    }
-}
 
 //This function updates the results. It assumes that they all lines share the same day and skill.
 const editResults = async (newData, userId) => {
@@ -621,10 +499,11 @@ const editResults2 = async (req, userId) => {
 
     for (const [assignedShiftLineId, workerId] of Object.entries(editInfo)) {
         const assignedShiftLine = await AssignedShiftLine.findOne({ id: assignedShiftLineId })
+        const table1 =  await getTableByUserId(userId, 1)
         if (workerId === '') { //When its empty it means that the assigned worker needs to be deleted.
             assignedShiftLine.assignedWorkerName = '';
         } else { //Otherwise we assign the the worker with the given ID.
-            const workerName = await getWorkerNameByWorkerId(userId, workerId)
+            const workerName = await ResultsHelper.getWorkerNameByWorkerId(table1.table1Content, workerId)
             if (workerName === '') {
                 throw new Error("There was no worker with the following ID: " + workerId)
             }
@@ -644,32 +523,5 @@ const editResults2 = async (req, userId) => {
     //await TableValidator.setTableBit(userId, 1, false) //Resetting the bits to indicate that those tables are relevant to the current results.
     //await TableValidator.setTableBit(userId, 4, false)
 }
-
-//This functino returns the worker with the given ID. If there is no worker with that ID, it returns an empty string.
-const getWorkerNameByWorkerId = async (userId, workerId) => {
-    const table1 = await getTableByUserId(userId, 1)
-    for (const line of table1.table1Content) {
-        if (line[0] === workerId) {
-            return line[1]
-        }
-    }
-    return ''
-}
-
-const getWorkerNamesMapByUserId = async (userId) => {
-    const table1 = await getTableByUserId(userId, 1); // Assuming `getTableByUserId` fetches the correct table
-    const workerNamesMap = new Map();
-
-    // Iterate through the table1Content and populate the map
-    for (const line of table1.table1Content) {
-        const workerId = line[0];
-        const workerName = line[1];
-        workerNamesMap.set(workerId, workerName); // Set the workerId as the key and workerName as the value
-    }
-
-    return workerNamesMap;
-};
-
-
 
 module.exports = { getResults1, saveResults, editResults, getResults1FromDB, editResults2, getResults2FromDB, getResults2, saveResults2, getEmptyResults2 }
