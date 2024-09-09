@@ -558,7 +558,8 @@ const validateAlgo2ShiftWorkersRequirement = async (userId) => {
     counter = 0
     const idsDict = await ResultsHelper.transformAssignedShiftTablesToIdsDict(user.assignedShiftTables)
     for (const line1 of results1) {
-        if ((transformedResults2.get(line1['id'])).length < line1['required_workers']) {
+        const assignedWorkers = transformedResults2.get(line1['id']) || []; 
+        if (assignedWorkers.length < line1['required_workers']) {
             if (info[0]) {
                 info[0] = false
                 info[1] += idsDict[String(line1['id'])]
