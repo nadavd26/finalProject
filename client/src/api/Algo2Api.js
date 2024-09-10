@@ -28,8 +28,8 @@ export async function generateAlgo2Results(token, getFromDatabase, autoComplete,
     }
 }
 
-export function postAlgo2Results(token, changeInfo, callback) {
-    fetch('http://localhost:12345/Results/GetResults2', {
+export async function postAlgo2Results(token, changeInfo) {
+    await fetch('http://localhost:12345/Results/GetResults2', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -37,14 +37,6 @@ export function postAlgo2Results(token, changeInfo, callback) {
         },
         body: JSON.stringify(changeInfo)
     })
-        .then(response => {
-            if (response.ok) {
-                callback(true);
-            } else {
-                callback(false);
-            }
-        })
-        .catch(() => callback(false));
 }
 
 export async function getTableInfomarion(token) {
