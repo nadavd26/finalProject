@@ -7,10 +7,10 @@ import copy
 
 
 fixed_schedule = [
-    # {"emp_id": 0, "shift_id": 8},
-    # {"emp_id": 2, "shift_id": 4},
-    # {"emp_id": 2, "shift_id": 5},
-    # {"emp_id": 3, "shift_id": 4},
+    {"emp_id": 0, "shift_id": 8},
+    {"emp_id": 0, "shift_id": 6},
+    {"emp_id": 0, "shift_id": 5},
+    {"emp_id": 0, "shift_id": 4},
     # {"emp_id": 2, "shift_id": 8},
     # {"emp_id": 10, "shift_id": 0},
 ]
@@ -421,6 +421,8 @@ def generate_random_employee(id):
     skills = ["Cable Technician", "WIFI Technician", "TV Technician"]
     name = random.choice(names)
     num_skills = random.randint(1, 3)
+    if id == 0:
+        num_skills = 3
     selected_skills = random.sample(skills, num_skills)
     employee_skills = ["", "", ""]
     for i in range(num_skills):
@@ -668,6 +670,7 @@ def mutate(
     employee_shifts,
     shift_worker_count,
     employees,
+    fixed_schedule_set,
     mutation_rate=0.1,
 ):
     # Determine if mutation should occur based on the mutation rate
@@ -683,10 +686,11 @@ def mutate(
     if assigned_shifts:
         # Randomly select one shift to remove if there are assigned shifts
         shift_to_remove = random.choice(assigned_shifts)
-        assigned_shifts.remove(shift_to_remove)
-        shift_worker_count[
-            shift_to_remove["id"]
-        ] -= 1  # Decrease the count for the removed shift
+        if (employee_id, shift_to_remove["id"]) not in fixed_schedule_set:
+            assigned_shifts.remove(shift_to_remove)
+            shift_worker_count[
+                shift_to_remove["id"]
+            ] -= 1  # Decrease the count for the removed shift
 
     # Shuffle shift requirements to randomly order them
     random_shift_requirements = random.sample(
@@ -724,73 +728,103 @@ def select_parents(population, crossover_probabilities):
     return parents[0], parents[1]
 
 
-# def genetic_algorithm(
-#     pop_size=100,
-#     generations=100,
-#     mutation_rate=0.1,
-#     elitism_rate=0.2,
-#     stagnation_threshold=5,  # Number of generations with no improvement to trigger mutation rate increase
-# ):
-#     population = initialize_population(pop_size)
-#     fitness_scores = [fitness(schedule) for schedule in population]
-#     num_elites = int(pop_size * elitism_rate)
-#     num_new_population = pop_size - num_elites
-#     previous_best_fitness = -1
-#     original_mutation_rate = mutation_rate
-#     stagnation_counter = 0
+def genetic_algorithm(
+    fixed_schedule,
+    employees,
+    shift_requirements,
+    pop_size=100,
+    generations=100,
+    mutation_rate=0.1,
+    elitism_rate=0.3,
+    stagnation_threshold=5,  # Number of generations with no improvement to trigger mutation rate increase
+):
+    fixed_schedule_set = {
+        (entry["emp_id"], entry["shift_id"]) for entry in fixed_schedule
+    }
+    population = initialize_population(
+        pop_size, fixed_schedule, employees, shift_requirements
+    )
+    fitness_scores = [
+        fitness(employees, shift_requirements, schedule[0], schedule[1])
+        for schedule in population
+    ]
+    num_elites = int(pop_size * elitism_rate)
+    num_new_population = pop_size - num_elites
+    previous_best_fitness = -1
+    original_mutation_rate = mutation_rate
+    stagnation_counter = 0
 
-#     for generation in range(generations):
-#         best_fitness = min(fitness_scores)
+    for generation in range(generations):
+        best_fitness = min(fitness_scores)
 
-#         # Check for perfect solution
-#         if best_fitness == 0:
-#             best_schedule = population[fitness_scores.index(best_fitness)]
-#             print(f"Perfect solution found in generation {generation}: {best_schedule}")
-#             return best_schedule
+        # Check for perfect solution
+        if best_fitness == 0:
+            best_schedule = population[fitness_scores.index(best_fitness)]
+            print(f"Perfect solution found in generation {generation}: {best_schedule}")
+            return best_schedule
 
-#         # Check for stagnation
-#         if best_fitness == previous_best_fitness:
-#             stagnation_counter += 1
-#         else:
-#             stagnation_counter = 0
-#             mutation_rate = original_mutation_rate
-#         if stagnation_counter >= stagnation_threshold:
-#             mutation_rate = min(mutation_rate * 2, 0.5)
-#             stagnation_counter = 0
-#         previous_best_fitness = best_fitness
+        # Check for stagnation
+        if best_fitness == previous_best_fitness:
+            stagnation_counter += 1
+        else:
+            stagnation_counter = 0
+            mutation_rate = original_mutation_rate
+        if stagnation_counter >= stagnation_threshold:
+            mutation_rate = min(mutation_rate * 2, 0.5)
+            stagnation_counter = 0
+        previous_best_fitness = best_fitness
 
-#         crossover_probs = calculate_crossover_probabilities(fitness_scores)
+        crossover_probs = calculate_crossover_probabilities(fitness_scores)
 
-#         # Elitism: Get the indices of the top num_elites schedules
-#         elite_indices = sorted(
-#             range(len(fitness_scores)), key=lambda x: fitness_scores[x]
-#         )[:num_elites]
-#         elite_population = [population[i] for i in elite_indices]
-#         elite_fitness_scores = [fitness_scores[i] for i in elite_indices]
-#         new_population = []
+        # Elitism: Get the indices of the top num_elites schedules
+        elite_indices = sorted(
+            range(len(fitness_scores)), key=lambda x: fitness_scores[x]
+        )[:num_elites]
+        elite_population = [population[i] for i in elite_indices]
+        elite_fitness_scores = [fitness_scores[i] for i in elite_indices]
+        new_population = []
 
-#         while len(new_population) < num_new_population:
-#             parent1, parent2 = select_parents(population, crossover_probs)
+        while len(new_population) < num_new_population:
+            parent1, parent2 = select_parents(population, crossover_probs)
 
-#             child1, child2 = crossover(parent1, parent2)
+            child1, child2 = crossover(
+                employees, shift_requirements, parent1[0], parent2[0]
+            )
 
-#             mutate(child1, mutation_rate)
-#             mutate(child2, mutation_rate)
+            mutate(
+                shift_requirements,
+                child1[0],
+                child1[1],
+                employees,
+                fixed_schedule_set,
+                mutation_rate,
+            )
+            mutate(
+                shift_requirements,
+                child2[0],
+                child2[1],
+                employees,
+                fixed_schedule_set,
+                mutation_rate,
+            )
 
-#             new_population.append(child1)
-#             new_population.append(child2)
+            new_population.append(child1)
+            new_population.append(child2)
 
-#         new_population = new_population[:num_new_population]  # Ensure correct size
-#         new_fitness_scores = [fitness(schedule) for schedule in new_population]
+        new_population = new_population[:num_new_population]  # Ensure correct size
+        new_fitness_scores = [
+            fitness(employees, shift_requirements, schedule[0], schedule[1])
+            for schedule in new_population
+        ]
 
-#         population = elite_population + new_population
-#         fitness_scores = elite_fitness_scores + new_fitness_scores
+        population = elite_population + new_population
+        fitness_scores = elite_fitness_scores + new_fitness_scores
 
-#         # Print the best fitness of the current generation
-#         print(f"Generation {generation}: Best Fitness = {best_fitness}")
+        # Print the best fitness of the current generation
+        print(f"Generation {generation}: Best Fitness = {best_fitness}")
 
-#     print("No perfect solution found.")
-#     return population[fitness_scores.index(min(fitness_scores))]
+    print("No perfect solution found.")
+    return population[fitness_scores.index(min(fitness_scores))]
 
 
 def calculate_shift_hours(shift):
@@ -910,41 +944,118 @@ def convert_employee_shifts_to_schedule(employee_shifts):
     return schedule
 
 
+def validate_schedule(schedule, shift_requirements, employees, fixed_schedule):
+    # Initialize data structures
+    employee_shifts = {e["id"]: [] for e in employees}
+    shift_worker_count = {s["id"]: 0 for s in shift_requirements}
+    employee_skills = {e["id"]: e["skills"] for e in employees}
+
+    # Populate employee shifts and shift worker count
+    for entry in schedule:
+        emp_id = entry["emp_id"]
+        shift_id = entry["shift_id"]
+        shift = get_shift_by_id(shift_id, shift_requirements)
+
+        if shift is None:
+            print(f"Invalid shift ID {shift_id} in schedule.")
+            return False
+
+        employee_shifts[emp_id].append(shift)
+        shift_worker_count[shift_id] += 1
+
+    # Validate each employee's shifts
+    for emp_id, shifts in employee_shifts.items():
+        employee = next(e for e in employees if e["id"] == emp_id)
+        skills = employee["skills"]
+
+        # Check if all assigned shifts match the employee's skills
+        if not all(shift["skill"] in skills for shift in shifts):
+            print(f"Employee {emp_id} has shifts not matching their skills.")
+            return False
+
+        # Check for overlapping shifts
+        for i, shift1 in enumerate(shifts):
+            for shift2 in shifts[i + 1 :]:
+                if shifts_overlap(shift1, shift2):
+                    print(
+                        f"Employee {emp_id} has overlapping shifts: {shift1} and {shift2}."
+                    )
+                    return False
+
+    # Validate shift requirements
+    for shift_id, count in shift_worker_count.items():
+        shift = get_shift_by_id(shift_id, shift_requirements)
+        if shift is None:
+            print(f"Invalid shift ID {shift_id} in shift requirements.")
+            return False
+        if count < shift["required_workers"]:
+            print(
+                f"Shift {shift_id} does not meet the required number of workers. Required: {shift['required_workers']}, Assigned: {count}"
+            )
+            return False
+
+    # Check that all fixed schedules are present
+    fixed_schedule_set = {
+        (entry["emp_id"], entry["shift_id"]) for entry in fixed_schedule
+    }
+    schedule_set = {(entry["emp_id"], entry["shift_id"]) for entry in schedule}
+
+    if not fixed_schedule_set.issubset(schedule_set):
+        missing_schedules = fixed_schedule_set - schedule_set
+        print(f"Fixed schedules missing from the solution: {missing_schedules}")
+        return False
+
+    return True
+
+
 if __name__ == "__main__":
-    start_time = time.time()  # Start timing
-    # best_solution = genetic_algorithm(
-    #     pop_size=POPULATION_SIZE,
-    #     generations=GENERATIONS,
-    # )
-    # print(f"Best solution found: {best_solution}")
-    employees = generate_employees(20)
+    employees = generate_employees(70)
     employees = update_employees(employees)
-    pop = initialize_population(100, fixed_schedule, employees, shift_requirements)
+    start_time = time.time()  # Start timing
+    best_solution = genetic_algorithm(
+        fixed_schedule,
+        employees,
+        shift_requirements,
+        pop_size=100,
+        generations=20,
+    )
+    print(
+        f"Best solution found: {convert_employee_shifts_to_schedule(best_solution[0])}"
+    )
+    print(
+        validate_schedule(
+            convert_employee_shifts_to_schedule(best_solution[0]),
+            shift_requirements,
+            employees,
+            fixed_schedule,
+        )
+    )
+    # pop = initialize_population(100, fixed_schedule, employees, shift_requirements)
     # print_schedule(
     #     convert_employee_shifts_to_schedule(pop[1][0]), shift_requirements, employees
     # )
     # print_shift_details(
     #     convert_employee_shifts_to_schedule(pop[1][0]), shift_requirements
     # )
-    print(
-        "fitness:",
-        fitness(employees, shift_requirements, pop[0][0], pop[0][1]),
-        fitness(employees, shift_requirements, pop[1][0], pop[1][1]),
-    )
-    mutate(shift_requirements, pop[0][0], pop[0][1], employees, 1)
-    mutate(shift_requirements, pop[1][0], pop[1][1], employees, 1)
-    print(
-        "fitness:",
-        fitness(employees, shift_requirements, pop[0][0], pop[0][1]),
-        fitness(employees, shift_requirements, pop[1][0], pop[1][1]),
-    )
-    end_time = time.time()  # End timing
-    print(f"Time taken: {end_time - start_time:.2f} seconds")  # Print elapsed time
-    start_time = time.time()  # Start timing
-    child1, child2 = crossover(employees, shift_requirements, pop[0][0], pop[1][0])
-    print(
-        fitness(employees, shift_requirements, child1[0], child1[1]),
-        fitness(employees, shift_requirements, child2[0], child2[1]),
-    )
+    # print(
+    #     "fitness:",
+    #     fitness(employees, shift_requirements, pop[0][0], pop[0][1]),
+    #     fitness(employees, shift_requirements, pop[1][0], pop[1][1]),
+    # )
+    # mutate(shift_requirements, pop[0][0], pop[0][1], employees, 1)
+    # mutate(shift_requirements, pop[1][0], pop[1][1], employees, 1)
+    # print(
+    #     "fitness:",
+    #     fitness(employees, shift_requirements, pop[0][0], pop[0][1]),
+    #     fitness(employees, shift_requirements, pop[1][0], pop[1][1]),
+    # )
+    # end_time = time.time()  # End timing
+    # print(f"Time taken: {end_time - start_time:.2f} seconds")  # Print elapsed time
+    # start_time = time.time()  # Start timing
+    # child1, child2 = crossover(employees, shift_requirements, pop[0][0], pop[1][0])
+    # print(
+    #     fitness(employees, shift_requirements, child1[0], child1[1]),
+    #     fitness(employees, shift_requirements, child2[0], child2[1]),
+    # )
     end_time = time.time()  # End timing
     print(f"Time taken: {end_time - start_time:.2f} seconds")  # Print elapsed time
