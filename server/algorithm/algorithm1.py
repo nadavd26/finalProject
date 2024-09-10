@@ -2,10 +2,6 @@ import pulp
 import sys
 import json
 
-def parse_json(json_file):
-    with open(json_file) as f:
-        return json.load(f)
-
 # Converts any hour in format 'hh:mm' to a number between 0 and 47, every half an hour is +1.
 def hour_to_index(hour):
     hours, minutes = map(int, hour.split(':'))
@@ -25,14 +21,6 @@ def hours_to_array(start_hour, end_hour):
 
     return hours_array
 
-# Parse JSON string to Python object
-def parse_json(json_string):
-    try:
-        return json.loads(json_string)
-    except json.JSONDecodeError as e:
-        print("Error decoding JSON:", e)
-        sys.exit(1)
-
 # Arguments:
 # Reqs is a 2d array filled with the employees required for a day, a skill, and range of hours.
 # Example: ["sunday", "cable technition", "00:00", "00:30", 50].
@@ -45,14 +33,11 @@ def solve_shifts(reqs, shifts):
     pulp.LpSolverDefault.msg = 0
 
     skills = []
-    # Get distinct skills in skills array
+    days = []
+    # Fill skills and days arrays
     for item in reqs:
         if item[1] not in skills:
             skills.append(item[1])
-
-    days = []
-    # Get distinct days in days array
-    for item in reqs:
         if item[0] not in days:
             days.append(item[0])
 
@@ -69,7 +54,7 @@ def solve_shifts(reqs, shifts):
         day_index = day_mapping.get(shift[1], -1)
         skill_index = skill_mapping.get(shift[0], -1)
         if(skill_index == -1 or day_index == -1):
-            raise ValueError("Error filling the shifts array")
+            continue
 
         hours = hours_to_array(shift[2], shift[3])
         cost = int(shift[4])
@@ -137,17 +122,21 @@ def solve_shifts(reqs, shifts):
     return output
 
 if __name__ == "__main__":
-    if len(sys.argv) != 1:
-        print("Usage: python script.py")
+    # Read reqs JSON from stdin
+    reqs_str = sys.stdin.readline().strip()
+    try:
+        reqs = json.loads(reqs_str)
+    except json.JSONDecodeError as e:
+        print("Error parsing reqs JSON:", e)
         sys.exit(1)
 
-    # Read reqs JSON from stdin
-    reqs_str = input()
-    reqs = json.loads(reqs_str)
-
     # Read shifts JSON from stdin
-    shifts_str = input()
-    shifts = json.loads(shifts_str)
+    shifts_str = sys.stdin.readline().strip()
+    try:
+        shifts = json.loads(shifts_str)
+    except json.JSONDecodeError as e:
+        print("Error parsing shifts JSON:", e)
+        sys.exit(1)
 
     output = solve_shifts(reqs, shifts)
     print(json.dumps(output))

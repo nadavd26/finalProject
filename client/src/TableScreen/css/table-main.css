@@ -9,7 +9,9 @@
   padding: 0;
   box-sizing: border-box;
   background-image: url('../../../public/gradient-background-light-blue.jpg');
-  background-repeat: round;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   height: 100vh;
   width: 100vw;
 }
@@ -93,7 +95,8 @@
 }
 
 #table-screen .blue {
-  background-color: rgba(111, 126, 221, 1);
+  background-color: rgb(60, 60, 60);
+  color: white !important;
 }
 
 #table-screen td.green {
@@ -116,7 +119,6 @@
   border-left-width: 1px !important;
 }
 
-td#first-column.cell100.first-columns{
+td#first-column.cell100.first-columns {
   border-left-width: 1px !important;
 }
-

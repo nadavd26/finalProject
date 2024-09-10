@@ -24,14 +24,14 @@ const removeLinesByIds = async (tableNum, tableLineIDsToDelete) => {
                 });
                 break;
             default:
-                console.log("Invalid table number.")
+                
         }
     } catch (err) {
         throw err
     }
 }
 //This function updates the relvant table in the db for the relvant user.
-const updateTable = async (tableNum, tableContent, email, googleId) => {
+const updateTable = async (tableNum, tableContent, email, googleId, userId) => {
     try {
         const tableField = `table${tableNum}`;
         switch (tableNum) {
@@ -44,7 +44,8 @@ const updateTable = async (tableNum, tableContent, email, googleId) => {
                         skill1: lineData[2],
                         skill2: lineData[3],
                         skill3: lineData[4],
-                        contract: lineData[5],
+                        min_hours: lineData[5],
+                        max_hours: lineData[6],
                     });
                     const savedLine = await tableLine1.save();
                     tableLines1.push(savedLine._id);
@@ -53,6 +54,7 @@ const updateTable = async (tableNum, tableContent, email, googleId) => {
                     { email, googleId },
                     { $addToSet: { [tableField]: { $each: tableLines1 } } }
                 );
+                await tableValidator.setTableBit(userId, 1, true) //Setting the relevant bit to indicate that the table changed.
                 break;
             case 2:
                 const tableLines2 = [];
@@ -73,7 +75,7 @@ const updateTable = async (tableNum, tableContent, email, googleId) => {
                     { email, googleId },
                     { $addToSet: { [tableField]: { $each: tableLines2 } } }
                 );
-                break;
+                await tableValidator.setTableBit(userId, 2, true)
             case 3:
                 const tableLines3 = [];
                 for (const lineData of tableContent) {
@@ -91,9 +93,10 @@ const updateTable = async (tableNum, tableContent, email, googleId) => {
                     { email, googleId },
                     { $addToSet: { [tableField]: { $each: tableLines3 } } }
                 );
+                await tableValidator.setTableBit(userId, 3, true)
                 break;
             default:
-                console.log("Invalid table number.")
+                
         }
     } catch (err) {
         throw err
@@ -110,7 +113,8 @@ const formatTable = (tableNum, tableContent) => {
                     line.skill1,
                     line.skill2,
                     line.skill3,
-                    line.contract,
+                    String(line.min_hours) == "null" ? "" : String(line.min_hours),
+                    String(line.max_hours) == "null" ? "" : String(line.max_hours),
                 ]);
             case 2:
                 return tableContent.map(line => [
@@ -129,7 +133,7 @@ const formatTable = (tableNum, tableContent) => {
                     line.cost.toString(),
                 ]);
             default:
-                console.log("Invalid table number.")
+                
         }
     } catch (err) {
         throw err
@@ -150,7 +154,7 @@ const sortTable = (table, tableNum) => {
         case 3:
             return table.sort(tableSorter.customSort3)
         default:
-            console.log("Invalid table number.")
+            
     }
 }
 //Validating the table with the relevant validation function.
@@ -163,7 +167,7 @@ const validateTable = (table, tableNum) => {
         case 3:
             return tableValidator.validateTable3(table)
         default:
-            console.log("Invalid table number.")
+            
     }
 }
 module.exports = { removeLinesByIds, updateTable, formatTable, sortTable, validateTable }

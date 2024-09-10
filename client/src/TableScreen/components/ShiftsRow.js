@@ -6,7 +6,7 @@ function ShiftsRow({ name, shifts, defaultColor, optionalColor }) {
         <tr className="row100 body last-rows">
             <td className={`cell100 first-column static-position ${defaultColor}`}>{name}</td>
             {shifts.map((shift, index) => (
-                <td key={index} className={`cell100 last-columns ${shift ? optionalColor : defaultColor}`}></td>
+                <td key={index} className={`cell100 last-columns ${shift.isWorking ? optionalColor : defaultColor}`}>{shift.skill}</td>
             ))}
         </tr>
     );

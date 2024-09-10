@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Table from "./Table";
 import '../css/bootstrap.min.css'
 import '../css/edit-file-table-main.css'
@@ -7,9 +7,14 @@ import { postInputTable } from "../../api/InputTableApi";
 import { csv_to_array, parseTime, isNumberOfWorkersValid, isSkillValid, isIdValid, isNameValid, isContractValid } from "../Utils";
 import { sortTable } from "../../api/InputTableApi";
 
-export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromServer }) {
-    const [content, setContent] = useState([["", "", "", "", "", ""]])
-    const [errors, setErrors] = useState([[true, true, true, false, false, true]])
+export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromServer, scratch }) {
+    const [content, setContent] = useState([])
+    const [initialRender, setInitialRender] = useState(!scratch)
+    function initialRenderUpdate(newRef) {
+        setInitialRender(newRef)
+    };
+
+    const [errors, setErrors] = useState([])
     const [showErrorModel, setShowErrorModel] = useState(false)
     const [showSuccessModel, setShowSuccessModel] = useState(false)
     const [rowsToRender, setRowsToRender] = useState({})
@@ -20,7 +25,8 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
         "Duplicates between skills are not alowed.\n" +
         "Skill cannot be empty if the next skill is not empty.\n" +
         "Must have at least one skill.\n" +
-        "Contract is a non-negative integer."
+        "Contract is a non-negative integer.\n" +
+        "Note that each field has maximum number of characters."
     const [errorMsg, setErrorMsg] = useState(defaultErrorMsg)
     const token = user.token
     var errorLines = 0
@@ -56,10 +62,10 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
         }
         for (let i = 0; i < table.length; i++) {
             isValid = true
-            if (table[i].length != 6) {
+            if (table[i].length != 7) {
                 isValid = false
-                setEditInfo({ inEdit: false, errorMsg: "The table must be 6 columns" })
-                return
+                setEditInfo({ inEdit: false, errorMsg: "Line " + (i + 1) + " The table must be 7 columns (some can be empty but still need 6 commas)" })
+                return {returnTable : [], returnErrors : []}
             }
             const id = table[i][0]
             if (!isIdValid(id)) {
@@ -82,27 +88,35 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
                 handleError(i, 2)
             }
 
-            if ((!isSkillValid(skill2) && skill2 != "") || (skill2 == skill1)) {
+            if ((skill2 != "") && (!isSkillValid(skill2) || (skill2 == skill1))) {
                 handleError(i, 3)
             }
 
-            if ((!isSkillValid(skill3) && skill3 != "") || (skill3 == skill2) || (skill3 == skill1)) {
+            if ((skill3 != "") && (!isSkillValid(skill3) || (skill3 == skill2) || (skill3 == skill1))) {
                 handleError(i, 4)
             }
 
-            if (skill3 != "") {
-                if (skill2 == "") {
-                    handleError(i, 3)
-                }
-
-                if (skill1 == "") {
-                    handleError(i, 2)
-                }
+            if (skill1 == "" && (skill2 != "" || skill3 != "")) {
+                handleError(i, 2)
             }
 
-            const contract = table[i][5]
-            if (!isContractValid(contract)) {
+            if (skill2 == "" && skill1 != "" && skill3 != "") {
+                handleError(i, 3)
+            }
+
+            const minHour = table[i][5]
+            if (!isContractValid(minHour)) {
                 handleError(i, 5)
+            }
+
+            const maxHour = table[i][6]
+            if (!isContractValid(maxHour)) {
+                handleError(i, 6)
+            }
+
+            if (parseFloat(minHour) > parseFloat(maxHour)) {
+                handleError(i, 5)
+                handleError(i, 6)
             }
 
             if (!isValid) {
@@ -110,38 +124,56 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
             }
         }
 
+        var returnTable = []
         if (errorLines != table.length) {
             const newTable = await sortTableWithErrors(table)
-            setContent(newTable)
-            setContent(table)
+            returnTable = newTable
         } else {
-            setContent(table)
+            returnTable = table
         }
-        setErrors(errorsFound)
+        var returnErrors = errorsFound
+        
+        
+        return { returnTable, returnErrors }
     }
 
 
     useEffect(() => {
-        if (csvArray.length > 0 && fromServer == false) {
-            initAndCheck(csvArray);
+        var table = []
+        var errors = []
+        const load_data = async() => {
+            if (csvArray.length > 0 && fromServer == false) {
+                const { returnTable, returnErrors } = await initAndCheck(csvArray);
+                
+                
+                table = returnTable
+                errors = returnErrors
+            }
+    
+            if (fromServer == true) {
+                const falseArray = Array.from({ length: csvArray.length }, () =>
+                    Array.from({ length: csvArray[0].length }, () => false)
+                );
+                table = csvArray
+                errors = falseArray
+            }
+    
+            if (scratch == true) {
+                table = [["", "", "", "", "", "", ""]]
+                errors = [[true, true, true, false, false, false, false]]
+            }  
+            setContent(table)
+            setErrors(errors)
         }
-
-        if (fromServer == true) {
-            setContent(csvArray)
-            const falseArray = Array.from({ length: csvArray.length }, () =>
-                Array.from({ length: csvArray[0].length }, () => false)
-            );
-
-            setErrors(falseArray)
-        }
+        load_data()
     }, [csvArray, setContent]);
 
     const addRowHandler = () => {
-        const newRow = ["", "", "", "", "", ""]
-        const newErrorRow = [true, true, true, false, false, true]
+        const newRow = ["", "", "", "", "", "", ""]
+        const newErrorRow = [true, true, true, false, false, false, false]
         var newRowsToRender = {}
         for (let i = 0; i < content.length; i++) {
-            console.log("render all")
+            
             newRowsToRender[i] = true
         }
 
@@ -151,12 +183,12 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
     };
 
     const onRowAdd = (rowIndex) => {
-        const newEmptyRow = ["", "", "", "", "", ""];
-        const newErrorRow = [true, true, true, false, false, true];
+        const newEmptyRow = ["", "", "", "", "", "", ""];
+        const newErrorRow = [true, true, true, false, false, false, false];
 
         var newRowsToRender = {}
         for (let i = 0; i < content.length; i++) {
-            console.log("render all")
+            
             newRowsToRender[i] = true
         }
 
@@ -176,48 +208,28 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
 
     const handleCellEdit = (rowIndex, columnIndex, value) => {
         var oldValue = content[rowIndex][columnIndex]
-        const updatedContent = content.map((row, i) => {
-            if (i === rowIndex) {
-                return row.map((cell, j) => (j === columnIndex ? value : cell));
-            } else {
-                return row;
-            }
-        });
+        if (value == oldValue) {
+            return
+        }
+        const updatedContent = [...content]
+        updatedContent[rowIndex][columnIndex] = value
 
         const skill1 = updatedContent[rowIndex][2]
         const skill2 = updatedContent[rowIndex][3]
         const skill3 = updatedContent[rowIndex][4]
 
-        var updatedErrors
+        var updatedErrors = [...errors]
         switch (columnIndex) {
             case 0: //id
-                updatedErrors = errors.map((row, i) => {
-                    if (i === rowIndex) {
-                        return row.map((cell, j) => (j === columnIndex ? !isIdValid(updatedContent[i][j]) : cell));
-                    } else {
-                        return row;
-                    }
-                });
+                updatedErrors[rowIndex][columnIndex] = !isIdValid(updatedContent[rowIndex][columnIndex])
                 break;
 
             case 1: //name
-                updatedErrors = errors.map((row, i) => {
-                    if (i === rowIndex) {
-                        return row.map((cell, j) => (j === columnIndex ? !isNameValid(updatedContent[i][j]) : cell));
-                    } else {
-                        return row;
-                    }
-                });
+                updatedErrors[rowIndex][columnIndex] = !isNameValid(updatedContent[rowIndex][columnIndex])
                 break;
             case 2: //skill1
-                updatedErrors = errors.map((row, i) => {
-                    if (i === rowIndex) {
-                        return row.map((cell, j) => (j === columnIndex ? !isSkillValid(updatedContent[i][j]) : cell));
-                    } else {
-                        return row;
-                    }
-                });
-
+                
+                updatedErrors[rowIndex][columnIndex] = !isSkillValid(updatedContent[rowIndex][columnIndex])
                 if (value != "") {
                     if (value == skill2) {
                         updatedErrors[rowIndex][3] = true
@@ -238,22 +250,22 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
                     updatedErrors[rowIndex][3] = (!isSkillValid(skill2) && skill2 != "") || (skill3 != "" && skill2 == "")
                     updatedErrors[rowIndex][4] = !isSkillValid(skill3) && skill3 != ""
                 }
-
                 break;
             case 3: //skill2
-                updatedErrors = errors.map((row, i) => {
-                    if (i === rowIndex) {
-                        return row.map((cell, j) => (j === columnIndex ? updatedContent[i][j] != "" && !isSkillValid(updatedContent[i][j]) : cell));
-                    } else {
-                        return row;
-                    }
-                });
-
+                
+                
+                
+                updatedErrors[rowIndex][columnIndex] = !isSkillValid(updatedContent[rowIndex][columnIndex]) && (updatedContent[rowIndex][columnIndex] != "")
+                
+                
                 if (value == "") {
+                    
                     if (skill3 != "") {
+                        
                         updatedErrors[rowIndex][3] = true
                     }
                 } else {
+                    
                     if (value == skill1) { //duplicate skill
                         updatedErrors[rowIndex][3] = true
                     }
@@ -267,15 +279,10 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
                     }
                 }
                 break;
-            case 4: //skill3
-                updatedErrors = errors.map((row, i) => {
-                    if (i === rowIndex) {
-                        return row.map((cell, j) => (j === columnIndex ? updatedContent[i][j] != "" && !isSkillValid(updatedContent[i][j]) : cell));
-                    } else {
-                        return row;
-                    }
-                });
 
+            case 4: //skill3
+                
+                updatedErrors[rowIndex][columnIndex] = !isSkillValid(updatedContent[rowIndex][columnIndex]) && (updatedContent[rowIndex][columnIndex] != "")
                 if (value != "") {
                     if (updatedContent[rowIndex][3] == "") {
                         updatedErrors[rowIndex][3] = true
@@ -290,18 +297,40 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
                     }
                 }
                 break;
-
             case 5:
-                updatedErrors = errors.map((row, i) => {
-                    if (i === rowIndex) {
-                        return row.map((cell, j) => (j === columnIndex ? !isContractValid(updatedContent[i][j]) : cell));
+                updatedErrors[rowIndex][5] = !isContractValid(updatedContent[rowIndex][columnIndex])
+                if (isContractValid(updatedContent[rowIndex][5]) && isContractValid(updatedContent[rowIndex][6]) && updatedContent[rowIndex][6] != "" && updatedContent[rowIndex][5] != "") {
+                    if (parseFloat(updatedContent[rowIndex][5]) > parseFloat(updatedContent[rowIndex][6])) {
+                        updatedErrors[rowIndex][5] = true
+                        updatedErrors[rowIndex][6] = true
                     } else {
-                        return row;
+                        updatedErrors[rowIndex][5] = false
+                        updatedErrors[rowIndex][6] = false
                     }
-                });
-                break;
+                }
+                if (!isContractValid(updatedContent[rowIndex][5]) && isContractValid(updatedContent[rowIndex][6])) {
+                    updatedErrors[rowIndex][6] = false
+                }
+                break
+            case 6:
+                updatedErrors[rowIndex][6] = !isContractValid(updatedContent[rowIndex][columnIndex])
+                if (isContractValid(updatedContent[rowIndex][5]) && isContractValid(updatedContent[rowIndex][6]) && updatedContent[rowIndex][6] != "" && updatedContent[rowIndex][5] != "") {
+                    if (parseFloat(updatedContent[rowIndex][5]) > parseFloat(updatedContent[rowIndex][6])) {
+                        updatedErrors[rowIndex][5] = true
+                        updatedErrors[rowIndex][6] = true
+                    } else {
+                        updatedErrors[rowIndex][5] = false
+                        updatedErrors[rowIndex][6] = false
+                    }
+                }
+                if (!isContractValid(updatedContent[rowIndex][6]) && isContractValid(updatedContent[rowIndex][5])) {
+                    updatedErrors[rowIndex][5] = false
+                }
+                break
         }
 
+        
+        
         var newRowsToRender = {}
         newRowsToRender[rowIndex] = true
         setRowsToRender(newRowsToRender)
@@ -360,6 +389,7 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
             } else {
                 saveModal.show()
             }
+            //server
         }
     };
 
@@ -367,26 +397,28 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
 
 
     const deleteRow = (rowIndex) => {
-        if (rowIndex >= 0 && rowIndex < content.length) {
-            setContent((prevContent) => {
-                const newContent = [...prevContent];
-                newContent.splice(rowIndex, 1);
-                return newContent;
-            })
+        if (content.length > 1) {
+            if (rowIndex >= 0 && rowIndex < content.length) {
+                setContent((prevContent) => {
+                    const newContent = [...prevContent];
+                    newContent.splice(rowIndex, 1);
+                    return newContent;
+                })
 
-            setErrors((prevErrors) => {
-                const newErrors = [...prevErrors];
-                newErrors.splice(rowIndex, 1);
-                return newErrors;
-            })
+                setErrors((prevErrors) => {
+                    const newErrors = [...prevErrors];
+                    newErrors.splice(rowIndex, 1);
+                    return newErrors;
+                })
 
-            var newRowsToRender = {}
-            for (let i = 0; i < content.length; i++) {
-                newRowsToRender[i] = true
-            }
+                var newRowsToRender = {}
+                for (let i = 0; i < content.length; i++) {
+                    newRowsToRender[i] = true
+                }
 
-            setRowsToRender(newRowsToRender)
-        };
+                setRowsToRender(newRowsToRender)
+            };
+        }
     }
 
     const handleErrorModalClose = () => {
@@ -406,6 +438,7 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
         setEditInfo({ inEdit: false, errorMsg: "" })
         var newUser = user
         newUser.table1 = content
+        newUser.table1Changed = true
         setUser(newUser)
     };
 
@@ -420,18 +453,18 @@ export default function EditFile1({ csvArray, setEditInfo, user, setUser, fromSe
     return (
         <div id="edit-file">
             <div className="container-fluid py-3">
-                <div className="col-1" style={{position: "fixed", top: "1%" ,height: "3%"}}>
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#backModal" onClick={handleBack}>Back</button>
+                <div className="col-1" style={{ position: "fixed", top: "1%", height: "3%" }}>
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#backModal" onClick={handleBack} disabled={initialRender}>Back</button>
                 </div>
                 <div className="col-11"></div>
                 <Table content={content} onCellEdit={handleCellEdit} onRowDelete={deleteRow} errors={errors}
-                    isNumberOfWorkersValid={isNumberOfWorkersValid} isSkillValid={isSkillValid} onRowAdd={onRowAdd} rowsToRender={rowsToRender}></Table>
+                    isNumberOfWorkersValid={isNumberOfWorkersValid} isSkillValid={isSkillValid} onRowAdd={onRowAdd} rowsToRender={rowsToRender} initialRender={initialRender} initialRenderUpdate={initialRenderUpdate}></Table>
                 <div className="row"><br /></div>
-                <div className="row down-buttons"  style={{position: "fixed", top: "90%", width: "100%"}}>
+                <div className="row down-buttons" style={{ position: "fixed", top: "90%", width: "100%" }}>
                     <div className="col-3"></div>
-                    <button className="btn btn-success col-3" onClick={handleSave}
+                    <button className="btn btn-success col-3" onClick={handleSave} disabled={initialRender}
                         data-toggle="modal" >Save</button>
-                    <button className="btn btn-secondary col-3" onClick={addRowHandler} >Add Row</button>
+                    <button className="btn btn-secondary col-3" onClick={addRowHandler} disabled={initialRender}>Add Row</button>
                     <div className="col-3"></div>
                 </div>
             </div>

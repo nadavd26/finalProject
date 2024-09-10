@@ -7,19 +7,24 @@ import { postInputTable } from "../../api/InputTableApi";
 import { csv_to_array, parseTime, isNumberOfWorkersValid, isSkillValid } from "../Utils";
 import { sortTable } from "../../api/InputTableApi";
 
-export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromServer }) {
-    const [content, setContent] = useState([["", "", "", "", ""]])
-    const [errors, setErrors] = useState([[true, true, true, true, true]])
+export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromServer, scratch }) {
+    const [content, setContent] = useState([])
+    const [errors, setErrors] = useState([])
+    const [initialRender, setInitialRender] = useState(!scratch)
+    function initialRenderUpdate(newRef) {
+        setInitialRender(newRef)
+    };
     const [showErrorModel, setShowErrorModel] = useState(false)
     const [showSuccessModel, setShowSuccessModel] = useState(false)
     const [showBackModal, setShowBackModal] = useState(false)
     const [rowsToRender, setRowsToRender] = useState({})
     const defaultErrorMsg = "The table must contain at least one line.\n" +
         "Skill contains only letters, spaces, apostrophes, and certain special characters.\n" +
-        "Required Number Of Workers is a non-negative integer."
+        "Required Number Of Workers is a non-negative integer and cannot be larger than the total amount of workers.\n" + "Note that each field has maximum number of characters."
     const [errorMsg, setErrorMsg] = useState(defaultErrorMsg)
     const token = user.token
     var errorLines = 0
+    var maxWorkers = user.table1 ? user.table1.length : 1000000
     const sortTableWithErrors = async (table) => {
         const validTable = table.slice(errorLines, table.length)
         const sortedTable = await sortTable(2, validTable, user.token)
@@ -54,25 +59,18 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
             isValid = true
             if (table[i].length != 5) {
                 isValid = false
-                setEditInfo({ inEdit: false, errorMsg: "The table must be 5 columns" })
-                return
+                setEditInfo({ inEdit: false, errorMsg: "Line " + (i + 1) + " The table must be 5 columns (some can be empty but still need 4 commas)" })
+                return { returnTable : [], returnErrors: [] }
             }
             table[i][0] = (table[i][0]).toLowerCase()
             const day = table[i][0]
             if (day != "sunday" && day != "monday" && day != "tuesday" && day != "wednesday" && day != "thursday" && day != "friday" && day != "saturday") {
-                // isValid = false
-                // swap_lines(i, errorLines)
-                // errorLines++
-                // errorsFound[i][0] = true
                 handleError(i, 0)
                 errorMsg += "line " + (i + 1) + " column 1 " + "invalid day" + "\n"
             }
 
             const skill = table[i][1]
             if (!isSkillValid(skill)) {
-                // isValid = false
-                // errorsFound[i][1] = true
-                // errorMsg += "line " + (i + 1) + " column 2 " + "invalid skill" + "\n"
                 handleError(i, 1)
             }
 
@@ -82,32 +80,20 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
             const formatFrom = parseTime(from)
             if (!formatFrom) {
                 fromTimeValid = false
-                // errorsFound[i][2] = true
-                // isValid = false
-                // errorMsg += "line " + (i + 1) + " column 3 " + "invalid from hour" + "\n"
                 handleError(i, 2)
             } else {
                 table[i][2] = formatFrom
             }
             if (fromTimeValid) {
                 if (formatFrom[4] != "0" || (formatFrom[3] != "0" && formatFrom[3] != "3")) {
-                    // errorMsg += "line " + (i + 1) + " column 3 " + "time interval is 30 minutes" + "\n"
-                    // isValid = false
-                    // errorsFound[i][2] = true
                     handleError(i, 2)
                 }
 
                 if (formatFrom < "00:00") {
-                    // errorMsg += "line " + (i + 1) + " column 3 " + "min from time is 00:00" + "\n"
-                    // isValid = false
-                    // errorsFound[i][2] = true
                     handleError(i, 2)
                 }
 
                 if (formatFrom > "23:30") {
-                    // errorMsg += "line " + (i + 1) + " column 3 " + "max from time is 23:30" + "\n"
-                    // isValid = false
-                    // errorsFound[i][2] = true
                     handleError(i, 2)
                 }
             }
@@ -115,10 +101,7 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
             const until = table[i][3]
             const formatUntil = parseTime(until)
             if (!formatUntil) {
-                // isValid = false
                 untilTimeValid = false
-                // errorsFound[i][3] = true
-                // errorMsg += "line " + (i + 1) + " column 4 " + "invalid until hour" + "\n"
                 handleError(i, 3)
             } else {
                 table[i][3] = formatUntil
@@ -126,29 +109,18 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
 
             if (untilTimeValid) {
                 if (formatUntil[4] != "0" || (formatUntil[3] != "0" && formatUntil[3] != "3")) {
-                    // errorMsg += "line " + (i + 1) + " column 4 " + "time interval is 30 minutes" + "\n"
-                    // errorsFound[i][3] = true
                     handleError(i, 3)
                 }
 
                 if (formatUntil > "24:00") {
-                    // errorMsg += "line " + (i + 1) + " column 4 " + "max until time is 24:00" + "\n"
-                    // isValid = false
-                    // errorsFound[i][3] = true
                     handleError(i, 3)
                 }
 
                 if (formatUntil < "00:30") {
-                    // errorMsg += "line " + (i + 1) + " column 4 " + "min until time is 00:30" + "\n"
-                    // isValid = false
-                    // errorsFound[i][3] = true
                     handleError(i, 3)
                 }
 
                 if (fromTimeValid && formatFrom >= formatUntil) {
-                    // errorMsg += "line " + (i + 1) + " column 3 and 4 " + "until time is before or equal from time" + "\n"
-                    // isValid = false
-                    // errorsFound[i][3] = true
                     handleError(i, 3)
                     errorsFound[i][2] = true
                 }
@@ -156,10 +128,7 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
 
             const numOfWorkers = table[i][4]
             const modifiedNumOfWorkers = parseInt(numOfWorkers)
-            if (!isNumberOfWorkersValid(modifiedNumOfWorkers)) {
-                // isValid = false
-                // errorsFound[i][4] = true
-                // errorMsg += "line " + (i + 1) + " column 5 " + "invalid number of workers" + "\n"
+            if (!isNumberOfWorkersValid(modifiedNumOfWorkers, maxWorkers)) {
                 handleError(i, 4)
             } else {
                 table[i][4] = modifiedNumOfWorkers
@@ -169,39 +138,66 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
                 handleLineError(i)
             }
         }
-
+        var returnTable = []
         if (errorLines != table.length) {
             const newTable = await sortTableWithErrors(table)
-            setContent(newTable)
+            returnTable = newTable
         } else {
-            setContent(table)
+            returnTable = table
         }
 
-        setErrors(errorsFound)
+        var returnErrors = errorsFound
+        return {returnTable, returnErrors}
     }
 
-
     useEffect(() => {
-        if (csvArray.length > 0 && fromServer == false) {
-            initAndCheck(csvArray);
+        var table = []
+        var errors = []
+        const load_data = async() => {
+            if (csvArray.length > 0 && fromServer == false) {
+                const { returnTable, returnErrors } = await initAndCheck(csvArray);
+                
+                
+                table = returnTable
+                errors = returnErrors
+            }
+    
+            if (fromServer == true) {
+                var initialErrors = Array.from({ length: csvArray.length }, () =>
+                    Array.from({ length: csvArray[0].length }, () => false)
+                );
+                for (let i = 0; i < csvArray.length; i++) {
+                    initialErrors[i][4] = !isNumberOfWorkersValid(csvArray[i][4], maxWorkers)
+                }
+                table = csvArray
+                errors = initialErrors
+            }
+    
+            if (scratch == true) {
+                table = [["", "", "", "", ""]]
+                errors = [[true, true, true, true, true]]
+            }
+    
+            
+            
+            setContent(table)
+            setErrors(errors)
         }
-
-        if (fromServer == true) {
-            setContent(csvArray)
-            const falseArray = Array.from({ length: csvArray.length }, () =>
-                Array.from({ length: csvArray[0].length }, () => false)
-            );
-
-            setErrors(falseArray)
-        }
+        load_data()
     }, [csvArray, setContent]);
 
     const addRowHandler = () => {
+        for (let i = 0; i < content.length; i++) {
+            for (let j = 0; j <= 4; j++) {
+                const cell = document.getElementById(`cell-${(i)}-${j}`)
+                cell.classList.remove("pink")
+            }
+        }
         const newRow = ["", "", "", "", ""]
         const newErrorRow = [true, true, true, true, true]
         var newRowsToRender = {}
         for (let i = 0; i < content.length; i++) {
-            console.log("render all")
+            
             newRowsToRender[i] = true
         }
 
@@ -211,11 +207,17 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
     };
 
     const onRowAdd = (rowIndex) => {
-        const newEmptyRow = [content[rowIndex][0], content[rowIndex][1], "00:00", "24:00", ""];
-        const newErrorRow = [errors[rowIndex][0], errors[rowIndex][1], false, false, true];
+        for (let i = 0; i < content.length; i++) {
+            for (let j = 0; j <= 4; j++) {
+                const cell = document.getElementById(`cell-${(i)}-${j}`)
+                cell.classList.remove("pink")
+            }
+        }
+        const newEmptyRow = [content[rowIndex][0], content[rowIndex][1], "", "", ""];
+        const newErrorRow = [errors[rowIndex][0], errors[rowIndex][1], true, true, true];
         var newRowsToRender = {}
         for (let i = 0; i < content.length; i++) {
-            console.log("render all")
+            
             newRowsToRender[i] = true
         }
 
@@ -234,51 +236,26 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
     }
 
     const handleCellEdit = (rowIndex, columnIndex, value) => {
-        const updatedContent = content.map((row, i) => {
-            if (i === rowIndex) {
-                return row.map((cell, j) => (j === columnIndex ? value : cell));
-            } else {
-                return row;
+        if (value != content[rowIndex][columnIndex]) {
+            var updatedContent = [...content]
+            var updatedErrors = [...errors]
+            updatedContent[rowIndex][columnIndex] = value
+            switch (columnIndex) {
+                case 1:
+                    updatedErrors[rowIndex][columnIndex] = !isSkillValid(value)
+                    break;
+                case 4:
+                    updatedErrors[rowIndex][columnIndex] = !isNumberOfWorkersValid(value, maxWorkers)
+                    break;
+                default:
+                    updatedErrors[rowIndex][columnIndex] = false //editing through the day/hour dropdown which is always valid
             }
-        });
-
-        var updatedErrors
-        switch (columnIndex) {
-            case 1:
-                updatedErrors = errors.map((row, i) => {
-                    if (i === rowIndex) {
-                        return row.map((cell, j) => (j === columnIndex ? !isSkillValid(updatedContent[i][j]) : cell));
-                    } else {
-                        return row;
-                    }
-                });
-                break; // Add break statement here
-
-            case 4:
-                updatedErrors = errors.map((row, i) => {
-                    if (i === rowIndex) {
-                        return row.map((cell, j) => (j === columnIndex ? !isNumberOfWorkersValid(updatedContent[i][j]) : cell));
-                    } else {
-                        return row;
-                    }
-                });
-                break; // Add break statement here
-
-            default:
-                updatedErrors = errors.map((row, i) => {
-                    if (i === rowIndex) {
-                        return row.map((cell, j) => (j === columnIndex ? false : cell));
-                    } else {
-                        return row;
-                    }
-                });
-                break; // Add break statement here
+            var newRowsToRender = {}
+            newRowsToRender[rowIndex] = true
+            setRowsToRender(newRowsToRender)
+            setContent(updatedContent);
+            setErrors(updatedErrors)
         }
-        var newRowsToRender = {}
-        newRowsToRender[rowIndex] = true
-        setRowsToRender(newRowsToRender)
-        setContent(updatedContent);
-        setErrors(updatedErrors)
     };
 
 
@@ -297,6 +274,8 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
         return overlaps
     }
     const handleSave = async () => {
+        
+        
         const errorModal = new window.bootstrap.Modal(document.getElementById('errModal'));
         const saveModal = new window.bootstrap.Modal(document.getElementById('saveModal'));
 
@@ -353,26 +332,34 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
 
 
     const deleteRow = (rowIndex) => {
-        if (rowIndex >= 0 && rowIndex < content.length) {
-            setContent((prevContent) => {
-                const newContent = [...prevContent];
-                newContent.splice(rowIndex, 1);
-                return newContent;
-            })
-
-            setErrors((prevErrors) => {
-                const newErrors = [...prevErrors];
-                newErrors.splice(rowIndex, 1);
-                return newErrors;
-            })
-
-            var newRowsToRender = {}
+        if (content.length > 1) {
             for (let i = 0; i < content.length; i++) {
-                newRowsToRender[i] = true
+                for (let j = 0; j <= 4; j++) {
+                    const cell = document.getElementById(`cell-${(i)}-${j}`)
+                    cell.classList.remove("pink")
+                }
             }
+            if (rowIndex >= 0 && rowIndex < content.length) {
+                setContent((prevContent) => {
+                    const newContent = [...prevContent];
+                    newContent.splice(rowIndex, 1);
+                    return newContent;
+                })
 
-            setRowsToRender(newRowsToRender)
-        };
+                setErrors((prevErrors) => {
+                    const newErrors = [...prevErrors];
+                    newErrors.splice(rowIndex, 1);
+                    return newErrors;
+                })
+
+                var newRowsToRender = {}
+                for (let i = 0; i < content.length; i++) {
+                    newRowsToRender[i] = true
+                }
+
+                setRowsToRender(newRowsToRender)
+            };
+        }
     }
 
     const handleErrorModalClose = () => {
@@ -392,6 +379,7 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
         setEditInfo({ inEdit: false, errorMsg: "" })
         var newUser = user
         newUser.table2 = content
+        newUser.table2Changed = true
         setUser(newUser)
     };
 
@@ -406,18 +394,18 @@ export default function EditFile2({ csvArray, setEditInfo, user, setUser, fromSe
     return (
         <div id="edit-file">
             <div className="container-fluid py-3">
-                <div className="col-1" style={{position: "fixed", top: "1%" ,height: "3%"}}>
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#backModal" onClick={handleBack}>Back</button>
+                <div className="col-1" style={{ position: "fixed", top: "1%", height: "3%" }}>
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#backModal" onClick={handleBack} disabled={initialRender}>Back</button>
                 </div>
                 <div className="col-11"></div>
                 <Table content={content} onCellEdit={handleCellEdit} onRowDelete={deleteRow} errors={errors}
-                    isNumberOfWorkersValid={isNumberOfWorkersValid} isSkillValid={isSkillValid} onRowAdd={onRowAdd} rowsToRender={rowsToRender}></Table>
+                    isNumberOfWorkersValid={isNumberOfWorkersValid} isSkillValid={isSkillValid} onRowAdd={onRowAdd} rowsToRender={rowsToRender} initialRender={initialRender} initialRenderUpdate={initialRenderUpdate}></Table>
                 <div className="row"><br /></div>
-                <div className="row down-buttons" style={{position: "fixed", top: "90%", width: "100%"}}>
+                <div className="row down-buttons" style={{ position: "fixed", top: "90%", width: "100%" }}>
                     <div className="col-3"></div>
-                    <button className="btn btn-success col-3" onClick={handleSave}
+                    <button className="btn btn-success col-3" onClick={handleSave} disabled={initialRender}
                         data-toggle="modal" >Save</button>
-                    <button className="btn btn-secondary col-3" onClick={addRowHandler} >Add Row</button>
+                    <button className="btn btn-secondary col-3" onClick={addRowHandler} disabled={initialRender}>Add Row</button>
                     <div className="col-3"></div>
                 </div>
             </div>

@@ -9,7 +9,7 @@ const checkAuthorized = (req, res, next) => {
             req.user = user;
             return next();
         } catch (err) {
-            console.log(err.message);
+            
         }
     }
     return res.status(401).send("Unauthorized");

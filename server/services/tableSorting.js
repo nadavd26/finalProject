@@ -1,19 +1,21 @@
 const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 //The function is used to sort the table 1 array.
 const customSort1 = (a, b) => {
-     //Id is the most significant element in the sorting of table1.
-    if(a[0] != b[0])
-        return a[0].localeCompare(b[0])
+    //Id is the most significant element in the sorting of table1.
+    if (a[0] != b[0])
+        return +a[0] - +b[0] //'+' here is a unary operator to convert the strings to numbers.
     //after that the skills are given the most significance in the table 1 sorting.
     for (i = 2; i < 5; i++)
         if (a[i] != b[i])
             return a[i].localeCompare(b[i])
     //After the skills the names is most significant
     if (a[1] != b[1])
-            return a[1].localeCompare(b[1])
-    //And lastley is the contract
+        return a[1].localeCompare(b[1])
+    //And lastley minHouers and maxHouers.
     if (a[5] != b[5])
-            return a[5].localeCompare(b[5])
+        return a[5] - b[5]
+    if (a[6] != b[6])
+        return a[6] - b[6]
     //If nothing has been returned yet the row are the same.
     return 0
 }
@@ -22,14 +24,14 @@ const customSort1 = (a, b) => {
 const customSort2 = (a, b) => {
     //In table 2 the first item of each row is a day.
     daysCompare = compareDays(a[0], b[0])
-    if(daysCompare != 0)
+    if (daysCompare != 0)
         return daysCompare
     //The rest of the row items discluding the last one are simply compared as strings.
     for (i = 1; i < 4; i++)
         if (a[i] != b[i])
             return a[i].localeCompare(b[i])
     //The last parameter is a number.
-    if(a[4] != b[4])
+    if (a[4] != b[4])
         return a[i] - b[i]
     //If nothing has been returned yet the row are the same.
     return 0
@@ -39,7 +41,7 @@ const customSort2 = (a, b) => {
 const customSort3 = (a, b) => {
     //First we sort by day.
     daysCompare = compareDays(a[1], b[1])
-    if(daysCompare != 0)
+    if (daysCompare != 0)
         return daysCompare
     //Then by 'from' an 'until'.
     for (i = 2; i < 4; i++)
@@ -47,9 +49,9 @@ const customSort3 = (a, b) => {
             return a[i].localeCompare(b[i])
     //Then by skill.
     if (a[0] != b[0])
-            return a[0].localeCompare(b[0])
+        return a[0].localeCompare(b[0])
     //And at the end by cost.
-    if(a[4] != b[4])
+    if (a[4] != b[4])
         return a[i] - b[i]
     //If nothing has been returned yet the row are the same.
     return 0
@@ -82,4 +84,28 @@ const compareDays = (day1, day2) => {
     return index1 - index2;
 }
 
-module.exports = {customSort1, customSort2, customSort3, compareTable1Line }
+// This function get the map of the results of algo1, and returns the map sorted.
+const sortResults1Map = (originalMap) => {
+    const sortedKeys = Array.from(originalMap.keys()).sort((keyA, keyB) => {
+        const [dayA, restA] = keyA.split('*');
+        const [dayB, restB] = keyB.split('*');
+    
+        const dayIndexA = days.indexOf(dayA);
+        const dayIndexB = days.indexOf(dayB);
+    
+        // First comparing the days.
+        if (dayIndexA !== dayIndexB) {
+            return dayIndexA - dayIndexB;
+        }
+    
+        // If those are the same day, we compare by the skill.
+        return restA.localeCompare(restB);
+    });
+    const sortedMap = new Map();
+    sortedKeys.forEach(key => {
+        sortedMap.set(key, originalMap.get(key));
+    });
+    return sortedMap
+}
+
+module.exports = { customSort1, customSort2, customSort3, compareTable1Line, sortResults1Map }

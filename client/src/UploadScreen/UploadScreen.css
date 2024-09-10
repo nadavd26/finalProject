@@ -129,6 +129,14 @@ p {
     border-radius: 4px; 
   }
 
+  #border-left-important {
+    border-left-width: 1px !important;
+  }
+
+  .th#border-left-importantcell100.first-column.blue {
+    border-left-width: 1px !important;
+  }
+
   input[type="file"] {
     display: none;
   }
@@ -162,7 +170,9 @@ p {
 }
 #upload_screen {
     background-image: url('../../public/gradient-background-light-blue.jpg');
-    background-repeat:round;
+    background-repeat:no-repeat;
+    background-size: cover;
+    background-position: center;
     height: 100vh;
     width: 100vw;
   }
@@ -211,4 +221,61 @@ p {
     user-select: none;
 
   }
+}
+
+/* width */
+.scrollbar::-webkit-scrollbar {
+  width: 10px;
+  margin: 0;
+  padding: 0;
+}
+
+/* Track */
+.scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 10px;
+}
+
+/* Handle */
+.scrollbar::-webkit-scrollbar-thumb {
+  background: #ffffff;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+.scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #acacac;
+}
+
+.scrollbar::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+.scrollbar::-webkit-scrollbar {
+  width: 15px; /* Set the width of the scrollbar */
+  height: 15px;
+}
+
+.not-uploaded-button {
+  background-color: rgb(250, 197, 197);
+  color: black;
+  border: 0px;
+}
+.uploaded-button {
+  background-color: rgb(173, 248, 173);
+  color: black;
+  border: 0px;
+}
+
+.not-uploaded-current-button {
+  background-color: #DC3545;
+  color: black;
+  border: 0px;
+}
+
+.uploaded-current-button {
+  background-color: #28A745;
+  color: black;
+  border: 0px;
 }

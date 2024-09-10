@@ -1,19 +1,16 @@
 import React from 'react';
-import "../css/TableRow.css"; // Import your CSS file for styling
+import "../css/TableRow.css"; 
 import FreeEditCell from '../components/FreeEditCell';
 import NonEditableCell from "../components/NonEditableCell";
 import ShiftIdCell from "../components/ShiftIdCell";
 import WorkerDropdown from "../components/WorkerDropdown";
-// import MemorizedTableRow from './TableRow'
 import * as utils from '../../Utils'
 import { useState } from "react";
 import { memo } from 'react';
 
 
 const TableRow = ({ rowIndex, row, color, generateWorkerList, onCellEdit, getLineInfo, hidden }) => {
-    console.log("render row num " + (rowIndex + 1));
-
-    // Function to capitalize the first letter of a string
+    console.log("row " + rowIndex + " rendered")
     function capitalizeFirstLetter(str) {
         return str.charAt(0).toUpperCase() + str.slice(1);
     }
@@ -48,11 +45,7 @@ function arePropsEqual(oldProps, newProps) {
 }
 
 const MemorizedTableRow = React.memo(TableRow, arePropsEqual)
-//first row : [{name : , validate : function}, ....]
 function Table({ linesFiltered, content, start, pageSize, colors, shiftsPerWorker, workerMap, shiftsInfo, onCellEdit, generateWorkerList, getLineInfo, rowsToRender, indexSearchElement, searchDayElement, searchSkillElement, searchFromElement, searchUntilElement, searchAssignedElement, searchShiftIndexElement }) {
-    console.log("render table" + start)
-    console.log("linesFiltered")
-    console.log(linesFiltered)
     const renderedRows = [];
     var end = Math.min(pageSize + start - 1, linesFiltered.length - 1)
     for (let i = start; i <= end; i++) {
@@ -72,23 +65,6 @@ function Table({ linesFiltered, content, start, pageSize, colors, shiftsPerWorke
             />
         );
     }
-    // for (let i = end; i < pageSize + start - 1; i++) {
-    //     renderedRows.push(
-    //         <MemorizedTableRow
-    //             rowIndex={0}
-    //             row={["a", "a", "a", "a", "a", "a", "a", "a"]}
-    //             color={"white"}
-    //             workerMap={workerMap}
-    //             shiftsInfo={shiftsInfo}
-    //             generateWorkerList={() => []}
-    //             onCellEdit={() => { }}
-    //             getLineInfo={() => { }}
-    //             shouldRender={true}
-    //             hidden={true}
-    //         />
-    //     )
-    // }
-
     const widths=[12, 18, 10, 10, 25, 14]
     const vw = (num) => {
         return num+"vw"

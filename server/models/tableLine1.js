@@ -22,9 +22,11 @@ const TableLine1 = new Schema(
         skill3: {
             type: String,
         },
-        contract: {
-            type: String,
-            required: true,
+        min_hours: {
+            type: Number,
+        },
+        max_hours: {
+            type: Number,
         },
     },
     { autoIndex: false, autoCreate: false }

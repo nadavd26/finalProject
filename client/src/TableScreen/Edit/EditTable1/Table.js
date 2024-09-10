@@ -1,7 +1,6 @@
 import React from 'react';
 import TableRowMemo from './TableRow';
 // import TableRow from './TableRow';
-//first row : [{name : , validate : function}, ....]
 const TableRows = ({ content, isNumberOfWorkersValid, onCellEdit, rowsToRender}) => {
     
     return (
@@ -27,9 +26,10 @@ function Table({content, isNumberOfWorkersValid, onCellEdit, rowsToRender}) {
                                 <tr className="row100 body first-row">
                                     <th className="cell100 first-column blue col-2">Day</th>
                                     <th class="cell100  last-columns blue col-3">Skill</th>
-                                    <th class="cell100  last-columns blue col-2">From</th>
-                                    <th class="cell100  last-columns blue col-2">Until</th>
+                                    <th class="cell100  last-columns blue col-1">From</th>
+                                    <th class="cell100  last-columns blue col-1">Until</th>
                                     <th class="cell100  last-columns blue col-3">Assinged Number Of Workers</th>
+                                    <th class="cell100  last-columns blue col-2">Cost</th>
                                 </tr>
                                 <TableRows content={content} isNumberOfWorkersValid={isNumberOfWorkersValid} onCellEdit={onCellEdit} rowsToRender={rowsToRender}/>
                             </tbody>

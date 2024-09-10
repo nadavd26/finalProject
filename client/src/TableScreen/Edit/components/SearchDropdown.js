@@ -1,7 +1,7 @@
 import React from 'react';
 import Select from 'react-select';
 
-const SearchDropdown = ({ value, shownValue, options, shownOptions, onSelect, width }) => {
+const SearchDropdown = ({ value, shownValue, options, shownOptions, onSelect, width, filterOption }) => {
     // Define a function to format the option label
     const formatOptionLabel = (option) => {
         const label = shownOptions[option.value];
@@ -48,8 +48,8 @@ const SearchDropdown = ({ value, shownValue, options, shownOptions, onSelect, wi
             width: width !== undefined ? width : '100%',
             margin: '0px',
             padding: '0px',
-             // Set padding to 0
-             // Set width to either the specified value or 100%
+            // Set padding to 0
+            // Set width to either the specified value or 100%
         }),
         indicatorSeparator: (provided) => ({
             ...provided,
@@ -69,12 +69,12 @@ const SearchDropdown = ({ value, shownValue, options, shownOptions, onSelect, wi
             padding: '0px',
             marginRight: '0px',
             width: '100%',
-             // Add margin on the right // Center items vertically
+            // Add margin on the right // Center items vertically
         }),
     };
 
     return (
-        <>
+        <div style={{ color: 'black' }}>
             <Select
                 value={selectedValue !== null ? transformedOptions[selectedValue] : null} // Set the selected value
                 options={transformedOptions} // Set options with labels
@@ -84,10 +84,9 @@ const SearchDropdown = ({ value, shownValue, options, shownOptions, onSelect, wi
                 isClearable // Enable the clearable option
                 styles={customStyles} // Apply custom styles
                 menuShouldBlockScroll={true}
+                {...(filterOption !== undefined ? { filterOption } : {})} // Conditionally include filterOption
             />
-            {/* <div>value: {value}</div>
-            <div>shownValue: {shownValue}</div> */}
-        </>
+        </div>
     );
 };
 

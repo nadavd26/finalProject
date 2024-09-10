@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import ShiftsRow from '../conponenets/ShiftsRow';
+import ShiftsRow from '../components/ShiftsRow';
 import { Modal, Button, Col } from 'react-bootstrap';
 import { useState } from 'react';
 //expecting json: [{"name":"name1", "shifts":[true, true, false, ...]}, {"name":"name2", "shifts":[true, true, false, ...]}, ....]
@@ -10,14 +10,14 @@ function TableAlgo2({ workersAndShifts }) {
         setShowModal(workersAndShifts.length == 0)
     }
     ,[workersAndShifts])
-    console.log("workersAndShifts")
-    console.log(workersAndShifts)
+    
+    
     return (
         <>
             <div className="container-table100">
                 <div className="wrap-table100" style={{ opacity: workersAndShifts.length == 0 ? 0 : 1 }}>
                     <div className="ver1 m-b-110">
-                        <div className="table100-body scrollbar" style={{position: 'fixed', maxHeight: "74vh", width: "98%", left: "1%", top: "16%"}}>
+                        <div className="table100-body scrollbar" style={{position: 'fixed', maxHeight: "74vh", width: "90%", left: "5%", top: "16%"}}>
                             <table className="table table-hover table-striped" id="table">
                                 <tbody>
                                     <tr className="row100 body first-row">
@@ -36,12 +36,12 @@ function TableAlgo2({ workersAndShifts }) {
                                         <th className="cell100 last-columns blue">05:30</th>
                                         <th className="cell100 last-columns blue">06:00</th>
                                         <th className="cell100 last-columns blue">06:30</th>
-                                        <th className="cell100 last-columns blue">7:00</th>
-                                        <th className="cell100 last-columns blue">7:30</th>
-                                        <th className="cell100 last-columns blue">8:00</th>
-                                        <th className="cell100 last-columns blue">8:30</th>
-                                        <th className="cell100 last-columns blue">9:00</th>
-                                        <th className="cell100 last-columns blue">9:30</th>
+                                        <th className="cell100 last-columns blue">07:00</th>
+                                        <th className="cell100 last-columns blue">07:30</th>
+                                        <th className="cell100 last-columns blue">08:00</th>
+                                        <th className="cell100 last-columns blue">08:30</th>
+                                        <th className="cell100 last-columns blue">09:00</th>
+                                        <th className="cell100 last-columns blue">09:30</th>
                                         <th className="cell100 last-columns blue">10:00</th>
                                         <th className="cell100 last-columns blue">10:30</th>
                                         <th className="cell100 last-columns blue">11:00</th>
@@ -72,7 +72,7 @@ function TableAlgo2({ workersAndShifts }) {
                                         <th className="cell100 last-columns blue">23:30</th>
                                     </tr>
                                     {workersAndShifts.map((workerData, index) => (
-                                        <ShiftsRow
+                                        <ShiftsRow 
                                             key={index}
                                             {...workerData}
                                             defaultColor={index % 2 === 0 ? 'white' : 'gray'}

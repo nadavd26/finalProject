@@ -57,6 +57,34 @@ const User = new Schema(
                 required: true,
             }],
         }],
+        assignedShiftTables: [{
+            day: {
+                type: String,
+                required: true,
+            },
+            assignedShifts: [{
+                type: Schema.Types.ObjectId,
+                ref: "AssignedShiftLine",
+                required: true,
+            }],
+        }],
+        //Those bits are set after their tables are updated, and reset when the relevant algorithm was executed.
+        table1Bit : {
+            type: Boolean,
+            default: false,
+        },
+        table2Bit : {
+            type: Boolean,
+            default: false,
+        },
+        table3Bit : {
+            type: Boolean,
+            default: false,
+        },
+        shiftTablesBit : {
+            type: Boolean,
+            default: false,
+        },
     },
     { autoIndex: false, autoCreate: false }
 );

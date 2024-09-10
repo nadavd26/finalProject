@@ -1,4 +1,4 @@
-export default function TimeCell({value, rowIndex, columnIndex, isValid, minTime, maxTime, onEdit}) {
+export default function TimeCell({value, rowIndex, columnIndex, isValid, minTime, maxTime, onEdit, enableEdit}) {
     const generateArrayTimeOptions = (minHour, maxHour) => {
         const [minHourValue, minMinuteValue] = minHour.split(':').map(Number);
         const [maxHourValue, maxMinuteValue] = maxHour.split(':').map(Number);
@@ -59,7 +59,7 @@ export default function TimeCell({value, rowIndex, columnIndex, isValid, minTime
     };
     
     return <td id={`cell-${rowIndex}-${columnIndex}`} className={`cell100 last-columns ${isValid ? 'red' : ''}`} onBlur={handleOnBlur} onFocus={handleFocus}>
-        <select id={`appt1-${rowIndex}`} name="appt" required value={value} onChange={(e) => onEdit(rowIndex, columnIndex, e.target.value)}>
+        <select id={`appt1-${rowIndex}`} name="appt" required value={value} onChange={(e) => onEdit(rowIndex, columnIndex, e.target.value)} disabled={!enableEdit}>
             {arrayTimeOptions.includes(value) ? (
                 <>
                     {timeOptions}

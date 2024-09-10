@@ -41,7 +41,7 @@ const getUser = async (email, googleId) => {
     return newUser;
 }
 
-const setTable = async (email, googleId, tableContent, tableNum) => {
+const setTable = async (email, googleId, tableContent, tableNum, userId) => {
     try {
         if (!tableContent || !Array.isArray(tableContent)) {
             throw new Error("Invalid table content");
@@ -75,7 +75,7 @@ const setTable = async (email, googleId, tableContent, tableNum) => {
             { email, googleId },
             { $addToSet: { [tableField]: { $each: tableLines } } }
         );*/
-        await Tables.updateTable(parseInt(tableNum), tableContent, email, googleId)
+        await Tables.updateTable(parseInt(tableNum), tableContent, email, googleId, userId)
     } catch (err) {
         throw err
     }

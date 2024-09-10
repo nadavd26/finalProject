@@ -12,24 +12,26 @@ const clientId = "697357189642-cv95irflcae6i8dm2nidpvokkqtpv62k.apps.googleuserc
 function Login() {
     const navigate = useNavigate();
     const { user, setUser } = useContext(UserContext);
+    
+    
     const onSuccess = async (res) => {
-        console.log("Login SUCCESS! current user: ", res.profileObj);
+        
         const token = await serverGetToken(res.profileObj.googleId, res.profileObj.imageUrl, 
             res.profileObj.email, res.profileObj.name, res.profileObj.givenName, res.profileObj.familyName)
-        console.log("token is: " + token)
+        
         const userInfo = res.profileObj
         userInfo["token"] = token
         userInfo["table1"] = await getInputTable(1, token)
         userInfo["table2"] = await getInputTable(2, token)
         userInfo["table3"] = await getInputTable(3, token)
         userInfo["algo1Table"] = []
-        userInfo["algo2Table"] = [] 
+        userInfo["algo2Table"] = []
         setUser(userInfo)
         navigate("/upload")
     };
 
     const onFailure = (res) => {
-        console.log("Login FAILED! res: ", res);
+        
     };
 
     return (
