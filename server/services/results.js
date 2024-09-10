@@ -91,7 +91,7 @@ const getEmptyResults2 = async (userId) => {
         Friday: [],
         Saturday: []
     };
-    let id = 0; //Creating id that will be uniqe for each value.
+    let id = 1; //Creating id that will be uniqe for each value.
     const inputMap = await getResults1FromDB(userId)
     // Populating the newMap with values from the inputMap
     for (let [key, value] of inputMap) {
@@ -230,7 +230,7 @@ const getResults2 = async (userId, autoComplete) => {
         Friday: [],
         Saturday: []
     };
-    let id = 0; //Creating id that will be uniqe for each value.
+    let id = 1; //Creating id that will be uniqe for each value.
     const inputMap = await getResults1FromDB(userId)
     const employeesMap = await ResultsHelper.getWorkerNamesMapByUserId(table1)
     // Populating the newMap with values from the inputMap

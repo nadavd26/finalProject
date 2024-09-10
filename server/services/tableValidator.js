@@ -499,8 +499,8 @@ const checkResults2 = async (userId) => {
 //This function checks if there are workers that work less hours than what's required in their contracts.
 const validateAlgo2MinHours = async (userId) => {
     const user = await User.findById(userId).populate('table1').populate('shiftTables.shifts').populate('assignedShiftTables.assignedShifts');
-    const employeeHoursWorked = await ResultsHelper.getEmployeesHoursWorkedDict(userId)
     const table1 = user['table1'] || [];
+    const employeeHoursWorked = await ResultsHelper.getEmployeesHoursWorkedDict(userId, table1)
     info = [true, "The following employees work less hours than required in their contracts: "]
     let counter = 0
     for (const line1 of table1) {
@@ -525,8 +525,8 @@ const validateAlgo2MinHours = async (userId) => {
 //This function checks if there are workers that work more hours than the limit in their contracts.
 const validateAlgo2MaxHours = async (userId) => {
     const user = await User.findById(userId).populate('table1').populate('shiftTables.shifts').populate('assignedShiftTables.assignedShifts');
-    const employeeHoursWorked = await ResultsHelper.getEmployeesHoursWorkedDict(userId)
     const table1 = user['table1'] || [];
+    const employeeHoursWorked = await ResultsHelper.getEmployeesHoursWorkedDict(userId, table1)
     info = [true, "The following employees work more hours than the limit in their contracts: "]
     let counter = 0
     for (const line1 of table1) {
