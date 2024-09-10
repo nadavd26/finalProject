@@ -5,6 +5,7 @@ from joblib import Parallel, delayed
 from collections import defaultdict
 import copy
 
+# JUST FOR TEST - OMER CAN REMOVE 1/2 ---------------------------------------------
 
 fixed_schedule = [
     {"emp_id": 0, "shift_id": 8},
@@ -448,7 +449,9 @@ def generate_employees(n):
     return employees
 
 
-shift_dict = {shift["id"]: shift for shift in shift_requirements}
+employees = generate_employees(1000)
+
+# JUST FOR TEST - OMER CAN REMOVE 1/2 ---------------------------------------------
 
 
 # Helper Functions
@@ -521,6 +524,7 @@ def generate_random_schedule(
                         for existing_shift in employee_shifts[employee["id"]]
                     )
                 ):
+                    # Assign the shift to the employee
                     shift_worker_count[shift["id"]] += 1
                     additional_hours = (
                         parse_time(shift["end_time"]) - parse_time(shift["start_time"])
@@ -529,6 +533,12 @@ def generate_random_schedule(
                     employee_shifts[employee["id"]].append(shift)
                     current_index = i + 1
                     found_shift = True
+
+                    # Remove the shift from random_shift_requirements if it is full
+                    if shift_worker_count[shift["id"]] == shift["required_workers"]:
+                        random_shift_requirements.pop(i)
+                        current_index -= 1
+
                     break
             if not found_shift:
                 break
@@ -555,11 +565,18 @@ def generate_random_schedule(
                         for existing_shift in employee_shifts[employee["id"]]
                     )
                 ):
+                    # Assign the shift to the employee
                     shift_worker_count[shift["id"]] += 1
                     current_hours += additional_hours
                     employee_shifts[employee["id"]].append(shift)
                     current_index = i + 1
                     found_shift = True
+
+                    # Remove the shift from random_shift_requirements if it is full
+                    if shift_worker_count[shift["id"]] == shift["required_workers"]:
+                        random_shift_requirements.pop(i)
+                        current_index -= 1
+
                     break
             if not found_shift:
                 break
@@ -728,6 +745,59 @@ def select_parents(population, crossover_probabilities):
     return parents[0], parents[1]
 
 
+def fill_shifts(employees, shift_requirements, employee_shifts, shift_worker_count):
+    # Iterate through all shift requirements
+    for shift in shift_requirements:
+        shift_id = shift["id"]
+        max_required_workers = shift["required_workers"]
+
+        # If the shift is already fully staffed, skip it
+        if shift_worker_count[shift_id] >= max_required_workers:
+            continue
+
+        skill_required = shift["skill"]
+
+        # Iterate through all employees to fill the shift
+        for employee in employees:
+            emp_id = employee["id"]
+            employee_skills = employee["skills"]
+
+            # Check if the employee has the required skill and can be assigned to the shift
+            if skill_required in employee_skills and not any(
+                shifts_overlap(shift, existing_shift)
+                for existing_shift in employee_shifts[emp_id]
+            ):
+                # Calculate the additional hours this shift would add
+                additional_hours = (
+                    parse_time(shift["end_time"]) - parse_time(shift["start_time"])
+                ).seconds / 3600
+
+                # Check if assigning this shift exceeds the employee's maximum hours
+                current_hours = calculate_employee_hours(
+                    employee_shifts[emp_id], shift_requirements
+                )
+                if current_hours + additional_hours <= employee["max_hours"]:
+                    # Assign the shift to the employee
+                    employee_shifts[emp_id].append(shift)
+                    shift_worker_count[shift_id] += 1
+                    if shift_worker_count[shift_id] == max_required_workers:
+                        break  # Move to the next shift requirement if the current shift is filled
+
+    return employee_shifts, shift_worker_count
+
+
+def convert_employee_shifts_to_schedule(employee_shifts):
+    schedule = []
+
+    # Iterate over the dictionary with employee IDs and their assigned shifts
+    for emp_id, shifts in employee_shifts.items():
+        for shift in shifts:
+            # Append a new dictionary with employee ID and shift ID to the schedule list
+            schedule.append({"emp_id": emp_id, "shift_id": shift["id"]})
+
+    return schedule
+
+
 def genetic_algorithm(
     fixed_schedule,
     employees,
@@ -754,13 +824,12 @@ def genetic_algorithm(
     original_mutation_rate = mutation_rate
     stagnation_counter = 0
 
-    for generation in range(generations):
+    for _ in range(generations):
         best_fitness = min(fitness_scores)
 
         # Check for perfect solution
         if best_fitness == 0:
             best_schedule = population[fitness_scores.index(best_fitness)]
-            print(f"Perfect solution found in generation {generation}: {best_schedule}")
             return best_schedule
 
         # Check for stagnation
@@ -820,11 +889,41 @@ def genetic_algorithm(
         population = elite_population + new_population
         fitness_scores = elite_fitness_scores + new_fitness_scores
 
-        # Print the best fitness of the current generation
-        print(f"Generation {generation}: Best Fitness = {best_fitness}")
+    best_solution = population[fitness_scores.index(min(fitness_scores))]
+    best_solution_after_fill = fill_shifts(
+        employees, shift_requirements, best_solution[0], best_solution[1]
+    )
+    return convert_employee_shifts_to_schedule(best_solution_after_fill[0])
 
-    print("No perfect solution found.")
-    return population[fitness_scores.index(min(fitness_scores))]
+
+def update_employees(employees):
+    # Maximum hours in a week
+    MAX_WEEK_HOURS = 24 * 7
+
+    for employee in employees:
+        # Set min_hours to 0 if it's None
+        if employee["min_hours"] is None:
+            employee["min_hours"] = 0
+
+        # Set max_hours to 24*7 (168) if it's None
+        if employee["max_hours"] is None:
+            employee["max_hours"] = MAX_WEEK_HOURS
+
+        # Combine skill1, skill2, skill3 into a skills array, filtering out empty strings
+        skills = [
+            employee[key] for key in ["skill1", "skill2", "skill3"] if employee[key]
+        ]
+        employee["skills"] = skills
+
+        # Remove the old skill keys
+        employee.pop("skill1", None)
+        employee.pop("skill2", None)
+        employee.pop("skill3", None)
+
+    return employees
+
+
+# JUST FOR TEST - OMER CAN REMOVE 2/2 ---------------------------------------------
 
 
 def calculate_shift_hours(shift):
@@ -905,50 +1004,10 @@ def print_shift_details(schedule, shift_requirements):
             print("-" * 30)
 
 
-def update_employees(employees):
-    # Maximum hours in a week
-    MAX_WEEK_HOURS = 24 * 7
-
-    for employee in employees:
-        # Set min_hours to 0 if it's None
-        if employee["min_hours"] is None:
-            employee["min_hours"] = 0
-
-        # Set max_hours to 24*7 (168) if it's None
-        if employee["max_hours"] is None:
-            employee["max_hours"] = MAX_WEEK_HOURS
-
-        # Combine skill1, skill2, skill3 into a skills array, filtering out empty strings
-        skills = [
-            employee[key] for key in ["skill1", "skill2", "skill3"] if employee[key]
-        ]
-        employee["skills"] = skills
-
-        # Remove the old skill keys
-        employee.pop("skill1", None)
-        employee.pop("skill2", None)
-        employee.pop("skill3", None)
-
-    return employees
-
-
-def convert_employee_shifts_to_schedule(employee_shifts):
-    schedule = []
-
-    # Iterate over the dictionary with employee IDs and their assigned shifts
-    for emp_id, shifts in employee_shifts.items():
-        for shift in shifts:
-            # Append a new dictionary with employee ID and shift ID to the schedule list
-            schedule.append({"emp_id": emp_id, "shift_id": shift["id"]})
-
-    return schedule
-
-
 def validate_schedule(schedule, shift_requirements, employees, fixed_schedule):
     # Initialize data structures
     employee_shifts = {e["id"]: [] for e in employees}
     shift_worker_count = {s["id"]: 0 for s in shift_requirements}
-    employee_skills = {e["id"]: e["skills"] for e in employees}
 
     # Populate employee shifts and shift worker count
     for entry in schedule:
@@ -988,7 +1047,7 @@ def validate_schedule(schedule, shift_requirements, employees, fixed_schedule):
         if shift is None:
             print(f"Invalid shift ID {shift_id} in shift requirements.")
             return False
-        if count < shift["required_workers"]:
+        if count > shift["required_workers"]:
             print(
                 f"Shift {shift_id} does not meet the required number of workers. Required: {shift['required_workers']}, Assigned: {count}"
             )
@@ -1008,54 +1067,16 @@ def validate_schedule(schedule, shift_requirements, employees, fixed_schedule):
     return True
 
 
+# JUST FOR TEST - OMER CAN REMOVE 2/2 ---------------------------------------------
+
 if __name__ == "__main__":
-    employees = generate_employees(70)
+    start_time = time.time()
     employees = update_employees(employees)
-    start_time = time.time()  # Start timing
     best_solution = genetic_algorithm(
         fixed_schedule,
         employees,
         shift_requirements,
-        pop_size=100,
+        pop_size=30,
         generations=20,
     )
-    print(
-        f"Best solution found: {convert_employee_shifts_to_schedule(best_solution[0])}"
-    )
-    print(
-        validate_schedule(
-            convert_employee_shifts_to_schedule(best_solution[0]),
-            shift_requirements,
-            employees,
-            fixed_schedule,
-        )
-    )
-    # pop = initialize_population(100, fixed_schedule, employees, shift_requirements)
-    # print_schedule(
-    #     convert_employee_shifts_to_schedule(pop[1][0]), shift_requirements, employees
-    # )
-    # print_shift_details(
-    #     convert_employee_shifts_to_schedule(pop[1][0]), shift_requirements
-    # )
-    # print(
-    #     "fitness:",
-    #     fitness(employees, shift_requirements, pop[0][0], pop[0][1]),
-    #     fitness(employees, shift_requirements, pop[1][0], pop[1][1]),
-    # )
-    # mutate(shift_requirements, pop[0][0], pop[0][1], employees, 1)
-    # mutate(shift_requirements, pop[1][0], pop[1][1], employees, 1)
-    # print(
-    #     "fitness:",
-    #     fitness(employees, shift_requirements, pop[0][0], pop[0][1]),
-    #     fitness(employees, shift_requirements, pop[1][0], pop[1][1]),
-    # )
-    # end_time = time.time()  # End timing
-    # print(f"Time taken: {end_time - start_time:.2f} seconds")  # Print elapsed time
-    # start_time = time.time()  # Start timing
-    # child1, child2 = crossover(employees, shift_requirements, pop[0][0], pop[1][0])
-    # print(
-    #     fitness(employees, shift_requirements, child1[0], child1[1]),
-    #     fitness(employees, shift_requirements, child2[0], child2[1]),
-    # )
-    end_time = time.time()  # End timing
-    print(f"Time taken: {end_time - start_time:.2f} seconds")  # Print elapsed time
+    print(best_solution)
