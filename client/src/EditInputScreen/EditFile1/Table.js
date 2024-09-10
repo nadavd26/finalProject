@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import TableRowMemo from './TableRow'
-import Loader from "../../components/Loader";
+import Loader from '../../components/Loader'
 const TableRows = ({ content, errors, onCellEdit, onRowDelete, onRowAdd, rowsToRender, initialRender, initialRenderUpdate }) => {
     const [renderedRows, setRenderedRows] = useState([]);
     const render_all = () => {

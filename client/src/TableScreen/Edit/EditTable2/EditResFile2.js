@@ -192,7 +192,7 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
         }));
         setCurrentIndex(newCurrentIndex)
         setSearchedIndex('')
-        document.getElementById('searchIndexInput').value = '';
+        document.getElementById('searchIndexInput').value = ''; 
     }
 
     const firstPage = () => {

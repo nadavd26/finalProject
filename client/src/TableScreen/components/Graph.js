@@ -38,7 +38,7 @@ const parseStackedShifts = (shifts) => {
             end = 48;
         }
         for (let i = start; i < end; i++) {
-            newShifts[i] += shift[4];
+            newShifts[i] += parseInt(shift[4]);
         }
     }
     return newShifts;
@@ -61,15 +61,20 @@ const wastedHours = (reqs, shifts) => {
 const Plot = createPlotlyComponent(Plotly);
 
 const Graph = ({ reqs, shifts, skill, day, user, setUser }) => {
-    
-    
+    console.log("reqs")
+    console.log(reqs)
+    console.log("shifts")
+    console.log(shifts)
     const [showEmptyGraphModal, setShowEmptyGraphModal] = useState(false);
     const [showDeviationModal, setShowDeviationModal] = useState(false);
     useEffect(() => {
         let newReqs = parseReqs(reqs);
         let newShifts = parseStackedShifts(shifts);
         
-        
+        console.log("newReqs")
+        console.log(newReqs)
+        console.log("newShifts")
+        console.log(newShifts)
         if (!showEmptyGraphModal && reqs.length === 0) {
             
             setShowEmptyGraphModal(true);

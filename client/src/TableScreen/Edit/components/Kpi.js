@@ -1,13 +1,14 @@
 import { useState } from "react";
 import up from '../Images/up.jpg';
 import down from '../Images/down.jpg';
+import equal from '../Images/equal.webp'
 import { Modal, Button } from 'react-bootstrap';
 
 const Kpi = ({ name, value, initialValue, description, maxWidth }) => {
     const [showModal, setShowModal] = useState(false);
-    const imgType = value > initialValue ? up : down;
-    const modalTextType = value > initialValue ? "text-danger" : "text-success";
-    const modalButtonType = value > initialValue ? "danger" : "success";
+    const imgType = value > initialValue ? up : value == initialValue ? equal : down;
+    const modalTextType = value > initialValue ? "text-danger" : value == initialValue ? "text-warning": "text-success";
+    const modalButtonType = value > initialValue ? "danger" : value == initialValue ? "warning": "success";
 
     const containerStyle = {
         border: '1px solid black',
