@@ -3,15 +3,16 @@ import time
 from datetime import datetime, timedelta
 from joblib import Parallel, delayed
 from collections import defaultdict
+import copy
 
 
 fixed_schedule = [
-    {"emp_id": 0, "shift_id": 8},
-    {"emp_id": 2, "shift_id": 4},
-    {"emp_id": 2, "shift_id": 5},
-    {"emp_id": 3, "shift_id": 4},
-    {"emp_id": 2, "shift_id": 8},
-    {"emp_id": 10, "shift_id": 0},
+    # {"emp_id": 0, "shift_id": 8},
+    # {"emp_id": 2, "shift_id": 4},
+    # {"emp_id": 2, "shift_id": 5},
+    # {"emp_id": 3, "shift_id": 4},
+    # {"emp_id": 2, "shift_id": 8},
+    # {"emp_id": 10, "shift_id": 0},
 ]
 
 shift_requirements = [
@@ -481,100 +482,106 @@ def shifts_overlap(shift1, shift2):
     return start_time1 < end_time2 and start_time2 < end_time1
 
 
-def calculate_employee_hours(schedule, employee_id, shift_requirements):
+def calculate_employee_hours(schedule_of_employee, shift_requirements):
     total_hours = 0
-    for entry in schedule:
-        if entry["emp_id"] == employee_id:
-            shift = get_shift_by_id(entry["shift_id"], shift_requirements)
-            start_time = parse_time(shift["start_time"])
-            end_time = parse_time(shift["end_time"])
-            total_hours += (end_time - start_time).seconds / 3600
+    for shift in schedule_of_employee:
+        start_time = parse_time(shift["start_time"])
+        end_time = parse_time(shift["end_time"])
+        total_hours += (end_time - start_time).seconds / 3600
     return total_hours
 
 
-def generate_random_schedule(fixed_schedule, employees, shift_requirements):
-    schedule = fixed_schedule.copy()
+def generate_random_schedule(
+    employees, shift_requirements, employee_shifts_global, shift_worker_count_global
+):
+    employee_shifts = copy.deepcopy(employee_shifts_global)
+    shift_worker_count = copy.deepcopy(shift_worker_count_global)
     random_employees = random.sample(employees, len(employees))
     random_shift_requirements = random.sample(
         shift_requirements, len(shift_requirements)
     )
 
-    # Initialize shift worker count dictionary
-    shift_worker_count = {shift["id"]: 0 for shift in shift_requirements}
-
-    # Dictionary to track employee shifts
-    employee_shifts = {e["id"]: [] for e in employees}
-
-    for s in schedule:
-        shift_worker_count[s["shift_id"]] += 1
-        employee_shifts[s["emp_id"]].append(
-            get_shift_by_id(s["shift_id"], shift_requirements)
-        )
-
     # First round: Satisfy minimum hours
     for employee in random_employees:
         current_hours = calculate_employee_hours(
-            schedule, employee["id"], shift_requirements
+            employee_shifts[employee["id"]], shift_requirements
         )
+        current_index = 0
         while current_hours < employee["min_hours"]:
             found_shift = False
-            for shift in random_shift_requirements:
+            for i in range(current_index, len(random_shift_requirements)):
+                shift = random_shift_requirements[i]
                 if (
-                    shift["skill"] in employee["skills"]
-                    and shift_worker_count[shift["id"]] < shift["required_workers"]
+                    shift_worker_count[shift["id"]] < shift["required_workers"]
+                    and shift["skill"] in employee["skills"]
                     and not any(
                         shifts_overlap(shift, existing_shift)
                         for existing_shift in employee_shifts[employee["id"]]
                     )
                 ):
-                    schedule.append({"emp_id": employee["id"], "shift_id": shift["id"]})
                     shift_worker_count[shift["id"]] += 1
                     additional_hours = (
                         parse_time(shift["end_time"]) - parse_time(shift["start_time"])
                     ).seconds / 3600
                     current_hours += additional_hours
                     employee_shifts[employee["id"]].append(shift)
+                    current_index = i + 1
                     found_shift = True
                     break
             if not found_shift:
                 break
 
     # Second round: Try to reach maximum hours
-    random_employees = random.sample(employees, len(employees))
     for employee in random_employees:
         current_hours = calculate_employee_hours(
-            schedule, employee["id"], shift_requirements
+            employee_shifts[employee["id"]], shift_requirements
         )
+        current_index = 0
         while current_hours < employee["max_hours"]:
             found_shift = False
-            for shift in random_shift_requirements:
+            for i in range(current_index, len(random_shift_requirements)):
+                shift = random_shift_requirements[i]
                 additional_hours = (
                     parse_time(shift["end_time"]) - parse_time(shift["start_time"])
                 ).seconds / 3600
                 if (
                     current_hours + additional_hours <= employee["max_hours"]
-                    and shift["skill"] in employee["skills"]
                     and shift_worker_count[shift["id"]] < shift["required_workers"]
+                    and shift["skill"] in employee["skills"]
                     and not any(
                         shifts_overlap(shift, existing_shift)
                         for existing_shift in employee_shifts[employee["id"]]
                     )
                 ):
-                    schedule.append({"emp_id": employee["id"], "shift_id": shift["id"]})
                     shift_worker_count[shift["id"]] += 1
                     current_hours += additional_hours
                     employee_shifts[employee["id"]].append(shift)
+                    current_index = i + 1
                     found_shift = True
                     break
             if not found_shift:
                 break
 
-    return schedule
+    return employee_shifts, shift_worker_count
 
 
-def initialize_population_par(pop_size, fixed_schedule, employees, shift_requirements):
+def initialize_population(pop_size, fixed_schedule, employees, shift_requirements):
+    # Initialize shift worker count dictionary
+    shift_worker_count = {shift["id"]: 0 for shift in shift_requirements}
+
+    # Dictionary to track employee shifts
+    employee_shifts = {e["id"]: [] for e in employees}
+
+    for s in fixed_schedule:
+        shift_worker_count[s["shift_id"]] += 1
+        employee_shifts[s["emp_id"]].append(
+            get_shift_by_id(s["shift_id"], shift_requirements)
+        )
+
     def generate_schedule():
-        return generate_random_schedule(fixed_schedule, employees, shift_requirements)
+        return generate_random_schedule(
+            employees, shift_requirements, employee_shifts, shift_worker_count
+        )
 
     # Using joblib to parallelize the schedule generation
     population = Parallel(n_jobs=-1)(
@@ -583,52 +590,123 @@ def initialize_population_par(pop_size, fixed_schedule, employees, shift_require
     return population
 
 
-def initialize_population(pop_size, fixed_schedule, employees, shift_requirements):
-    population = []
-    for _ in range(pop_size):
-        population.append(
-            generate_random_schedule(fixed_schedule, employees, shift_requirements)
-        )
-    return population
-
-
-def fitness(schedule, employees, shift_requirements):
-    CONTRACT_VIOLATION_PENALTY = 10
+def fitness(employees, shift_requirements, employee_shifts, shift_worker_count):
+    CONTRACT_VIOLATION_PENALTY = 5
     total_penalty = 0
-    emp_hours = {emp["id"]: 0 for emp in employees}
-
-    shift_count = {}
-    for assignment in schedule:
-        emp_id = assignment["emp_id"]
-        shift_id = assignment["shift_id"]
-
-        shift = get_shift_by_id(shift_id, shift_requirements)
-        shift_hours = (
-            parse_time(shift["end_time"]) - parse_time(shift["start_time"])
-        ).total_seconds() / 3600
-        emp_hours[emp_id] += shift_hours
-
-        if shift_id not in shift_count:
-            shift_count[shift_id] = 0
-        shift_count[shift_id] += 1
-
-    # Soft constraint: Check if employees meet their min and max hours
+    for shift in shift_requirements:
+        total_penalty += shift["required_workers"] - shift_worker_count[shift["id"]]
     for emp in employees:
-        if emp_hours[emp["id"]] < emp["min_hours"]:
-            total_penalty += (
-                CONTRACT_VIOLATION_PENALTY + emp["min_hours"] - emp_hours[emp["id"]]
-            )
-        if emp_hours[emp["id"]] > emp["max_hours"]:
-            total_penalty += (
-                CONTRACT_VIOLATION_PENALTY + emp_hours[emp["id"]] - emp["max_hours"]
-            )
-
-    # Soft constraint: Penalize shifts with fewer workers than required
-    for shift_id, count in shift_count.items():
-        required = get_shift_by_id(shift_id, shift_requirements)["required_workers"]
-        total_penalty += max(0, required - count)
-
+        total_hours = 0
+        for shift in employee_shifts[emp["id"]]:
+            shift_hours = (
+                parse_time(shift["end_time"]) - parse_time(shift["start_time"])
+            ).total_seconds() / 3600
+            total_hours += shift_hours
+        if total_hours < emp["min_hours"]:
+            total_penalty += CONTRACT_VIOLATION_PENALTY + emp["min_hours"] - total_hours
+        if total_hours > emp["max_hours"]:
+            total_penalty += CONTRACT_VIOLATION_PENALTY + total_hours - emp["max_hours"]
     return total_penalty
+
+
+def crossover(
+    employees,
+    shift_requirements,
+    parent1_employee_shifts,
+    parent2_employee_shifts,
+):
+    # Initialize child shift dictionaries
+    child1_employee_shifts = {emp["id"]: [] for emp in employees}
+    child2_employee_shifts = {emp["id"]: [] for emp in employees}
+
+    # Initialize shift worker count dictionaries
+    child1_shift_worker_count = {shift["id"]: 0 for shift in shift_requirements}
+    child2_shift_worker_count = {shift["id"]: 0 for shift in shift_requirements}
+
+    # Shuffle the list of employees to randomize crossover assignment
+    random_employees = random.sample(employees, len(employees))
+
+    # Split the employees into two halves for inheritance from parent1 and parent2
+    mid_point = len(random_employees) // 2
+
+    for i, employee in enumerate(random_employees):
+        emp_id = employee["id"]
+
+        if i < mid_point:
+            # Child 1 takes from Parent 1, Child 2 from Parent 2
+            parent1_shifts = parent1_employee_shifts[emp_id]
+            parent2_shifts = parent2_employee_shifts[emp_id]
+        else:
+            # Child 1 takes from Parent 2, Child 2 from Parent 1
+            parent1_shifts = parent2_employee_shifts[emp_id]
+            parent2_shifts = parent1_employee_shifts[emp_id]
+
+        # Assign shifts to Child 1, ensuring the shift requirement is not exceeded
+        for shift in parent1_shifts:
+            shift_id = shift["id"]
+            required_workers = shift["required_workers"]
+            if child1_shift_worker_count[shift_id] < required_workers:
+                child1_employee_shifts[emp_id].append(shift)
+                child1_shift_worker_count[shift_id] += 1
+
+        # Assign shifts to Child 2, ensuring the shift requirement is not exceeded
+        for shift in parent2_shifts:
+            shift_id = shift["id"]
+            required_workers = shift["required_workers"]
+            if child2_shift_worker_count[shift_id] < required_workers:
+                child2_employee_shifts[emp_id].append(shift)
+                child2_shift_worker_count[shift_id] += 1
+
+    return (child1_employee_shifts, child1_shift_worker_count), (
+        child2_employee_shifts,
+        child2_shift_worker_count,
+    )
+
+
+def mutate(
+    shift_requirements,
+    employee_shifts,
+    shift_worker_count,
+    employees,
+    mutation_rate=0.1,
+):
+    # Determine if mutation should occur based on the mutation rate
+    if random.random() > mutation_rate:
+        return
+
+    # Select a random employee
+    employee = random.choice(employees)
+    employee_id = employee["id"]
+
+    assigned_shifts = employee_shifts[employee_id]
+
+    if assigned_shifts:
+        # Randomly select one shift to remove if there are assigned shifts
+        shift_to_remove = random.choice(assigned_shifts)
+        assigned_shifts.remove(shift_to_remove)
+        shift_worker_count[
+            shift_to_remove["id"]
+        ] -= 1  # Decrease the count for the removed shift
+
+    # Shuffle shift requirements to randomly order them
+    random_shift_requirements = random.sample(
+        shift_requirements, len(shift_requirements)
+    )
+
+    # Try to add a new valid shift
+    for shift in random_shift_requirements:
+        if (
+            shift_worker_count[shift["id"]] < shift["required_workers"]
+            and shift["skill"] in employee["skills"]
+            and not any(
+                shifts_overlap(shift, existing_shift)
+                for existing_shift in assigned_shifts
+            )
+        ):
+            # Assign the new shift
+            assigned_shifts.append(shift)
+            shift_worker_count[shift["id"]] += 1
+            break  # Return
 
 
 def calculate_crossover_probabilities(fitness_scores):
@@ -654,7 +732,7 @@ def select_parents(population, crossover_probabilities):
 #     stagnation_threshold=5,  # Number of generations with no improvement to trigger mutation rate increase
 # ):
 #     population = initialize_population(pop_size)
-#     fitness_scores = [fitness(genome) for genome in population]
+#     fitness_scores = [fitness(schedule) for schedule in population]
 #     num_elites = int(pop_size * elitism_rate)
 #     num_new_population = pop_size - num_elites
 #     previous_best_fitness = -1
@@ -666,9 +744,9 @@ def select_parents(population, crossover_probabilities):
 
 #         # Check for perfect solution
 #         if best_fitness == 0:
-#             best_genome = population[fitness_scores.index(best_fitness)]
-#             print(f"Perfect solution found in generation {generation}: {best_genome}")
-#             return best_genome
+#             best_schedule = population[fitness_scores.index(best_fitness)]
+#             print(f"Perfect solution found in generation {generation}: {best_schedule}")
+#             return best_schedule
 
 #         # Check for stagnation
 #         if best_fitness == previous_best_fitness:
@@ -683,7 +761,7 @@ def select_parents(population, crossover_probabilities):
 
 #         crossover_probs = calculate_crossover_probabilities(fitness_scores)
 
-#         # Elitism: Get the indices of the top num_elites genomes
+#         # Elitism: Get the indices of the top num_elites schedules
 #         elite_indices = sorted(
 #             range(len(fitness_scores)), key=lambda x: fitness_scores[x]
 #         )[:num_elites]
@@ -703,7 +781,7 @@ def select_parents(population, crossover_probabilities):
 #             new_population.append(child2)
 
 #         new_population = new_population[:num_new_population]  # Ensure correct size
-#         new_fitness_scores = [fitness(genome) for genome in new_population]
+#         new_fitness_scores = [fitness(schedule) for schedule in new_population]
 
 #         population = elite_population + new_population
 #         fitness_scores = elite_fitness_scores + new_fitness_scores
@@ -820,6 +898,18 @@ def update_employees(employees):
     return employees
 
 
+def convert_employee_shifts_to_schedule(employee_shifts):
+    schedule = []
+
+    # Iterate over the dictionary with employee IDs and their assigned shifts
+    for emp_id, shifts in employee_shifts.items():
+        for shift in shifts:
+            # Append a new dictionary with employee ID and shift ID to the schedule list
+            schedule.append({"emp_id": emp_id, "shift_id": shift["id"]})
+
+    return schedule
+
+
 if __name__ == "__main__":
     start_time = time.time()  # Start timing
     # best_solution = genetic_algorithm(
@@ -827,15 +917,34 @@ if __name__ == "__main__":
     #     generations=GENERATIONS,
     # )
     # print(f"Best solution found: {best_solution}")
-    employees = generate_employees(100)
+    employees = generate_employees(20)
     employees = update_employees(employees)
-    pop = initialize_population_par(100, fixed_schedule, employees, shift_requirements)
-    print_schedule(pop[1], shift_requirements, employees)
-    print_shift_details(pop[1], shift_requirements)
+    pop = initialize_population(100, fixed_schedule, employees, shift_requirements)
+    # print_schedule(
+    #     convert_employee_shifts_to_schedule(pop[1][0]), shift_requirements, employees
+    # )
+    # print_shift_details(
+    #     convert_employee_shifts_to_schedule(pop[1][0]), shift_requirements
+    # )
     print(
         "fitness:",
-        fitness(pop[0], employees, shift_requirements),
-        fitness(pop[1], employees, shift_requirements),
+        fitness(employees, shift_requirements, pop[0][0], pop[0][1]),
+        fitness(employees, shift_requirements, pop[1][0], pop[1][1]),
+    )
+    mutate(shift_requirements, pop[0][0], pop[0][1], employees, 1)
+    mutate(shift_requirements, pop[1][0], pop[1][1], employees, 1)
+    print(
+        "fitness:",
+        fitness(employees, shift_requirements, pop[0][0], pop[0][1]),
+        fitness(employees, shift_requirements, pop[1][0], pop[1][1]),
+    )
+    end_time = time.time()  # End timing
+    print(f"Time taken: {end_time - start_time:.2f} seconds")  # Print elapsed time
+    start_time = time.time()  # Start timing
+    child1, child2 = crossover(employees, shift_requirements, pop[0][0], pop[1][0])
+    print(
+        fitness(employees, shift_requirements, child1[0], child1[1]),
+        fitness(employees, shift_requirements, child2[0], child2[1]),
     )
     end_time = time.time()  # End timing
     print(f"Time taken: {end_time - start_time:.2f} seconds")  # Print elapsed time

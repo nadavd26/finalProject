@@ -388,6 +388,18 @@ def update_employees(employees):
     return employees
 
 
+def convert_employee_shifts_to_schedule(employee_shifts):
+    schedule = []
+
+    # Iterate over the dictionary with employee IDs and their assigned shifts
+    for emp_id, shifts in employee_shifts.items():
+        for shift in shifts:
+            # Append a new dictionary with employee ID and shift ID to the schedule list
+            schedule.append({"emp_id": emp_id, "shift_id": shift["id"]})
+
+    return schedule
+
+
 if __name__ == "__main__":
     employees = update_employees(employees)
     print(generate_random_schedule(fixed_schedule, employees, shift_requirements))
