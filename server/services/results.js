@@ -137,7 +137,7 @@ const runAlgo2 = async (fixedSchedule, employees, shiftRequirements, userId) => 
         await fs.promises.writeFile(shiftRequirementsFileName, shiftRequirementsJson);
 
         // Spawn a Python process
-        const algorithm2 = spawn('python3', ['./algorithm/algorithm2_example.py']);
+        const algorithm2 = spawn('python3', ['./algorithm/algorithm2.py']);
 
         let outputBuffer = '';
 
