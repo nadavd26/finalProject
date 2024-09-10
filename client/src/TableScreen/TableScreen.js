@@ -432,9 +432,9 @@ function TableScreen({ user, setUser }) {
                                 src={edit}
                                 alt="Edit"
                                 style={{
-                                    width: "100%", 
-                                    height: "100%", 
-                                    objectFit: "contain", 
+                                    width: "100%",
+                                    height: "100%",
+                                    objectFit: "contain",
                                 }}
                             />
                         </Button>
@@ -490,7 +490,17 @@ function TableScreen({ user, setUser }) {
                         </button>
                     </Modal.Header>
                     <Modal.Body style={{ maxHeight: 'calc(100vh - 210px)', overflowY: 'auto', overflowWrap: 'break-word' }}>
-                        {infoTable2}
+                        {infoTable2.split('\n').map((line, index) => (
+                            <div key={index}>
+                                {line.split(/(\d+)/).map((part, i) => (
+                                    /\d+/.test(part) ? (
+                                        <span key={i} style={{ color: 'red' }}>{part}</span>
+                                    ) : (
+                                        <span key={i}>{part}</span>
+                                    )
+                                ))}
+                            </div>
+                        ))}
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={() => setShowInfo2Modal(false)}>

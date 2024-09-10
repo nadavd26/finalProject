@@ -146,7 +146,7 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
         var newUser = user
         newUser.algo2Table = initialTable
         newUser.contracts = contracts
-        algo2api.postAlgo2Results(user.token, changeInfo, () => { })
+        await algo2api.postAlgo2Results(user.token, changeInfo)
         setShiftsPerWorkers(renderInfo.shiftsPerWorkers)
         setUser(newUser)
         setInEdit(false)
