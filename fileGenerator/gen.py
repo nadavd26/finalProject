@@ -32,14 +32,33 @@ def generate_valid_time_intervals(times):
             intervals.append((times[i], times[j]))
     return intervals
 
+def generate_valid_shifts_intervals(times):
+    intervals = []
+    def time_to_minutes(time_str):
+        """Convert HH:MM time string to minutes since start of the day."""
+        hours, minutes = map(int, time_str.split(':'))
+        return hours * 60 + minutes  
+    for i in range(len(times) - 1):
+        start_time = times[i]
+        start_time_minutes = time_to_minutes(start_time)  
+        for j in range(i + 1, len(times)):
+            end_time = times[j]
+            end_time_minutes = time_to_minutes(end_time)
+            duration = end_time_minutes - start_time_minutes
+            if 300 <= duration <= 600:
+                intervals.append((start_time, end_time))
+    
+    return intervals
+
 def random_day():
     return random.choice(["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"])
 
 def random_min_hours():
-    return round(random.uniform(0, 168) * 2) / 2  # Ensures increments of 0.5
+    return round(random.uniform(20, 62) * 2) / 2  # Ensures increments of 0.5 and min hours is at least 20
 
 def random_max_hours(min_hours):
-    return round(random.uniform(min_hours + 0.5, 168) * 2) / 2  # Ensures increments of 0.5 and greater than min_hours
+    max_hours = round(random.uniform(min_hours + 0.5, 63) * 2) / 2  # Ensures increments of 0.5, max is at most 63
+    return min(max_hours, 63)  # Ensures max_hours does not exceed 63
 
 def random_workers(total_workers):
     return random.randint(1, total_workers)
@@ -85,32 +104,42 @@ def generate_csv_1(skills_array, num_lines, filename):
 
 def generate_csv_3(skills_array, num_lines, filename):
     times = create_time_array()
-    intervals = generate_valid_time_intervals(times)
-    random.shuffle(intervals)  # Shuffle to randomize the order
-    used_intervals = set()  # Track used intervals to avoid duplicates
-    num_lines = min(num_lines, len(intervals))  # Limit number of lines based on available intervals
+    intervals = generate_valid_shifts_intervals(times)
+    
+    # Track used intervals for each combination of day and skill
+    used_intervals = {}  # Dictionary with key (day, skill) -> set of used intervals   
+    
     
     with open(filename, 'w', newline='') as csvfile:
-        writer = csv.writer(csvfile, delimiter=',')
+        writer = csv.writer(csvfile, delimiter=',')     
         
         for _ in range(num_lines):
             skill = random.choice(skills_array)
-            day = random_day()
+            day = random_day()           
             
-            # Get a valid interval that hasn't been used
+            # Initialize used intervals set for this day/skill if it doesn't exist
+            if (day, skill) not in used_intervals:
+                used_intervals[(day, skill)] = set()
+                
+            # Re-shuffle the intervals for each day/skill combination to ensure more randomness
+            random.shuffle(intervals)
+            
+            # Get a valid interval that hasn't been used for this day/skill
             for interval in intervals:
-                if interval not in used_intervals:
+                if interval not in used_intervals[(day, skill)]:
                     from_time, until_time = interval
-                    used_intervals.add(interval)
+                    used_intervals[(day, skill)].add(interval)  # Mark interval as used for this day/skill
                     break
             else:
                 # If no interval found, exit early
-                continue
+                continue       
             
             cost = random_cost()
             writer.writerow([skill, day, from_time, until_time, cost])
     
     return used_intervals  # Return intervals to cross-check with Table 2
+
+
 
 def count_rows_in_csv(filename):
     with open(filename, 'r') as csvfile:
@@ -192,4 +221,4 @@ def main(num_skills, num_lines_1, num_lines_2, num_lines_3):
     generate_csv_2(skills_array, num_lines_2, 'csv2.csv', 'csv1.csv')
 
 # Example usage:
-main(num_skills=5, num_lines_1=100, num_lines_2=100, num_lines_3=100)
+main(num_skills=20, num_lines_1=1000, num_lines_2=1000, num_lines_3=1000)
