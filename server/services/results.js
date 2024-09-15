@@ -131,13 +131,44 @@ const runAlgo2 = async (fixedSchedule, employees, shiftRequirements, userId) => 
     const shiftRequirementsFileName = `./algorithm/shiftRequirements${userId}.json`;
 
     try {
+        function convertFixed(fixed) {
+            // Parse the JSON string into an array
+            const fixedArray = JSON.parse(fixed);
+        
+            // Convert the array to the desired format
+            return fixedArray.map(item => `${item.shift_id},${item.emp_id}`).join("=");
+        }
+
+        function convertEmployees(employees) {
+            // Parse the JSON string if necessary
+            const employeesArray = typeof employees === 'string' ? JSON.parse(employees) : employees;
+        
+            // Convert the array to the desired format
+            return employeesArray.map(employee => 
+                `${employee.id},${employee.name},${employee.skill1},${employee.skill2 || ''},${employee.skill3 || ''},${employee.min_hours || 0},${employee.max_hours || 168}`
+            ).join("=");
+        }
+
+        function convertShifts(shifts) {
+            // Parse the JSON string if necessary
+            const shiftsArray = typeof shifts === 'string' ? JSON.parse(shifts) : shifts;
+        
+            // Convert the array to the desired format
+            return shiftsArray.map(shift => 
+                `${shift.id},${shift.skill},${shift.day},${shift.start_time},${shift.end_time},${shift.required_workers}`
+            ).join("=");
+        }
+        
+
         // Write JSON data to temporary files
-        await fs.promises.writeFile(fixedScheduleFileName, fixedScheduleJson);
-        await fs.promises.writeFile(employeesFileName, employeesJson);
-        await fs.promises.writeFile(shiftRequirementsFileName, shiftRequirementsJson);
+        console.log("fixed: " + fixedScheduleJson)
+        await fs.promises.writeFile(fixedScheduleFileName, convertFixed(fixedScheduleJson));
+        await fs.promises.writeFile(employeesFileName, convertEmployees(employeesJson));
+        await fs.promises.writeFile(shiftRequirementsFileName, convertShifts(shiftRequirementsJson));
 
         // Spawn a Python process
-        const algorithm2 = spawn('python3', ['./algorithm/algorithm2_example.py']);
+        const algo2Path = './algorithm/algo2';
+        const algorithm2 = spawn('wsl', [algo2Path]);
 
         let outputBuffer = '';
 
