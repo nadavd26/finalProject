@@ -167,7 +167,7 @@ const runAlgo2 = async (fixedSchedule, employees, shiftRequirements, userId) => 
         await fs.promises.writeFile(shiftRequirementsFileName, convertShifts(shiftRequirementsJson));
 
         // Spawn a Python process
-        const algo2Path = '/mnt/c/Users/nirka/OneDrive/works in madmah/MAIN PROJECT/git/finalProject/server/algorithm/algo2';
+        const algo2Path = './algorithm/algo2';
         const algorithm2 = spawn('wsl', [algo2Path]);
 
         let outputBuffer = '';
