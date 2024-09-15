@@ -185,7 +185,7 @@ const transformAssignedShiftTablesToMap = async (assignedShiftTables) => {
             assignedShift.startTime,
             assignedShift.finishTime,
             assignedShift.assignedWorkerName,
-            assignedShift.shiftId,
+            assignedShift.shiftId - 1,
             assignedShift.id
         ]));
         resultMap.get(key).push(...assignedShiftsData);
