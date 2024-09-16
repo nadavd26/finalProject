@@ -1,465 +1,895 @@
-Saturday,e,01:00,07:30,64
-Wednesday,h,09:00,13:00,53
-Thursday,m,04:30,09:00,36
-Thursday,o,04:30,18:30,7
-Tuesday,d,01:30,04:30,107
-Wednesday,h,16:00,16:30,59
-Thursday,d,11:30,16:30,44
-Saturday,a,10:30,11:00,38
-Friday,e,10:30,18:00,90
-Friday,s,17:00,20:30,15
-Thursday,i,05:30,12:00,64
-Sunday,g,02:30,22:00,45
-Wednesday,n,10:30,15:00,51
-Wednesday,h,03:30,04:30,107
-Monday,d,09:30,18:30,61
-Sunday,n,05:00,09:30,36
-Saturday,l,01:30,19:30,81
-Friday,f,15:30,20:00,52
-Friday,h,04:30,09:30,74
-Thursday,h,04:00,19:00,50
-Friday,n,04:00,07:00,9
-Monday,i,10:00,19:00,116
-Sunday,d,06:30,11:30,43
-Thursday,b,08:30,13:30,120
-Thursday,o,20:00,23:00,4
-Tuesday,s,06:30,23:00,17
-Monday,d,02:00,08:30,85
-Sunday,h,16:00,23:30,123
-Tuesday,g,01:30,07:30,91
-Wednesday,q,04:00,06:30,14
-Wednesday,c,07:30,13:00,49
-Monday,t,18:00,23:30,113
-Wednesday,a,05:00,13:00,26
-Wednesday,s,12:30,21:00,16
-Friday,c,06:30,19:30,84
-Friday,c,02:30,04:30,63
-Tuesday,e,16:30,17:00,52
-Thursday,e,12:30,20:30,87
-Friday,s,02:00,16:30,128
-Thursday,g,08:30,14:00,38
-Sunday,s,05:30,10:00,106
-Wednesday,j,06:30,22:30,37
-Monday,t,13:00,15:00,38
-Monday,t,02:30,12:00,89
-Wednesday,a,15:30,16:00,33
-Tuesday,t,05:30,12:00,125
-Tuesday,f,03:00,23:00,13
-Sunday,s,11:30,12:00,45
-Wednesday,g,02:00,04:00,72
-Saturday,m,07:30,22:00,126
-Tuesday,j,01:00,09:00,100
-Tuesday,a,01:30,16:30,27
-Sunday,s,13:30,19:30,117
-Thursday,t,13:30,15:30,20
-Saturday,j,00:00,11:00,49
-Thursday,n,20:30,21:00,86
-Tuesday,q,02:00,15:00,50
-Wednesday,m,15:00,23:00,54
-Thursday,h,02:30,04:00,7
-Sunday,a,20:30,21:30,92
-Monday,e,06:00,16:30,111
-Monday,h,18:00,21:00,34
-Saturday,l,20:00,20:30,77
-Saturday,d,13:00,21:30,96
-Tuesday,q,17:30,22:30,12
-Tuesday,g,11:30,15:00,27
-Friday,p,03:30,10:00,38
-Friday,c,04:30,06:30,85
-Friday,c,01:30,02:00,15
-Thursday,f,07:00,10:30,7
-Thursday,a,02:00,18:30,63
-Saturday,j,11:00,12:00,35
-Friday,d,11:30,19:00,37
-Sunday,q,03:30,07:00,81
-Friday,a,15:00,20:30,94
-Thursday,c,00:30,10:00,58
-Saturday,b,22:30,23:00,43
-Wednesday,c,19:00,22:30,101
-Thursday,l,07:30,21:00,41
-Monday,g,01:30,15:00,5
-Saturday,a,05:00,05:30,79
-Saturday,r,15:30,22:30,49
-Sunday,k,09:00,10:00,44
-Saturday,j,17:30,18:00,74
-Monday,a,15:00,18:30,88
-Friday,m,01:30,07:30,83
-Thursday,f,11:30,12:00,48
-Friday,b,14:30,22:30,60
-Sunday,t,06:00,12:00,47
-Monday,m,02:00,18:00,37
-Thursday,j,17:00,20:30,44
-Wednesday,p,18:30,19:00,2
-Monday,o,04:30,16:30,111
-Wednesday,g,05:00,19:00,80
-Thursday,n,09:30,19:30,65
-Monday,d,19:30,22:30,32
-Saturday,s,01:00,03:00,119
-Thursday,t,08:00,10:30,121
-Sunday,q,16:30,17:30,50
-Sunday,k,13:30,16:30,71
-Saturday,a,05:30,06:30,90
-Friday,i,14:00,16:00,81
-Saturday,d,05:00,06:00,79
-Tuesday,n,10:00,19:30,79
-Tuesday,a,18:00,23:30,56
-Sunday,b,19:30,23:00,103
-Saturday,p,01:00,11:00,6
-Friday,s,20:30,21:30,117
-Saturday,o,18:00,21:30,109
-Sunday,p,07:30,11:30,29
-Wednesday,t,14:30,18:30,72
-Tuesday,s,02:00,06:00,54
-Sunday,l,01:00,16:30,31
-Sunday,o,03:00,20:00,24
-Monday,q,01:00,19:30,93
-Wednesday,s,00:30,04:00,23
-Saturday,f,00:30,22:30,78
-Monday,j,13:30,14:00,21
-Wednesday,h,02:00,03:30,84
-Thursday,h,19:30,21:00,7
-Monday,m,20:00,22:30,22
-Saturday,e,13:00,14:00,86
-Sunday,g,00:30,01:30,109
-Thursday,f,19:30,20:00,55
-Wednesday,a,20:00,22:30,98
-Tuesday,j,14:00,15:30,66
-Sunday,l,18:30,21:00,86
-Sunday,b,04:30,15:00,54
-Thursday,t,02:30,08:00,15
-Wednesday,h,19:00,21:00,73
-Friday,c,19:30,22:30,104
-Tuesday,a,16:30,17:30,74
-Wednesday,i,06:00,12:30,68
-Thursday,t,10:30,12:00,71
-Tuesday,f,01:00,03:00,39
-Sunday,f,07:30,20:30,90
-Sunday,r,11:30,16:00,82
-Monday,d,08:30,09:30,98
-Monday,m,18:00,18:30,82
-Thursday,o,01:00,01:30,119
-Tuesday,q,16:00,17:00,108
-Thursday,i,22:00,23:30,91
-Friday,b,02:00,14:00,58
-Saturday,q,02:30,12:30,76
-Tuesday,c,06:30,10:00,14
-Wednesday,r,06:00,17:00,52
-Saturday,l,23:00,23:30,53
-Tuesday,k,09:30,19:30,47
-Friday,i,00:30,06:30,78
-Friday,i,08:00,13:00,9
-Tuesday,s,23:00,23:30,66
-Tuesday,c,12:30,17:00,33
-Monday,j,05:30,08:30,27
-Friday,h,17:30,21:00,81
-Saturday,o,03:30,08:00,107
-Monday,r,06:00,11:30,117
-Tuesday,q,00:30,01:30,101
-Sunday,d,01:30,02:30,25
-Monday,a,02:00,09:00,11
-Friday,r,09:30,14:00,38
-Tuesday,s,01:30,02:00,35
-Sunday,h,08:00,15:00,26
-Saturday,d,01:00,02:00,38
-Wednesday,l,01:30,22:30,109
-Wednesday,s,04:30,11:00,81
-Sunday,e,08:30,09:00,73
-Wednesday,c,15:00,15:30,35
-Monday,o,00:00,04:30,22
-Saturday,i,20:00,20:30,64
-Thursday,t,16:30,19:30,114
-Saturday,n,09:00,23:00,54
-Friday,b,01:00,02:00,69
-Sunday,o,02:30,03:00,67
-Monday,i,04:30,06:00,23
-Friday,e,08:00,09:30,61
-Tuesday,d,05:00,15:00,15
-Friday,r,18:30,20:30,91
-Thursday,c,14:30,17:00,49
-Wednesday,n,03:30,06:30,14
-Thursday,k,03:30,11:30,44
-Monday,t,15:30,18:00,101
-Thursday,b,03:00,06:30,117
-Sunday,t,15:00,16:00,13
-Tuesday,r,11:30,16:30,78
-Sunday,j,05:00,19:00,13
-Friday,c,00:30,01:30,62
-Wednesday,m,01:00,14:00,20
-Wednesday,r,18:00,23:30,3
-Thursday,e,01:30,02:00,31
-Sunday,a,03:30,04:00,9
-Wednesday,b,12:30,15:00,44
-Friday,a,01:00,11:00,48
-Sunday,k,11:00,11:30,72
-Saturday,j,13:30,14:00,26
-Friday,d,20:00,23:00,3
-Monday,t,00:30,02:00,120
-Monday,e,20:00,23:00,102
-Monday,q,19:30,21:30,79
-Tuesday,k,02:30,04:00,78
-Sunday,c,03:00,08:00,47
-Tuesday,e,04:00,13:00,17
-Tuesday,j,20:30,21:00,44
-Tuesday,b,02:30,13:00,63
-Monday,p,06:30,19:30,43
-Friday,t,04:30,17:30,43
-Sunday,l,17:30,18:30,134
-Monday,e,17:30,19:00,74
-Tuesday,a,17:30,18:00,97
-Saturday,n,00:00,01:00,8
-Wednesday,q,11:00,11:30,65
-Friday,r,20:30,22:30,63
-Friday,d,02:00,09:30,22
-Sunday,q,21:00,21:30,95
-Sunday,t,16:30,18:30,111
-Wednesday,p,10:30,18:00,106
-Monday,o,21:30,23:00,49
-Wednesday,j,03:30,06:00,3
-Saturday,m,04:00,05:30,131
-Monday,n,10:00,12:00,11
-Tuesday,s,00:30,01:30,131
-Wednesday,s,23:00,23:30,10
-Friday,l,02:00,21:30,42
-Tuesday,d,16:00,17:00,104
-Sunday,h,02:00,03:30,65
-Wednesday,m,00:00,01:00,127
-Monday,s,08:00,19:00,49
-Friday,k,08:00,21:00,41
-Saturday,p,18:00,21:30,45
-Thursday,i,00:00,02:30,97
-Monday,r,02:00,04:30,43
-Saturday,s,11:30,17:00,44
-Monday,m,19:30,20:00,131
-Monday,d,23:00,23:30,76
-Monday,e,00:30,02:30,10
-Wednesday,s,11:00,12:00,79
-Friday,q,13:30,18:00,52
-Saturday,c,17:30,23:30,6
-Wednesday,c,15:30,17:30,27
-Sunday,q,12:30,14:00,35
-Saturday,a,18:30,19:00,80
-Saturday,b,03:30,12:30,23
-Thursday,d,01:00,10:30,51
-Saturday,s,22:30,23:30,40
-Friday,h,03:00,04:00,33
-Thursday,r,06:00,14:30,48
-Sunday,h,04:30,06:00,26
-Saturday,o,13:00,15:30,18
-Tuesday,k,21:00,23:00,100
-Wednesday,m,23:00,23:30,24
-Friday,e,00:00,08:00,81
-Thursday,p,22:00,23:30,11
-Wednesday,d,02:30,06:00,99
-Wednesday,a,18:00,18:30,97
-Sunday,n,10:00,23:30,48
-Monday,a,14:30,15:00,13
-Sunday,n,01:00,03:30,74
-Sunday,c,11:30,14:00,31
-Thursday,r,15:30,20:30,111
-Saturday,m,02:00,03:00,117
-Friday,b,00:00,00:30,45
-Sunday,h,04:00,04:30,42
-Wednesday,a,15:00,15:30,95
-Sunday,h,00:00,01:00,63
-Wednesday,o,05:00,23:00,67
-Tuesday,i,01:00,22:00,31
-Thursday,i,13:30,19:30,89
-Saturday,c,08:30,10:00,46
-Wednesday,s,21:00,22:00,37
-Monday,h,02:00,16:30,119
-Tuesday,j,16:30,19:30,103
-Sunday,h,06:00,08:00,98
-Monday,e,04:30,06:00,1
-Sunday,m,06:00,21:00,2
-Saturday,l,21:00,21:30,102
-Wednesday,s,22:00,22:30,113
-Wednesday,i,13:30,17:00,17
-Thursday,l,05:30,06:30,37
-Thursday,e,02:00,11:30,86
-Wednesday,h,00:30,01:30,62
-Tuesday,t,12:00,22:30,16
-Tuesday,t,02:00,05:00,20
-Saturday,n,02:30,05:00,40
-Friday,r,14:00,16:00,92
-Thursday,i,19:30,20:00,71
-Thursday,p,04:00,11:30,29
-Tuesday,p,20:30,23:00,71
-Monday,k,00:00,19:30,58
-Thursday,h,23:00,23:30,20
-Monday,s,00:30,04:00,76
-Saturday,a,12:30,13:00,70
-Thursday,d,18:00,18:30,11
-Thursday,k,17:00,21:30,47
-Wednesday,j,00:30,03:00,93
-Sunday,j,02:00,04:00,18
-Saturday,s,04:30,08:30,82
-Thursday,p,19:00,22:00,13
-Tuesday,c,21:00,22:30,86
-Tuesday,a,00:00,01:00,13
-Saturday,p,15:30,16:00,70
-Friday,l,23:00,23:30,50
-Monday,b,15:00,16:30,98
-Saturday,i,01:00,19:30,37
-Wednesday,a,13:00,13:30,79
-Tuesday,h,12:30,19:00,28
-Wednesday,b,06:30,07:30,59
-Monday,a,09:00,12:00,9
-Friday,j,06:30,21:30,40
-Monday,r,15:30,17:00,1
-Thursday,t,20:30,21:00,15
-Tuesday,c,06:00,06:30,51
-Tuesday,b,21:00,23:30,50
-Thursday,a,19:30,21:00,91
-Wednesday,t,18:30,19:30,102
-Saturday,e,14:00,23:00,55
-Wednesday,h,22:00,23:30,37
-Monday,l,05:30,10:30,41
-Friday,j,03:00,06:30,70
-Monday,m,00:00,01:30,16
-Sunday,d,00:30,01:00,73
-Monday,m,23:00,23:30,81
-Saturday,o,09:30,11:30,7
-Friday,e,18:30,23:00,30
-Saturday,p,16:00,17:00,85
-Thursday,k,00:30,01:30,14
-Sunday,c,14:30,21:00,80
-Friday,h,10:00,13:30,46
-Thursday,l,02:00,02:30,46
-Sunday,r,00:30,09:30,41
-Thursday,d,18:30,21:00,105
-Friday,h,13:30,15:00,86
-Monday,n,12:00,14:30,64
-Tuesday,p,13:00,15:30,5
-Friday,j,21:30,22:30,102
-Sunday,j,19:00,22:00,63
-Sunday,s,01:30,02:30,51
-Sunday,e,02:30,03:00,72
-Sunday,k,04:30,06:00,83
-Wednesday,r,17:00,17:30,81
-Thursday,s,03:00,11:00,46
-Saturday,l,22:00,22:30,112
-Wednesday,a,18:30,19:30,91
-Monday,t,12:00,13:00,93
-Tuesday,p,05:00,06:00,5
-Friday,d,10:00,10:30,85
-Friday,p,11:30,22:00,75
-Monday,h,21:30,23:00,92
-Monday,b,00:30,04:30,41
-Thursday,s,12:30,17:00,111
-Saturday,p,13:00,15:00,88
-Monday,s,20:30,21:30,130
-Saturday,n,01:30,02:30,71
-Monday,o,16:30,21:00,35
-Wednesday,r,00:30,06:00,59
-Sunday,o,20:00,22:30,10
-Thursday,b,19:00,21:30,32
-Sunday,i,03:30,20:00,82
-Saturday,d,06:00,07:00,63
-Monday,b,21:30,22:00,125
-Sunday,j,22:30,23:00,52
-Tuesday,m,03:00,14:00,103
-Sunday,r,18:30,19:30,54
-Thursday,a,00:30,02:00,38
-Monday,j,02:00,02:30,72
-Thursday,p,13:30,16:30,51
-Wednesday,b,18:00,20:30,114
-Sunday,j,00:00,00:30,94
-Wednesday,d,13:30,16:00,15
-Wednesday,p,01:30,09:00,26
-Saturday,n,05:00,07:00,27
-Tuesday,k,06:00,07:30,61
-Saturday,s,17:30,21:30,66
-Sunday,s,19:30,21:00,2
-Friday,l,21:30,22:00,120
-Sunday,s,03:00,04:30,40
-Thursday,p,01:30,02:30,111
-Thursday,r,01:30,03:00,19
-Monday,h,21:00,21:30,129
-Tuesday,b,13:30,20:00,73
-Thursday,p,03:00,04:00,96
-Monday,i,09:30,10:00,35
-Tuesday,i,00:00,00:30,81
-Thursday,i,05:00,05:30,91
-Wednesday,n,06:30,08:30,54
-Sunday,r,21:00,22:30,112
-Monday,e,02:30,04:00,75
-Tuesday,j,21:00,22:30,7
-Sunday,n,00:00,00:30,60
-Tuesday,n,02:30,05:30,48
-Wednesday,a,16:30,18:00,89
-Tuesday,e,19:30,21:00,79
-Wednesday,j,03:00,03:30,70
-Saturday,j,16:30,17:00,41
-Friday,k,04:30,07:30,43
-Monday,l,02:00,03:00,2
-Saturday,e,10:00,11:00,61
-Monday,k,19:30,23:00,57
-Sunday,j,01:30,02:00,3
-Saturday,a,03:30,04:00,90
-Friday,i,06:30,07:30,66
-Thursday,a,21:30,22:00,80
-Wednesday,j,06:00,06:30,94
-Saturday,j,18:30,19:00,18
-Sunday,l,00:30,01:00,3
-Thursday,e,20:30,21:00,102
-Saturday,r,09:30,12:00,63
-Sunday,a,09:30,19:00,37
-Tuesday,b,00:00,01:30,91
-Saturday,e,08:30,10:00,112
-Saturday,d,08:30,12:00,1
-Wednesday,b,01:30,02:30,1
-Sunday,e,11:00,21:30,12
-Wednesday,l,00:30,01:30,121
-Monday,j,01:00,01:30,72
-Thursday,r,03:30,06:00,105
-Wednesday,d,17:00,17:30,44
-Tuesday,b,20:30,21:00,106
-Wednesday,d,17:30,23:30,32
-Tuesday,r,17:30,18:00,73
-Friday,a,11:00,14:30,49
-Saturday,p,11:00,12:30,20
-Thursday,p,17:00,19:00,116
-Sunday,r,17:00,17:30,40
-Monday,i,07:30,09:30,85
-Thursday,b,06:30,08:00,70
-Sunday,b,00:30,04:30,54
-Thursday,i,20:00,20:30,74
-Saturday,d,02:00,02:30,14
-Friday,r,16:30,17:30,32
-Thursday,b,14:00,17:30,25
-Wednesday,i,02:30,05:00,84
-Thursday,d,11:00,11:30,43
-Thursday,i,13:00,13:30,100
-Sunday,d,11:30,15:00,90
-Monday,i,19:00,21:30,105
-Friday,i,17:30,19:30,24
-Thursday,i,20:30,21:30,80
-Tuesday,d,20:30,23:30,37
-Sunday,i,21:30,23:00,64
-Saturday,b,16:30,22:00,33
-Sunday,b,18:00,19:00,51
-Monday,r,20:00,22:30,61
-Sunday,r,10:00,11:00,44
-Sunday,i,00:00,02:00,64
-Friday,i,21:00,22:00,50
-Saturday,b,00:30,03:30,74
-Saturday,r,03:30,08:30,22
-Friday,b,22:30,23:30,87
-Saturday,r,12:30,13:30,55
-Sunday,r,16:30,17:00,10
-Friday,i,16:30,17:00,91
-Monday,r,14:30,15:30,24
-Friday,i,19:30,20:30,87
-Friday,i,13:30,14:00,72
-Monday,r,11:30,12:00,36
-Friday,i,22:00,23:00,70
-Tuesday,r,05:30,08:30,71
-Sunday,r,18:00,18:30,4
-Wednesday,i,01:00,01:30,117
-Friday,i,17:00,17:30,3
-Monday,i,03:30,04:00,44
-Wednesday,i,18:00,23:30,19
-Wednesday,i,00:00,01:00,13
-Sunday,i,02:00,02:30,114
-Saturday,i,21:00,22:00,62
-Thursday,i,03:30,04:00,108
+Friday,Stocker,08:00,20:30,25
+Saturday,Electrician,08:00,20:30,4
+Saturday,Driver,02:00,04:30,23
+Friday,Plumber,10:00,18:30,22
+Sunday,Busser,01:00,10:30,34
+Wednesday,Chef,16:30,17:00,2
+Sunday,Concierge,07:00,13:00,4
+Tuesday,Mover,13:30,15:30,23
+Saturday,Hairdresser,09:30,17:30,19
+Sunday,Concierge,18:00,22:00,5
+Saturday,Concierge,14:30,17:00,35
+Monday,Chef,03:00,08:00,17
+Tuesday,Dog Walker,01:30,20:30,12
+Saturday,Painter,05:00,09:30,2
+Thursday,Warehouse Worker,12:00,19:30,24
+Tuesday,Delivery Person,02:00,23:30,26
+Wednesday,Mechanic,15:00,19:30,14
+Wednesday,Cleaner,05:00,14:00,37
+Thursday,Taxi Driver,11:30,14:00,19
+Thursday,Delivery Person,01:30,09:00,47
+Sunday,Window Cleaner,10:00,15:00,14
+Saturday,Waitstaff,07:00,12:30,25
+Friday,Stocker,01:30,08:00,42
+Thursday,Nanny,00:30,20:00,9
+Monday,Dishwasher,00:00,15:30,5
+Friday,Plumber,01:00,04:00,15
+Thursday,Parking Attendant,03:00,07:30,14
+Tuesday,Chef,12:00,23:30,45
+Tuesday,Cashier,14:00,20:30,36
+Tuesday,Barista,04:00,07:30,37
+Friday,Carpenter,09:00,23:00,9
+Thursday,Sous Chef,02:30,14:00,41
+Monday,Security Guard,12:30,16:00,15
+Saturday,Groundskeeper,09:30,13:30,21
+Monday,Construction Worker,14:00,23:00,37
+Thursday,Mechanic,06:30,10:30,1
+Sunday,Bartender,19:30,21:30,25
+Sunday,Butcher,11:00,13:30,14
+Saturday,Dog Walker,00:30,16:00,11
+Monday,Butcher,11:30,21:30,3
+Tuesday,Plumber,07:30,08:00,23
+Friday,Warehouse Worker,08:00,21:30,6
+Monday,Nanny,03:00,15:30,47
+Wednesday,Kitchen Assistant,17:00,21:00,47
+Thursday,Hairdresser,07:00,08:30,8
+Sunday,Sous Chef,14:00,14:30,21
+Sunday,Janitor,00:00,19:30,29
+Monday,Cook,00:30,15:00,9
+Sunday,Mechanic,07:00,23:30,28
+Tuesday,Receptionist,04:30,22:30,36
+Saturday,Window Cleaner,00:00,19:30,11
+Monday,Mechanic,20:00,22:00,30
+Monday,Gardener,06:00,22:00,2
+Friday,Bartender,06:30,20:00,13
+Friday,Window Cleaner,09:00,19:00,36
+Saturday,Stocker,13:00,23:30,14
+Thursday,Construction Worker,07:00,21:30,4
+Monday,Butcher,02:00,08:00,6
+Sunday,Carpenter,14:30,15:30,4
+Monday,Stocker,02:30,18:00,36
+Tuesday,Waitstaff,10:30,20:00,38
+Friday,Babysitter,02:00,17:00,20
+Saturday,Stocker,01:00,01:30,30
+Friday,Taxi Driver,01:00,20:00,17
+Tuesday,Mechanic,06:30,07:00,15
+Sunday,Construction Worker,15:00,23:30,22
+Wednesday,Bellhop,08:00,20:30,2
+Thursday,Painter,14:30,20:00,32
+Tuesday,Cook,08:00,20:00,36
+Sunday,Groundskeeper,18:30,22:30,19
+Tuesday,Maintenance Worker,12:00,14:00,32
+Sunday,Kitchen Assistant,09:00,10:30,26
+Wednesday,Parking Attendant,03:00,13:00,9
+Sunday,Busser,13:00,23:30,30
+Friday,Concierge,09:00,14:30,29
+Tuesday,Chef,02:30,07:30,12
+Monday,Laundry Attendant,08:00,11:30,39
+Saturday,Construction Worker,19:00,23:00,33
+Monday,Gardener,02:30,06:00,35
+Tuesday,Barista,15:00,19:00,19
+Thursday,Cashier,20:30,22:30,1
+Saturday,Housekeeper,16:00,20:00,25
+Saturday,Laundry Attendant,11:30,14:00,31
+Monday,Dishwasher,20:00,22:30,5
+Sunday,Butcher,19:30,23:30,8
+Saturday,Babysitter,04:30,17:30,18
+Sunday,Receptionist,00:30,08:30,35
+Saturday,Stocker,01:30,04:00,26
+Sunday,Mechanic,01:00,03:00,27
+Monday,Pet Groomer,04:30,15:30,8
+Friday,Housekeeper,09:30,23:30,54
+Saturday,Laundry Attendant,09:00,10:00,11
+Saturday,Receptionist,01:30,02:30,10
+Tuesday,Plumber,13:00,21:00,41
+Saturday,Concierge,02:30,11:30,9
+Wednesday,Host/Hostess,10:00,13:30,12
+Thursday,Housekeeper,08:00,12:30,22
+Friday,Babysitter,20:00,20:30,46
+Thursday,Parking Attendant,16:30,21:00,37
+Saturday,Bellhop,02:30,18:30,10
+Tuesday,Parking Attendant,00:00,06:30,25
+Monday,Warehouse Worker,01:00,07:00,34
+Saturday,Lifeguard,04:30,15:00,33
+Tuesday,Dishwasher,06:00,22:00,17
+Friday,Barista,00:30,02:00,37
+Saturday,Cleaner,06:30,18:30,11
+Thursday,Cleaner,00:30,06:00,14
+Monday,Nanny,00:30,01:30,7
+Friday,Dog Walker,07:30,20:30,26
+Thursday,Room Service Attendant,10:00,19:30,22
+Friday,Mechanic,19:30,21:00,2
+Monday,Nanny,17:00,23:30,23
+Monday,Room Service Attendant,18:30,22:30,23
+Wednesday,Driver,17:00,20:30,33
+Saturday,Sous Chef,11:00,17:00,28
+Sunday,Bartender,12:30,14:00,6
+Monday,Electrician,09:00,15:00,1
+Tuesday,Window Cleaner,06:30,13:30,4
+Sunday,Lifeguard,06:30,22:00,1
+Monday,Driver,16:00,20:30,17
+Wednesday,Dog Walker,09:30,19:30,40
+Friday,Driver,08:00,09:30,24
+Wednesday,Stocker,09:00,16:30,17
+Saturday,Driver,08:30,21:00,25
+Monday,Construction Worker,03:00,08:30,32
+Sunday,Room Service Attendant,10:30,12:30,19
+Monday,Bellhop,12:00,21:00,33
+Sunday,Electrician,04:00,11:00,17
+Wednesday,Cook,02:30,14:30,44
+Tuesday,Cleaner,01:30,06:30,51
+Tuesday,Waiter,04:00,07:30,28
+Wednesday,Host/Hostess,03:30,07:00,8
+Saturday,Gardener,15:30,23:00,13
+Sunday,Host/Hostess,00:30,01:30,9
+Sunday,Dog Walker,11:30,18:00,14
+Monday,Dog Walker,04:30,18:30,30
+Saturday,Gardener,06:00,10:30,16
+Tuesday,Dishwasher,00:00,04:00,16
+Friday,Waitstaff,14:30,21:30,6
+Monday,Chef,08:30,23:00,22
+Thursday,Porter,14:00,21:00,25
+Friday,Receptionist,09:00,17:30,37
+Wednesday,Valet,06:00,19:30,17
+Sunday,Pet Groomer,06:30,07:00,42
+Sunday,Valet,00:00,02:30,37
+Friday,Sous Chef,06:00,11:30,1
+Saturday,Porter,11:30,14:00,7
+Thursday,Window Cleaner,00:30,09:30,18
+Sunday,Maintenance Worker,03:30,23:00,9
+Sunday,Bartender,18:00,19:00,18
+Friday,Lifeguard,05:00,19:00,35
+Wednesday,Plumber,04:30,13:00,6
+Sunday,Cook,02:00,16:30,10
+Sunday,Carpenter,00:30,07:30,14
+Wednesday,Pet Groomer,19:30,21:00,17
+Saturday,Electrician,00:30,08:00,16
+Sunday,Babysitter,03:30,16:00,40
+Saturday,Cashier,09:00,23:30,8
+Saturday,Construction Worker,05:00,13:30,33
+Thursday,Warehouse Worker,00:00,09:30,40
+Saturday,Groundskeeper,00:00,08:30,20
+Monday,Receptionist,13:00,13:30,36
+Sunday,Butcher,08:30,09:00,5
+Wednesday,Busser,00:00,14:00,10
+Wednesday,Dishwasher,12:00,13:30,7
+Friday,Room Service Attendant,11:30,13:00,25
+Wednesday,Plumber,19:00,19:30,22
+Friday,Construction Worker,03:00,09:00,30
+Wednesday,Lifeguard,04:00,20:30,36
+Monday,Janitor,02:00,11:00,34
+Thursday,Room Service Attendant,07:00,08:00,2
+Friday,Security Guard,09:30,14:00,16
+Thursday,Maintenance Worker,03:30,10:30,30
+Wednesday,Chef,00:30,12:30,14
+Saturday,Taxi Driver,11:30,13:30,42
+Monday,Dog Walker,00:00,01:30,14
+Sunday,Waitstaff,06:30,13:30,50
+Thursday,Janitor,03:30,15:00,8
+Thursday,Waiter,00:30,12:30,9
+Monday,Kitchen Assistant,03:30,05:30,35
+Wednesday,Driver,12:00,13:00,5
+Friday,Waiter,00:30,17:30,50
+Saturday,Receptionist,09:30,16:30,13
+Monday,Valet,09:30,10:00,20
+Tuesday,Bartender,07:00,10:00,25
+Saturday,Maintenance Worker,02:00,06:00,35
+Wednesday,Dog Walker,00:00,04:30,10
+Monday,Security Guard,04:30,09:30,13
+Thursday,Host/Hostess,02:00,15:30,33
+Tuesday,Construction Worker,10:30,15:30,21
+Thursday,Babysitter,07:00,10:00,15
+Saturday,Mover,13:30,17:30,37
+Monday,Nanny,01:30,02:00,30
+Tuesday,Gardener,03:00,16:30,38
+Monday,Lifeguard,02:00,02:30,25
+Saturday,Barista,06:00,14:00,30
+Sunday,Lifeguard,02:30,04:30,10
+Wednesday,Bartender,04:30,10:00,10
+Wednesday,Waiter,07:30,16:30,32
+Sunday,Waitstaff,15:30,19:00,33
+Thursday,Butcher,13:30,15:30,19
+Friday,Mechanic,00:30,02:00,7
+Monday,Valet,21:30,23:30,13
+Monday,Waiter,12:00,19:00,25
+Sunday,Babysitter,18:00,21:00,53
+Friday,Clerk,01:00,18:00,2
+Wednesday,Construction Worker,03:00,21:00,20
+Wednesday,Laundry Attendant,02:00,11:30,36
+Wednesday,Painter,18:00,19:00,16
+Saturday,Cook,08:30,21:00,32
+Saturday,Babysitter,00:00,01:30,8
+Monday,Kitchen Assistant,19:00,19:30,43
+Saturday,Bartender,12:30,21:00,7
+Tuesday,Valet,10:00,15:00,32
+Wednesday,Window Cleaner,05:30,21:30,39
+Thursday,Cook,09:30,20:30,25
+Saturday,Waiter,01:00,11:30,12
+Saturday,Janitor,07:30,17:30,3
+Saturday,Barista,17:00,23:00,23
+Saturday,Room Service Attendant,10:00,12:30,10
+Sunday,Bellhop,03:30,18:00,13
+Tuesday,Pet Groomer,23:00,23:30,2
+Monday,Gardener,01:00,01:30,1
+Saturday,Janitor,18:30,22:00,10
+Friday,Lifeguard,01:30,03:00,24
+Sunday,Construction Worker,05:00,08:00,32
+Monday,Carpenter,13:30,15:00,2
+Saturday,Butcher,06:30,15:00,13
+Thursday,Butcher,07:30,10:30,26
+Saturday,Plumber,20:00,22:00,40
+Saturday,Driver,05:30,07:00,39
+Friday,Taxi Driver,20:00,22:00,55
+Wednesday,Painter,01:30,05:30,42
+Saturday,Kitchen Assistant,00:00,17:30,44
+Monday,Host/Hostess,12:00,18:30,29
+Monday,Cook,15:00,19:00,1
+Thursday,Room Service Attendant,04:00,06:30,18
+Saturday,Room Service Attendant,04:00,07:30,20
+Friday,Barista,06:30,13:30,40
+Tuesday,Gardener,19:30,20:00,22
+Sunday,Janitor,22:00,23:30,25
+Wednesday,Gardener,04:00,14:30,33
+Thursday,Cleaner,15:30,19:30,48
+Wednesday,Valet,02:30,03:30,36
+Sunday,Host/Hostess,08:00,15:00,29
+Wednesday,Babysitter,09:00,23:00,22
+Monday,Lifeguard,06:30,14:00,38
+Wednesday,Sous Chef,01:00,03:00,22
+Thursday,Janitor,18:30,21:00,10
+Wednesday,Housekeeper,06:30,17:00,9
+Saturday,Driver,07:30,08:00,5
+Saturday,Janitor,04:00,07:30,27
+Sunday,Waitstaff,01:30,05:30,21
+Friday,Groundskeeper,21:00,22:30,32
+Saturday,Babysitter,17:30,23:00,52
+Friday,Bartender,00:30,04:30,37
+Saturday,Hairdresser,18:30,19:00,37
+Sunday,Painter,17:00,21:30,9
+Wednesday,Maintenance Worker,03:30,07:30,34
+Friday,Clerk,18:00,22:30,10
+Tuesday,Lifeguard,04:00,07:30,36
+Monday,Sous Chef,02:00,08:00,15
+Wednesday,Laundry Attendant,20:00,21:30,35
+Saturday,Taxi Driver,19:30,20:00,7
+Thursday,Painter,00:30,10:00,27
+Tuesday,Baggage Handler,11:00,13:30,30
+Friday,Nanny,05:30,13:30,36
+Tuesday,Chauffeur,10:00,17:30,4
+Sunday,Mechanic,06:00,07:00,39
+Saturday,Groundskeeper,18:00,22:00,40
+Monday,Waitstaff,07:00,10:30,22
+Monday,Host/Hostess,02:30,03:00,54
+Thursday,Mover,13:30,21:30,6
+Monday,Hairdresser,04:00,05:30,36
+Friday,Window Cleaner,02:30,08:00,30
+Sunday,Chauffeur,14:00,20:30,17
+Friday,Laundry Attendant,02:30,06:00,42
+Monday,Mover,05:30,19:00,37
+Sunday,Clerk,10:30,16:00,22
+Wednesday,Baggage Handler,14:30,17:30,27
+Thursday,Receptionist,04:30,16:00,22
+Saturday,Gardener,12:30,14:30,46
+Sunday,Plumber,14:00,21:00,25
+Friday,Room Service Attendant,01:30,10:00,7
+Sunday,Mover,02:30,15:00,28
+Tuesday,Lifeguard,14:00,23:30,24
+Wednesday,Baggage Handler,07:00,13:00,4
+Monday,Dog Walker,20:30,22:00,4
+Monday,Cashier,12:30,21:00,20
+Friday,Gardener,12:30,21:30,18
+Tuesday,Sous Chef,03:00,14:30,46
+Friday,Groundskeeper,14:30,17:00,31
+Wednesday,Room Service Attendant,06:00,12:30,5
+Tuesday,Warehouse Worker,04:30,16:30,13
+Monday,Carpenter,15:30,16:30,26
+Sunday,Cook,19:00,19:30,34
+Tuesday,Cleaner,16:00,22:00,40
+Wednesday,Plumber,15:30,18:30,5
+Tuesday,Dog Walker,01:00,01:30,12
+Monday,Waiter,05:30,07:00,46
+Monday,Babysitter,16:00,18:30,13
+Tuesday,Mechanic,07:00,13:00,14
+Monday,Carpenter,09:30,11:00,20
+Monday,Security Guard,17:30,23:30,29
+Tuesday,Housekeeper,03:00,16:30,48
+Sunday,Host/Hostess,04:00,08:00,30
+Saturday,Cook,03:30,05:30,41
+Monday,Butcher,00:00,01:30,24
+Saturday,Plumber,09:00,10:30,37
+Saturday,Construction Worker,14:00,16:00,24
+Monday,Driver,03:30,12:30,35
+Sunday,Pet Groomer,00:00,03:00,20
+Thursday,Painter,21:00,22:30,45
+Saturday,Chauffeur,03:30,05:00,13
+Friday,Room Service Attendant,13:30,20:00,15
+Sunday,Electrician,13:30,16:30,24
+Wednesday,Host/Hostess,08:30,09:30,6
+Thursday,Receptionist,20:00,21:30,5
+Tuesday,Hairdresser,03:30,15:00,5
+Saturday,Porter,00:00,08:00,40
+Wednesday,Dog Walker,21:30,23:30,39
+Tuesday,Pet Groomer,08:00,21:30,27
+Sunday,Baggage Handler,00:30,14:30,30
+Tuesday,Hairdresser,00:30,01:00,15
+Monday,Mechanic,12:00,12:30,3
+Thursday,Busser,00:30,05:30,38
+Thursday,Baggage Handler,10:30,21:30,10
+Monday,Babysitter,03:00,14:00,4
+Monday,Butcher,09:00,09:30,23
+Wednesday,Electrician,02:00,05:00,32
+Tuesday,Housekeeper,18:00,20:00,37
+Sunday,Groundskeeper,15:30,17:30,41
+Wednesday,Security Guard,18:00,20:30,36
+Wednesday,Warehouse Worker,02:00,10:30,4
+Monday,Painter,03:30,08:00,38
+Tuesday,Busser,05:30,22:30,31
+Friday,Nanny,14:00,16:30,9
+Saturday,Waitstaff,19:00,21:30,39
+Thursday,Waitstaff,09:00,21:30,11
+Wednesday,Dog Walker,05:00,05:30,18
+Wednesday,Bartender,13:00,16:00,1
+Friday,Room Service Attendant,20:30,23:30,6
+Thursday,Parking Attendant,08:00,09:00,13
+Tuesday,Busser,00:00,01:30,15
+Friday,Bellhop,09:00,23:30,5
+Sunday,Waiter,00:30,04:00,13
+Monday,Host/Hostess,22:00,23:00,26
+Friday,Busser,16:30,20:30,39
+Sunday,Taxi Driver,12:00,19:00,55
+Thursday,Cook,04:30,08:00,43
+Tuesday,Waiter,10:00,13:30,6
+Tuesday,Warehouse Worker,16:30,23:00,45
+Sunday,Parking Attendant,14:00,21:00,31
+Wednesday,Barista,10:00,15:00,29
+Monday,Receptionist,01:00,12:00,22
+Monday,Carpenter,22:00,23:00,14
+Saturday,Mechanic,04:00,08:30,10
+Monday,Carpenter,05:30,08:30,20
+Saturday,Butcher,20:30,23:00,36
+Friday,Waitstaff,02:00,11:30,28
+Sunday,Room Service Attendant,19:00,20:00,3
+Tuesday,Painter,02:00,23:30,15
+Monday,Mechanic,02:30,08:30,35
+Saturday,Housekeeper,05:30,12:00,42
+Saturday,Carpenter,00:00,20:00,26
+Saturday,Waiter,16:30,23:00,2
+Friday,Bartender,04:30,05:30,44
+Tuesday,Dog Walker,22:00,22:30,19
+Saturday,Room Service Attendant,13:00,23:30,28
+Saturday,Host/Hostess,03:00,12:00,55
+Thursday,Gardener,12:30,22:00,38
+Wednesday,Janitor,11:30,14:30,30
+Tuesday,Sous Chef,17:00,18:30,26
+Thursday,Mechanic,19:00,23:30,30
+Monday,Janitor,22:30,23:30,10
+Tuesday,Janitor,00:00,11:30,4
+Saturday,Waitstaff,01:00,04:00,26
+Wednesday,Window Cleaner,22:00,22:30,32
+Monday,Kitchen Assistant,05:30,07:30,31
+Saturday,Receptionist,19:00,20:30,34
+Thursday,Driver,02:00,19:00,26
+Saturday,Driver,22:00,22:30,33
+Tuesday,Electrician,12:30,21:00,7
+Sunday,Maintenance Worker,00:00,01:00,23
+Wednesday,Lifeguard,20:30,21:00,17
+Wednesday,Window Cleaner,00:00,02:30,33
+Thursday,Dog Walker,07:00,12:30,22
+Friday,Mechanic,08:00,17:30,19
+Saturday,Construction Worker,00:30,01:00,34
+Tuesday,Babysitter,13:00,21:30,37
+Thursday,Painter,10:30,13:30,26
+Wednesday,Busser,14:00,20:00,19
+Sunday,Porter,11:00,14:00,22
+Wednesday,Mechanic,04:00,15:00,30
+Wednesday,Mover,10:00,22:00,39
+Friday,Laundry Attendant,13:30,22:00,31
+Saturday,Maintenance Worker,08:00,17:00,21
+Thursday,Chauffeur,03:00,15:30,10
+Saturday,Porter,19:30,22:30,6
+Thursday,Cook,23:00,23:30,35
+Tuesday,Construction Worker,18:30,23:30,25
+Saturday,Bellhop,00:00,02:30,17
+Friday,Maintenance Worker,14:00,22:30,15
+Saturday,Pet Groomer,10:00,11:30,24
+Monday,Waitstaff,12:00,18:30,40
+Saturday,Babysitter,01:30,04:30,52
+Monday,Window Cleaner,08:30,11:30,38
+Monday,Baggage Handler,08:30,17:30,16
+Monday,Driver,22:30,23:30,33
+Friday,Housekeeper,01:00,01:30,1
+Wednesday,Laundry Attendant,13:00,20:00,26
+Thursday,Cashier,03:00,19:00,9
+Sunday,Gardener,10:30,19:30,33
+Friday,Waiter,21:00,23:00,49
+Sunday,Construction Worker,13:00,14:00,1
+Saturday,Porter,09:30,10:00,37
+Wednesday,Plumber,04:00,04:30,28
+Monday,Driver,20:30,21:00,19
+Thursday,Taxi Driver,20:00,23:00,24
+Monday,Babysitter,00:00,02:30,48
+Tuesday,Electrician,04:00,10:30,42
+Monday,Busser,02:00,14:30,25
+Wednesday,Laundry Attendant,12:00,12:30,1
+Saturday,Waiter,11:30,16:30,28
+Wednesday,Electrician,05:00,17:00,24
+Saturday,Lifeguard,16:00,23:00,44
+Thursday,Chauffeur,16:30,20:30,20
+Thursday,Receptionist,17:00,17:30,1
+Saturday,Mover,02:30,04:00,17
+Tuesday,Groundskeeper,00:00,22:00,16
+Sunday,Mover,17:30,18:00,28
+Tuesday,Driver,09:00,18:30,32
+Monday,Dog Walker,01:30,02:00,12
+Friday,Waitstaff,11:30,12:00,7
+Saturday,Cleaner,03:30,04:00,37
+Saturday,Plumber,12:30,14:00,29
+Friday,Plumber,04:00,09:30,41
+Sunday,Dog Walker,00:30,05:30,46
+Monday,Construction Worker,11:00,12:30,28
+Thursday,Lifeguard,06:30,08:00,7
+Saturday,Baggage Handler,02:30,22:30,1
+Friday,Laundry Attendant,08:00,11:30,10
+Tuesday,Kitchen Assistant,12:30,20:30,39
+Sunday,Mover,20:30,22:30,19
+Monday,Mover,19:00,20:30,20
+Saturday,Taxi Driver,01:30,06:00,35
+Tuesday,Construction Worker,04:30,08:00,16
+Tuesday,Butcher,06:00,16:00,26
+Wednesday,Cook,17:00,21:30,49
+Saturday,Dog Walker,18:00,22:30,48
+Saturday,Carpenter,20:30,21:00,19
+Wednesday,Security Guard,04:00,07:00,2
+Tuesday,Cashier,00:30,07:30,36
+Wednesday,Receptionist,13:00,19:00,15
+Sunday,Security Guard,01:00,11:00,29
+Tuesday,Cleaner,00:00,00:30,21
+Sunday,Waiter,11:30,13:00,19
+Friday,Valet,21:30,22:30,5
+Wednesday,Mechanic,20:00,22:30,4
+Thursday,Kitchen Assistant,06:30,11:30,8
+Thursday,Laundry Attendant,03:30,22:00,1
+Thursday,Waitstaff,04:00,05:00,32
+Friday,Porter,14:30,15:30,28
+Wednesday,Nanny,02:30,19:30,8
+Monday,Barista,02:30,03:30,29
+Saturday,Mechanic,13:00,23:00,2
+Saturday,Butcher,19:30,20:30,1
+Sunday,Barista,06:00,20:30,16
+Monday,Bellhop,01:00,05:00,13
+Wednesday,Pet Groomer,03:30,11:00,35
+Thursday,Host/Hostess,22:00,23:30,26
+Thursday,Sous Chef,15:30,21:30,8
+Tuesday,Construction Worker,00:00,01:30,28
+Friday,Nanny,04:30,05:30,36
+Sunday,Mover,15:30,16:30,5
+Thursday,Receptionist,02:30,03:00,24
+Tuesday,Cleaner,08:00,10:30,45
+Tuesday,Cleaner,10:30,12:00,18
+Tuesday,Painter,01:00,02:00,11
+Tuesday,Cashier,07:30,09:30,31
+Saturday,Host/Hostess,18:30,23:30,55
+Monday,Housekeeper,02:30,08:30,51
+Saturday,Cashier,02:30,05:00,1
+Tuesday,Lifeguard,08:00,10:00,33
+Saturday,Janitor,22:30,23:30,22
+Sunday,Cleaner,03:30,10:00,33
+Thursday,Groundskeeper,01:30,06:30,2
+Wednesday,Butcher,01:30,06:30,14
+Sunday,Painter,06:30,10:30,31
+Thursday,Janitor,21:30,23:00,13
+Wednesday,Painter,07:30,11:30,8
+Thursday,Pet Groomer,09:30,15:00,42
+Sunday,Cook,22:30,23:00,22
+Wednesday,Painter,13:30,16:00,39
+Tuesday,Receptionist,00:00,02:00,19
+Sunday,Housekeeper,08:00,12:00,40
+Wednesday,Baggage Handler,18:30,23:30,12
+Friday,Cook,02:30,11:00,38
+Monday,Sous Chef,22:30,23:00,5
+Monday,Valet,02:00,08:00,36
+Wednesday,Host/Hostess,15:30,22:00,35
+Thursday,Lifeguard,10:00,23:30,13
+Friday,Mover,08:30,21:00,18
+Tuesday,Pet Groomer,05:30,07:00,28
+Saturday,Maintenance Worker,18:30,19:30,39
+Tuesday,Valet,15:30,21:00,1
+Thursday,Dog Walker,16:30,18:30,20
+Sunday,Porter,14:00,23:00,2
+Sunday,Pet Groomer,13:30,22:00,37
+Wednesday,Receptionist,07:30,10:30,40
+Saturday,Painter,09:30,10:00,8
+Monday,Laundry Attendant,13:00,13:30,45
+Monday,Electrician,17:00,19:30,46
+Thursday,Maintenance Worker,17:30,19:00,1
+Wednesday,Cleaner,18:00,20:30,17
+Friday,Bartender,20:00,21:30,45
+Friday,Housekeeper,03:30,04:00,21
+Tuesday,Lifeguard,01:00,01:30,35
+Friday,Painter,04:30,14:00,26
+Thursday,Porter,02:00,03:30,37
+Thursday,Bartender,13:00,20:30,35
+Wednesday,Driver,05:00,10:00,37
+Wednesday,Painter,00:30,01:00,13
+Monday,Porter,05:30,17:00,27
+Saturday,Maintenance Worker,21:00,21:30,46
+Saturday,Waitstaff,14:30,16:30,45
+Tuesday,Kitchen Assistant,00:30,01:30,15
+Friday,Baggage Handler,05:00,14:30,20
+Sunday,Taxi Driver,02:00,02:30,30
+Friday,Bartender,22:30,23:00,10
+Saturday,Kitchen Assistant,20:30,21:00,10
+Thursday,Porter,07:00,11:30,24
+Friday,Lifeguard,22:30,23:30,23
+Monday,Window Cleaner,18:30,23:00,25
+Friday,Lifeguard,20:00,22:30,5
+Friday,Laundry Attendant,12:00,12:30,39
+Tuesday,Cashier,21:30,22:30,38
+Sunday,Pet Groomer,03:00,04:00,9
+Wednesday,Barista,00:30,08:30,33
+Thursday,Cleaner,10:30,14:00,8
+Thursday,Kitchen Assistant,14:30,17:30,38
+Thursday,Cashier,01:00,02:30,6
+Sunday,Laundry Attendant,04:00,12:30,37
+Thursday,Laundry Attendant,00:30,02:00,38
+Monday,Laundry Attendant,15:00,16:30,5
+Saturday,Host/Hostess,12:00,15:30,5
+Wednesday,Painter,19:30,23:30,10
+Saturday,Waitstaff,18:30,19:00,1
+Wednesday,Bellhop,02:00,04:00,28
+Sunday,Plumber,08:00,11:00,24
+Saturday,Hairdresser,00:00,06:30,40
+Saturday,Waitstaff,06:30,07:00,19
+Friday,Groundskeeper,01:00,07:30,51
+Friday,Janitor,13:30,23:00,23
+Wednesday,Plumber,22:00,23:30,21
+Sunday,Window Cleaner,02:00,09:00,39
+Friday,Painter,16:00,21:30,21
+Thursday,Chauffeur,20:30,22:00,27
+Monday,Waiter,03:30,05:00,6
+Monday,Driver,14:00,16:00,37
+Monday,Barista,14:30,20:30,22
+Sunday,Plumber,01:00,02:00,13
+Thursday,Porter,21:00,23:00,31
+Tuesday,Pet Groomer,02:30,04:30,10
+Friday,Gardener,01:30,03:30,23
+Sunday,Parking Attendant,01:00,13:00,7
+Sunday,Waitstaff,19:00,23:30,47
+Friday,Security Guard,17:30,21:30,34
+Friday,Lifeguard,00:00,01:30,10
+Thursday,Cook,02:00,04:00,51
+Friday,Waiter,23:00,23:30,21
+Saturday,Construction Worker,16:30,17:00,37
+Friday,Driver,12:00,19:00,25
+Wednesday,Carpenter,01:00,07:00,27
+Friday,Bellhop,00:00,05:30,23
+Thursday,Driver,22:00,23:30,5
+Thursday,Taxi Driver,01:30,04:30,4
+Monday,Chauffeur,13:00,16:00,37
+Friday,Taxi Driver,00:00,00:30,34
+Friday,Kitchen Assistant,03:30,20:30,28
+Sunday,Mover,00:30,01:00,16
+Monday,Valet,12:00,19:30,15
+Sunday,Pet Groomer,09:30,13:00,44
+Monday,Laundry Attendant,03:30,07:30,13
+Friday,Kitchen Assistant,01:30,03:00,30
+Thursday,Bartender,04:30,10:30,29
+Saturday,Barista,03:30,05:30,2
+Sunday,Barista,00:30,03:30,6
+Sunday,Bartender,07:00,08:00,26
+Thursday,Driver,20:30,21:30,42
+Sunday,Waiter,21:00,23:30,26
+Saturday,Gardener,04:00,04:30,8
+Sunday,Waitstaff,15:00,15:30,23
+Sunday,Host/Hostess,22:00,23:30,20
+Sunday,Security Guard,11:00,14:30,17
+Wednesday,Cleaner,21:00,22:30,30
+Saturday,Mover,00:00,00:30,37
+Saturday,Groundskeeper,17:30,18:00,28
+Tuesday,Pet Groomer,21:30,23:00,11
+Monday,Janitor,12:00,15:30,25
+Monday,Window Cleaner,12:30,17:30,35
+Tuesday,Parking Attendant,12:30,13:00,40
+Friday,Janitor,01:00,06:00,13
+Friday,Janitor,06:30,09:30,21
+Wednesday,Cook,16:00,16:30,7
+Sunday,Carpenter,20:30,21:00,19
+Sunday,Barista,22:00,23:30,14
+Tuesday,Gardener,20:00,22:00,33
+Saturday,Lifeguard,01:00,02:30,25
+Monday,Taxi Driver,02:30,09:00,7
+Sunday,Chauffeur,09:30,10:00,11
+Saturday,Sous Chef,01:30,06:00,19
+Monday,Room Service Attendant,10:30,13:30,41
+Sunday,Laundry Attendant,12:30,16:00,20
+Saturday,Valet,14:30,23:00,18
+Tuesday,Baggage Handler,14:00,21:30,43
+Friday,Receptionist,18:30,19:30,13
+Wednesday,Chauffeur,02:00,04:00,3
+Wednesday,Lifeguard,21:00,23:00,5
+Saturday,Window Cleaner,21:30,22:00,33
+Sunday,Host/Hostess,02:00,03:30,26
+Thursday,Butcher,02:30,05:30,36
+Tuesday,Bartender,01:00,06:00,53
+Thursday,Bartender,00:00,00:30,52
+Wednesday,Hairdresser,10:00,12:30,27
+Thursday,Baggage Handler,03:30,09:30,1
+Monday,Carpenter,01:00,03:00,14
+Sunday,Groundskeeper,00:00,14:30,8
+Wednesday,Laundry Attendant,11:30,12:00,7
+Thursday,Receptionist,04:00,04:30,35
+Friday,Receptionist,01:30,07:30,3
+Monday,Bellhop,06:30,11:30,57
+Monday,Receptionist,15:30,21:00,23
+Monday,Groundskeeper,06:30,09:30,30
+Monday,Parking Attendant,06:00,07:00,11
+Monday,Host/Hostess,04:30,09:30,44
+Sunday,Window Cleaner,15:30,21:00,31
+Friday,Butcher,11:00,15:00,39
+Monday,Hairdresser,09:00,16:00,37
+Friday,Parking Attendant,08:30,23:30,6
+Thursday,Valet,03:30,13:30,24
+Tuesday,Laundry Attendant,06:30,16:00,29
+Tuesday,Waiter,21:30,22:30,14
+Saturday,Sous Chef,21:30,23:00,39
+Saturday,Janitor,01:00,04:00,32
+Tuesday,Plumber,21:30,22:30,14
+Thursday,Plumber,11:30,19:00,20
+Wednesday,Window Cleaner,04:30,05:00,36
+Tuesday,Cleaner,07:00,07:30,39
+Friday,Window Cleaner,19:00,20:30,35
+Saturday,Plumber,15:00,17:00,32
+Sunday,Mover,20:00,20:30,3
+Monday,Kitchen Assistant,17:00,19:00,47
+Wednesday,Groundskeeper,04:30,14:30,36
+Sunday,Waiter,06:00,09:30,29
+Tuesday,Hairdresser,18:30,20:30,15
+Saturday,Gardener,01:30,04:00,20
+Friday,Bartender,22:00,22:30,56
+Thursday,Cook,08:30,09:00,36
+Wednesday,Groundskeeper,19:30,23:30,1
+Thursday,Chauffeur,01:00,01:30,25
+Tuesday,Sous Chef,19:30,23:30,48
+Thursday,Parking Attendant,11:00,15:30,26
+Sunday,Cashier,05:00,11:00,13
+Saturday,Sous Chef,18:30,21:30,5
+Thursday,Housekeeper,00:30,05:00,46
+Wednesday,Hairdresser,01:30,06:30,43
+Friday,Receptionist,20:30,21:30,13
+Monday,Mover,00:30,01:00,38
+Tuesday,Baggage Handler,06:00,10:30,15
+Saturday,Hairdresser,07:30,09:00,15
+Thursday,Mover,10:00,13:30,26
+Friday,Housekeeper,04:00,05:00,40
+Friday,Construction Worker,09:00,23:30,39
+Friday,Groundskeeper,12:30,13:00,46
+Friday,Host/Hostess,07:00,08:00,12
+Sunday,Housekeeper,13:00,20:00,41
+Wednesday,Groundskeeper,14:30,19:30,35
+Monday,Housekeeper,20:30,22:30,52
+Sunday,Cashier,16:30,18:00,12
+Wednesday,Hairdresser,17:00,21:00,31
+Sunday,Chauffeur,01:00,07:00,41
+Tuesday,Kitchen Assistant,02:00,06:30,19
+Saturday,Housekeeper,20:00,21:00,25
+Friday,Mover,00:00,08:30,39
+Thursday,Receptionist,22:00,23:30,32
+Sunday,Electrician,18:30,19:30,43
+Thursday,Security Guard,07:30,21:00,34
+Monday,Chauffeur,06:00,07:30,29
+Tuesday,Room Service Attendant,05:30,08:00,7
+Monday,Sous Chef,13:00,19:00,40
+Wednesday,Bartender,17:30,19:30,33
+Sunday,Taxi Driver,19:00,19:30,28
+Thursday,Cashier,22:30,23:30,25
+Monday,Baggage Handler,18:30,20:00,48
+Thursday,Housekeeper,17:30,22:30,41
+Thursday,Baggage Handler,00:30,01:00,12
+Tuesday,Valet,04:00,05:00,25
+Monday,Butcher,21:30,22:30,27
+Tuesday,Security Guard,02:00,06:30,26
+Wednesday,Chauffeur,05:30,15:00,15
+Saturday,Taxi Driver,22:30,23:30,27
+Saturday,Housekeeper,01:30,05:00,2
+Tuesday,Carpenter,11:30,21:00,15
+Monday,Porter,17:30,18:00,33
+Sunday,Chauffeur,20:30,22:30,43
+Wednesday,Security Guard,09:00,11:30,25
+Wednesday,Plumber,20:30,22:00,28
+Sunday,Baggage Handler,19:30,20:30,46
+Saturday,Window Cleaner,22:30,23:30,14
+Friday,Electrician,09:00,13:30,26
+Saturday,Groundskeeper,14:30,16:00,14
+Monday,Kitchen Assistant,13:30,16:00,38
+Monday,Bellhop,11:30,12:00,30
+Wednesday,Bartender,01:00,02:00,26
+Thursday,Kitchen Assistant,21:00,23:30,14
+Tuesday,Bartender,15:00,18:00,1
+Tuesday,Carpenter,08:00,11:00,7
+Saturday,Valet,04:00,14:00,36
+Sunday,Construction Worker,03:00,04:00,38
+Tuesday,Security Guard,10:00,19:30,5
+Thursday,Valet,13:30,21:00,43
+Wednesday,Plumber,00:00,02:00,39
+Friday,Bellhop,05:30,08:00,10
+Sunday,Construction Worker,08:00,08:30,5
+Monday,Barista,04:00,12:00,41
+Monday,Kitchen Assistant,13:00,13:30,17
+Saturday,Barista,00:00,02:30,16
+Sunday,Construction Worker,14:00,14:30,7
+Tuesday,Baggage Handler,00:30,05:30,32
+Saturday,Barista,14:00,17:00,14
+Tuesday,Host/Hostess,08:00,22:00,40
+Sunday,Butcher,00:30,06:00,50
+Wednesday,Carpenter,10:30,19:30,26
+Friday,Butcher,18:30,22:30,8
+Wednesday,Taxi Driver,04:00,18:00,56
+Friday,Porter,22:00,23:00,27
+Tuesday,Housekeeper,21:00,22:30,29
+Sunday,Baggage Handler,21:30,23:00,59
+Tuesday,Waiter,16:30,17:30,41
+Wednesday,Receptionist,20:30,21:30,1
+Wednesday,Electrician,17:30,21:00,3
+Wednesday,Waiter,03:00,06:00,53
+Wednesday,Kitchen Assistant,10:30,15:30,21
+Tuesday,Kitchen Assistant,07:00,09:30,47
+Saturday,Groundskeeper,22:30,23:30,32
+Thursday,Hairdresser,09:30,23:00,43
+Tuesday,Sous Chef,00:30,02:00,43
+Friday,Taxi Driver,22:00,23:30,52
+Monday,Cleaner,07:00,17:00,21
+Sunday,Sous Chef,08:30,10:30,18
+Tuesday,Hairdresser,15:00,17:30,1
+Thursday,Window Cleaner,13:00,23:30,7
+Sunday,Baggage Handler,18:00,19:30,5
+Thursday,Chauffeur,02:00,03:00,16
+Tuesday,Baggage Handler,22:00,22:30,6
+Tuesday,Cleaner,12:00,15:30,31
+Monday,Kitchen Assistant,00:30,03:00,40
+Friday,Host/Hostess,09:00,20:00,40
+Thursday,Baggage Handler,02:00,02:30,12
+Friday,Electrician,14:30,16:00,33
+Thursday,Receptionist,00:00,00:30,16
+Thursday,Kitchen Assistant,04:30,05:30,47
+Wednesday,Porter,01:00,12:00,12
+Sunday,Waiter,13:00,17:00,15
+Saturday,Host/Hostess,00:30,03:00,9
+Tuesday,Valet,07:30,10:00,36
+Thursday,Kitchen Assistant,01:30,04:00,56
+Wednesday,Valet,01:30,02:30,37
+Wednesday,Bartender,10:00,11:30,51
+Saturday,Security Guard,17:30,18:30,19
+Friday,Electrician,16:30,19:30,22
+Sunday,Waiter,10:00,10:30,18
+Sunday,Housekeeper,00:30,08:00,37
+Friday,Valet,07:30,19:30,1
+Tuesday,Security Guard,07:00,08:00,2
+Monday,Housekeeper,16:00,19:30,12
+Thursday,Security Guard,01:00,01:30,12
+Wednesday,Waiter,02:00,03:00,1
+Sunday,Valet,22:00,23:30,7
+Sunday,Chauffeur,10:00,13:00,42
+Tuesday,Host/Hostess,02:00,04:00,27
+Sunday,Cleaner,14:30,19:00,39
+Sunday,Receptionist,11:30,21:30,41
+Sunday,Taxi Driver,08:00,10:00,48
+Monday,Taxi Driver,10:30,21:00,57
+Thursday,Butcher,18:00,20:30,23
+Monday,Bartender,10:30,12:30,5
+Sunday,Cleaner,12:30,13:00,12
+Friday,Sous Chef,14:30,22:00,33
+Monday,Host/Hostess,21:00,21:30,27
+Wednesday,Bartender,21:00,23:00,28
+Friday,Cleaner,03:30,18:30,32
+Thursday,Housekeeper,12:30,17:30,36
+Sunday,Receptionist,09:30,11:00,4
+Friday,Kitchen Assistant,22:00,23:00,50
+Friday,Plumber,18:30,19:00,17
+Sunday,Security Guard,17:00,19:00,1
+Saturday,Taxi Driver,16:00,18:00,20
+Thursday,Taxi Driver,08:00,10:30,33
+Thursday,Butcher,23:00,23:30,34
+Friday,Host/Hostess,02:30,04:30,7
+Saturday,Kitchen Assistant,21:00,22:00,18
+Friday,Security Guard,05:30,07:00,6
+Saturday,Security Guard,01:30,04:30,2
+Wednesday,Window Cleaner,02:30,03:00,32
+Tuesday,Receptionist,02:00,03:30,20
+Saturday,Plumber,01:00,06:30,32
+Sunday,Butcher,06:30,08:30,21
+Thursday,Security Guard,23:00,23:30,9
+Saturday,Taxi Driver,06:00,09:00,19
+Wednesday,Host/Hostess,13:30,15:00,43
+Wednesday,Receptionist,03:00,03:30,41
+Sunday,Plumber,21:00,21:30,13
+Saturday,Groundskeeper,14:00,14:30,8
+Monday,Chauffeur,22:00,23:30,34
+Thursday,Security Guard,03:00,07:30,12
+Tuesday,Porter,02:00,13:30,25
+Wednesday,Bartender,20:30,21:00,58
+Saturday,Taxi Driver,00:00,00:30,40
+Sunday,Housekeeper,12:30,13:00,18
+Thursday,Security Guard,02:00,03:00,31
+Friday,Kitchen Assistant,20:30,22:00,12
+Monday,Chauffeur,18:30,21:30,40
+Friday,Bartender,05:30,06:30,44
+Wednesday,Butcher,12:00,22:00,7
+Saturday,Housekeeper,13:00,13:30,4
+Sunday,Porter,01:00,03:00,23
+Tuesday,Bartender,18:00,19:00,33
+Wednesday,Kitchen Assistant,00:00,02:30,18
+Thursday,Kitchen Assistant,11:30,14:00,21
+Tuesday,Plumber,00:00,05:30,8
+Sunday,Butcher,15:30,17:30,6
+Saturday,Groundskeeper,22:00,22:30,39
+Sunday,Host/Hostess,15:00,20:30,25
+Monday,Plumber,16:00,19:00,16
+Tuesday,Kitchen Assistant,10:00,11:30,18
+Saturday,Kitchen Assistant,17:30,19:00,38
+Monday,Housekeeper,00:00,02:00,50
+Thursday,Plumber,01:00,01:30,1
+Friday,Security Guard,01:30,02:30,21
+Saturday,Butcher,03:00,04:30,17
+Sunday,Plumber,12:00,12:30,37
+Friday,Housekeeper,01:30,03:30,48
+Monday,Bartender,15:00,23:30,57
+Monday,Window Cleaner,04:30,07:30,34
+Friday,Porter,13:30,14:30,5
+Sunday,Porter,08:30,11:00,37
+Friday,Housekeeper,06:00,08:00,10
+Wednesday,Plumber,14:00,14:30,39
+Wednesday,Butcher,06:30,09:30,49
+Thursday,Plumber,02:00,03:00,39
+Sunday,Kitchen Assistant,01:00,03:30,42
+Wednesday,Taxi Driver,02:00,04:00,39
+Friday,Butcher,09:30,10:30,11
+Saturday,Butcher,15:00,15:30,17
+Sunday,Housekeeper,20:00,22:00,15
+Wednesday,Kitchen Assistant,03:30,07:00,50
+Saturday,Chauffeur,13:00,19:00,24
+Tuesday,Chauffeur,00:00,01:30,2
+Tuesday,Chauffeur,17:30,20:00,37
+Monday,Housekeeper,09:30,10:00,15
+Sunday,Housekeeper,12:00,12:30,36
+Wednesday,Butcher,00:00,01:30,22
+Thursday,Taxi Driver,05:00,06:30,48
+Friday,Porter,07:00,08:30,13
+Friday,Chauffeur,05:00,22:00,38
+Friday,Housekeeper,08:30,09:00,31
+Tuesday,Plumber,08:00,08:30,17
+Friday,Butcher,00:30,02:00,24
+Tuesday,Chauffeur,04:00,05:30,35
+Sunday,Butcher,14:30,15:30,25
+Thursday,Plumber,19:00,20:00,17
+Sunday,Butcher,10:00,10:30,46
+Friday,Security Guard,22:00,23:00,8
+Monday,Plumber,09:00,11:00,2
+Tuesday,Porter,17:00,17:30,38
+Friday,Porter,03:00,04:00,15
+Thursday,Porter,04:30,05:30,24
+Saturday,Butcher,15:30,19:00,38
+Wednesday,Chauffeur,16:00,17:30,14
+Saturday,Porter,18:30,19:30,26
+Tuesday,Porter,19:30,20:30,39
+Sunday,Porter,05:30,08:00,24
+Wednesday,Plumber,19:30,20:00,41
+Sunday,Porter,04:00,04:30,11
+Saturday,Plumber,07:00,08:00,18
+Saturday,Porter,16:30,18:00,13
+Monday,Butcher,10:30,11:30,11
+Wednesday,Butcher,09:30,11:30,9
+Thursday,Porter,12:30,13:00,32
+Saturday,Butcher,02:00,03:00,2
+Friday,Butcher,15:30,16:00,42
+Friday,Butcher,02:00,04:00,50
+Monday,Porter,20:30,23:30,32
