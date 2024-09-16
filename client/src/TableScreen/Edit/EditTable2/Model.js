@@ -552,7 +552,6 @@ export function getShiftList(table){
     // const shiftsInfo = Array.from(uniqueShiftsInfo)
     var res = { options: ["", ...(shifts)], shownOptions: ["Any", ...(shifts)] };
     // 
-    console.log(res)
     return res;
 };
 

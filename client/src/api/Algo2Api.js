@@ -48,6 +48,5 @@ export async function getTableInfomarion(token) {
     });
 
     const body = await res.text()
-    console.log(body)
     return body
 }

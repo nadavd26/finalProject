@@ -43,10 +43,8 @@ const getEmployeesHoursWorkedDict = async (userId, table1) => {
     const user = await User.findById(userId).populate('table1').populate('shiftTables.shifts').populate('assignedShiftTables.assignedShifts');
     const results2 = getAssignedLines(user.assignedShiftTables)
     const employeeToShiftsDict = transformToEmployeeShiftsMap(results2)
-    console.log("employeeToShiftsDict: ", employeeToShiftsDict)
     const results1 = transformShiftTablesToArray(user.shiftTables)
     const shiftIdToShiftLengthDict = getShifIdToShiftLengthDict(results1)
-    console.log("shiftIdToShiftLengthDict: ", shiftIdToShiftLengthDict)
     const employeeHoursWorked = {};
     for(const line1 of table1) { //Initializing the dictionary with 0 for every id.
         employeeHoursWorked[line1['id']] = 0 
@@ -56,7 +54,6 @@ const getEmployeesHoursWorkedDict = async (userId, table1) => {
         const totalHours = shifts.reduce((sum, shiftId) => sum + shiftIdToShiftLengthDict[shiftId], 0);
         employeeHoursWorked[employeeId] = totalHours;
     });
-    console.log("employeeHoursWorked", employeeHoursWorked);
     return employeeHoursWorked
 }
 
@@ -185,7 +182,7 @@ const transformAssignedShiftTablesToMap = async (assignedShiftTables) => {
             assignedShift.startTime,
             assignedShift.finishTime,
             assignedShift.assignedWorkerName,
-            assignedShift.shiftId,
+            assignedShift.shiftId - 1,
             assignedShift.id
         ]));
         resultMap.get(key).push(...assignedShiftsData);

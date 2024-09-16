@@ -3,20 +3,53 @@ import random
 
 # Initialize global counters
 name_counter = 0
+first_names = [
+    'Oliver', 'Charlotte', 'Liam', 'Amelia', 'Noah', 'Sophia', 'James', 'Isabella', 'Elijah', 'Mia', 
+    'Benjamin', 'Harper', 'Lucas', 'Evelyn', 'Mason', 'Avery', 'Logan', 'Ella', 'Jackson', 'Abigail',
+    'Aiden', 'Scarlett', 'Henry', 'Emily', 'Sebastian', 'Elizabeth', 'Alexander', 'Sofia', 'Mateo', 
+    'Mila', 'Daniel', 'Aria', 'Michael', 'Layla', 'William', 'Chloe', 'David', 'Grace', 'Joseph', 
+    'Riley', 'Owen', 'Lily', 'Wyatt', 'Hannah', 'Matthew', 'Zoey', 'Jack', 'Leah', 'Samuel', 'Nora',
+    'Isaac', 'Aubrey', 'Ethan', 'Eleanor', 'Jacob', 'Ellie', 'Luke', 'Stella', 'Gabriel', 'Lucy', 
+    'Jayden', 'Maya', 'Carter', 'Paisley', 'Dylan', 'Natalie', 'Levi', 'Hazel', 'Julian', 'Savannah',
+    'Anthony', 'Bella', 'Christopher', 'Aurora', 'Andrew', 'Willow', 'Lincoln', 'Violet', 'Nathan', 
+    'Penelope', 'Hunter', 'Luna', 'Ryan', 'Eva', 'Isaiah', 'Victoria', 'Caleb', 'Alice', 'Joshua', 
+    'Madeline', 'Maverick', 'Ariana', 'Adam', 'Claire', 'Thomas', 'Samantha', 'Leo', 'Hailey', 
+    'John', 'Sadie', 'Landon', 'Gabriella'
+]
+
+last_names = [
+    'Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis', 'Rodriguez', 
+    'Martinez', 'Hernandez', 'Lopez', 'Gonzalez', 'Wilson', 'Anderson', 'Thomas', 'Taylor', 'Moore', 
+    'Jackson', 'Martin', 'Lee', 'Perez', 'Thompson', 'White', 'Harris', 'Sanchez', 'Clark', 'Ramirez', 
+    'Lewis', 'Robinson', 'Walker', 'Young', 'Allen', 'King', 'Wright', 'Scott', 'Torres', 'Nguyen', 
+    'Hill', 'Flores', 'Green', 'Adams', 'Nelson', 'Baker', 'Hall', 'Rivera', 'Campbell', 'Mitchell', 
+    'Carter', 'Roberts', 'Gomez', 'Phillips', 'Evans', 'Turner', 'Diaz', 'Parker', 'Cruz', 'Edwards', 
+    'Collins', 'Reyes', 'Stewart', 'Morris', 'Morales', 'Murphy', 'Cook', 'Rogers', 'Gutierrez', 'Ortiz', 
+    'Morgan', 'Cooper', 'Peterson', 'Bailey', 'Reed', 'Kelly', 'Howard', 'Ramos', 'Kim', 'Cox', 
+    'Ward', 'Richardson', 'Watson', 'Brooks', 'Chavez', 'Wood', 'James', 'Bennett', 'Gray', 'Mendoza', 
+    'Ruiz', 'Hughes', 'Price', 'Alvarez', 'Castillo', 'Sanders', 'Patel', 'Myers', 'Long', 'Ross', 
+    'Foster', 'Jimenez', 'Powell', 'Jenkins', 'Perry', 'Russell'
+]
+
+skills_list = [
+    "Waiter", "Cleaner", "Cook", "Bartender", "Receptionist", "Driver", "Security Guard", "Dishwasher", "Janitor", 
+    "Gardener", "Delivery Person", "Cashier", "Barista", "Housekeeper", "Kitchen Assistant", "Maintenance Worker", 
+    "Porter", "Warehouse Worker", "Host/Hostess", "Chef", "Lifeguard", "Baggage Handler", "Clerk", "Stocker", 
+    "Laundry Attendant", "Concierge", "Busser", "Mover", "Valet", "Parking Attendant", "Window Cleaner", 
+    "Room Service Attendant", "Groundskeeper", "Carpenter", "Electrician", "Painter", "Plumber", 
+    "Mechanic", "Construction Worker", "Waitstaff", "Bellhop", "Butcher", "Sous Chef", "Taxi Driver", "Chauffeur", 
+    "Hairdresser", "Dog Walker", "Pet Groomer", "Nanny", "Babysitter"
+]
+
 
 def generate_name():
-    global name_counter
-    name = ''
-    current = name_counter
+    # Sample a first name and a last name from the predefined lists
+    first_name = random.choice(first_names)
+    last_name = random.choice(last_names)
     
-    while True:
-        name = chr(97 + current % 26) + name
-        current = current // 26 - 1
-        if current < 0:
-            break
-    
-    name_counter += 1
-    return name
+    # Combine them into a full name
+    return f"{first_name} {last_name}"
+
 
 def create_time_array():
     times = []
@@ -67,7 +100,12 @@ def random_cost():
     return random.randint(50, 100)
 
 def generate_skills_array(num_skills):
-    return [generate_name() for _ in range(num_skills)]
+    # Ensure we don't request more skills than available in the skills list
+    if num_skills > len(skills_list):
+        raise ValueError(f"Cannot generate more than {len(skills_list)} unique skills.")
+    
+    return random.sample(skills_list, num_skills)  # Randomly sample the required number of skills
+
 
 def generate_csv_1(skills_array, num_lines, filename):
     with open(filename, 'w', newline='') as csvfile:
@@ -221,4 +259,4 @@ def main(num_skills, num_lines_1, num_lines_2, num_lines_3):
     generate_csv_2(skills_array, num_lines_2, 'csv2.csv', 'csv1.csv')
 
 # Example usage:
-main(num_skills=20, num_lines_1=1000, num_lines_2=1000, num_lines_3=1000)
+main(num_skills=50, num_lines_1=1000, num_lines_2=1000, num_lines_3=1000)
