@@ -1,1000 +1,200 @@
-Bartender,Sunday,12:30,18:30,66
-Maintenance Worker,Sunday,11:30,19:30,98
-Cleaner,Wednesday,13:00,23:00,53
-Mover,Saturday,14:00,19:00,64
-Hairdresser,Friday,14:30,22:00,84
-Mover,Tuesday,02:30,12:30,99
-Security Guard,Wednesday,05:30,11:30,55
-Babysitter,Saturday,15:00,20:00,77
-Chauffeur,Thursday,02:00,10:30,58
-Mechanic,Tuesday,00:00,10:00,84
-Maintenance Worker,Sunday,01:00,06:30,88
-Nanny,Monday,07:00,15:30,73
-Delivery Person,Thursday,14:00,19:00,99
-Dog Walker,Friday,06:30,15:00,95
-Dog Walker,Thursday,02:30,11:30,76
-Plumber,Monday,00:30,10:00,64
-Painter,Friday,00:00,07:00,100
-Pet Groomer,Monday,04:30,12:30,69
-Construction Worker,Saturday,07:00,15:30,52
-Delivery Person,Wednesday,02:00,10:00,79
-Stocker,Saturday,13:00,21:00,60
-Carpenter,Monday,08:30,16:30,77
-Mover,Wednesday,03:30,11:30,96
-Receptionist,Tuesday,14:30,22:00,64
-Window Cleaner,Thursday,11:30,19:00,59
-Dog Walker,Saturday,08:00,14:00,85
-Cashier,Sunday,10:00,19:30,74
-Butcher,Tuesday,03:30,10:00,69
-Painter,Friday,15:00,21:30,85
-Baggage Handler,Friday,11:00,19:30,81
-Bartender,Wednesday,10:00,19:30,61
-Lifeguard,Saturday,08:00,16:00,75
-Chef,Saturday,04:00,12:30,73
-Kitchen Assistant,Tuesday,07:30,16:30,52
-Clerk,Sunday,11:00,19:30,76
-Janitor,Monday,12:30,18:30,77
-Lifeguard,Wednesday,11:30,18:00,91
-Mechanic,Friday,08:00,17:30,71
-Mechanic,Tuesday,09:30,15:00,71
-Receptionist,Tuesday,16:00,21:30,75
-Warehouse Worker,Friday,15:30,21:00,90
-Cashier,Sunday,00:30,07:30,80
-Mover,Saturday,16:30,22:30,96
-Busser,Sunday,10:00,15:00,92
-Electrician,Wednesday,12:30,20:30,100
-Maintenance Worker,Monday,13:00,22:30,85
-Dishwasher,Tuesday,09:00,14:00,87
-Clerk,Tuesday,08:30,15:00,73
-Laundry Attendant,Thursday,05:30,15:30,53
-Cleaner,Tuesday,14:00,23:00,55
-Receptionist,Sunday,05:00,13:00,93
-Cashier,Monday,03:30,10:30,63
-Carpenter,Wednesday,13:00,22:00,89
-Dog Walker,Monday,09:00,15:00,54
-Babysitter,Monday,14:30,23:30,50
-Barista,Tuesday,11:30,17:00,51
-Parking Attendant,Thursday,01:00,08:30,50
-Housekeeper,Saturday,00:00,08:30,70
-Security Guard,Tuesday,06:30,14:30,65
-Electrician,Sunday,09:30,17:30,53
-Host/Hostess,Wednesday,11:30,19:00,66
-Lifeguard,Wednesday,14:00,19:30,54
-Clerk,Wednesday,06:30,12:30,92
-Cashier,Tuesday,13:00,19:00,98
-Housekeeper,Tuesday,05:30,15:30,82
-Cleaner,Saturday,09:30,18:30,78
-Host/Hostess,Sunday,03:30,13:00,51
-Warehouse Worker,Friday,11:00,16:30,85
-Chauffeur,Saturday,07:00,13:30,75
-Dog Walker,Wednesday,12:30,22:30,82
-Warehouse Worker,Monday,06:30,15:30,65
-Nanny,Wednesday,02:30,12:30,58
-Plumber,Friday,11:30,19:30,82
-Waiter,Saturday,00:00,05:00,61
-Dishwasher,Tuesday,00:00,09:30,100
-Delivery Person,Saturday,03:30,13:30,51
-Concierge,Thursday,05:00,11:30,61
-Groundskeeper,Thursday,09:30,19:30,100
-Painter,Friday,03:00,09:30,63
-Receptionist,Thursday,02:00,09:30,97
-Dog Walker,Thursday,05:00,15:00,54
-Stocker,Thursday,00:30,07:00,67
-Electrician,Monday,04:00,12:00,54
-Dishwasher,Friday,11:00,16:30,59
-Bellhop,Friday,13:00,21:30,99
-Housekeeper,Monday,13:30,22:30,84
-Lifeguard,Thursday,03:00,09:00,97
-Construction Worker,Saturday,01:30,09:30,81
-Taxi Driver,Friday,02:30,08:00,52
-Groundskeeper,Thursday,06:30,15:30,66
-Painter,Sunday,14:30,23:00,77
-Kitchen Assistant,Thursday,11:30,20:30,99
-Concierge,Sunday,02:30,12:30,80
-Barista,Friday,03:00,10:00,89
-Maintenance Worker,Monday,05:30,14:30,89
-Security Guard,Thursday,01:00,08:00,61
-Bellhop,Thursday,02:00,07:00,100
-Housekeeper,Saturday,06:30,12:30,86
-Waiter,Wednesday,14:00,20:00,88
-Delivery Person,Saturday,16:30,22:00,94
-Clerk,Friday,09:00,15:30,91
-Dishwasher,Friday,10:00,18:00,78
-Gardener,Sunday,06:30,14:00,78
-Busser,Friday,10:00,15:30,93
-Barista,Thursday,12:30,21:30,69
-Warehouse Worker,Tuesday,08:00,18:00,77
-Mover,Wednesday,02:00,08:30,50
-Janitor,Sunday,03:00,08:30,55
-Busser,Wednesday,11:30,19:30,78
-Dog Walker,Thursday,12:00,22:00,57
-Baggage Handler,Tuesday,00:00,10:00,84
-Kitchen Assistant,Tuesday,12:00,19:30,66
-Host/Hostess,Tuesday,03:00,09:30,56
-Busser,Monday,17:00,22:00,82
-Room Service Attendant,Thursday,08:00,15:00,96
-Maintenance Worker,Sunday,00:00,09:00,70
-Valet,Monday,04:30,12:30,71
-Security Guard,Friday,08:30,13:30,51
-Electrician,Tuesday,02:00,09:30,58
-Construction Worker,Tuesday,08:00,18:00,75
-Housekeeper,Friday,14:30,21:30,55
-Barista,Saturday,03:00,09:00,92
-Bartender,Thursday,06:30,16:30,60
-Pet Groomer,Friday,14:30,23:30,72
-Chef,Saturday,00:30,05:30,75
-Chef,Monday,01:00,09:30,80
-Valet,Saturday,14:30,22:30,86
-Busser,Saturday,13:00,22:30,71
-Busser,Thursday,04:00,09:00,71
-Cook,Monday,10:30,17:30,81
-Valet,Saturday,11:30,20:30,67
-Laundry Attendant,Friday,13:00,22:30,51
-Concierge,Sunday,06:00,15:30,51
-Busser,Thursday,10:30,16:30,68
-Babysitter,Monday,09:00,17:30,78
-Warehouse Worker,Wednesday,11:00,20:00,50
-Babysitter,Friday,11:00,19:00,98
-Driver,Sunday,11:00,18:00,72
-Parking Attendant,Sunday,06:00,12:00,58
-Maintenance Worker,Wednesday,08:30,13:30,68
-Groundskeeper,Monday,12:00,17:00,60
-Cashier,Sunday,06:00,16:00,97
-Busser,Wednesday,12:30,21:30,53
-Delivery Person,Saturday,13:00,20:00,93
-Janitor,Friday,02:00,10:30,89
-Laundry Attendant,Monday,09:30,15:00,82
-Chef,Thursday,08:30,15:30,68
-Busser,Saturday,00:30,08:30,74
-Room Service Attendant,Tuesday,01:30,09:00,75
-Bartender,Sunday,06:00,11:00,99
-Mover,Thursday,06:00,15:00,55
-Host/Hostess,Friday,17:00,22:30,81
-Stocker,Friday,15:00,21:30,97
-Painter,Sunday,05:30,15:30,62
-Dishwasher,Tuesday,05:00,12:00,52
-Valet,Thursday,12:30,21:00,76
-Delivery Person,Sunday,06:00,13:30,52
-Waitstaff,Monday,00:30,10:30,84
-Hairdresser,Tuesday,00:30,10:30,74
-Lifeguard,Friday,07:00,13:30,94
-Housekeeper,Sunday,04:30,12:00,66
-Delivery Person,Saturday,16:00,23:30,82
-Chauffeur,Tuesday,03:00,10:00,63
-Security Guard,Wednesday,13:00,19:00,88
-Porter,Wednesday,10:00,15:30,57
-Clerk,Saturday,14:00,22:00,92
-Warehouse Worker,Tuesday,16:00,22:00,74
-Mechanic,Sunday,11:30,18:30,52
-Porter,Friday,13:00,19:30,61
-Taxi Driver,Thursday,05:30,15:30,94
-Security Guard,Wednesday,00:30,10:00,66
-Groundskeeper,Thursday,10:30,20:00,91
-Barista,Sunday,01:00,10:30,93
-Cleaner,Monday,09:30,14:30,57
-Carpenter,Friday,04:30,11:30,91
-Butcher,Tuesday,04:30,14:30,81
-Warehouse Worker,Sunday,11:30,21:30,63
-Cleaner,Friday,11:00,20:00,57
-Babysitter,Tuesday,13:30,20:00,67
-Bartender,Saturday,11:30,19:30,95
-Construction Worker,Friday,07:00,13:30,92
-Busser,Wednesday,00:30,07:30,51
-Driver,Sunday,01:30,11:00,52
-Nanny,Thursday,09:30,15:30,66
-Concierge,Wednesday,05:00,12:00,84
-Dishwasher,Thursday,03:00,12:00,63
-Security Guard,Thursday,15:30,21:30,51
-Porter,Thursday,16:00,21:00,70
-Dishwasher,Sunday,13:30,22:30,53
-Waitstaff,Saturday,03:30,10:00,86
-Security Guard,Monday,05:00,12:30,71
-Concierge,Friday,16:00,23:30,86
-Parking Attendant,Thursday,13:30,23:00,50
-Painter,Sunday,12:00,21:30,65
-Dog Walker,Wednesday,11:00,20:30,82
-Driver,Monday,09:00,16:30,62
-Porter,Thursday,07:30,13:30,55
-Delivery Person,Saturday,02:00,08:00,97
-Window Cleaner,Monday,13:30,23:30,65
-Busser,Tuesday,12:00,22:00,95
-Carpenter,Friday,14:00,21:00,77
-Cleaner,Monday,11:00,20:30,86
-Chef,Friday,14:00,19:30,78
-Bartender,Friday,12:30,18:00,96
-Barista,Sunday,08:00,17:30,62
-Chef,Tuesday,14:30,22:00,70
-Laundry Attendant,Wednesday,04:00,14:00,73
-Cashier,Sunday,08:30,13:30,74
-Gardener,Saturday,03:30,12:00,86
-Janitor,Monday,00:30,06:00,76
-Janitor,Friday,01:00,10:00,86
-Plumber,Monday,00:30,09:30,79
-Security Guard,Monday,12:00,20:00,87
-Baggage Handler,Monday,03:00,11:30,57
-Barista,Thursday,03:30,11:30,73
-Busser,Sunday,06:00,13:00,62
-Bellhop,Monday,08:30,16:30,50
-Electrician,Sunday,15:30,22:00,61
-Dog Walker,Saturday,12:00,17:30,75
-Construction Worker,Saturday,09:30,16:30,84
-Host/Hostess,Friday,05:30,12:30,99
-Chef,Saturday,02:30,08:00,83
-Butcher,Tuesday,16:00,22:30,90
-Sous Chef,Monday,16:30,23:30,99
-Pet Groomer,Friday,02:00,12:00,82
-Chauffeur,Saturday,02:30,07:30,93
-Dog Walker,Sunday,11:30,17:30,67
-Housekeeper,Tuesday,14:00,23:00,82
-Security Guard,Sunday,16:30,21:30,61
-Maintenance Worker,Wednesday,03:00,09:00,87
-Warehouse Worker,Saturday,07:30,13:00,89
-Barista,Saturday,12:00,17:30,70
-Security Guard,Sunday,09:00,14:30,69
-Cleaner,Monday,08:00,14:00,85
-Waitstaff,Wednesday,03:00,10:00,65
-Painter,Friday,11:30,18:00,58
-Host/Hostess,Tuesday,00:00,08:00,93
-Stocker,Tuesday,13:00,20:30,95
-Cleaner,Wednesday,00:00,07:00,60
-Warehouse Worker,Saturday,12:00,17:30,95
-Parking Attendant,Sunday,13:00,20:00,83
-Construction Worker,Wednesday,02:30,10:30,68
-Host/Hostess,Saturday,09:30,19:00,64
-Waiter,Monday,06:30,12:00,88
-Electrician,Friday,05:00,10:30,86
-Janitor,Wednesday,03:00,13:00,77
-Security Guard,Friday,10:30,20:00,53
-Cleaner,Monday,05:00,12:30,97
-Busser,Monday,09:30,19:00,98
-Parking Attendant,Friday,11:30,17:30,84
-Parking Attendant,Wednesday,00:30,05:30,57
-Dog Walker,Tuesday,12:00,21:30,94
-Plumber,Tuesday,16:00,23:00,100
-Stocker,Friday,09:30,17:30,50
-Butcher,Saturday,16:00,21:00,92
-Sous Chef,Monday,07:30,17:00,65
-Mover,Friday,01:30,08:30,98
-Carpenter,Wednesday,10:00,20:00,56
-Busser,Sunday,01:00,07:30,88
-Groundskeeper,Friday,09:00,14:00,74
-Dishwasher,Monday,02:00,10:00,67
-Cleaner,Sunday,08:30,15:30,74
-Waitstaff,Thursday,14:30,23:00,80
-Cleaner,Thursday,08:00,15:30,58
-Chauffeur,Saturday,17:00,22:00,95
-Driver,Saturday,13:00,22:30,51
-Clerk,Saturday,08:00,14:00,65
-Gardener,Monday,13:30,19:00,87
-Mover,Monday,11:30,20:30,62
-Carpenter,Thursday,15:30,21:00,76
-Host/Hostess,Monday,02:30,09:30,81
-Butcher,Saturday,03:30,11:30,90
-Driver,Wednesday,02:00,09:00,80
-Mover,Sunday,01:30,08:30,57
-Room Service Attendant,Tuesday,03:30,13:30,53
-Baggage Handler,Saturday,15:30,23:30,77
-Laundry Attendant,Thursday,01:30,09:00,98
-Carpenter,Monday,12:00,19:00,81
-Sous Chef,Tuesday,03:30,08:30,61
-Busser,Wednesday,14:30,22:00,70
-Sous Chef,Sunday,04:30,13:00,54
-Nanny,Tuesday,08:00,14:00,78
-Barista,Monday,09:00,17:00,93
-Kitchen Assistant,Wednesday,00:30,09:30,89
-Warehouse Worker,Sunday,05:00,10:00,80
-Room Service Attendant,Monday,11:00,18:30,95
-Butcher,Monday,13:00,18:00,59
-Delivery Person,Friday,14:30,21:30,61
-Warehouse Worker,Friday,01:00,09:00,73
-Butcher,Monday,12:30,18:00,96
-Construction Worker,Friday,05:30,15:00,69
-Carpenter,Saturday,05:00,15:00,75
-Delivery Person,Saturday,13:30,20:30,59
-Driver,Wednesday,08:00,16:30,82
-Window Cleaner,Tuesday,14:30,22:30,86
-Housekeeper,Thursday,03:00,09:00,67
-Painter,Friday,18:00,23:30,89
-Pet Groomer,Thursday,08:00,18:00,52
-Delivery Person,Monday,04:00,11:00,86
-Chauffeur,Thursday,12:30,19:00,88
-Bellhop,Tuesday,16:00,23:30,87
-Stocker,Friday,17:30,22:30,97
-Nanny,Friday,09:00,14:30,59
-Room Service Attendant,Thursday,16:30,22:30,92
-Parking Attendant,Sunday,16:30,23:00,80
-Warehouse Worker,Tuesday,04:00,09:30,56
-Parking Attendant,Thursday,12:30,18:00,75
-Dishwasher,Wednesday,10:30,17:00,92
-Concierge,Thursday,01:00,08:00,96
-Warehouse Worker,Saturday,10:00,16:30,85
-Cashier,Wednesday,06:30,13:00,96
-Busser,Saturday,10:00,16:30,51
-Cashier,Wednesday,05:00,11:00,62
-Mover,Saturday,10:00,20:00,50
-Concierge,Wednesday,08:30,17:30,61
-Valet,Saturday,06:00,15:00,50
-Mover,Monday,08:00,13:30,89
-Chef,Monday,04:30,13:30,79
-Stocker,Tuesday,06:30,11:30,79
-Maintenance Worker,Sunday,00:30,07:30,67
-Host/Hostess,Saturday,13:30,22:00,52
-Waiter,Monday,09:30,17:30,81
-Receptionist,Monday,12:00,19:30,57
-Hairdresser,Thursday,12:00,18:30,51
-Busser,Tuesday,10:30,20:00,51
-Construction Worker,Monday,04:00,10:00,66
-Baggage Handler,Wednesday,06:00,13:00,85
-Parking Attendant,Sunday,06:30,13:30,86
-Barista,Saturday,00:00,08:00,64
-Window Cleaner,Sunday,02:00,07:00,93
-Driver,Thursday,05:00,11:00,93
-Nanny,Monday,07:30,13:30,95
-Barista,Sunday,10:00,15:30,91
-Driver,Saturday,00:30,06:30,50
-Dog Walker,Friday,02:00,10:00,72
-Painter,Sunday,13:00,19:30,98
-Laundry Attendant,Wednesday,12:00,19:30,96
-Delivery Person,Sunday,12:00,20:00,78
-Babysitter,Saturday,17:00,22:30,67
-Kitchen Assistant,Friday,16:00,22:00,70
-Delivery Person,Monday,13:00,21:30,97
-Pet Groomer,Friday,12:30,21:30,85
-Plumber,Saturday,07:00,14:00,80
-Cook,Tuesday,02:30,11:30,60
-Electrician,Saturday,14:30,20:00,56
-Pet Groomer,Wednesday,06:30,12:00,81
-Electrician,Sunday,18:30,23:30,90
-Receptionist,Friday,09:00,15:30,71
-Chauffeur,Sunday,07:00,12:30,56
-Waiter,Tuesday,05:00,15:00,93
-Sous Chef,Wednesday,14:00,20:00,64
-Sous Chef,Wednesday,10:00,19:00,89
-Cashier,Friday,09:30,15:00,80
-Cashier,Saturday,14:30,20:30,90
-Nanny,Tuesday,12:00,21:00,93
-Mechanic,Tuesday,08:30,13:30,95
-Mechanic,Tuesday,12:00,22:00,59
-Delivery Person,Friday,12:00,17:30,60
-Porter,Monday,15:30,22:00,85
-Chauffeur,Saturday,09:00,16:00,81
-Cleaner,Sunday,10:30,15:30,61
-Maintenance Worker,Monday,02:00,08:00,85
-Cook,Wednesday,01:00,07:30,82
-Waitstaff,Wednesday,08:00,15:30,80
-Chef,Tuesday,11:30,19:30,98
-Host/Hostess,Friday,08:00,15:00,56
-Cleaner,Monday,03:30,10:00,74
-Security Guard,Saturday,11:00,21:00,63
-Dishwasher,Wednesday,08:00,14:00,91
-Cook,Wednesday,13:00,18:00,86
-Groundskeeper,Monday,00:00,09:30,76
-Cashier,Saturday,16:30,21:30,52
-Porter,Wednesday,06:30,14:00,54
-Window Cleaner,Saturday,09:00,16:30,82
-Chauffeur,Monday,16:00,23:30,71
-Hairdresser,Saturday,08:30,17:00,71
-Room Service Attendant,Thursday,08:30,18:30,52
-Host/Hostess,Monday,06:00,15:30,95
-Electrician,Friday,00:00,10:00,69
-Barista,Tuesday,02:30,11:00,67
-Host/Hostess,Wednesday,13:30,23:00,73
-Busser,Saturday,04:30,12:00,65
-Security Guard,Tuesday,11:00,16:00,67
-Delivery Person,Wednesday,06:00,11:00,91
-Hairdresser,Friday,13:00,21:30,87
-Parking Attendant,Wednesday,16:30,22:30,83
-Delivery Person,Wednesday,08:00,13:30,75
-Maintenance Worker,Monday,08:30,13:30,87
-Construction Worker,Sunday,12:30,19:00,64
-Driver,Sunday,10:00,16:00,76
-Waiter,Tuesday,06:30,11:30,75
-Receptionist,Wednesday,15:30,22:00,72
-Kitchen Assistant,Saturday,05:00,12:30,51
-Bartender,Friday,12:30,20:00,68
-Room Service Attendant,Tuesday,13:30,20:30,81
-Waiter,Saturday,14:30,20:00,60
-Taxi Driver,Saturday,06:30,13:00,58
-Waitstaff,Monday,03:30,12:30,97
-Window Cleaner,Saturday,06:30,13:30,58
-Driver,Wednesday,13:00,22:00,72
-Janitor,Sunday,17:00,23:00,59
-Groundskeeper,Sunday,13:00,19:00,72
-Waiter,Saturday,08:00,13:00,67
-Nanny,Sunday,13:30,21:00,53
-Construction Worker,Tuesday,09:30,16:00,97
-Clerk,Saturday,13:30,20:30,74
-Barista,Wednesday,07:30,15:30,100
-Driver,Sunday,08:00,17:00,91
-Hairdresser,Tuesday,08:30,17:30,60
-Mechanic,Sunday,02:00,12:00,87
-Cook,Friday,06:30,14:00,92
-Valet,Sunday,04:00,10:30,75
-Housekeeper,Monday,14:00,22:00,75
-Stocker,Saturday,12:30,19:30,72
-Janitor,Sunday,05:00,14:00,71
-Busser,Tuesday,13:00,20:30,54
-Lifeguard,Wednesday,11:00,19:30,77
-Hairdresser,Sunday,07:00,15:30,58
-Waiter,Monday,09:00,17:00,61
-Lifeguard,Saturday,01:00,08:30,53
-Receptionist,Sunday,01:00,06:00,65
-Clerk,Monday,07:00,14:00,64
-Busser,Saturday,02:00,08:30,51
-Receptionist,Saturday,00:00,06:30,56
-Electrician,Tuesday,12:30,19:30,80
-Warehouse Worker,Monday,10:00,18:30,58
-Taxi Driver,Tuesday,05:00,10:30,61
-Cleaner,Tuesday,08:30,18:30,88
-Plumber,Sunday,03:30,11:00,93
-Parking Attendant,Monday,07:00,14:00,91
-Waitstaff,Wednesday,16:00,23:30,92
-Electrician,Wednesday,03:00,08:30,92
-Housekeeper,Saturday,15:30,22:30,52
-Laundry Attendant,Saturday,08:00,15:30,84
-Gardener,Tuesday,01:00,11:00,62
-Cashier,Monday,07:30,15:30,80
-Mechanic,Wednesday,04:30,12:00,53
-Mover,Tuesday,03:00,13:00,57
-Bartender,Monday,00:00,07:30,83
-Porter,Wednesday,02:30,12:00,92
-Barista,Thursday,02:00,09:30,74
-Carpenter,Saturday,17:00,22:00,58
-Host/Hostess,Monday,17:00,22:30,90
-Plumber,Monday,08:30,17:00,90
-Bartender,Monday,07:00,12:30,69
-Construction Worker,Saturday,02:00,11:00,63
-Cook,Tuesday,06:30,11:30,62
-Room Service Attendant,Saturday,04:30,12:00,55
-Waitstaff,Sunday,12:00,19:30,52
-Driver,Monday,00:00,08:30,95
-Window Cleaner,Wednesday,13:30,20:00,95
-Baggage Handler,Thursday,09:30,16:00,67
-Driver,Friday,04:30,12:30,50
-Nanny,Saturday,12:00,17:30,82
-Room Service Attendant,Sunday,09:00,17:30,81
-Security Guard,Tuesday,06:00,13:00,82
-Dog Walker,Monday,12:30,19:30,97
-Parking Attendant,Tuesday,14:00,22:30,85
-Janitor,Monday,03:00,10:00,67
-Laundry Attendant,Thursday,13:00,23:00,86
-Waitstaff,Saturday,12:30,19:30,66
-Host/Hostess,Wednesday,05:00,11:30,64
-Painter,Sunday,03:30,09:00,70
-Window Cleaner,Wednesday,07:00,12:00,89
-Dog Walker,Friday,08:30,14:30,82
-Kitchen Assistant,Monday,15:00,23:30,81
-Lifeguard,Thursday,03:00,10:30,85
-Cashier,Saturday,02:30,09:00,77
-Hairdresser,Tuesday,10:30,17:00,98
-Cashier,Sunday,00:00,08:00,72
-Barista,Tuesday,04:30,12:00,71
-Nanny,Friday,02:30,09:30,57
-Bellhop,Monday,13:30,19:30,87
-Security Guard,Saturday,16:00,22:00,93
-Butcher,Friday,02:00,08:00,97
-Host/Hostess,Saturday,04:30,11:30,55
-Lifeguard,Monday,10:00,15:00,65
-Receptionist,Sunday,07:00,12:30,57
-Chef,Friday,12:00,19:00,54
-Chef,Friday,17:00,22:30,90
-Window Cleaner,Tuesday,11:30,17:30,74
-Cleaner,Wednesday,10:00,15:00,92
-Kitchen Assistant,Friday,10:00,20:00,97
-Clerk,Tuesday,10:30,17:30,69
-Dishwasher,Monday,02:30,08:30,56
-Busser,Wednesday,02:30,11:30,96
-Mechanic,Tuesday,10:00,20:00,50
-Window Cleaner,Sunday,12:30,18:00,79
-Lifeguard,Saturday,15:00,20:30,52
-Hairdresser,Thursday,12:00,17:30,70
-Cashier,Tuesday,05:00,11:00,76
-Window Cleaner,Wednesday,15:00,23:00,98
-Groundskeeper,Tuesday,08:30,15:00,95
-Busser,Saturday,13:00,21:00,83
-Gardener,Sunday,03:00,12:00,70
-Parking Attendant,Friday,13:30,22:00,82
-Porter,Friday,08:00,18:00,86
-Lifeguard,Saturday,06:30,15:00,90
-Electrician,Saturday,16:30,22:00,96
-Bellhop,Thursday,15:00,21:00,82
-Receptionist,Thursday,08:00,17:30,76
-Warehouse Worker,Wednesday,14:00,23:00,89
-Butcher,Monday,11:30,19:00,78
-Taxi Driver,Monday,06:30,16:30,88
-Bellhop,Monday,17:00,23:00,86
-Baggage Handler,Tuesday,09:30,15:00,73
-Butcher,Tuesday,00:00,05:00,50
-Driver,Friday,09:30,17:00,98
-Construction Worker,Wednesday,10:00,18:30,61
-Delivery Person,Wednesday,05:30,15:00,54
-Cashier,Saturday,14:00,22:30,64
-Busser,Tuesday,03:00,13:00,66
-Pet Groomer,Thursday,14:30,23:30,96
-Bartender,Sunday,07:00,15:30,72
-Housekeeper,Tuesday,03:30,09:30,67
-Waitstaff,Sunday,01:00,09:30,71
-Dishwasher,Monday,13:00,22:30,84
-Electrician,Tuesday,02:00,08:30,66
-Window Cleaner,Wednesday,08:30,17:30,95
-Dog Walker,Sunday,07:00,17:00,50
-Bartender,Sunday,16:00,21:00,89
-Warehouse Worker,Saturday,01:00,06:30,62
-Mechanic,Wednesday,06:30,13:30,99
-Receptionist,Friday,06:00,13:00,54
-Cook,Monday,02:30,12:30,89
-Babysitter,Saturday,05:00,12:30,51
-Cook,Sunday,11:30,21:00,81
-Bartender,Tuesday,17:00,23:30,60
-Receptionist,Sunday,06:30,13:30,68
-Gardener,Wednesday,10:00,20:00,93
-Chauffeur,Tuesday,13:30,19:30,90
-Janitor,Tuesday,09:30,16:00,60
-Bellhop,Tuesday,03:30,11:30,100
-Room Service Attendant,Friday,06:30,11:30,55
-Plumber,Wednesday,09:30,17:30,68
-Pet Groomer,Friday,07:30,14:30,68
-Taxi Driver,Tuesday,01:00,06:30,80
-Valet,Friday,05:00,11:30,93
-Maintenance Worker,Sunday,13:30,19:00,73
-Bellhop,Sunday,03:30,08:30,91
-Barista,Friday,09:00,16:30,92
-Chauffeur,Monday,03:30,09:00,100
-Busser,Tuesday,07:30,17:30,55
-Cleaner,Saturday,08:30,15:00,93
-Carpenter,Tuesday,03:30,10:30,69
-Bellhop,Thursday,14:00,21:00,60
-Barista,Sunday,13:00,21:00,57
-Groundskeeper,Monday,07:30,16:00,76
-Concierge,Sunday,06:00,13:30,75
-Maintenance Worker,Tuesday,00:00,07:30,72
-Nanny,Saturday,14:00,22:30,94
-Painter,Thursday,12:00,19:30,77
-Driver,Monday,15:00,20:30,87
-Clerk,Monday,09:30,19:00,63
-Bellhop,Wednesday,01:00,06:00,80
-Kitchen Assistant,Tuesday,14:30,22:30,66
-Host/Hostess,Friday,13:30,23:00,75
-Valet,Saturday,15:00,23:30,59
-Dishwasher,Sunday,15:30,21:00,86
-Laundry Attendant,Monday,09:30,14:30,89
-Dishwasher,Thursday,13:30,23:00,56
-Concierge,Tuesday,02:30,12:30,89
-Receptionist,Friday,02:30,08:30,60
-Lifeguard,Saturday,14:00,19:30,62
-Taxi Driver,Thursday,01:00,07:30,82
-Porter,Thursday,13:00,21:30,72
-Hairdresser,Saturday,10:00,20:00,64
-Painter,Saturday,04:00,09:00,66
-Carpenter,Monday,12:00,22:00,88
-Gardener,Wednesday,08:00,14:30,86
-Cook,Tuesday,01:30,11:00,61
-Babysitter,Monday,16:30,22:30,59
-Mover,Monday,09:30,15:30,65
-Clerk,Friday,17:30,23:00,63
-Window Cleaner,Wednesday,08:30,13:30,51
-Baggage Handler,Wednesday,07:30,13:00,56
-Sous Chef,Thursday,11:00,19:00,66
-Driver,Saturday,01:00,07:30,76
-Sous Chef,Tuesday,17:00,22:00,51
-Housekeeper,Wednesday,14:30,21:00,78
-Clerk,Sunday,15:00,21:30,70
-Sous Chef,Sunday,14:30,23:00,62
-Porter,Monday,00:30,10:30,68
-Barista,Saturday,11:00,18:30,97
-Mechanic,Saturday,08:00,14:00,73
-Security Guard,Wednesday,03:00,10:00,93
-Valet,Tuesday,00:30,10:30,72
-Barista,Friday,14:00,19:30,100
-Taxi Driver,Wednesday,04:30,09:30,80
-Bartender,Saturday,13:00,21:00,64
-Delivery Person,Friday,17:30,23:00,52
-Plumber,Wednesday,04:30,09:30,51
-Babysitter,Tuesday,09:00,18:00,59
-Mover,Sunday,00:30,10:30,84
-Room Service Attendant,Wednesday,16:30,22:00,92
-Porter,Saturday,02:00,08:00,72
-Clerk,Sunday,11:30,16:30,67
-Butcher,Friday,05:30,12:30,54
-Clerk,Sunday,05:00,13:30,79
-Window Cleaner,Thursday,02:00,07:00,71
-Nanny,Saturday,04:00,11:30,64
-Waiter,Tuesday,02:00,10:00,55
-Delivery Person,Thursday,12:30,20:30,74
-Security Guard,Tuesday,16:30,22:30,79
-Room Service Attendant,Monday,11:30,18:00,97
-Busser,Tuesday,13:30,22:30,80
-Bellhop,Saturday,04:30,12:00,72
-Concierge,Sunday,09:00,18:00,100
-Groundskeeper,Tuesday,00:30,07:00,95
-Valet,Tuesday,09:30,18:30,94
-Clerk,Friday,05:30,13:30,80
-Concierge,Tuesday,08:30,14:30,98
-Housekeeper,Tuesday,01:00,09:30,70
-Laundry Attendant,Monday,12:30,22:00,91
-Driver,Monday,04:00,14:00,92
-Painter,Tuesday,01:30,08:30,95
-Taxi Driver,Saturday,11:30,18:00,64
-Valet,Friday,12:30,19:00,61
-Concierge,Sunday,03:30,09:30,98
-Bartender,Wednesday,08:00,16:30,88
-Taxi Driver,Friday,13:00,21:00,86
-Waiter,Friday,03:30,08:30,51
-Taxi Driver,Wednesday,05:00,12:00,71
-Waitstaff,Monday,04:00,11:00,77
-Bellhop,Monday,03:00,10:00,67
-Laundry Attendant,Tuesday,04:00,11:30,54
-Clerk,Tuesday,10:00,16:30,55
-Groundskeeper,Sunday,02:30,10:30,91
-Baggage Handler,Thursday,02:30,10:00,61
-Chauffeur,Friday,09:30,14:30,88
-Busser,Monday,10:30,19:00,90
-Parking Attendant,Tuesday,06:30,16:00,90
-Construction Worker,Tuesday,04:00,13:30,72
-Parking Attendant,Sunday,13:30,20:30,100
-Maintenance Worker,Sunday,10:00,15:30,90
-Cleaner,Tuesday,11:00,20:00,56
-Construction Worker,Wednesday,02:30,12:30,64
-Janitor,Saturday,04:00,11:30,64
-Waiter,Thursday,01:00,07:00,92
-Security Guard,Monday,05:30,12:30,92
-Groundskeeper,Monday,13:30,21:30,62
-Laundry Attendant,Monday,11:30,21:30,64
-Busser,Sunday,03:30,09:00,74
-Maintenance Worker,Monday,14:00,19:30,55
-Porter,Thursday,12:30,21:30,89
-Gardener,Monday,10:00,17:30,50
-Chauffeur,Thursday,12:30,22:30,68
-Construction Worker,Sunday,10:30,19:30,61
-Cleaner,Monday,16:00,22:00,66
-Cashier,Friday,10:00,15:00,61
-Painter,Sunday,04:00,11:00,73
-Construction Worker,Tuesday,16:00,23:30,70
-Concierge,Wednesday,06:30,15:30,77
-Hairdresser,Saturday,06:00,12:30,74
-Plumber,Thursday,02:00,11:00,72
-Mover,Sunday,13:00,22:00,64
-Janitor,Friday,04:00,12:00,71
-Barista,Sunday,10:00,20:00,93
-Cleaner,Saturday,14:30,22:30,97
-Butcher,Sunday,00:00,08:00,70
-Concierge,Friday,07:00,16:30,52
-Waitstaff,Saturday,05:00,13:00,54
-Receptionist,Wednesday,07:00,16:00,85
-Gardener,Saturday,11:00,20:30,61
-Stocker,Wednesday,10:30,18:30,80
-Stocker,Sunday,03:00,11:30,84
-Receptionist,Sunday,12:30,18:30,87
-Porter,Wednesday,01:00,09:30,78
-Nanny,Tuesday,06:30,16:00,66
-Security Guard,Wednesday,03:00,12:30,63
-Lifeguard,Friday,15:00,20:30,96
-Painter,Monday,06:30,13:30,80
-Parking Attendant,Saturday,13:00,19:30,61
-Sous Chef,Thursday,04:30,11:00,62
-Bartender,Friday,02:30,08:30,67
-Mechanic,Friday,17:00,22:00,80
-Chauffeur,Friday,14:00,21:30,80
-Nanny,Monday,01:30,07:00,82
-Cashier,Monday,12:30,22:30,61
-Mover,Sunday,00:00,08:00,97
-Driver,Tuesday,06:00,15:30,69
-Gardener,Friday,06:30,12:30,79
-Kitchen Assistant,Wednesday,12:30,19:00,66
-Pet Groomer,Saturday,07:00,15:00,93
-Taxi Driver,Friday,01:00,07:00,69
-Host/Hostess,Monday,00:00,06:30,65
-Gardener,Thursday,15:30,23:30,55
-Mechanic,Monday,12:00,19:00,50
-Gardener,Friday,03:30,09:30,56
-Janitor,Thursday,10:30,16:30,64
-Barista,Sunday,04:00,10:30,59
-Waiter,Friday,08:30,18:30,82
-Dishwasher,Sunday,14:00,20:30,51
-Hairdresser,Friday,00:00,08:30,71
-Nanny,Saturday,06:00,13:00,78
-Chauffeur,Saturday,07:00,16:00,62
-Taxi Driver,Tuesday,10:00,18:00,78
-Kitchen Assistant,Friday,03:30,09:00,73
-Painter,Monday,00:30,08:30,71
-Pet Groomer,Monday,00:30,06:00,100
-Electrician,Monday,11:30,21:30,75
-Groundskeeper,Friday,12:00,18:00,87
-Security Guard,Saturday,16:00,23:00,52
-Cleaner,Sunday,09:30,17:30,72
-Bartender,Monday,13:00,23:00,56
-Chef,Thursday,12:00,17:30,92
-Janitor,Friday,05:30,15:00,54
-Receptionist,Sunday,15:30,20:30,70
-Host/Hostess,Wednesday,09:00,16:30,77
-Receptionist,Tuesday,01:00,09:30,81
-Nanny,Sunday,00:00,06:30,84
-Plumber,Sunday,01:00,10:30,79
-Bartender,Saturday,11:00,16:00,66
-Dishwasher,Saturday,01:00,11:00,52
-Construction Worker,Tuesday,16:00,22:00,53
-Nanny,Friday,12:00,18:30,91
-Electrician,Saturday,13:30,19:00,95
-Clerk,Thursday,11:30,17:00,78
-Chef,Saturday,01:30,09:30,86
-Construction Worker,Monday,10:30,15:30,67
-Clerk,Thursday,09:30,17:00,71
-Porter,Saturday,03:30,10:30,82
-Groundskeeper,Saturday,13:00,22:00,70
-Nanny,Friday,15:30,20:30,58
-Lifeguard,Monday,04:00,11:00,84
-Driver,Tuesday,03:00,09:00,74
-Warehouse Worker,Saturday,08:30,16:00,89
-Hairdresser,Monday,03:30,09:00,54
-Parking Attendant,Monday,08:30,13:30,52
-Receptionist,Tuesday,04:30,13:30,60
-Delivery Person,Sunday,00:30,05:30,83
-Laundry Attendant,Wednesday,12:30,22:00,97
-Plumber,Sunday,03:30,09:00,77
-Construction Worker,Saturday,02:30,10:00,59
-Parking Attendant,Friday,09:30,15:30,86
-Security Guard,Monday,13:30,21:00,85
-Lifeguard,Thursday,11:00,17:00,62
-Maintenance Worker,Sunday,02:30,12:30,79
-Cleaner,Wednesday,03:00,09:00,57
-Lifeguard,Monday,12:30,22:30,51
-Electrician,Tuesday,02:30,11:00,98
-Chauffeur,Monday,02:00,08:00,57
-Gardener,Sunday,05:30,13:00,66
-Sous Chef,Tuesday,12:30,21:00,77
-Construction Worker,Friday,08:30,17:00,79
-Painter,Monday,09:30,15:30,77
-Baggage Handler,Monday,02:00,10:00,79
-Electrician,Sunday,07:00,15:30,80
-Cook,Wednesday,01:00,10:30,67
-Cashier,Sunday,02:30,09:00,88
-Kitchen Assistant,Friday,16:30,22:30,67
-Waiter,Friday,12:30,22:30,57
-Receptionist,Thursday,14:00,20:00,83
-Babysitter,Saturday,09:00,18:30,56
-Parking Attendant,Friday,14:00,20:30,84
-Plumber,Friday,13:00,22:30,92
-Hairdresser,Sunday,12:00,18:30,72
-Nanny,Wednesday,03:30,11:00,67
-Lifeguard,Friday,13:30,22:00,96
-Warehouse Worker,Sunday,07:00,14:30,85
-Maintenance Worker,Monday,05:00,12:30,86
-Bartender,Sunday,01:30,09:00,77
-Bartender,Wednesday,16:00,22:00,83
-Sous Chef,Monday,09:30,19:00,84
-Porter,Saturday,14:30,20:00,63
-Kitchen Assistant,Tuesday,12:00,17:00,74
-Waiter,Tuesday,09:00,18:00,72
-Laundry Attendant,Tuesday,13:30,21:30,87
-Janitor,Friday,09:00,19:00,79
-Electrician,Sunday,13:30,21:30,59
-Clerk,Monday,17:00,22:30,82
-Construction Worker,Wednesday,16:30,22:30,93
-Babysitter,Sunday,10:30,17:00,65
-Parking Attendant,Saturday,08:30,14:30,60
-Porter,Sunday,07:00,13:00,74
-Cashier,Saturday,13:30,22:00,68
-Mover,Sunday,09:00,15:00,75
-Cook,Sunday,09:30,18:00,70
-Room Service Attendant,Tuesday,17:00,22:00,95
-Janitor,Sunday,17:00,22:30,64
-Painter,Saturday,04:30,13:30,70
-Bellhop,Wednesday,05:30,15:30,50
-Security Guard,Wednesday,14:00,23:30,82
-Pet Groomer,Saturday,13:30,22:00,73
-Receptionist,Thursday,12:30,19:30,85
-Bartender,Saturday,13:00,23:00,77
-Taxi Driver,Wednesday,15:30,22:00,83
-Cashier,Monday,03:30,13:00,56
-Taxi Driver,Saturday,12:00,17:00,63
-Janitor,Wednesday,09:30,17:00,55
-Baggage Handler,Wednesday,13:00,23:00,66
-Delivery Person,Sunday,07:00,17:00,86
-Concierge,Sunday,04:00,14:00,55
-Bellhop,Monday,03:30,10:30,51
-Lifeguard,Monday,02:30,08:30,65
-Cleaner,Monday,17:00,22:00,93
-Construction Worker,Monday,12:00,22:00,100
-Warehouse Worker,Thursday,02:30,12:30,85
-Concierge,Thursday,18:00,23:00,95
-Chef,Sunday,06:30,11:30,90
-Waitstaff,Wednesday,05:30,14:30,84
-Busser,Friday,03:00,11:00,97
-Waiter,Tuesday,16:00,22:00,52
-Maintenance Worker,Saturday,05:00,11:00,90
-Hairdresser,Saturday,02:00,10:00,98
-Kitchen Assistant,Thursday,11:30,18:30,95
-Bellhop,Thursday,04:00,13:00,63
-Bartender,Wednesday,02:00,09:00,84
-Groundskeeper,Wednesday,18:30,23:30,76
-Taxi Driver,Saturday,08:30,15:00,65
-Chef,Wednesday,01:00,07:00,82
-Bartender,Thursday,03:30,11:30,79
-Parking Attendant,Friday,06:00,13:00,91
-Taxi Driver,Friday,15:00,23:00,59
-Clerk,Monday,05:00,12:00,74
-Room Service Attendant,Sunday,16:30,23:00,84
-Dishwasher,Wednesday,11:00,20:30,62
-Cook,Tuesday,04:00,11:30,97
-Dog Walker,Thursday,03:00,08:30,56
-Chauffeur,Friday,00:30,06:00,56
-Taxi Driver,Sunday,13:30,19:00,87
-Driver,Thursday,06:00,13:30,51
-Bartender,Sunday,03:00,08:30,72
-Parking Attendant,Friday,02:00,12:00,64
-Hairdresser,Monday,08:00,15:00,57
-Mover,Sunday,11:30,19:00,69
-Groundskeeper,Saturday,10:00,20:00,97
-Window Cleaner,Monday,15:00,23:00,66
-Chef,Tuesday,01:30,07:30,53
-Taxi Driver,Monday,11:30,17:00,63
-Pet Groomer,Tuesday,06:00,16:00,50
-Host/Hostess,Thursday,00:30,09:00,91
-Carpenter,Thursday,13:30,23:30,72
-Gardener,Wednesday,03:00,11:30,76
-Bellhop,Tuesday,14:00,20:00,73
-Bartender,Sunday,12:00,19:00,100
-Groundskeeper,Monday,13:00,20:30,91
-Porter,Sunday,00:00,06:30,82
-Taxi Driver,Saturday,16:00,22:00,63
-Mover,Monday,14:00,21:00,84
-Dishwasher,Wednesday,06:00,12:00,96
-Barista,Wednesday,09:00,16:30,66
-Dog Walker,Tuesday,03:30,08:30,61
-Mechanic,Monday,03:00,11:00,67
-Window Cleaner,Monday,00:30,06:00,62
-Butcher,Saturday,11:00,18:30,96
-Cashier,Tuesday,15:00,23:00,88
-Parking Attendant,Wednesday,05:00,15:00,99
-Waitstaff,Sunday,11:00,21:00,82
-Groundskeeper,Saturday,14:30,22:30,62
-Porter,Saturday,11:00,19:00,50
-Barista,Monday,06:00,13:30,54
-Laundry Attendant,Tuesday,09:00,16:30,70
-Housekeeper,Sunday,14:00,19:00,71
-Warehouse Worker,Monday,01:30,07:00,61
-Janitor,Monday,04:00,11:30,54
-Receptionist,Thursday,08:30,18:00,51
-Cook,Tuesday,05:30,11:30,53
-Baggage Handler,Tuesday,07:00,16:00,64
-Mover,Saturday,10:30,19:00,93
-Dog Walker,Tuesday,10:00,15:30,78
-Carpenter,Thursday,14:30,19:30,82
-Chef,Thursday,04:00,14:00,65
-Concierge,Sunday,03:30,10:00,72
-Bellhop,Saturday,12:30,21:00,58
-Butcher,Monday,09:00,18:00,55
-Baggage Handler,Friday,00:00,08:00,74
-Barista,Wednesday,02:00,11:00,58
-Window Cleaner,Sunday,02:30,08:00,63
-Gardener,Monday,05:30,12:30,100
-Warehouse Worker,Saturday,07:30,12:30,75
-Busser,Wednesday,10:30,16:30,84
-Window Cleaner,Sunday,05:00,13:30,82
-Kitchen Assistant,Sunday,15:00,20:00,70
-Cook,Thursday,02:00,09:00,69
-Room Service Attendant,Wednesday,14:30,23:30,76
-Dishwasher,Tuesday,06:30,11:30,50
-Chauffeur,Friday,12:30,22:30,76
-Nanny,Friday,10:30,20:30,65
-Dog Walker,Tuesday,09:00,18:30,93
-Bartender,Saturday,09:30,15:00,87
-Host/Hostess,Friday,09:30,19:00,51
-Mechanic,Thursday,06:00,14:30,54
-Nanny,Tuesday,08:30,18:30,67
-Cleaner,Tuesday,03:30,12:00,83
-Porter,Thursday,05:30,13:30,86
-Dog Walker,Tuesday,10:30,16:00,96
-Warehouse Worker,Sunday,10:30,16:30,95
-Security Guard,Friday,12:00,17:00,60
-Carpenter,Sunday,04:00,14:00,71
-Electrician,Friday,07:00,16:00,93
-Sous Chef,Tuesday,11:30,19:00,59
-Bartender,Monday,07:00,15:30,93
-Waiter,Tuesday,03:30,11:30,61
-Babysitter,Sunday,07:30,17:00,53
-Clerk,Friday,12:30,18:30,93
-Mechanic,Monday,02:30,12:00,84
-Gardener,Saturday,13:00,19:30,67
-Bartender,Saturday,05:30,11:30,74
-Delivery Person,Tuesday,01:00,06:30,61
-Chauffeur,Monday,09:30,17:00,74
-Room Service Attendant,Friday,10:00,18:00,53
-Hairdresser,Saturday,13:00,20:30,60
-Concierge,Thursday,06:00,14:30,95
-Security Guard,Thursday,10:00,15:00,99
-Carpenter,Friday,08:30,15:00,79
-Cashier,Friday,06:00,11:30,68
-Clerk,Thursday,03:00,11:00,80
-Room Service Attendant,Monday,11:00,16:00,93
-Bartender,Wednesday,16:00,21:00,56
-Cook,Thursday,03:00,08:00,88
-Parking Attendant,Sunday,00:00,06:00,83
-Electrician,Sunday,09:00,14:30,87
-Butcher,Sunday,12:30,22:30,84
-Barista,Wednesday,00:30,09:30,55
-Pet Groomer,Friday,11:30,16:30,59
-Mover,Saturday,11:30,20:30,55
-Delivery Person,Monday,08:00,18:00,65
-Stocker,Friday,06:00,15:30,92
-Janitor,Tuesday,01:00,08:30,58
-Window Cleaner,Thursday,06:00,14:30,75
-Cashier,Wednesday,03:00,10:30,94
-Janitor,Saturday,01:30,07:00,69
-Bartender,Saturday,04:30,13:00,51
-Taxi Driver,Tuesday,04:00,11:00,62
-Mover,Thursday,07:30,13:30,51
-Groundskeeper,Saturday,07:00,13:30,58
-Dishwasher,Sunday,09:30,17:00,72
-Babysitter,Sunday,10:30,15:30,86
-Painter,Saturday,12:00,21:00,86
-Kitchen Assistant,Sunday,11:30,19:30,67
-Cook,Sunday,03:30,12:00,92
-Nanny,Saturday,02:30,07:30,61
-Concierge,Friday,12:30,19:30,67
-Pet Groomer,Thursday,05:30,13:30,72
-Cleaner,Friday,08:30,18:00,74
-Delivery Person,Wednesday,10:30,15:30,57
-Kitchen Assistant,Monday,09:00,18:00,60
-Sous Chef,Thursday,12:30,18:30,50
-Bartender,Thursday,04:00,12:00,89
-Cook,Tuesday,00:30,09:30,97
-Valet,Wednesday,06:30,14:30,99
-Mover,Saturday,07:00,15:00,68
-Babysitter,Saturday,15:00,20:30,55
-Bartender,Sunday,07:30,14:30,67
-Hairdresser,Sunday,13:30,22:30,76
-Clerk,Friday,15:30,23:00,93
-Plumber,Saturday,14:00,19:30,92
-Room Service Attendant,Saturday,02:00,09:00,81
-Clerk,Wednesday,07:00,14:30,71
-Groundskeeper,Wednesday,00:30,06:00,65
-Waitstaff,Wednesday,16:30,21:30,65
-Sous Chef,Thursday,01:30,11:00,50
-Cleaner,Friday,01:00,09:30,64
-Pet Groomer,Friday,06:30,14:00,66
-Babysitter,Tuesday,12:30,20:30,89
-Bartender,Wednesday,05:30,13:30,91
-Gardener,Tuesday,04:00,10:00,68
-Clerk,Saturday,03:00,13:00,71
-Construction Worker,Monday,17:00,22:00,51
-Bellhop,Tuesday,17:30,22:30,82
-Host/Hostess,Monday,06:00,11:00,83
-Room Service Attendant,Monday,00:00,05:30,100
-Room Service Attendant,Friday,11:00,20:00,53
-Warehouse Worker,Saturday,01:00,07:00,58
-Electrician,Tuesday,11:30,20:00,93
-Sous Chef,Thursday,11:30,16:30,58
-Nanny,Wednesday,15:00,20:30,90
-Chauffeur,Saturday,01:00,09:30,80
-Security Guard,Sunday,05:00,10:30,90
-Gardener,Wednesday,07:30,12:30,67
-Porter,Wednesday,11:00,20:30,79
-Groundskeeper,Thursday,04:00,13:30,69
-Delivery Person,Thursday,11:30,17:30,63
-Baggage Handler,Wednesday,08:30,16:00,82
-Valet,Friday,10:30,17:30,81
-Receptionist,Wednesday,00:00,07:30,85
-Porter,Tuesday,03:00,10:30,57
-Bellhop,Tuesday,05:30,15:00,86
-Gardener,Thursday,11:30,19:00,95
-Receptionist,Sunday,15:00,21:30,58
-Groundskeeper,Thursday,00:00,08:30,96
-Mover,Monday,10:30,18:30,66
-Cleaner,Sunday,10:00,15:30,80
-Lifeguard,Tuesday,15:00,23:30,79
-Chef,Monday,10:30,20:00,91
-Plumber,Sunday,04:30,12:00,58
-Taxi Driver,Monday,11:00,17:30,98
-Mechanic,Thursday,10:30,19:00,96
-Mover,Saturday,05:00,11:00,55
-Bartender,Tuesday,16:30,21:30,53
-Concierge,Wednesday,05:00,10:30,60
-Janitor,Saturday,08:00,13:00,98
-Security Guard,Friday,11:30,21:00,87
-Barista,Sunday,10:30,16:00,88
-Barista,Tuesday,06:30,16:30,84
-Cleaner,Sunday,16:30,21:30,88
-Painter,Thursday,04:00,14:00,79
-Baggage Handler,Tuesday,06:00,11:00,67
-Cleaner,Saturday,05:00,13:00,83
+Kitchen Assistant,Thursday,06:30,11:30,88
+Kitchen Assistant,Tuesday,14:00,21:30,54
+Groundskeeper,Thursday,08:30,17:30,78
+Groundskeeper,Saturday,08:30,14:30,61
+Dog Walker,Sunday,07:00,15:30,97
+Groundskeeper,Tuesday,01:00,11:00,71
+Dog Walker,Friday,14:30,22:00,65
+Stocker,Friday,03:00,09:30,55
+Kitchen Assistant,Thursday,09:30,15:30,83
+Groundskeeper,Thursday,10:30,19:00,92
+Stocker,Sunday,00:00,05:30,75
+Kitchen Assistant,Wednesday,13:00,19:00,60
+Stocker,Sunday,13:00,19:00,68
+Groundskeeper,Wednesday,03:00,13:00,72
+Stocker,Thursday,11:00,19:00,90
+Construction Worker,Wednesday,10:00,15:00,52
+Construction Worker,Wednesday,01:30,09:30,85
+Groundskeeper,Tuesday,05:30,11:00,89
+Kitchen Assistant,Friday,13:00,18:00,57
+Dog Walker,Friday,04:00,10:30,64
+Groundskeeper,Sunday,04:30,09:30,60
+Construction Worker,Saturday,17:00,23:30,98
+Groundskeeper,Wednesday,01:00,06:00,91
+Stocker,Thursday,09:30,16:30,97
+Kitchen Assistant,Thursday,15:30,23:00,97
+Stocker,Tuesday,04:30,10:00,91
+Dog Walker,Tuesday,07:30,16:00,54
+Construction Worker,Wednesday,10:00,19:00,81
+Kitchen Assistant,Friday,06:30,13:30,92
+Construction Worker,Monday,16:00,21:30,64
+Construction Worker,Friday,07:00,12:00,55
+Construction Worker,Friday,15:00,23:00,76
+Stocker,Thursday,09:00,14:00,65
+Dog Walker,Thursday,04:30,14:00,55
+Construction Worker,Friday,00:00,09:30,91
+Construction Worker,Monday,05:00,13:00,51
+Groundskeeper,Saturday,13:00,20:00,100
+Construction Worker,Sunday,15:30,21:30,91
+Construction Worker,Monday,04:30,13:30,99
+Construction Worker,Saturday,09:30,14:30,73
+Groundskeeper,Saturday,18:00,23:00,66
+Dog Walker,Friday,08:30,18:00,92
+Stocker,Sunday,08:00,15:00,83
+Kitchen Assistant,Monday,02:30,09:30,96
+Groundskeeper,Tuesday,13:30,21:30,65
+Groundskeeper,Monday,09:30,18:00,64
+Dog Walker,Friday,01:00,06:00,93
+Dog Walker,Tuesday,14:30,19:30,80
+Construction Worker,Tuesday,03:30,10:00,72
+Stocker,Sunday,04:30,09:30,65
+Groundskeeper,Wednesday,07:30,15:00,54
+Construction Worker,Monday,06:00,11:30,98
+Construction Worker,Wednesday,06:00,14:30,85
+Dog Walker,Tuesday,12:30,22:00,50
+Stocker,Friday,07:30,12:30,66
+Kitchen Assistant,Saturday,11:00,21:00,79
+Stocker,Friday,12:30,20:30,51
+Construction Worker,Saturday,00:30,10:30,83
+Kitchen Assistant,Wednesday,00:30,07:00,65
+Construction Worker,Tuesday,14:00,19:30,98
+Dog Walker,Tuesday,07:30,15:00,84
+Stocker,Thursday,11:30,19:00,100
+Kitchen Assistant,Monday,03:30,12:30,80
+Stocker,Thursday,05:00,13:00,85
+Dog Walker,Thursday,04:30,11:30,89
+Construction Worker,Sunday,15:30,23:00,55
+Groundskeeper,Saturday,10:30,18:00,100
+Kitchen Assistant,Sunday,13:30,18:30,82
+Kitchen Assistant,Thursday,10:30,20:30,67
+Kitchen Assistant,Sunday,08:30,15:30,58
+Stocker,Wednesday,07:30,17:30,62
+Stocker,Sunday,07:00,13:00,53
+Construction Worker,Sunday,00:00,10:00,65
+Stocker,Tuesday,01:00,07:00,72
+Construction Worker,Friday,15:00,21:30,83
+Dog Walker,Tuesday,05:00,14:30,51
+Kitchen Assistant,Tuesday,12:30,22:00,85
+Kitchen Assistant,Saturday,14:00,19:30,89
+Dog Walker,Tuesday,10:00,17:00,84
+Stocker,Tuesday,09:00,15:00,99
+Construction Worker,Monday,03:30,10:00,73
+Dog Walker,Tuesday,06:00,14:00,69
+Kitchen Assistant,Tuesday,06:00,15:00,81
+Dog Walker,Saturday,06:30,11:30,56
+Groundskeeper,Wednesday,09:00,16:30,66
+Kitchen Assistant,Wednesday,06:30,15:30,86
+Dog Walker,Sunday,07:00,13:00,92
+Construction Worker,Tuesday,00:00,08:30,74
+Stocker,Saturday,07:00,17:00,95
+Stocker,Tuesday,03:00,13:00,100
+Kitchen Assistant,Monday,11:00,19:30,87
+Groundskeeper,Thursday,13:00,19:30,86
+Groundskeeper,Tuesday,09:30,19:00,81
+Kitchen Assistant,Monday,14:00,20:30,76
+Construction Worker,Friday,09:30,17:00,70
+Kitchen Assistant,Saturday,00:00,05:30,61
+Groundskeeper,Wednesday,10:00,15:00,68
+Dog Walker,Monday,03:30,08:30,66
+Kitchen Assistant,Friday,17:00,23:00,59
+Groundskeeper,Sunday,13:30,23:30,95
+Dog Walker,Saturday,16:30,22:00,51
+Groundskeeper,Tuesday,11:30,17:00,60
+Construction Worker,Monday,15:00,22:00,55
+Stocker,Sunday,06:00,12:30,61
+Groundskeeper,Sunday,12:00,21:00,58
+Kitchen Assistant,Saturday,10:30,20:30,65
+Stocker,Sunday,10:30,17:00,50
+Kitchen Assistant,Saturday,05:30,12:30,85
+Kitchen Assistant,Thursday,11:00,19:30,86
+Groundskeeper,Saturday,14:00,19:00,88
+Stocker,Monday,01:30,08:30,58
+Dog Walker,Monday,15:30,21:00,67
+Groundskeeper,Thursday,08:30,15:30,68
+Stocker,Thursday,02:30,12:00,92
+Groundskeeper,Tuesday,10:30,17:00,87
+Stocker,Tuesday,03:00,08:00,53
+Kitchen Assistant,Wednesday,06:00,16:00,65
+Dog Walker,Wednesday,01:30,09:00,53
+Dog Walker,Tuesday,08:00,13:00,99
+Stocker,Wednesday,08:30,16:00,89
+Groundskeeper,Friday,14:00,19:00,71
+Kitchen Assistant,Tuesday,05:30,10:30,95
+Groundskeeper,Thursday,05:00,14:00,94
+Stocker,Wednesday,15:30,22:00,55
+Stocker,Monday,04:00,14:00,91
+Kitchen Assistant,Tuesday,11:00,16:30,54
+Stocker,Monday,14:00,20:30,58
+Construction Worker,Saturday,05:00,11:30,56
+Dog Walker,Thursday,03:00,11:30,97
+Kitchen Assistant,Tuesday,16:30,22:30,55
+Construction Worker,Friday,13:30,21:00,78
+Dog Walker,Tuesday,12:00,17:30,76
+Dog Walker,Saturday,08:30,14:00,97
+Dog Walker,Wednesday,10:00,17:00,52
+Groundskeeper,Thursday,13:00,22:30,55
+Dog Walker,Sunday,15:30,21:00,55
+Construction Worker,Tuesday,14:30,21:00,68
+Groundskeeper,Saturday,16:00,21:30,85
+Construction Worker,Sunday,04:30,14:30,70
+Dog Walker,Wednesday,07:00,13:30,59
+Groundskeeper,Thursday,02:00,10:30,51
+Construction Worker,Thursday,10:30,16:30,84
+Groundskeeper,Sunday,06:00,12:00,92
+Kitchen Assistant,Sunday,13:30,22:00,100
+Construction Worker,Saturday,14:30,21:30,62
+Construction Worker,Friday,12:30,18:30,57
+Dog Walker,Saturday,04:30,14:30,61
+Kitchen Assistant,Sunday,00:30,09:00,97
+Stocker,Thursday,09:00,17:30,90
+Groundskeeper,Sunday,12:30,19:00,85
+Construction Worker,Monday,02:30,08:00,83
+Construction Worker,Monday,10:00,18:00,96
+Stocker,Tuesday,12:30,22:30,57
+Kitchen Assistant,Sunday,14:30,21:00,62
+Stocker,Monday,15:30,20:30,76
+Kitchen Assistant,Monday,00:30,10:30,92
+Dog Walker,Wednesday,18:00,23:00,98
+Stocker,Wednesday,11:00,18:00,59
+Kitchen Assistant,Tuesday,04:30,11:00,67
+Stocker,Friday,09:00,14:30,94
+Construction Worker,Wednesday,06:00,16:00,66
+Kitchen Assistant,Tuesday,01:00,09:30,99
+Groundskeeper,Tuesday,08:30,16:30,70
+Dog Walker,Thursday,00:00,07:00,73
+Stocker,Saturday,08:00,13:30,96
+Kitchen Assistant,Friday,01:00,07:00,94
+Construction Worker,Tuesday,06:00,15:00,59
+Kitchen Assistant,Saturday,17:00,22:30,100
+Construction Worker,Monday,01:00,11:00,88
+Groundskeeper,Tuesday,01:00,08:30,72
+Dog Walker,Tuesday,06:00,15:00,98
+Dog Walker,Wednesday,00:30,08:00,81
+Dog Walker,Wednesday,15:00,21:30,76
+Dog Walker,Wednesday,08:30,15:00,91
+Dog Walker,Sunday,03:30,10:30,95
+Construction Worker,Saturday,16:00,21:30,72
+Groundskeeper,Sunday,02:30,09:30,58
+Dog Walker,Tuesday,11:00,19:30,58
+Dog Walker,Monday,06:30,13:00,97
+Groundskeeper,Wednesday,17:00,22:30,53
+Dog Walker,Friday,05:30,14:00,91
+Groundskeeper,Wednesday,03:30,13:00,90
+Stocker,Thursday,04:00,10:30,100
+Groundskeeper,Tuesday,01:00,10:30,80
+Construction Worker,Friday,04:00,12:00,61
+Kitchen Assistant,Thursday,17:00,23:30,96
+Dog Walker,Thursday,00:00,06:00,96
+Construction Worker,Friday,05:30,13:00,64
+Kitchen Assistant,Thursday,13:00,18:30,78
+Stocker,Thursday,15:00,21:00,100
+Dog Walker,Thursday,10:30,16:30,69
+Stocker,Monday,04:00,11:00,52
+Construction Worker,Saturday,12:00,18:30,55
+Kitchen Assistant,Sunday,15:00,20:30,92
+Construction Worker,Sunday,07:00,12:00,51
+Dog Walker,Sunday,01:00,08:30,82
+Kitchen Assistant,Sunday,15:30,22:30,89
+Stocker,Sunday,13:00,18:30,61
+Stocker,Saturday,01:00,08:00,80
+Kitchen Assistant,Thursday,10:00,15:00,52

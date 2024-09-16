@@ -81,6 +81,8 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
         setIsGenerated(true)
     }, []);
 
+    useEffect(() => { console.log(linesFiltered.length) }, [linesFiltered])
+
     function getLineInfo(absuluteIndex) {
         const { overlapMsg, contractMsg } = model.getLineInfo(absuluteIndex, renderInfo.table, renderInfo.colors, shiftsInfo, contracts, shiftsPerWorkers, initialTable)
         setOverlapInfo(overlapMsg)
@@ -192,7 +194,7 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
         }));
         setCurrentIndex(newCurrentIndex)
         setSearchedIndex('')
-        document.getElementById('searchIndexInput').value = ''; 
+        document.getElementById('searchIndexInput').value = '';
     }
 
     const firstPage = () => {
@@ -409,10 +411,55 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
 
 
     const filterButton = () => {
-        return (<button onClick={filterButtonHandler} style={{ background: 'white', border: '2px solid black' }}>
-            Apply Search&nbsp;<img src={search} alt="Search" style={{ width: '25px', height: '25px' }} />
-        </button>)
+        return (
+            <div style={{ display: "inline-flex", alignItems: "center" }}>
+                <button
+                    onClick={filterButtonHandler}
+                    style={{
+                        background: 'white',
+                        position: 'relative',
+                        bottom: "8px",
+                        border: '2px solid black',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        height: '40px',
+                        lineHeight: '40px',
+                        boxSizing: 'border-box',
+                        padding: '0 10px',
+                        verticalAlign: 'middle' // Added vertical alignment
+                    }}
+                >
+                    Apply Search&nbsp;
+                    <img src={search} alt="Search" style={{ width: '25px', height: '25px' }} />
+                </button>
+
+                <div
+                    className="alert alert-danger text-center"
+                    role="alert"
+                    style={{
+                        marginLeft: '10px',
+                        height: '40px',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        lineHeight: '40px',
+                        padding: "0 10px",
+                        whiteSpace: "nowrap",
+                        boxSizing: 'border-box',
+                        verticalAlign: 'middle' // Added vertical alignment
+                    }}
+                >
+                    {linesFiltered.length} lines filtered
+                </div>
+            </div>
+        );
     }
+
+
+
+
+
 
 
     const squareStyle = {
@@ -429,11 +476,11 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
                     <div className="col-2">
                         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#backModal" onClick={handleBack}>Back</button>
                     </div>
-                    <div className="col-3"></div>
-                    <div className="col-2 d-flex justify-content-center" style={{ marginBottom: "20px" }}>
+                    <div className="col-2"></div>
+                    <div className="col-4 d-flex justify-content-center" style={{ marginBottom: "20px" }}>
                         {filterButton()}
                     </div>
-                    <div className="col-4"></div>
+                    <div className="col-3"></div>
                     <div className="col-1">
                         <Button
                             variant="info"
