@@ -200,6 +200,9 @@ function removeColor(start, colorToRemove) {
 }
 
 function addColor(start, newColor) {
+    if (start.includes(newColor)) {
+        return start
+    }
     return start + newColor
 }
 
@@ -309,10 +312,12 @@ export function edit(table,initialTable,rowIndex, colors, newWorker, contracts, 
 
         if (newWorkerContract.assignment < newWorkerContract.minHours) { //too less hours
             newColors[absuluteIndex] = addColor(newColors[absuluteIndex], "yellow")
+            newColors[absuluteIndex] = removeColor(newColors[absuluteIndex], "orange")
         }
 
         if (newWorkerContract.assignment > newWorkerContract.maxHours) { //too much
             newColors[absuluteIndex] = addColor(newColors[absuluteIndex], "orange")
+            newColors[absuluteIndex] = removeColor(newColors[absuluteIndex], "yellow")
         }
     }
 
@@ -329,10 +334,12 @@ export function edit(table,initialTable,rowIndex, colors, newWorker, contracts, 
 
         if (oldWorkerContract.assignment < oldWorkerContract.minHours) { //too less hours
             newColors[absuluteIndex] = addColor(newColors[absuluteIndex], "yellow")
+            newColors[absuluteIndex] = removeColor(newColors[absuluteIndex], "orange")
         }
 
         if (oldWorkerContract.assignment > oldWorkerContract.maxHours) { //too much
             newColors[absuluteIndex] = addColor(newColors[absuluteIndex], "orange")
+            newColors[absuluteIndex] = removeColor(newColors[absuluteIndex], "yellow")
         }
     }
 
