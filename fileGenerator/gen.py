@@ -94,7 +94,7 @@ def generate_valid_shifts_intervals():
         end = start + random.randint(12, 20)
         end = min(end, 48)       
         intervals_list.append((times[start], times[end]))        
-        start = end - random.randint(2, 7) if start < 40 else end
+        start = random.randint(int((start+end)/2),end)
     return intervals_list
 
 
@@ -103,11 +103,11 @@ def random_day():
     return random.choice(["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"])
 
 def random_min_hours():
-    return round(random.uniform(20, 62) * 2) / 2  # Ensures increments of 0.5 and min hours is at least 20
+    return round(random.uniform(10, 82) * 2) / 2  # Ensures increments of 0.5 and min hours is at least 20
 
 def random_max_hours(min_hours):
-    max_hours = round(random.uniform(min_hours + 0.5, 63) * 2) / 2  # Ensures increments of 0.5, max is at most 63
-    return min(max_hours, 63)  # Ensures max_hours does not exceed 63
+    max_hours = round(random.uniform(min_hours + 0.5, 83) * 2) / 2  # Ensures increments of 0.5, max is at most 63
+    return min(max_hours, 83)  # Ensures max_hours does not exceed 63
 
 def random_workers(total_workers):
     return random.randint(1, total_workers)
@@ -252,7 +252,7 @@ def generate_csv_2(skills_array, filename, table1_filename):
                 continue
             times = create_time_intervals()
             # Set the first worker count for 00:00-00:30
-            required_workers = random.randint(1, int(available_workers / 2))
+            required_workers = random.randint(1, int(available_workers / 4))
             for from_time, until_time in times:
                 key = (day, skill)
                 
@@ -287,4 +287,4 @@ def main(num_skills, num_lines_1):
     generate_csv_2(skills_array,'csv2.csv', 'csv1.csv')
 
 # Example usage:
-main(num_skills=5, num_lines_1=200)
+main(num_skills=5, num_lines_1=500)

@@ -1,171 +1,195 @@
-Parking Attendant,Sunday,00:00,06:30,13.0
-Parking Attendant,Sunday,04:30,12:30,16.0
-Parking Attendant,Sunday,09:30,16:00,13.0
-Parking Attendant,Sunday,14:00,23:30,19.0
-Parking Attendant,Sunday,21:00,24:00,6.0
-Taxi Driver,Sunday,00:00,06:00,102.0
-Taxi Driver,Sunday,03:00,10:00,119.0
-Taxi Driver,Sunday,09:00,18:30,161.5
-Taxi Driver,Sunday,16:00,23:30,127.5
-Taxi Driver,Sunday,22:00,24:00,34.0
-Bellhop,Sunday,00:00,10:00,260.0
-Bellhop,Sunday,08:30,15:30,182.0
-Bellhop,Sunday,13:30,20:30,182.0
-Bellhop,Sunday,19:00,24:00,130.0
-Bellhop,Sunday,21:00,24:00,78.0
-Construction Worker,Sunday,00:00,07:00,210.0
-Construction Worker,Sunday,05:30,13:00,225.0
-Construction Worker,Sunday,11:00,20:30,285.0
-Construction Worker,Sunday,17:30,24:00,195.0
-Construction Worker,Sunday,22:30,24:00,45.0
-Driver,Sunday,00:00,07:30,127.5
-Driver,Sunday,04:30,11:30,119.0
-Driver,Sunday,10:00,19:00,153.0
-Driver,Sunday,16:30,22:30,102.0
-Driver,Sunday,20:30,24:00,59.5
-Parking Attendant,Monday,00:00,06:30,13.0
-Parking Attendant,Monday,05:00,13:30,17.0
-Parking Attendant,Monday,10:30,20:30,20.0
-Parking Attendant,Monday,19:00,24:00,10.0
-Parking Attendant,Monday,21:30,24:00,5.0
-Taxi Driver,Monday,00:00,09:30,161.5
-Taxi Driver,Monday,06:30,14:00,127.5
-Taxi Driver,Monday,11:00,20:00,153.0
-Taxi Driver,Monday,16:30,24:00,127.5
-Taxi Driver,Monday,21:30,24:00,42.5
-Bellhop,Monday,00:00,08:30,221.0
-Bellhop,Monday,05:30,11:30,156.0
-Bellhop,Monday,08:30,17:00,221.0
-Bellhop,Monday,15:30,23:00,195.0
-Bellhop,Monday,20:00,24:00,104.0
-Construction Worker,Monday,00:00,09:00,270.0
-Construction Worker,Monday,08:00,17:00,270.0
-Construction Worker,Monday,13:30,21:00,225.0
-Construction Worker,Monday,18:30,24:00,165.0
-Construction Worker,Monday,21:30,24:00,75.0
-Driver,Monday,00:00,10:00,170.0
-Driver,Monday,08:00,16:30,144.5
-Driver,Monday,15:30,24:00,144.5
-Driver,Monday,22:30,24:00,25.5
-Parking Attendant,Tuesday,00:00,07:00,14.0
-Parking Attendant,Tuesday,04:00,12:00,16.0
-Parking Attendant,Tuesday,09:30,16:30,14.0
-Parking Attendant,Tuesday,14:00,20:30,13.0
-Parking Attendant,Tuesday,17:30,24:00,13.0
-Parking Attendant,Tuesday,20:30,24:00,7.0
-Taxi Driver,Tuesday,00:00,09:30,161.5
-Taxi Driver,Tuesday,08:30,14:30,102.0
-Taxi Driver,Tuesday,12:00,19:00,119.0
-Taxi Driver,Tuesday,18:00,24:00,102.0
-Taxi Driver,Tuesday,23:00,24:00,17.0
-Bellhop,Tuesday,00:00,08:00,208.0
-Bellhop,Tuesday,07:00,16:30,247.0
-Bellhop,Tuesday,13:00,20:30,195.0
-Bellhop,Tuesday,17:00,23:00,156.0
-Bellhop,Tuesday,20:30,24:00,91.0
-Construction Worker,Tuesday,00:00,07:30,225.0
-Construction Worker,Tuesday,06:30,13:30,210.0
-Construction Worker,Tuesday,11:00,18:00,210.0
-Construction Worker,Tuesday,15:30,24:00,255.0
-Construction Worker,Tuesday,23:00,24:00,30.0
-Driver,Tuesday,00:00,08:00,136.0
-Driver,Tuesday,07:00,15:00,136.0
-Driver,Tuesday,12:00,22:00,170.0
-Driver,Tuesday,20:00,24:00,68.0
-Parking Attendant,Wednesday,00:00,06:30,13.0
-Parking Attendant,Wednesday,04:00,12:00,16.0
-Parking Attendant,Wednesday,10:00,16:30,13.0
-Parking Attendant,Wednesday,15:00,24:00,18.0
-Parking Attendant,Wednesday,21:30,24:00,5.0
-Taxi Driver,Wednesday,00:00,08:00,136.0
-Taxi Driver,Wednesday,07:00,15:00,136.0
-Taxi Driver,Wednesday,12:30,21:30,153.0
-Taxi Driver,Wednesday,20:00,24:00,68.0
-Bellhop,Wednesday,00:00,08:30,221.0
-Bellhop,Wednesday,06:30,16:30,260.0
-Bellhop,Wednesday,15:00,23:00,208.0
-Bellhop,Wednesday,21:30,24:00,65.0
-Construction Worker,Wednesday,00:00,06:00,180.0
-Construction Worker,Wednesday,02:30,09:00,195.0
-Construction Worker,Wednesday,07:30,17:00,285.0
-Construction Worker,Wednesday,14:00,24:00,300.0
-Construction Worker,Wednesday,22:30,24:00,45.0
-Driver,Wednesday,00:00,08:00,136.0
-Driver,Wednesday,06:00,12:30,110.5
-Driver,Wednesday,09:00,17:30,144.5
-Driver,Wednesday,16:30,24:00,127.5
-Driver,Wednesday,21:00,24:00,51.0
-Parking Attendant,Thursday,00:00,10:00,20.0
-Parking Attendant,Thursday,07:30,15:00,15.0
-Parking Attendant,Thursday,11:30,17:30,12.0
-Parking Attendant,Thursday,14:30,24:00,19.0
-Parking Attendant,Thursday,21:00,24:00,6.0
-Taxi Driver,Thursday,00:00,06:30,110.5
-Taxi Driver,Thursday,04:00,13:00,153.0
-Taxi Driver,Thursday,09:30,16:30,119.0
-Taxi Driver,Thursday,14:00,24:00,170.0
-Taxi Driver,Thursday,21:00,24:00,51.0
-Bellhop,Thursday,00:00,10:00,260.0
-Bellhop,Thursday,07:00,16:30,247.0
-Bellhop,Thursday,13:00,19:00,156.0
-Bellhop,Thursday,16:00,24:00,208.0
-Bellhop,Thursday,21:30,24:00,65.0
-Construction Worker,Thursday,00:00,07:00,210.0
-Construction Worker,Thursday,06:00,15:30,285.0
-Construction Worker,Thursday,12:30,19:00,195.0
-Construction Worker,Thursday,15:30,24:00,255.0
-Construction Worker,Thursday,23:00,24:00,30.0
-Driver,Thursday,00:00,09:30,161.5
-Driver,Thursday,08:00,16:30,144.5
-Driver,Thursday,14:00,24:00,170.0
-Driver,Thursday,23:00,24:00,17.0
-Parking Attendant,Friday,00:00,09:00,18.0
-Parking Attendant,Friday,07:30,16:30,18.0
-Parking Attendant,Friday,14:30,23:00,17.0
-Parking Attendant,Friday,19:30,24:00,9.0
-Parking Attendant,Friday,21:30,24:00,5.0
-Taxi Driver,Friday,00:00,07:30,127.5
-Taxi Driver,Friday,04:30,13:30,153.0
-Taxi Driver,Friday,11:30,20:30,153.0
-Taxi Driver,Friday,17:30,24:00,110.5
-Taxi Driver,Friday,23:00,24:00,17.0
-Bellhop,Friday,00:00,08:00,208.0
-Bellhop,Friday,06:00,12:00,156.0
-Bellhop,Friday,09:00,17:30,221.0
-Bellhop,Friday,14:00,20:00,156.0
-Bellhop,Friday,17:30,24:00,169.0
-Bellhop,Friday,22:30,24:00,39.0
-Construction Worker,Friday,00:00,06:30,195.0
-Construction Worker,Friday,05:00,14:00,270.0
-Construction Worker,Friday,13:00,20:30,225.0
-Construction Worker,Friday,18:30,24:00,165.0
-Construction Worker,Friday,22:00,24:00,60.0
-Driver,Friday,00:00,09:30,161.5
-Driver,Friday,08:00,16:30,144.5
-Driver,Friday,15:30,24:00,144.5
-Driver,Friday,21:00,24:00,51.0
-Parking Attendant,Saturday,00:00,08:30,17.0
-Parking Attendant,Saturday,05:30,13:00,15.0
-Parking Attendant,Saturday,10:00,18:30,17.0
-Parking Attendant,Saturday,15:30,24:00,17.0
-Parking Attendant,Saturday,21:30,24:00,5.0
-Taxi Driver,Saturday,00:00,06:30,110.5
-Taxi Driver,Saturday,04:30,11:00,110.5
-Taxi Driver,Saturday,10:00,20:00,170.0
-Taxi Driver,Saturday,18:30,24:00,93.5
-Taxi Driver,Saturday,22:30,24:00,25.5
-Bellhop,Saturday,00:00,06:00,156.0
-Bellhop,Saturday,04:00,11:30,195.0
-Bellhop,Saturday,09:00,18:30,247.0
-Bellhop,Saturday,17:00,24:00,182.0
-Bellhop,Saturday,22:00,24:00,52.0
-Construction Worker,Saturday,00:00,09:00,270.0
-Construction Worker,Saturday,06:30,13:30,210.0
-Construction Worker,Saturday,11:30,21:30,300.0
-Construction Worker,Saturday,18:00,24:00,180.0
-Construction Worker,Saturday,23:00,24:00,30.0
-Driver,Saturday,00:00,06:30,110.5
-Driver,Saturday,03:30,12:30,153.0
-Driver,Saturday,10:00,20:00,170.0
-Driver,Saturday,17:30,24:00,110.5
-Driver,Saturday,22:30,24:00,25.5
+Gardener,Sunday,00:00,07:30,97.5
+Gardener,Sunday,04:30,13:30,117.0
+Gardener,Sunday,10:00,18:30,110.5
+Gardener,Sunday,16:00,24:00,104.0
+Gardener,Sunday,23:30,24:00,6.5
+Host/Hostess,Sunday,00:00,08:30,178.5
+Host/Hostess,Sunday,05:00,15:00,210.0
+Host/Hostess,Sunday,10:30,20:00,199.5
+Host/Hostess,Sunday,15:30,23:00,157.5
+Host/Hostess,Sunday,20:00,24:00,84.0
+Window Cleaner,Sunday,00:00,09:00,153.0
+Window Cleaner,Sunday,09:00,18:00,153.0
+Window Cleaner,Sunday,14:30,20:30,102.0
+Window Cleaner,Sunday,19:30,24:00,76.5
+Window Cleaner,Sunday,23:30,24:00,8.5
+Porter,Sunday,00:00,06:30,110.5
+Porter,Sunday,06:00,12:30,110.5
+Porter,Sunday,09:30,18:00,144.5
+Porter,Sunday,17:30,24:00,110.5
+Porter,Sunday,20:30,24:00,59.5
+Porter,Sunday,23:30,24:00,8.5
+Waitstaff,Sunday,00:00,09:30,180.5
+Waitstaff,Sunday,05:30,14:00,161.5
+Waitstaff,Sunday,11:00,17:00,114.0
+Waitstaff,Sunday,16:30,22:30,114.0
+Waitstaff,Sunday,19:30,24:00,85.5
+Gardener,Monday,00:00,09:00,117.0
+Gardener,Monday,04:30,13:30,117.0
+Gardener,Monday,11:00,18:30,97.5
+Gardener,Monday,15:00,21:30,84.5
+Gardener,Monday,20:30,24:00,45.5
+Gardener,Monday,22:00,24:00,26.0
+Host/Hostess,Monday,00:00,09:30,199.5
+Host/Hostess,Monday,08:00,15:00,147.0
+Host/Hostess,Monday,12:00,21:00,189.0
+Host/Hostess,Monday,16:30,24:00,157.5
+Host/Hostess,Monday,23:30,24:00,10.5
+Window Cleaner,Monday,00:00,06:00,102.0
+Window Cleaner,Monday,03:30,12:00,144.5
+Window Cleaner,Monday,09:30,19:00,161.5
+Window Cleaner,Monday,15:30,21:30,102.0
+Window Cleaner,Monday,18:30,24:00,93.5
+Window Cleaner,Monday,21:00,24:00,51.0
+Porter,Monday,00:00,09:30,161.5
+Porter,Monday,04:30,12:00,127.5
+Porter,Monday,10:00,19:00,153.0
+Porter,Monday,16:30,22:30,102.0
+Porter,Monday,21:00,24:00,51.0
+Porter,Monday,23:30,24:00,8.5
+Waitstaff,Monday,00:00,09:00,171.0
+Waitstaff,Monday,09:00,17:00,152.0
+Waitstaff,Monday,14:30,23:30,171.0
+Waitstaff,Monday,21:00,24:00,57.0
+Waitstaff,Monday,23:00,24:00,19.0
+Gardener,Tuesday,00:00,06:30,84.5
+Gardener,Tuesday,05:30,15:30,130.0
+Gardener,Tuesday,14:30,24:00,123.5
+Gardener,Tuesday,22:30,24:00,19.5
+Host/Hostess,Tuesday,00:00,09:30,199.5
+Host/Hostess,Tuesday,07:30,15:30,168.0
+Host/Hostess,Tuesday,11:30,19:30,168.0
+Host/Hostess,Tuesday,18:30,24:00,115.5
+Host/Hostess,Tuesday,23:00,24:00,21.0
+Window Cleaner,Tuesday,00:00,07:00,119.0
+Window Cleaner,Tuesday,07:00,13:30,110.5
+Window Cleaner,Tuesday,10:00,17:30,127.5
+Window Cleaner,Tuesday,14:00,20:00,102.0
+Window Cleaner,Tuesday,18:00,24:00,102.0
+Window Cleaner,Tuesday,22:00,24:00,34.0
+Window Cleaner,Tuesday,23:30,24:00,8.5
+Porter,Tuesday,00:00,06:00,102.0
+Porter,Tuesday,04:30,12:00,127.5
+Porter,Tuesday,09:00,19:00,170.0
+Porter,Tuesday,16:00,24:00,136.0
+Porter,Tuesday,23:00,24:00,17.0
+Waitstaff,Tuesday,00:00,08:00,152.0
+Waitstaff,Tuesday,07:30,17:30,190.0
+Waitstaff,Tuesday,13:30,21:00,142.5
+Waitstaff,Tuesday,17:00,23:30,123.5
+Waitstaff,Tuesday,22:00,24:00,38.0
+Gardener,Wednesday,00:00,10:00,130.0
+Gardener,Wednesday,09:30,19:30,130.0
+Gardener,Wednesday,18:30,24:00,71.5
+Gardener,Wednesday,23:30,24:00,6.5
+Host/Hostess,Wednesday,00:00,08:00,168.0
+Host/Hostess,Wednesday,06:00,14:30,178.5
+Host/Hostess,Wednesday,11:30,20:30,189.0
+Host/Hostess,Wednesday,17:00,24:00,147.0
+Host/Hostess,Wednesday,21:00,24:00,63.0
+Host/Hostess,Wednesday,22:30,24:00,31.5
+Host/Hostess,Wednesday,23:30,24:00,10.5
+Window Cleaner,Wednesday,00:00,07:00,119.0
+Window Cleaner,Wednesday,06:30,16:30,170.0
+Window Cleaner,Wednesday,13:30,20:00,110.5
+Window Cleaner,Wednesday,19:30,24:00,76.5
+Window Cleaner,Wednesday,23:00,24:00,17.0
+Window Cleaner,Wednesday,23:30,24:00,8.5
+Porter,Wednesday,00:00,08:30,144.5
+Porter,Wednesday,05:00,13:30,144.5
+Porter,Wednesday,13:00,22:00,153.0
+Porter,Wednesday,17:30,24:00,110.5
+Porter,Wednesday,22:00,24:00,34.0
+Waitstaff,Wednesday,00:00,10:00,190.0
+Waitstaff,Wednesday,06:00,12:30,123.5
+Waitstaff,Wednesday,09:00,16:00,133.0
+Waitstaff,Wednesday,15:30,23:30,152.0
+Waitstaff,Wednesday,23:30,24:00,9.5
+Gardener,Thursday,00:00,09:30,123.5
+Gardener,Thursday,05:30,13:30,104.0
+Gardener,Thursday,12:00,18:00,78.0
+Gardener,Thursday,16:00,22:30,84.5
+Gardener,Thursday,22:00,24:00,26.0
+Gardener,Thursday,23:00,24:00,13.0
+Gardener,Thursday,23:30,24:00,6.5
+Host/Hostess,Thursday,00:00,06:00,126.0
+Host/Hostess,Thursday,03:00,11:00,168.0
+Host/Hostess,Thursday,07:00,14:30,157.5
+Host/Hostess,Thursday,10:30,17:30,147.0
+Host/Hostess,Thursday,15:30,24:00,178.5
+Host/Hostess,Thursday,22:30,24:00,31.5
+Host/Hostess,Thursday,23:00,24:00,21.0
+Window Cleaner,Thursday,00:00,06:00,102.0
+Window Cleaner,Thursday,05:00,11:30,110.5
+Window Cleaner,Thursday,10:00,20:00,170.0
+Window Cleaner,Thursday,17:00,24:00,119.0
+Window Cleaner,Thursday,23:30,24:00,8.5
+Porter,Thursday,00:00,09:30,161.5
+Porter,Thursday,06:00,12:30,110.5
+Porter,Thursday,10:00,18:30,144.5
+Porter,Thursday,14:30,20:30,102.0
+Porter,Thursday,17:30,24:00,110.5
+Porter,Thursday,22:00,24:00,34.0
+Waitstaff,Thursday,00:00,06:30,123.5
+Waitstaff,Thursday,03:30,10:30,133.0
+Waitstaff,Thursday,09:00,17:00,152.0
+Waitstaff,Thursday,15:30,21:30,114.0
+Waitstaff,Thursday,21:00,24:00,57.0
+Waitstaff,Thursday,22:30,24:00,28.5
+Waitstaff,Thursday,23:00,24:00,19.0
+Waitstaff,Thursday,23:30,24:00,9.5
+Gardener,Friday,00:00,06:30,84.5
+Gardener,Friday,05:00,13:00,104.0
+Gardener,Friday,09:30,19:00,123.5
+Gardener,Friday,14:00,20:00,78.0
+Gardener,Friday,18:30,24:00,71.5
+Gardener,Friday,23:30,24:00,6.5
+Host/Hostess,Friday,00:00,06:30,136.5
+Host/Hostess,Friday,03:00,11:30,178.5
+Host/Hostess,Friday,08:00,16:30,178.5
+Host/Hostess,Friday,13:00,22:00,189.0
+Host/Hostess,Friday,20:30,24:00,73.5
+Host/Hostess,Friday,23:00,24:00,21.0
+Window Cleaner,Friday,00:00,06:00,102.0
+Window Cleaner,Friday,03:00,11:00,136.0
+Window Cleaner,Friday,09:00,16:30,127.5
+Window Cleaner,Friday,15:30,23:30,136.0
+Window Cleaner,Friday,19:30,24:00,76.5
+Window Cleaner,Friday,23:00,24:00,17.0
+Window Cleaner,Friday,23:30,24:00,8.5
+Porter,Friday,00:00,07:30,127.5
+Porter,Friday,04:30,11:00,110.5
+Porter,Friday,11:00,18:30,127.5
+Porter,Friday,16:30,24:00,127.5
+Porter,Friday,20:00,24:00,68.0
+Waitstaff,Friday,00:00,07:30,142.5
+Waitstaff,Friday,04:00,10:30,123.5
+Waitstaff,Friday,09:30,18:30,171.0
+Waitstaff,Friday,15:30,24:00,161.5
+Waitstaff,Friday,23:00,24:00,19.0
+Waitstaff,Friday,23:30,24:00,9.5
+Gardener,Saturday,00:00,07:30,97.5
+Gardener,Saturday,03:30,11:30,104.0
+Gardener,Saturday,09:00,16:30,97.5
+Gardener,Saturday,12:30,22:30,130.0
+Gardener,Saturday,22:00,24:00,26.0
+Host/Hostess,Saturday,00:00,06:00,126.0
+Host/Hostess,Saturday,06:00,14:00,168.0
+Host/Hostess,Saturday,13:30,23:00,199.5
+Host/Hostess,Saturday,21:30,24:00,52.5
+Window Cleaner,Saturday,00:00,07:30,127.5
+Window Cleaner,Saturday,07:00,16:00,153.0
+Window Cleaner,Saturday,16:00,24:00,136.0
+Window Cleaner,Saturday,23:00,24:00,17.0
+Window Cleaner,Saturday,23:30,24:00,8.5
+Porter,Saturday,00:00,10:00,170.0
+Porter,Saturday,08:00,18:00,170.0
+Porter,Saturday,13:00,21:00,136.0
+Porter,Saturday,19:00,24:00,85.0
+Porter,Saturday,23:00,24:00,17.0
+Porter,Saturday,23:30,24:00,8.5
+Waitstaff,Saturday,00:00,07:00,133.0
+Waitstaff,Saturday,06:00,13:00,133.0
+Waitstaff,Saturday,13:00,19:30,123.5
+Waitstaff,Saturday,18:00,24:00,114.0
+Waitstaff,Saturday,23:30,24:00,9.5

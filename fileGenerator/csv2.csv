@@ -1,945 +1,947 @@
-Sunday,Parking Attendant,08:00,08:30,35
-Sunday,Parking Attendant,08:30,09:00,37
-Sunday,Parking Attendant,09:00,09:30,39
-Sunday,Parking Attendant,09:30,10:00,34
-Sunday,Parking Attendant,10:00,10:30,29
-Sunday,Parking Attendant,10:30,11:00,30
-Sunday,Parking Attendant,11:00,11:30,25
-Sunday,Parking Attendant,11:30,12:00,23
-Sunday,Parking Attendant,12:00,12:30,25
-Sunday,Parking Attendant,12:30,13:00,23
-Sunday,Parking Attendant,13:00,13:30,21
-Sunday,Parking Attendant,13:30,14:00,16
-Sunday,Parking Attendant,14:00,14:30,18
-Sunday,Parking Attendant,14:30,15:00,18
-Sunday,Parking Attendant,15:00,15:30,13
-Sunday,Parking Attendant,15:30,16:00,18
-Sunday,Parking Attendant,16:00,16:30,22
-Sunday,Parking Attendant,16:30,17:00,24
-Sunday,Parking Attendant,17:00,17:30,22
-Sunday,Parking Attendant,17:30,18:00,23
-Sunday,Parking Attendant,18:00,18:30,28
-Sunday,Parking Attendant,18:30,19:00,29
-Sunday,Parking Attendant,19:00,19:30,33
-Sunday,Parking Attendant,19:30,20:00,37
-Sunday,Parking Attendant,20:00,20:30,41
-Sunday,Parking Attendant,20:30,21:00,43
-Sunday,Parking Attendant,21:00,21:30,38
-Sunday,Parking Attendant,21:30,22:00,34
-Sunday,Parking Attendant,22:00,22:30,30
-Sunday,Parking Attendant,22:30,23:00,35
-Sunday,Taxi Driver,10:30,11:00,32
-Sunday,Taxi Driver,11:00,11:30,32
-Sunday,Taxi Driver,11:30,12:00,32
-Sunday,Taxi Driver,12:00,12:30,33
-Sunday,Taxi Driver,12:30,13:00,28
-Sunday,Taxi Driver,13:00,13:30,30
-Sunday,Taxi Driver,13:30,14:00,30
-Sunday,Taxi Driver,14:00,14:30,33
-Sunday,Taxi Driver,14:30,15:00,28
-Sunday,Taxi Driver,15:00,15:30,30
-Sunday,Taxi Driver,15:30,16:00,31
-Sunday,Taxi Driver,16:00,16:30,33
-Sunday,Taxi Driver,16:30,17:00,32
-Sunday,Taxi Driver,17:00,17:30,37
-Sunday,Taxi Driver,17:30,18:00,39
-Sunday,Taxi Driver,18:00,18:30,42
-Sunday,Taxi Driver,18:30,19:00,43
-Sunday,Taxi Driver,19:00,19:30,44
-Sunday,Taxi Driver,19:30,20:00,40
-Sunday,Taxi Driver,20:00,20:30,38
-Sunday,Taxi Driver,20:30,21:00,38
-Sunday,Taxi Driver,21:00,21:30,35
-Sunday,Taxi Driver,21:30,22:00,34
-Sunday,Taxi Driver,22:00,22:30,34
-Sunday,Taxi Driver,22:30,23:00,38
-Sunday,Taxi Driver,23:00,23:30,40
-Sunday,Taxi Driver,23:30,24:00,40
-Sunday,Bellhop,12:30,13:00,44
-Sunday,Bellhop,13:00,13:30,48
-Sunday,Bellhop,13:30,14:00,53
-Sunday,Bellhop,14:00,14:30,53
-Sunday,Bellhop,14:30,15:00,53
-Sunday,Bellhop,15:00,15:30,48
-Sunday,Bellhop,15:30,16:00,53
-Sunday,Bellhop,16:00,16:30,51
-Sunday,Bellhop,16:30,17:00,54
-Sunday,Bellhop,17:00,17:30,51
-Sunday,Bellhop,17:30,18:00,55
-Sunday,Bellhop,18:00,18:30,57
-Sunday,Bellhop,18:30,19:00,62
-Sunday,Bellhop,19:00,19:30,57
-Sunday,Bellhop,19:30,20:00,53
-Sunday,Bellhop,20:00,20:30,52
-Sunday,Bellhop,20:30,21:00,52
-Sunday,Bellhop,21:00,21:30,50
-Sunday,Bellhop,21:30,22:00,47
-Sunday,Bellhop,22:00,22:30,50
-Sunday,Bellhop,22:30,23:00,49
-Sunday,Bellhop,23:00,23:30,48
-Sunday,Bellhop,23:30,24:00,44
-Sunday,Construction Worker,03:30,04:00,8
-Sunday,Construction Worker,04:00,04:30,7
-Sunday,Construction Worker,04:30,05:00,7
-Sunday,Construction Worker,05:00,05:30,10
-Sunday,Construction Worker,05:30,06:00,13
-Sunday,Construction Worker,06:00,06:30,13
-Sunday,Construction Worker,06:30,07:00,9
-Sunday,Construction Worker,07:00,07:30,6
-Sunday,Construction Worker,07:30,08:00,6
-Sunday,Construction Worker,08:00,08:30,11
-Sunday,Construction Worker,08:30,09:00,8
-Sunday,Construction Worker,09:00,09:30,13
-Sunday,Construction Worker,09:30,10:00,9
-Sunday,Construction Worker,10:00,10:30,13
-Sunday,Construction Worker,10:30,11:00,9
-Sunday,Construction Worker,11:00,11:30,5
-Sunday,Construction Worker,11:30,12:00,5
-Sunday,Construction Worker,12:00,12:30,9
-Sunday,Construction Worker,12:30,13:00,6
-Sunday,Construction Worker,13:00,13:30,11
-Sunday,Driver,09:30,10:00,22
-Sunday,Driver,10:00,10:30,18
-Sunday,Driver,10:30,11:00,13
-Sunday,Driver,11:00,11:30,15
-Sunday,Driver,11:30,12:00,11
-Sunday,Driver,12:00,12:30,16
-Sunday,Driver,12:30,13:00,18
-Sunday,Driver,13:00,13:30,13
-Sunday,Driver,13:30,14:00,16
-Sunday,Driver,14:00,14:30,20
-Sunday,Driver,14:30,15:00,19
-Sunday,Driver,15:00,15:30,24
-Sunday,Driver,15:30,16:00,27
-Sunday,Driver,16:00,16:30,27
-Sunday,Driver,16:30,17:00,27
-Sunday,Driver,17:00,17:30,28
-Sunday,Driver,17:30,18:00,33
-Sunday,Driver,18:00,18:30,36
-Sunday,Driver,18:30,19:00,37
-Sunday,Driver,19:00,19:30,36
-Monday,Parking Attendant,02:00,02:30,25
-Monday,Parking Attendant,02:30,03:00,22
-Monday,Parking Attendant,03:00,03:30,22
-Monday,Parking Attendant,03:30,04:00,23
-Monday,Parking Attendant,04:00,04:30,27
-Monday,Parking Attendant,04:30,05:00,25
-Monday,Parking Attendant,05:00,05:30,22
-Monday,Parking Attendant,05:30,06:00,21
-Monday,Parking Attendant,06:00,06:30,24
-Monday,Parking Attendant,06:30,07:00,27
-Monday,Parking Attendant,07:00,07:30,29
-Monday,Parking Attendant,07:30,08:00,24
-Monday,Parking Attendant,08:00,08:30,22
-Monday,Parking Attendant,08:30,09:00,26
-Monday,Parking Attendant,09:00,09:30,28
-Monday,Parking Attendant,09:30,10:00,33
-Monday,Parking Attendant,10:00,10:30,38
-Monday,Parking Attendant,10:30,11:00,33
-Monday,Parking Attendant,11:00,11:30,38
-Monday,Parking Attendant,11:30,12:00,39
-Monday,Parking Attendant,12:00,12:30,34
-Monday,Parking Attendant,12:30,13:00,29
-Monday,Parking Attendant,13:00,13:30,34
-Monday,Parking Attendant,13:30,14:00,30
-Monday,Parking Attendant,14:00,14:30,33
-Monday,Parking Attendant,14:30,15:00,31
-Monday,Parking Attendant,15:00,15:30,27
-Monday,Parking Attendant,15:30,16:00,24
-Monday,Parking Attendant,16:00,16:30,29
-Monday,Parking Attendant,16:30,17:00,24
-Monday,Parking Attendant,17:00,17:30,23
-Monday,Parking Attendant,17:30,18:00,21
-Monday,Parking Attendant,18:00,18:30,19
-Monday,Parking Attendant,18:30,19:00,16
-Monday,Parking Attendant,19:00,19:30,19
-Monday,Parking Attendant,19:30,20:00,18
-Monday,Parking Attendant,20:00,20:30,15
-Monday,Parking Attendant,20:30,21:00,12
-Monday,Parking Attendant,21:00,21:30,13
-Monday,Parking Attendant,21:30,22:00,11
-Monday,Parking Attendant,22:00,22:30,12
-Monday,Parking Attendant,22:30,23:00,13
-Monday,Taxi Driver,14:00,14:30,32
-Monday,Taxi Driver,14:30,15:00,30
-Monday,Taxi Driver,15:00,15:30,33
-Monday,Taxi Driver,15:30,16:00,38
-Monday,Taxi Driver,16:00,16:30,42
-Monday,Taxi Driver,16:30,17:00,47
-Monday,Taxi Driver,17:00,17:30,43
-Monday,Taxi Driver,17:30,18:00,39
-Monday,Taxi Driver,18:00,18:30,42
-Monday,Taxi Driver,18:30,19:00,40
-Monday,Taxi Driver,19:00,19:30,35
-Monday,Taxi Driver,19:30,20:00,37
-Monday,Taxi Driver,20:00,20:30,38
-Monday,Taxi Driver,20:30,21:00,40
-Monday,Taxi Driver,21:00,21:30,37
-Monday,Taxi Driver,21:30,22:00,36
-Monday,Taxi Driver,22:00,22:30,37
-Monday,Taxi Driver,22:30,23:00,33
-Monday,Taxi Driver,23:00,23:30,34
-Monday,Taxi Driver,23:30,24:00,33
-Monday,Bellhop,11:30,12:00,45
-Monday,Bellhop,12:00,12:30,44
-Monday,Bellhop,12:30,13:00,47
-Monday,Bellhop,13:00,13:30,50
-Monday,Bellhop,13:30,14:00,54
-Monday,Bellhop,14:00,14:30,51
-Monday,Bellhop,14:30,15:00,55
-Monday,Bellhop,15:00,15:30,56
-Monday,Bellhop,15:30,16:00,53
-Monday,Bellhop,16:00,16:30,52
-Monday,Bellhop,16:30,17:00,55
-Monday,Bellhop,17:00,17:30,58
-Monday,Bellhop,17:30,18:00,56
-Monday,Bellhop,18:00,18:30,55
-Monday,Bellhop,18:30,19:00,59
-Monday,Bellhop,19:00,19:30,55
-Monday,Bellhop,19:30,20:00,54
-Monday,Bellhop,20:00,20:30,56
-Monday,Bellhop,20:30,21:00,59
-Monday,Bellhop,21:00,21:30,64
-Monday,Bellhop,21:30,22:00,65
-Monday,Bellhop,22:00,22:30,63
-Monday,Bellhop,22:30,23:00,62
-Monday,Construction Worker,10:00,10:30,22
-Monday,Construction Worker,10:30,11:00,23
-Monday,Construction Worker,11:00,11:30,19
-Monday,Construction Worker,11:30,12:00,15
-Monday,Construction Worker,12:00,12:30,15
-Monday,Construction Worker,12:30,13:00,15
-Monday,Construction Worker,13:00,13:30,17
-Monday,Construction Worker,13:30,14:00,17
-Monday,Construction Worker,14:00,14:30,20
-Monday,Construction Worker,14:30,15:00,22
-Monday,Construction Worker,15:00,15:30,20
-Monday,Construction Worker,15:30,16:00,23
-Monday,Construction Worker,16:00,16:30,19
-Monday,Construction Worker,16:30,17:00,14
-Monday,Construction Worker,17:00,17:30,12
-Monday,Construction Worker,17:30,18:00,15
-Monday,Construction Worker,18:00,18:30,10
-Monday,Construction Worker,18:30,19:00,7
-Monday,Construction Worker,19:00,19:30,12
-Monday,Construction Worker,19:30,20:00,17
-Monday,Construction Worker,20:00,20:30,12
-Monday,Construction Worker,20:30,21:00,16
-Monday,Driver,02:30,03:00,19
-Monday,Driver,03:00,03:30,16
-Monday,Driver,03:30,04:00,17
-Monday,Driver,04:00,04:30,18
-Monday,Driver,04:30,05:00,19
-Monday,Driver,05:00,05:30,20
-Monday,Driver,05:30,06:00,16
-Monday,Driver,06:00,06:30,13
-Monday,Driver,06:30,07:00,13
-Monday,Driver,07:00,07:30,15
-Monday,Driver,07:30,08:00,19
-Monday,Driver,08:00,08:30,17
-Monday,Driver,08:30,09:00,12
-Monday,Driver,09:00,09:30,10
-Monday,Driver,09:30,10:00,5
-Monday,Driver,10:00,10:30,1
-Monday,Driver,10:30,11:00,4
-Monday,Driver,11:00,11:30,5
-Monday,Driver,11:30,12:00,6
-Monday,Driver,12:00,12:30,7
-Monday,Driver,12:30,13:00,6
-Monday,Driver,13:00,13:30,4
-Monday,Driver,13:30,14:00,2
-Monday,Driver,14:00,14:30,2
-Monday,Driver,14:30,15:00,1
-Monday,Driver,15:00,15:30,1
-Tuesday,Parking Attendant,01:00,01:30,36
-Tuesday,Parking Attendant,01:30,02:00,34
-Tuesday,Parking Attendant,02:00,02:30,34
-Tuesday,Parking Attendant,02:30,03:00,32
-Tuesday,Parking Attendant,03:00,03:30,27
-Tuesday,Parking Attendant,03:30,04:00,28
-Tuesday,Parking Attendant,04:00,04:30,32
-Tuesday,Parking Attendant,04:30,05:00,30
-Tuesday,Parking Attendant,05:00,05:30,35
-Tuesday,Parking Attendant,05:30,06:00,39
-Tuesday,Parking Attendant,06:00,06:30,34
-Tuesday,Parking Attendant,06:30,07:00,36
-Tuesday,Parking Attendant,07:00,07:30,38
-Tuesday,Parking Attendant,07:30,08:00,43
-Tuesday,Parking Attendant,08:00,08:30,40
-Tuesday,Parking Attendant,08:30,09:00,35
-Tuesday,Parking Attendant,09:00,09:30,30
-Tuesday,Parking Attendant,09:30,10:00,33
-Tuesday,Parking Attendant,10:00,10:30,37
-Tuesday,Parking Attendant,10:30,11:00,41
-Tuesday,Parking Attendant,11:00,11:30,38
-Tuesday,Parking Attendant,11:30,12:00,41
-Tuesday,Parking Attendant,12:00,12:30,37
-Tuesday,Parking Attendant,12:30,13:00,36
-Tuesday,Parking Attendant,13:00,13:30,32
-Tuesday,Parking Attendant,13:30,14:00,36
-Tuesday,Parking Attendant,14:00,14:30,41
-Tuesday,Parking Attendant,14:30,15:00,40
-Tuesday,Parking Attendant,15:00,15:30,37
-Tuesday,Parking Attendant,15:30,16:00,33
-Tuesday,Parking Attendant,16:00,16:30,36
-Tuesday,Parking Attendant,16:30,17:00,31
-Tuesday,Parking Attendant,17:00,17:30,31
-Tuesday,Parking Attendant,17:30,18:00,30
-Tuesday,Parking Attendant,18:00,18:30,34
-Tuesday,Parking Attendant,18:30,19:00,39
-Tuesday,Parking Attendant,19:00,19:30,39
-Tuesday,Parking Attendant,19:30,20:00,35
-Tuesday,Parking Attendant,20:00,20:30,34
-Tuesday,Parking Attendant,20:30,21:00,31
-Tuesday,Parking Attendant,21:00,21:30,29
-Tuesday,Parking Attendant,21:30,22:00,27
-Tuesday,Parking Attendant,22:00,22:30,26
-Tuesday,Taxi Driver,09:00,09:30,41
-Tuesday,Taxi Driver,09:30,10:00,44
-Tuesday,Taxi Driver,10:00,10:30,45
-Tuesday,Taxi Driver,10:30,11:00,41
-Tuesday,Taxi Driver,11:00,11:30,36
-Tuesday,Taxi Driver,11:30,12:00,41
-Tuesday,Taxi Driver,12:00,12:30,41
-Tuesday,Taxi Driver,12:30,13:00,39
-Tuesday,Taxi Driver,13:00,13:30,36
-Tuesday,Taxi Driver,13:30,14:00,33
-Tuesday,Taxi Driver,14:00,14:30,32
-Tuesday,Taxi Driver,14:30,15:00,35
-Tuesday,Taxi Driver,15:00,15:30,32
-Tuesday,Taxi Driver,15:30,16:00,32
-Tuesday,Taxi Driver,16:00,16:30,32
-Tuesday,Taxi Driver,16:30,17:00,35
-Tuesday,Taxi Driver,17:00,17:30,33
-Tuesday,Taxi Driver,17:30,18:00,33
-Tuesday,Taxi Driver,18:00,18:30,35
-Tuesday,Taxi Driver,18:30,19:00,34
-Tuesday,Taxi Driver,19:00,19:30,32
-Tuesday,Taxi Driver,19:30,20:00,34
-Tuesday,Taxi Driver,20:00,20:30,34
-Tuesday,Taxi Driver,20:30,21:00,30
-Tuesday,Taxi Driver,21:00,21:30,33
-Tuesday,Taxi Driver,21:30,22:00,35
-Tuesday,Bellhop,12:30,13:00,45
-Tuesday,Bellhop,13:00,13:30,47
-Tuesday,Bellhop,13:30,14:00,46
-Tuesday,Bellhop,14:00,14:30,41
-Tuesday,Bellhop,14:30,15:00,43
-Tuesday,Bellhop,15:00,15:30,45
-Tuesday,Bellhop,15:30,16:00,49
-Tuesday,Bellhop,16:00,16:30,54
-Tuesday,Bellhop,16:30,17:00,58
-Tuesday,Bellhop,17:00,17:30,62
-Tuesday,Bellhop,17:30,18:00,57
-Tuesday,Bellhop,18:00,18:30,54
-Tuesday,Bellhop,18:30,19:00,52
-Tuesday,Bellhop,19:00,19:30,55
-Tuesday,Bellhop,19:30,20:00,55
-Tuesday,Bellhop,20:00,20:30,55
-Tuesday,Bellhop,20:30,21:00,54
-Tuesday,Bellhop,21:00,21:30,51
-Tuesday,Bellhop,21:30,22:00,49
-Tuesday,Bellhop,22:00,22:30,44
-Tuesday,Bellhop,22:30,23:00,44
-Tuesday,Bellhop,23:00,23:30,45
-Tuesday,Construction Worker,05:30,06:00,30
-Tuesday,Construction Worker,06:00,06:30,35
-Tuesday,Construction Worker,06:30,07:00,32
-Tuesday,Construction Worker,07:00,07:30,36
-Tuesday,Construction Worker,07:30,08:00,31
-Tuesday,Construction Worker,08:00,08:30,27
-Tuesday,Construction Worker,08:30,09:00,25
-Tuesday,Construction Worker,09:00,09:30,20
-Tuesday,Construction Worker,09:30,10:00,15
-Tuesday,Construction Worker,10:00,10:30,16
-Tuesday,Construction Worker,10:30,11:00,11
-Tuesday,Construction Worker,11:00,11:30,8
-Tuesday,Construction Worker,11:30,12:00,8
-Tuesday,Construction Worker,12:00,12:30,3
-Tuesday,Construction Worker,12:30,13:00,7
-Tuesday,Construction Worker,13:00,13:30,9
-Tuesday,Construction Worker,13:30,14:00,13
-Tuesday,Construction Worker,14:00,14:30,14
-Tuesday,Construction Worker,14:30,15:00,19
-Tuesday,Construction Worker,15:00,15:30,17
-Tuesday,Construction Worker,15:30,16:00,18
-Tuesday,Construction Worker,16:00,16:30,17
-Tuesday,Construction Worker,16:30,17:00,19
-Tuesday,Construction Worker,17:00,17:30,22
-Tuesday,Construction Worker,17:30,18:00,21
-Tuesday,Construction Worker,18:00,18:30,23
-Tuesday,Construction Worker,18:30,19:00,23
-Tuesday,Construction Worker,19:00,19:30,28
-Tuesday,Construction Worker,19:30,20:00,31
-Tuesday,Construction Worker,20:00,20:30,35
-Tuesday,Construction Worker,20:30,21:00,38
-Tuesday,Construction Worker,21:00,21:30,37
-Tuesday,Construction Worker,21:30,22:00,34
-Tuesday,Driver,04:30,05:00,19
-Tuesday,Driver,05:00,05:30,17
-Tuesday,Driver,05:30,06:00,16
-Tuesday,Driver,06:00,06:30,13
-Tuesday,Driver,06:30,07:00,11
-Tuesday,Driver,07:00,07:30,16
-Tuesday,Driver,07:30,08:00,12
-Tuesday,Driver,08:00,08:30,16
-Tuesday,Driver,08:30,09:00,19
-Tuesday,Driver,09:00,09:30,14
-Tuesday,Driver,09:30,10:00,13
-Tuesday,Driver,10:00,10:30,11
-Tuesday,Driver,10:30,11:00,7
-Tuesday,Driver,11:00,11:30,4
-Tuesday,Driver,11:30,12:00,6
-Tuesday,Driver,12:00,12:30,7
-Tuesday,Driver,12:30,13:00,6
-Tuesday,Driver,13:00,13:30,8
-Tuesday,Driver,13:30,14:00,3
-Tuesday,Driver,14:00,14:30,3
-Wednesday,Parking Attendant,01:00,01:30,16
-Wednesday,Parking Attendant,01:30,02:00,13
-Wednesday,Parking Attendant,02:00,02:30,9
-Wednesday,Parking Attendant,02:30,03:00,9
-Wednesday,Parking Attendant,03:00,03:30,13
-Wednesday,Parking Attendant,03:30,04:00,15
-Wednesday,Parking Attendant,04:00,04:30,14
-Wednesday,Parking Attendant,04:30,05:00,19
-Wednesday,Parking Attendant,05:00,05:30,15
-Wednesday,Parking Attendant,05:30,06:00,18
-Wednesday,Parking Attendant,06:00,06:30,15
-Wednesday,Parking Attendant,06:30,07:00,20
-Wednesday,Parking Attendant,07:00,07:30,22
-Wednesday,Parking Attendant,07:30,08:00,26
-Wednesday,Parking Attendant,08:00,08:30,21
-Wednesday,Parking Attendant,08:30,09:00,18
-Wednesday,Parking Attendant,09:00,09:30,15
-Wednesday,Parking Attendant,09:30,10:00,20
-Wednesday,Parking Attendant,10:00,10:30,15
-Wednesday,Parking Attendant,10:30,11:00,15
-Wednesday,Parking Attendant,11:00,11:30,10
-Wednesday,Parking Attendant,11:30,12:00,11
-Wednesday,Parking Attendant,12:00,12:30,6
-Wednesday,Parking Attendant,12:30,13:00,5
-Wednesday,Parking Attendant,13:00,13:30,6
-Wednesday,Parking Attendant,13:30,14:00,10
-Wednesday,Parking Attendant,14:00,14:30,12
-Wednesday,Taxi Driver,10:30,11:00,45
-Wednesday,Taxi Driver,11:00,11:30,46
-Wednesday,Taxi Driver,11:30,12:00,43
-Wednesday,Taxi Driver,12:00,12:30,46
-Wednesday,Taxi Driver,12:30,13:00,45
-Wednesday,Taxi Driver,13:00,13:30,46
-Wednesday,Taxi Driver,13:30,14:00,49
-Wednesday,Taxi Driver,14:00,14:30,44
-Wednesday,Taxi Driver,14:30,15:00,46
-Wednesday,Taxi Driver,15:00,15:30,49
-Wednesday,Taxi Driver,15:30,16:00,47
-Wednesday,Taxi Driver,16:00,16:30,51
-Wednesday,Taxi Driver,16:30,17:00,51
-Wednesday,Taxi Driver,17:00,17:30,52
-Wednesday,Taxi Driver,17:30,18:00,52
-Wednesday,Taxi Driver,18:00,18:30,47
-Wednesday,Taxi Driver,18:30,19:00,42
-Wednesday,Taxi Driver,19:00,19:30,39
-Wednesday,Taxi Driver,19:30,20:00,36
-Wednesday,Taxi Driver,20:00,20:30,33
-Wednesday,Taxi Driver,20:30,21:00,37
-Wednesday,Taxi Driver,21:00,21:30,37
-Wednesday,Taxi Driver,21:30,22:00,42
-Wednesday,Taxi Driver,22:00,22:30,47
-Wednesday,Taxi Driver,22:30,23:00,49
-Wednesday,Bellhop,13:00,13:30,21
-Wednesday,Bellhop,13:30,14:00,25
-Wednesday,Bellhop,14:00,14:30,26
-Wednesday,Bellhop,14:30,15:00,29
-Wednesday,Bellhop,15:00,15:30,27
-Wednesday,Bellhop,15:30,16:00,29
-Wednesday,Bellhop,16:00,16:30,29
-Wednesday,Bellhop,16:30,17:00,32
-Wednesday,Bellhop,17:00,17:30,34
-Wednesday,Bellhop,17:30,18:00,38
-Wednesday,Bellhop,18:00,18:30,40
-Wednesday,Bellhop,18:30,19:00,39
-Wednesday,Bellhop,19:00,19:30,43
-Wednesday,Bellhop,19:30,20:00,46
-Wednesday,Bellhop,20:00,20:30,41
-Wednesday,Bellhop,20:30,21:00,39
-Wednesday,Bellhop,21:00,21:30,42
-Wednesday,Bellhop,21:30,22:00,42
-Wednesday,Bellhop,22:00,22:30,44
-Wednesday,Bellhop,22:30,23:00,46
-Wednesday,Bellhop,23:00,23:30,45
-Wednesday,Bellhop,23:30,24:00,45
-Wednesday,Construction Worker,13:00,13:30,45
-Wednesday,Construction Worker,13:30,14:00,44
-Wednesday,Construction Worker,14:00,14:30,41
-Wednesday,Construction Worker,14:30,15:00,45
-Wednesday,Construction Worker,15:00,15:30,46
-Wednesday,Construction Worker,15:30,16:00,49
-Wednesday,Construction Worker,16:00,16:30,49
-Wednesday,Construction Worker,16:30,17:00,49
-Wednesday,Construction Worker,17:00,17:30,53
-Wednesday,Construction Worker,17:30,18:00,50
-Wednesday,Construction Worker,18:00,18:30,45
-Wednesday,Construction Worker,18:30,19:00,47
-Wednesday,Construction Worker,19:00,19:30,43
-Wednesday,Construction Worker,19:30,20:00,47
-Wednesday,Construction Worker,20:00,20:30,43
-Wednesday,Construction Worker,20:30,21:00,46
-Wednesday,Construction Worker,21:00,21:30,49
-Wednesday,Construction Worker,21:30,22:00,54
-Wednesday,Construction Worker,22:00,22:30,52
-Wednesday,Construction Worker,22:30,23:00,49
-Wednesday,Construction Worker,23:00,23:30,51
-Wednesday,Driver,00:30,01:00,38
-Wednesday,Driver,01:00,01:30,40
-Wednesday,Driver,01:30,02:00,38
-Wednesday,Driver,02:00,02:30,36
-Wednesday,Driver,02:30,03:00,40
-Wednesday,Driver,03:00,03:30,44
-Wednesday,Driver,03:30,04:00,40
-Wednesday,Driver,04:00,04:30,39
-Wednesday,Driver,04:30,05:00,34
-Wednesday,Driver,05:00,05:30,29
-Wednesday,Driver,05:30,06:00,26
-Wednesday,Driver,06:00,06:30,30
-Wednesday,Driver,06:30,07:00,35
-Wednesday,Driver,07:00,07:30,34
-Wednesday,Driver,07:30,08:00,36
-Wednesday,Driver,08:00,08:30,37
-Wednesday,Driver,08:30,09:00,34
-Wednesday,Driver,09:00,09:30,35
-Wednesday,Driver,09:30,10:00,34
-Wednesday,Driver,10:00,10:30,32
-Wednesday,Driver,10:30,11:00,31
-Wednesday,Driver,11:00,11:30,36
-Wednesday,Driver,11:30,12:00,35
-Wednesday,Driver,12:00,12:30,34
-Wednesday,Driver,12:30,13:00,30
-Wednesday,Driver,13:00,13:30,27
-Wednesday,Driver,13:30,14:00,26
-Wednesday,Driver,14:00,14:30,25
-Wednesday,Driver,14:30,15:00,30
-Wednesday,Driver,15:00,15:30,33
-Wednesday,Driver,15:30,16:00,28
-Wednesday,Driver,16:00,16:30,27
-Thursday,Parking Attendant,04:00,04:30,9
-Thursday,Parking Attendant,04:30,05:00,9
-Thursday,Parking Attendant,05:00,05:30,8
-Thursday,Parking Attendant,05:30,06:00,6
-Thursday,Parking Attendant,06:00,06:30,8
-Thursday,Parking Attendant,06:30,07:00,10
-Thursday,Parking Attendant,07:00,07:30,14
-Thursday,Parking Attendant,07:30,08:00,19
-Thursday,Parking Attendant,08:00,08:30,20
-Thursday,Parking Attendant,08:30,09:00,17
-Thursday,Parking Attendant,09:00,09:30,21
-Thursday,Parking Attendant,09:30,10:00,25
-Thursday,Parking Attendant,10:00,10:30,24
-Thursday,Parking Attendant,10:30,11:00,29
-Thursday,Parking Attendant,11:00,11:30,28
-Thursday,Parking Attendant,11:30,12:00,28
-Thursday,Parking Attendant,12:00,12:30,28
-Thursday,Parking Attendant,12:30,13:00,28
-Thursday,Parking Attendant,13:00,13:30,25
-Thursday,Parking Attendant,13:30,14:00,20
-Thursday,Parking Attendant,14:00,14:30,16
-Thursday,Parking Attendant,14:30,15:00,12
-Thursday,Parking Attendant,15:00,15:30,17
-Thursday,Parking Attendant,15:30,16:00,14
-Thursday,Parking Attendant,16:00,16:30,18
-Thursday,Parking Attendant,16:30,17:00,17
-Thursday,Parking Attendant,17:00,17:30,20
-Thursday,Parking Attendant,17:30,18:00,25
-Thursday,Parking Attendant,18:00,18:30,22
-Thursday,Parking Attendant,18:30,19:00,17
-Thursday,Parking Attendant,19:00,19:30,19
-Thursday,Taxi Driver,06:30,07:00,49
-Thursday,Taxi Driver,07:00,07:30,51
-Thursday,Taxi Driver,07:30,08:00,56
-Thursday,Taxi Driver,08:00,08:30,61
-Thursday,Taxi Driver,08:30,09:00,65
-Thursday,Taxi Driver,09:00,09:30,66
-Thursday,Taxi Driver,09:30,10:00,63
-Thursday,Taxi Driver,10:00,10:30,63
-Thursday,Taxi Driver,10:30,11:00,58
-Thursday,Taxi Driver,11:00,11:30,55
-Thursday,Taxi Driver,11:30,12:00,52
-Thursday,Taxi Driver,12:00,12:30,51
-Thursday,Taxi Driver,12:30,13:00,56
-Thursday,Taxi Driver,13:00,13:30,57
-Thursday,Taxi Driver,13:30,14:00,53
-Thursday,Taxi Driver,14:00,14:30,49
-Thursday,Taxi Driver,14:30,15:00,49
-Thursday,Taxi Driver,15:00,15:30,47
-Thursday,Taxi Driver,15:30,16:00,47
-Thursday,Taxi Driver,16:00,16:30,47
-Thursday,Taxi Driver,16:30,17:00,42
-Thursday,Taxi Driver,17:00,17:30,41
-Thursday,Taxi Driver,17:30,18:00,39
-Thursday,Bellhop,04:00,04:30,37
-Thursday,Bellhop,04:30,05:00,32
-Thursday,Bellhop,05:00,05:30,33
-Thursday,Bellhop,05:30,06:00,38
-Thursday,Bellhop,06:00,06:30,37
-Thursday,Bellhop,06:30,07:00,40
-Thursday,Bellhop,07:00,07:30,38
-Thursday,Bellhop,07:30,08:00,36
-Thursday,Bellhop,08:00,08:30,31
-Thursday,Bellhop,08:30,09:00,33
-Thursday,Bellhop,09:00,09:30,35
-Thursday,Bellhop,09:30,10:00,33
-Thursday,Bellhop,10:00,10:30,30
-Thursday,Bellhop,10:30,11:00,29
-Thursday,Bellhop,11:00,11:30,24
-Thursday,Bellhop,11:30,12:00,24
-Thursday,Bellhop,12:00,12:30,28
-Thursday,Bellhop,12:30,13:00,33
-Thursday,Bellhop,13:00,13:30,32
-Thursday,Bellhop,13:30,14:00,31
-Thursday,Bellhop,14:00,14:30,32
-Thursday,Bellhop,14:30,15:00,27
-Thursday,Bellhop,15:00,15:30,25
-Thursday,Bellhop,15:30,16:00,27
-Thursday,Bellhop,16:00,16:30,32
-Thursday,Bellhop,16:30,17:00,30
-Thursday,Bellhop,17:00,17:30,28
-Thursday,Bellhop,17:30,18:00,26
-Thursday,Construction Worker,11:30,12:00,30
-Thursday,Construction Worker,12:00,12:30,33
-Thursday,Construction Worker,12:30,13:00,28
-Thursday,Construction Worker,13:00,13:30,32
-Thursday,Construction Worker,13:30,14:00,31
-Thursday,Construction Worker,14:00,14:30,29
-Thursday,Construction Worker,14:30,15:00,28
-Thursday,Construction Worker,15:00,15:30,29
-Thursday,Construction Worker,15:30,16:00,28
-Thursday,Construction Worker,16:00,16:30,29
-Thursday,Construction Worker,16:30,17:00,29
-Thursday,Construction Worker,17:00,17:30,34
-Thursday,Construction Worker,17:30,18:00,33
-Thursday,Construction Worker,18:00,18:30,31
-Thursday,Construction Worker,18:30,19:00,33
-Thursday,Construction Worker,19:00,19:30,36
-Thursday,Construction Worker,19:30,20:00,35
-Thursday,Construction Worker,20:00,20:30,39
-Thursday,Construction Worker,20:30,21:00,34
-Thursday,Construction Worker,21:00,21:30,32
-Thursday,Driver,00:00,00:30,30
-Thursday,Driver,00:30,01:00,28
-Thursday,Driver,01:00,01:30,26
-Thursday,Driver,01:30,02:00,23
-Thursday,Driver,02:00,02:30,19
-Thursday,Driver,02:30,03:00,18
-Thursday,Driver,03:00,03:30,17
-Thursday,Driver,03:30,04:00,13
-Thursday,Driver,04:00,04:30,17
-Thursday,Driver,04:30,05:00,17
-Thursday,Driver,05:00,05:30,19
-Thursday,Driver,05:30,06:00,20
-Thursday,Driver,06:00,06:30,21
-Thursday,Driver,06:30,07:00,21
-Thursday,Driver,07:00,07:30,24
-Thursday,Driver,07:30,08:00,27
-Thursday,Driver,08:00,08:30,24
-Thursday,Driver,08:30,09:00,25
-Thursday,Driver,09:00,09:30,26
-Thursday,Driver,09:30,10:00,27
-Thursday,Driver,10:00,10:30,30
-Thursday,Driver,10:30,11:00,28
-Thursday,Driver,11:00,11:30,28
-Thursday,Driver,11:30,12:00,26
-Thursday,Driver,12:00,12:30,24
-Thursday,Driver,12:30,13:00,28
-Thursday,Driver,13:00,13:30,27
-Thursday,Driver,13:30,14:00,26
-Thursday,Driver,14:00,14:30,23
-Thursday,Driver,14:30,15:00,22
-Thursday,Driver,15:00,15:30,26
-Thursday,Driver,15:30,16:00,25
-Thursday,Driver,16:00,16:30,27
-Thursday,Driver,16:30,17:00,28
-Thursday,Driver,17:00,17:30,27
-Thursday,Driver,17:30,18:00,30
-Thursday,Driver,18:00,18:30,28
-Thursday,Driver,18:30,19:00,28
-Thursday,Driver,19:00,19:30,26
-Thursday,Driver,19:30,20:00,22
-Thursday,Driver,20:00,20:30,24
-Thursday,Driver,20:30,21:00,23
-Thursday,Driver,21:00,21:30,25
-Thursday,Driver,21:30,22:00,21
-Thursday,Driver,22:00,22:30,26
-Thursday,Driver,22:30,23:00,31
-Thursday,Driver,23:00,23:30,28
-Thursday,Driver,23:30,24:00,25
-Friday,Parking Attendant,08:30,09:00,18
-Friday,Parking Attendant,09:00,09:30,16
-Friday,Parking Attendant,09:30,10:00,14
-Friday,Parking Attendant,10:00,10:30,9
-Friday,Parking Attendant,10:30,11:00,4
-Friday,Parking Attendant,11:00,11:30,9
-Friday,Parking Attendant,11:30,12:00,12
-Friday,Parking Attendant,12:00,12:30,8
-Friday,Parking Attendant,12:30,13:00,4
-Friday,Parking Attendant,13:00,13:30,1
-Friday,Parking Attendant,13:30,14:00,1
-Friday,Parking Attendant,14:00,14:30,3
-Friday,Parking Attendant,14:30,15:00,4
-Friday,Parking Attendant,15:00,15:30,3
-Friday,Parking Attendant,15:30,16:00,1
-Friday,Parking Attendant,16:00,16:30,4
-Friday,Parking Attendant,16:30,17:00,4
-Friday,Parking Attendant,17:00,17:30,4
-Friday,Parking Attendant,17:30,18:00,2
-Friday,Parking Attendant,18:00,18:30,1
-Friday,Parking Attendant,18:30,19:00,1
-Friday,Parking Attendant,19:00,19:30,2
-Friday,Parking Attendant,19:30,20:00,7
-Friday,Parking Attendant,20:00,20:30,10
-Friday,Parking Attendant,20:30,21:00,13
-Friday,Parking Attendant,21:00,21:30,8
-Friday,Parking Attendant,21:30,22:00,11
-Friday,Parking Attendant,22:00,22:30,9
-Friday,Parking Attendant,22:30,23:00,7
-Friday,Taxi Driver,13:30,14:00,20
-Friday,Taxi Driver,14:00,14:30,25
-Friday,Taxi Driver,14:30,15:00,22
-Friday,Taxi Driver,15:00,15:30,19
-Friday,Taxi Driver,15:30,16:00,24
-Friday,Taxi Driver,16:00,16:30,25
-Friday,Taxi Driver,16:30,17:00,20
-Friday,Taxi Driver,17:00,17:30,19
-Friday,Taxi Driver,17:30,18:00,18
-Friday,Taxi Driver,18:00,18:30,22
-Friday,Taxi Driver,18:30,19:00,23
-Friday,Taxi Driver,19:00,19:30,19
-Friday,Taxi Driver,19:30,20:00,22
-Friday,Taxi Driver,20:00,20:30,17
-Friday,Taxi Driver,20:30,21:00,12
-Friday,Taxi Driver,21:00,21:30,14
-Friday,Taxi Driver,21:30,22:00,17
-Friday,Taxi Driver,22:00,22:30,16
-Friday,Taxi Driver,22:30,23:00,19
-Friday,Taxi Driver,23:00,23:30,15
-Friday,Taxi Driver,23:30,24:00,17
-Friday,Bellhop,09:00,09:30,4
-Friday,Bellhop,09:30,10:00,7
-Friday,Bellhop,10:00,10:30,11
-Friday,Bellhop,10:30,11:00,16
-Friday,Bellhop,11:00,11:30,13
-Friday,Bellhop,11:30,12:00,16
-Friday,Bellhop,12:00,12:30,12
-Friday,Bellhop,12:30,13:00,11
-Friday,Bellhop,13:00,13:30,11
-Friday,Bellhop,13:30,14:00,10
-Friday,Bellhop,14:00,14:30,15
-Friday,Bellhop,14:30,15:00,14
-Friday,Bellhop,15:00,15:30,18
-Friday,Bellhop,15:30,16:00,18
-Friday,Bellhop,16:00,16:30,19
-Friday,Bellhop,16:30,17:00,22
-Friday,Bellhop,17:00,17:30,19
-Friday,Bellhop,17:30,18:00,18
-Friday,Bellhop,18:00,18:30,22
-Friday,Bellhop,18:30,19:00,23
-Friday,Construction Worker,12:30,13:00,25
-Friday,Construction Worker,13:00,13:30,26
-Friday,Construction Worker,13:30,14:00,21
-Friday,Construction Worker,14:00,14:30,16
-Friday,Construction Worker,14:30,15:00,18
-Friday,Construction Worker,15:00,15:30,15
-Friday,Construction Worker,15:30,16:00,16
-Friday,Construction Worker,16:00,16:30,16
-Friday,Construction Worker,16:30,17:00,16
-Friday,Construction Worker,17:00,17:30,16
-Friday,Construction Worker,17:30,18:00,17
-Friday,Construction Worker,18:00,18:30,12
-Friday,Construction Worker,18:30,19:00,8
-Friday,Construction Worker,19:00,19:30,6
-Friday,Construction Worker,19:30,20:00,7
-Friday,Construction Worker,20:00,20:30,9
-Friday,Construction Worker,20:30,21:00,6
-Friday,Construction Worker,21:00,21:30,6
-Friday,Construction Worker,21:30,22:00,4
-Friday,Construction Worker,22:00,22:30,8
-Friday,Construction Worker,22:30,23:00,7
-Friday,Driver,02:30,03:00,35
-Friday,Driver,03:00,03:30,31
-Friday,Driver,03:30,04:00,33
-Friday,Driver,04:00,04:30,35
-Friday,Driver,04:30,05:00,34
-Friday,Driver,05:00,05:30,30
-Friday,Driver,05:30,06:00,32
-Friday,Driver,06:00,06:30,37
-Friday,Driver,06:30,07:00,32
-Friday,Driver,07:00,07:30,32
-Friday,Driver,07:30,08:00,37
-Friday,Driver,08:00,08:30,35
-Friday,Driver,08:30,09:00,32
-Friday,Driver,09:00,09:30,37
-Friday,Driver,09:30,10:00,41
-Friday,Driver,10:00,10:30,44
-Friday,Driver,10:30,11:00,48
-Friday,Driver,11:00,11:30,51
-Friday,Driver,11:30,12:00,52
-Friday,Driver,12:00,12:30,54
-Friday,Driver,12:30,13:00,57
-Friday,Driver,13:00,13:30,55
-Friday,Driver,13:30,14:00,53
-Friday,Driver,14:00,14:30,51
-Friday,Driver,14:30,15:00,54
-Friday,Driver,15:00,15:30,54
-Friday,Driver,15:30,16:00,50
-Friday,Driver,16:00,16:30,45
-Friday,Driver,16:30,17:00,42
-Friday,Driver,17:00,17:30,44
-Friday,Driver,17:30,18:00,44
-Friday,Driver,18:00,18:30,42
-Friday,Driver,18:30,19:00,37
-Friday,Driver,19:00,19:30,41
-Friday,Driver,19:30,20:00,39
-Friday,Driver,20:00,20:30,40
-Friday,Driver,20:30,21:00,35
-Friday,Driver,21:00,21:30,36
-Friday,Driver,21:30,22:00,41
-Friday,Driver,22:00,22:30,42
-Friday,Driver,22:30,23:00,40
-Friday,Driver,23:00,23:30,37
-Friday,Driver,23:30,24:00,32
-Saturday,Parking Attendant,02:30,03:00,27
-Saturday,Parking Attendant,03:00,03:30,25
-Saturday,Parking Attendant,03:30,04:00,29
-Saturday,Parking Attendant,04:00,04:30,26
-Saturday,Parking Attendant,04:30,05:00,29
-Saturday,Parking Attendant,05:00,05:30,26
-Saturday,Parking Attendant,05:30,06:00,28
-Saturday,Parking Attendant,06:00,06:30,32
-Saturday,Parking Attendant,06:30,07:00,31
-Saturday,Parking Attendant,07:00,07:30,36
-Saturday,Parking Attendant,07:30,08:00,40
-Saturday,Parking Attendant,08:00,08:30,35
-Saturday,Parking Attendant,08:30,09:00,30
-Saturday,Parking Attendant,09:00,09:30,34
-Saturday,Parking Attendant,09:30,10:00,34
-Saturday,Parking Attendant,10:00,10:30,34
-Saturday,Parking Attendant,10:30,11:00,30
-Saturday,Parking Attendant,11:00,11:30,30
-Saturday,Parking Attendant,11:30,12:00,35
-Saturday,Parking Attendant,12:00,12:30,39
-Saturday,Parking Attendant,12:30,13:00,40
-Saturday,Parking Attendant,13:00,13:30,43
-Saturday,Parking Attendant,13:30,14:00,40
-Saturday,Parking Attendant,14:00,14:30,35
-Saturday,Parking Attendant,14:30,15:00,30
-Saturday,Parking Attendant,15:00,15:30,35
-Saturday,Parking Attendant,15:30,16:00,30
-Saturday,Parking Attendant,16:00,16:30,34
-Saturday,Parking Attendant,16:30,17:00,31
-Saturday,Parking Attendant,17:00,17:30,27
-Saturday,Parking Attendant,17:30,18:00,24
-Saturday,Parking Attendant,18:00,18:30,22
-Saturday,Parking Attendant,18:30,19:00,17
-Saturday,Parking Attendant,19:00,19:30,18
-Saturday,Parking Attendant,19:30,20:00,21
-Saturday,Taxi Driver,08:30,09:00,27
-Saturday,Taxi Driver,09:00,09:30,29
-Saturday,Taxi Driver,09:30,10:00,26
-Saturday,Taxi Driver,10:00,10:30,21
-Saturday,Taxi Driver,10:30,11:00,20
-Saturday,Taxi Driver,11:00,11:30,22
-Saturday,Taxi Driver,11:30,12:00,21
-Saturday,Taxi Driver,12:00,12:30,19
-Saturday,Taxi Driver,12:30,13:00,17
-Saturday,Taxi Driver,13:00,13:30,17
-Saturday,Taxi Driver,13:30,14:00,19
-Saturday,Taxi Driver,14:00,14:30,17
-Saturday,Taxi Driver,14:30,15:00,15
-Saturday,Taxi Driver,15:00,15:30,17
-Saturday,Taxi Driver,15:30,16:00,12
-Saturday,Taxi Driver,16:00,16:30,16
-Saturday,Taxi Driver,16:30,17:00,21
-Saturday,Taxi Driver,17:00,17:30,23
-Saturday,Taxi Driver,17:30,18:00,23
-Saturday,Taxi Driver,18:00,18:30,27
-Saturday,Taxi Driver,18:30,19:00,32
-Saturday,Taxi Driver,19:00,19:30,33
-Saturday,Taxi Driver,19:30,20:00,36
-Saturday,Taxi Driver,20:00,20:30,37
-Saturday,Taxi Driver,20:30,21:00,38
-Saturday,Taxi Driver,21:00,21:30,39
-Saturday,Bellhop,02:30,03:00,16
-Saturday,Bellhop,03:00,03:30,16
-Saturday,Bellhop,03:30,04:00,11
-Saturday,Bellhop,04:00,04:30,7
-Saturday,Bellhop,04:30,05:00,2
-Saturday,Bellhop,05:00,05:30,6
-Saturday,Bellhop,05:30,06:00,9
-Saturday,Bellhop,06:00,06:30,14
-Saturday,Bellhop,06:30,07:00,17
-Saturday,Bellhop,07:00,07:30,17
-Saturday,Bellhop,07:30,08:00,13
-Saturday,Bellhop,08:00,08:30,8
-Saturday,Bellhop,08:30,09:00,8
-Saturday,Bellhop,09:00,09:30,5
-Saturday,Bellhop,09:30,10:00,2
-Saturday,Bellhop,10:00,10:30,2
-Saturday,Bellhop,10:30,11:00,1
-Saturday,Bellhop,11:00,11:30,1
-Saturday,Bellhop,11:30,12:00,1
-Saturday,Bellhop,12:00,12:30,1
-Saturday,Bellhop,12:30,13:00,3
-Saturday,Bellhop,13:00,13:30,1
-Saturday,Bellhop,13:30,14:00,3
-Saturday,Bellhop,14:00,14:30,8
-Saturday,Bellhop,14:30,15:00,9
-Saturday,Bellhop,15:00,15:30,5
-Saturday,Bellhop,15:30,16:00,1
-Saturday,Bellhop,16:00,16:30,2
-Saturday,Bellhop,16:30,17:00,1
-Saturday,Bellhop,17:00,17:30,5
-Saturday,Bellhop,17:30,18:00,10
-Saturday,Construction Worker,12:30,13:00,4
-Saturday,Construction Worker,13:00,13:30,4
-Saturday,Construction Worker,13:30,14:00,1
-Saturday,Construction Worker,14:00,14:30,4
-Saturday,Construction Worker,14:30,15:00,1
-Saturday,Construction Worker,15:00,15:30,5
-Saturday,Construction Worker,15:30,16:00,10
-Saturday,Construction Worker,16:00,16:30,15
-Saturday,Construction Worker,16:30,17:00,19
-Saturday,Construction Worker,17:00,17:30,24
-Saturday,Construction Worker,17:30,18:00,24
-Saturday,Construction Worker,18:00,18:30,24
-Saturday,Construction Worker,18:30,19:00,27
-Saturday,Construction Worker,19:00,19:30,30
-Saturday,Construction Worker,19:30,20:00,28
-Saturday,Construction Worker,20:00,20:30,25
-Saturday,Construction Worker,20:30,21:00,29
-Saturday,Construction Worker,21:00,21:30,26
-Saturday,Construction Worker,21:30,22:00,24
-Saturday,Construction Worker,22:00,22:30,21
-Saturday,Construction Worker,22:30,23:00,25
-Saturday,Construction Worker,23:00,23:30,22
-Saturday,Driver,02:30,03:00,5
-Saturday,Driver,03:00,03:30,9
-Saturday,Driver,03:30,04:00,5
-Saturday,Driver,04:00,04:30,5
-Saturday,Driver,04:30,05:00,1
-Saturday,Driver,05:00,05:30,1
-Saturday,Driver,05:30,06:00,2
-Saturday,Driver,06:00,06:30,1
-Saturday,Driver,06:30,07:00,2
-Saturday,Driver,07:00,07:30,1
-Saturday,Driver,07:30,08:00,1
-Saturday,Driver,08:00,08:30,1
-Saturday,Driver,08:30,09:00,1
-Saturday,Driver,09:00,09:30,1
-Saturday,Driver,09:30,10:00,1
-Saturday,Driver,10:00,10:30,5
-Saturday,Driver,10:30,11:00,6
-Saturday,Driver,11:00,11:30,2
-Saturday,Driver,11:30,12:00,1
-Saturday,Driver,12:00,12:30,1
-Saturday,Driver,12:30,13:00,3
-Saturday,Driver,13:00,13:30,6
-Saturday,Driver,13:30,14:00,2
+Sunday,Gardener,04:00,04:30,18
+Sunday,Gardener,04:30,05:00,23
+Sunday,Gardener,05:00,05:30,19
+Sunday,Gardener,05:30,06:00,23
+Sunday,Gardener,06:00,06:30,22
+Sunday,Gardener,06:30,07:00,17
+Sunday,Gardener,07:00,07:30,14
+Sunday,Gardener,07:30,08:00,18
+Sunday,Gardener,08:00,08:30,23
+Sunday,Gardener,08:30,09:00,24
+Sunday,Gardener,09:00,09:30,24
+Sunday,Gardener,09:30,10:00,23
+Sunday,Gardener,10:00,10:30,28
+Sunday,Gardener,10:30,11:00,26
+Sunday,Gardener,11:00,11:30,25
+Sunday,Gardener,11:30,12:00,20
+Sunday,Gardener,12:00,12:30,24
+Sunday,Gardener,12:30,13:00,23
+Sunday,Gardener,13:00,13:30,28
+Sunday,Gardener,13:30,14:00,25
+Sunday,Gardener,14:00,14:30,28
+Sunday,Gardener,14:30,15:00,25
+Sunday,Gardener,15:00,15:30,29
+Sunday,Gardener,15:30,16:00,34
+Sunday,Gardener,16:00,16:30,38
+Sunday,Gardener,16:30,17:00,36
+Sunday,Gardener,17:00,17:30,33
+Sunday,Gardener,17:30,18:00,32
+Sunday,Gardener,18:00,18:30,36
+Sunday,Gardener,18:30,19:00,37
+Sunday,Gardener,19:00,19:30,38
+Sunday,Gardener,19:30,20:00,43
+Sunday,Gardener,20:00,20:30,41
+Sunday,Gardener,20:30,21:00,41
+Sunday,Gardener,21:00,21:30,46
+Sunday,Gardener,21:30,22:00,43
+Sunday,Host/Hostess,12:00,12:30,54
+Sunday,Host/Hostess,12:30,13:00,58
+Sunday,Host/Hostess,13:00,13:30,54
+Sunday,Host/Hostess,13:30,14:00,57
+Sunday,Host/Hostess,14:00,14:30,54
+Sunday,Host/Hostess,14:30,15:00,49
+Sunday,Host/Hostess,15:00,15:30,50
+Sunday,Host/Hostess,15:30,16:00,47
+Sunday,Host/Hostess,16:00,16:30,44
+Sunday,Host/Hostess,16:30,17:00,39
+Sunday,Host/Hostess,17:00,17:30,44
+Sunday,Host/Hostess,17:30,18:00,43
+Sunday,Host/Hostess,18:00,18:30,43
+Sunday,Host/Hostess,18:30,19:00,39
+Sunday,Host/Hostess,19:00,19:30,44
+Sunday,Host/Hostess,19:30,20:00,48
+Sunday,Host/Hostess,20:00,20:30,53
+Sunday,Host/Hostess,20:30,21:00,58
+Sunday,Host/Hostess,21:00,21:30,61
+Sunday,Host/Hostess,21:30,22:00,66
+Sunday,Host/Hostess,22:00,22:30,71
+Sunday,Window Cleaner,09:30,10:00,31
+Sunday,Window Cleaner,10:00,10:30,30
+Sunday,Window Cleaner,10:30,11:00,32
+Sunday,Window Cleaner,11:00,11:30,34
+Sunday,Window Cleaner,11:30,12:00,29
+Sunday,Window Cleaner,12:00,12:30,24
+Sunday,Window Cleaner,12:30,13:00,24
+Sunday,Window Cleaner,13:00,13:30,28
+Sunday,Window Cleaner,13:30,14:00,32
+Sunday,Window Cleaner,14:00,14:30,27
+Sunday,Window Cleaner,14:30,15:00,23
+Sunday,Window Cleaner,15:00,15:30,27
+Sunday,Window Cleaner,15:30,16:00,24
+Sunday,Window Cleaner,16:00,16:30,20
+Sunday,Window Cleaner,16:30,17:00,19
+Sunday,Window Cleaner,17:00,17:30,20
+Sunday,Window Cleaner,17:30,18:00,17
+Sunday,Window Cleaner,18:00,18:30,16
+Sunday,Window Cleaner,18:30,19:00,13
+Sunday,Window Cleaner,19:00,19:30,17
+Sunday,Window Cleaner,19:30,20:00,19
+Sunday,Window Cleaner,20:00,20:30,16
+Sunday,Window Cleaner,20:30,21:00,12
+Sunday,Window Cleaner,21:00,21:30,7
+Sunday,Window Cleaner,21:30,22:00,2
+Sunday,Porter,08:00,08:30,27
+Sunday,Porter,08:30,09:00,32
+Sunday,Porter,09:00,09:30,33
+Sunday,Porter,09:30,10:00,29
+Sunday,Porter,10:00,10:30,28
+Sunday,Porter,10:30,11:00,26
+Sunday,Porter,11:00,11:30,27
+Sunday,Porter,11:30,12:00,26
+Sunday,Porter,12:00,12:30,30
+Sunday,Porter,12:30,13:00,34
+Sunday,Porter,13:00,13:30,34
+Sunday,Porter,13:30,14:00,39
+Sunday,Porter,14:00,14:30,42
+Sunday,Porter,14:30,15:00,39
+Sunday,Porter,15:00,15:30,43
+Sunday,Porter,15:30,16:00,40
+Sunday,Porter,16:00,16:30,41
+Sunday,Porter,16:30,17:00,41
+Sunday,Porter,17:00,17:30,36
+Sunday,Porter,17:30,18:00,40
+Sunday,Porter,18:00,18:30,40
+Sunday,Porter,18:30,19:00,43
+Sunday,Porter,19:00,19:30,48
+Sunday,Porter,19:30,20:00,44
+Sunday,Porter,20:00,20:30,49
+Sunday,Porter,20:30,21:00,52
+Sunday,Waitstaff,09:00,09:30,4
+Sunday,Waitstaff,09:30,10:00,7
+Sunday,Waitstaff,10:00,10:30,11
+Sunday,Waitstaff,10:30,11:00,10
+Sunday,Waitstaff,11:00,11:30,5
+Sunday,Waitstaff,11:30,12:00,6
+Sunday,Waitstaff,12:00,12:30,8
+Sunday,Waitstaff,12:30,13:00,3
+Sunday,Waitstaff,13:00,13:30,4
+Sunday,Waitstaff,13:30,14:00,9
+Sunday,Waitstaff,14:00,14:30,12
+Sunday,Waitstaff,14:30,15:00,8
+Sunday,Waitstaff,15:00,15:30,3
+Sunday,Waitstaff,15:30,16:00,6
+Sunday,Waitstaff,16:00,16:30,9
+Sunday,Waitstaff,16:30,17:00,10
+Sunday,Waitstaff,17:00,17:30,7
+Sunday,Waitstaff,17:30,18:00,9
+Sunday,Waitstaff,18:00,18:30,11
+Sunday,Waitstaff,18:30,19:00,16
+Sunday,Waitstaff,19:00,19:30,14
+Monday,Gardener,04:00,04:30,56
+Monday,Gardener,04:30,05:00,53
+Monday,Gardener,05:00,05:30,52
+Monday,Gardener,05:30,06:00,54
+Monday,Gardener,06:00,06:30,59
+Monday,Gardener,06:30,07:00,63
+Monday,Gardener,07:00,07:30,66
+Monday,Gardener,07:30,08:00,71
+Monday,Gardener,08:00,08:30,68
+Monday,Gardener,08:30,09:00,63
+Monday,Gardener,09:00,09:30,59
+Monday,Gardener,09:30,10:00,59
+Monday,Gardener,10:00,10:30,62
+Monday,Gardener,10:30,11:00,58
+Monday,Gardener,11:00,11:30,61
+Monday,Gardener,11:30,12:00,65
+Monday,Gardener,12:00,12:30,62
+Monday,Gardener,12:30,13:00,58
+Monday,Gardener,13:00,13:30,60
+Monday,Gardener,13:30,14:00,61
+Monday,Gardener,14:00,14:30,58
+Monday,Gardener,14:30,15:00,53
+Monday,Gardener,15:00,15:30,54
+Monday,Gardener,15:30,16:00,55
+Monday,Gardener,16:00,16:30,51
+Monday,Gardener,16:30,17:00,47
+Monday,Gardener,17:00,17:30,49
+Monday,Gardener,17:30,18:00,50
+Monday,Gardener,18:00,18:30,50
+Monday,Gardener,18:30,19:00,54
+Monday,Gardener,19:00,19:30,51
+Monday,Gardener,19:30,20:00,54
+Monday,Gardener,20:00,20:30,54
+Monday,Gardener,20:30,21:00,56
+Monday,Gardener,21:00,21:30,57
+Monday,Gardener,21:30,22:00,54
+Monday,Gardener,22:00,22:30,53
+Monday,Gardener,22:30,23:00,55
+Monday,Host/Hostess,05:30,06:00,2
+Monday,Host/Hostess,06:00,06:30,1
+Monday,Host/Hostess,06:30,07:00,6
+Monday,Host/Hostess,07:00,07:30,3
+Monday,Host/Hostess,07:30,08:00,4
+Monday,Host/Hostess,08:00,08:30,7
+Monday,Host/Hostess,08:30,09:00,7
+Monday,Host/Hostess,09:00,09:30,9
+Monday,Host/Hostess,09:30,10:00,8
+Monday,Host/Hostess,10:00,10:30,9
+Monday,Host/Hostess,10:30,11:00,13
+Monday,Host/Hostess,11:00,11:30,12
+Monday,Host/Hostess,11:30,12:00,12
+Monday,Host/Hostess,12:00,12:30,14
+Monday,Host/Hostess,12:30,13:00,13
+Monday,Host/Hostess,13:00,13:30,18
+Monday,Host/Hostess,13:30,14:00,13
+Monday,Host/Hostess,14:00,14:30,10
+Monday,Host/Hostess,14:30,15:00,8
+Monday,Host/Hostess,15:00,15:30,12
+Monday,Host/Hostess,15:30,16:00,13
+Monday,Host/Hostess,16:00,16:30,12
+Monday,Host/Hostess,16:30,17:00,12
+Monday,Host/Hostess,17:00,17:30,16
+Monday,Host/Hostess,17:30,18:00,16
+Monday,Host/Hostess,18:00,18:30,21
+Monday,Host/Hostess,18:30,19:00,24
+Monday,Host/Hostess,19:00,19:30,29
+Monday,Host/Hostess,19:30,20:00,26
+Monday,Host/Hostess,20:00,20:30,23
+Monday,Window Cleaner,11:00,11:30,39
+Monday,Window Cleaner,11:30,12:00,36
+Monday,Window Cleaner,12:00,12:30,40
+Monday,Window Cleaner,12:30,13:00,40
+Monday,Window Cleaner,13:00,13:30,37
+Monday,Window Cleaner,13:30,14:00,37
+Monday,Window Cleaner,14:00,14:30,42
+Monday,Window Cleaner,14:30,15:00,38
+Monday,Window Cleaner,15:00,15:30,41
+Monday,Window Cleaner,15:30,16:00,40
+Monday,Window Cleaner,16:00,16:30,43
+Monday,Window Cleaner,16:30,17:00,44
+Monday,Window Cleaner,17:00,17:30,40
+Monday,Window Cleaner,17:30,18:00,41
+Monday,Window Cleaner,18:00,18:30,38
+Monday,Window Cleaner,18:30,19:00,33
+Monday,Window Cleaner,19:00,19:30,35
+Monday,Window Cleaner,19:30,20:00,33
+Monday,Window Cleaner,20:00,20:30,37
+Monday,Window Cleaner,20:30,21:00,41
+Monday,Window Cleaner,21:00,21:30,37
+Monday,Window Cleaner,21:30,22:00,32
+Monday,Porter,07:30,08:00,38
+Monday,Porter,08:00,08:30,42
+Monday,Porter,08:30,09:00,45
+Monday,Porter,09:00,09:30,45
+Monday,Porter,09:30,10:00,43
+Monday,Porter,10:00,10:30,45
+Monday,Porter,10:30,11:00,42
+Monday,Porter,11:00,11:30,39
+Monday,Porter,11:30,12:00,35
+Monday,Porter,12:00,12:30,35
+Monday,Porter,12:30,13:00,31
+Monday,Porter,13:00,13:30,26
+Monday,Porter,13:30,14:00,27
+Monday,Porter,14:00,14:30,29
+Monday,Porter,14:30,15:00,30
+Monday,Porter,15:00,15:30,25
+Monday,Porter,15:30,16:00,28
+Monday,Porter,16:00,16:30,26
+Monday,Porter,16:30,17:00,23
+Monday,Porter,17:00,17:30,24
+Monday,Waitstaff,03:00,03:30,52
+Monday,Waitstaff,03:30,04:00,55
+Monday,Waitstaff,04:00,04:30,54
+Monday,Waitstaff,04:30,05:00,54
+Monday,Waitstaff,05:00,05:30,50
+Monday,Waitstaff,05:30,06:00,52
+Monday,Waitstaff,06:00,06:30,54
+Monday,Waitstaff,06:30,07:00,51
+Monday,Waitstaff,07:00,07:30,48
+Monday,Waitstaff,07:30,08:00,45
+Monday,Waitstaff,08:00,08:30,44
+Monday,Waitstaff,08:30,09:00,41
+Monday,Waitstaff,09:00,09:30,38
+Monday,Waitstaff,09:30,10:00,39
+Monday,Waitstaff,10:00,10:30,43
+Monday,Waitstaff,10:30,11:00,44
+Monday,Waitstaff,11:00,11:30,48
+Monday,Waitstaff,11:30,12:00,47
+Monday,Waitstaff,12:00,12:30,46
+Monday,Waitstaff,12:30,13:00,50
+Monday,Waitstaff,13:00,13:30,49
+Monday,Waitstaff,13:30,14:00,44
+Monday,Waitstaff,14:00,14:30,46
+Monday,Waitstaff,14:30,15:00,45
+Tuesday,Gardener,09:00,09:30,17
+Tuesday,Gardener,09:30,10:00,18
+Tuesday,Gardener,10:00,10:30,14
+Tuesday,Gardener,10:30,11:00,14
+Tuesday,Gardener,11:00,11:30,16
+Tuesday,Gardener,11:30,12:00,18
+Tuesday,Gardener,12:00,12:30,16
+Tuesday,Gardener,12:30,13:00,17
+Tuesday,Gardener,13:00,13:30,18
+Tuesday,Gardener,13:30,14:00,13
+Tuesday,Gardener,14:00,14:30,11
+Tuesday,Gardener,14:30,15:00,10
+Tuesday,Gardener,15:00,15:30,7
+Tuesday,Gardener,15:30,16:00,6
+Tuesday,Gardener,16:00,16:30,3
+Tuesday,Gardener,16:30,17:00,1
+Tuesday,Gardener,17:00,17:30,2
+Tuesday,Gardener,17:30,18:00,1
+Tuesday,Gardener,18:00,18:30,1
+Tuesday,Gardener,18:30,19:00,5
+Tuesday,Gardener,19:00,19:30,5
+Tuesday,Gardener,19:30,20:00,2
+Tuesday,Host/Hostess,08:00,08:30,2
+Tuesday,Host/Hostess,08:30,09:00,1
+Tuesday,Host/Hostess,09:00,09:30,1
+Tuesday,Host/Hostess,09:30,10:00,5
+Tuesday,Host/Hostess,10:00,10:30,5
+Tuesday,Host/Hostess,10:30,11:00,9
+Tuesday,Host/Hostess,11:00,11:30,8
+Tuesday,Host/Hostess,11:30,12:00,8
+Tuesday,Host/Hostess,12:00,12:30,7
+Tuesday,Host/Hostess,12:30,13:00,11
+Tuesday,Host/Hostess,13:00,13:30,8
+Tuesday,Host/Hostess,13:30,14:00,10
+Tuesday,Host/Hostess,14:00,14:30,9
+Tuesday,Host/Hostess,14:30,15:00,12
+Tuesday,Host/Hostess,15:00,15:30,7
+Tuesday,Host/Hostess,15:30,16:00,8
+Tuesday,Host/Hostess,16:00,16:30,10
+Tuesday,Host/Hostess,16:30,17:00,15
+Tuesday,Host/Hostess,17:00,17:30,20
+Tuesday,Host/Hostess,17:30,18:00,24
+Tuesday,Host/Hostess,18:00,18:30,21
+Tuesday,Host/Hostess,18:30,19:00,17
+Tuesday,Window Cleaner,11:00,11:30,39
+Tuesday,Window Cleaner,11:30,12:00,40
+Tuesday,Window Cleaner,12:00,12:30,45
+Tuesday,Window Cleaner,12:30,13:00,45
+Tuesday,Window Cleaner,13:00,13:30,42
+Tuesday,Window Cleaner,13:30,14:00,47
+Tuesday,Window Cleaner,14:00,14:30,49
+Tuesday,Window Cleaner,14:30,15:00,45
+Tuesday,Window Cleaner,15:00,15:30,48
+Tuesday,Window Cleaner,15:30,16:00,52
+Tuesday,Window Cleaner,16:00,16:30,47
+Tuesday,Window Cleaner,16:30,17:00,49
+Tuesday,Window Cleaner,17:00,17:30,47
+Tuesday,Window Cleaner,17:30,18:00,47
+Tuesday,Window Cleaner,18:00,18:30,47
+Tuesday,Window Cleaner,18:30,19:00,42
+Tuesday,Window Cleaner,19:00,19:30,47
+Tuesday,Window Cleaner,19:30,20:00,51
+Tuesday,Window Cleaner,20:00,20:30,56
+Tuesday,Window Cleaner,20:30,21:00,61
+Tuesday,Window Cleaner,21:00,21:30,63
+Tuesday,Window Cleaner,21:30,22:00,68
+Tuesday,Window Cleaner,22:00,22:30,65
+Tuesday,Porter,02:30,03:00,48
+Tuesday,Porter,03:00,03:30,44
+Tuesday,Porter,03:30,04:00,42
+Tuesday,Porter,04:00,04:30,37
+Tuesday,Porter,04:30,05:00,42
+Tuesday,Porter,05:00,05:30,40
+Tuesday,Porter,05:30,06:00,35
+Tuesday,Porter,06:00,06:30,33
+Tuesday,Porter,06:30,07:00,38
+Tuesday,Porter,07:00,07:30,37
+Tuesday,Porter,07:30,08:00,39
+Tuesday,Porter,08:00,08:30,41
+Tuesday,Porter,08:30,09:00,43
+Tuesday,Porter,09:00,09:30,43
+Tuesday,Porter,09:30,10:00,44
+Tuesday,Porter,10:00,10:30,42
+Tuesday,Porter,10:30,11:00,37
+Tuesday,Porter,11:00,11:30,38
+Tuesday,Porter,11:30,12:00,42
+Tuesday,Porter,12:00,12:30,46
+Tuesday,Porter,12:30,13:00,44
+Tuesday,Porter,13:00,13:30,39
+Tuesday,Porter,13:30,14:00,39
+Tuesday,Porter,14:00,14:30,37
+Tuesday,Porter,14:30,15:00,34
+Tuesday,Porter,15:00,15:30,37
+Tuesday,Porter,15:30,16:00,37
+Tuesday,Porter,16:00,16:30,40
+Tuesday,Porter,16:30,17:00,37
+Tuesday,Porter,17:00,17:30,40
+Tuesday,Porter,17:30,18:00,35
+Tuesday,Porter,18:00,18:30,40
+Tuesday,Porter,18:30,19:00,41
+Tuesday,Waitstaff,03:30,04:00,41
+Tuesday,Waitstaff,04:00,04:30,38
+Tuesday,Waitstaff,04:30,05:00,37
+Tuesday,Waitstaff,05:00,05:30,41
+Tuesday,Waitstaff,05:30,06:00,38
+Tuesday,Waitstaff,06:00,06:30,38
+Tuesday,Waitstaff,06:30,07:00,43
+Tuesday,Waitstaff,07:00,07:30,47
+Tuesday,Waitstaff,07:30,08:00,45
+Tuesday,Waitstaff,08:00,08:30,44
+Tuesday,Waitstaff,08:30,09:00,42
+Tuesday,Waitstaff,09:00,09:30,43
+Tuesday,Waitstaff,09:30,10:00,38
+Tuesday,Waitstaff,10:00,10:30,38
+Tuesday,Waitstaff,10:30,11:00,34
+Tuesday,Waitstaff,11:00,11:30,33
+Tuesday,Waitstaff,11:30,12:00,31
+Tuesday,Waitstaff,12:00,12:30,29
+Tuesday,Waitstaff,12:30,13:00,32
+Tuesday,Waitstaff,13:00,13:30,34
+Tuesday,Waitstaff,13:30,14:00,31
+Wednesday,Gardener,07:30,08:00,24
+Wednesday,Gardener,08:00,08:30,26
+Wednesday,Gardener,08:30,09:00,27
+Wednesday,Gardener,09:00,09:30,30
+Wednesday,Gardener,09:30,10:00,28
+Wednesday,Gardener,10:00,10:30,26
+Wednesday,Gardener,10:30,11:00,28
+Wednesday,Gardener,11:00,11:30,27
+Wednesday,Gardener,11:30,12:00,23
+Wednesday,Gardener,12:00,12:30,26
+Wednesday,Gardener,12:30,13:00,22
+Wednesday,Gardener,13:00,13:30,21
+Wednesday,Gardener,13:30,14:00,25
+Wednesday,Gardener,14:00,14:30,24
+Wednesday,Gardener,14:30,15:00,23
+Wednesday,Gardener,15:00,15:30,22
+Wednesday,Gardener,15:30,16:00,27
+Wednesday,Gardener,16:00,16:30,23
+Wednesday,Gardener,16:30,17:00,21
+Wednesday,Gardener,17:00,17:30,25
+Wednesday,Gardener,17:30,18:00,26
+Wednesday,Gardener,18:00,18:30,24
+Wednesday,Gardener,18:30,19:00,19
+Wednesday,Gardener,19:00,19:30,17
+Wednesday,Gardener,19:30,20:00,16
+Wednesday,Gardener,20:00,20:30,12
+Wednesday,Gardener,20:30,21:00,13
+Wednesday,Gardener,21:00,21:30,9
+Wednesday,Gardener,21:30,22:00,8
+Wednesday,Gardener,22:00,22:30,5
+Wednesday,Host/Hostess,06:00,06:30,6
+Wednesday,Host/Hostess,06:30,07:00,9
+Wednesday,Host/Hostess,07:00,07:30,6
+Wednesday,Host/Hostess,07:30,08:00,1
+Wednesday,Host/Hostess,08:00,08:30,4
+Wednesday,Host/Hostess,08:30,09:00,5
+Wednesday,Host/Hostess,09:00,09:30,2
+Wednesday,Host/Hostess,09:30,10:00,1
+Wednesday,Host/Hostess,10:00,10:30,4
+Wednesday,Host/Hostess,10:30,11:00,6
+Wednesday,Host/Hostess,11:00,11:30,9
+Wednesday,Host/Hostess,11:30,12:00,8
+Wednesday,Host/Hostess,12:00,12:30,9
+Wednesday,Host/Hostess,12:30,13:00,8
+Wednesday,Host/Hostess,13:00,13:30,5
+Wednesday,Host/Hostess,13:30,14:00,3
+Wednesday,Host/Hostess,14:00,14:30,2
+Wednesday,Host/Hostess,14:30,15:00,7
+Wednesday,Host/Hostess,15:00,15:30,11
+Wednesday,Host/Hostess,15:30,16:00,14
+Wednesday,Host/Hostess,16:00,16:30,17
+Wednesday,Host/Hostess,16:30,17:00,17
+Wednesday,Host/Hostess,17:00,17:30,22
+Wednesday,Host/Hostess,17:30,18:00,23
+Wednesday,Host/Hostess,18:00,18:30,25
+Wednesday,Host/Hostess,18:30,19:00,21
+Wednesday,Host/Hostess,19:00,19:30,19
+Wednesday,Window Cleaner,08:00,08:30,20
+Wednesday,Window Cleaner,08:30,09:00,15
+Wednesday,Window Cleaner,09:00,09:30,16
+Wednesday,Window Cleaner,09:30,10:00,11
+Wednesday,Window Cleaner,10:00,10:30,11
+Wednesday,Window Cleaner,10:30,11:00,9
+Wednesday,Window Cleaner,11:00,11:30,5
+Wednesday,Window Cleaner,11:30,12:00,10
+Wednesday,Window Cleaner,12:00,12:30,5
+Wednesday,Window Cleaner,12:30,13:00,1
+Wednesday,Window Cleaner,13:00,13:30,4
+Wednesday,Window Cleaner,13:30,14:00,2
+Wednesday,Window Cleaner,14:00,14:30,1
+Wednesday,Window Cleaner,14:30,15:00,1
+Wednesday,Window Cleaner,15:00,15:30,2
+Wednesday,Window Cleaner,15:30,16:00,6
+Wednesday,Window Cleaner,16:00,16:30,6
+Wednesday,Window Cleaner,16:30,17:00,8
+Wednesday,Window Cleaner,17:00,17:30,4
+Wednesday,Window Cleaner,17:30,18:00,9
+Wednesday,Window Cleaner,18:00,18:30,8
+Wednesday,Window Cleaner,18:30,19:00,12
+Wednesday,Porter,13:00,13:30,38
+Wednesday,Porter,13:30,14:00,38
+Wednesday,Porter,14:00,14:30,40
+Wednesday,Porter,14:30,15:00,40
+Wednesday,Porter,15:00,15:30,43
+Wednesday,Porter,15:30,16:00,39
+Wednesday,Porter,16:00,16:30,43
+Wednesday,Porter,16:30,17:00,48
+Wednesday,Porter,17:00,17:30,45
+Wednesday,Porter,17:30,18:00,43
+Wednesday,Porter,18:00,18:30,38
+Wednesday,Porter,18:30,19:00,37
+Wednesday,Porter,19:00,19:30,37
+Wednesday,Porter,19:30,20:00,32
+Wednesday,Porter,20:00,20:30,27
+Wednesday,Porter,20:30,21:00,25
+Wednesday,Porter,21:00,21:30,20
+Wednesday,Porter,21:30,22:00,24
+Wednesday,Porter,22:00,22:30,25
+Wednesday,Porter,22:30,23:00,27
+Wednesday,Porter,23:00,23:30,25
+Wednesday,Porter,23:30,24:00,27
+Wednesday,Waitstaff,02:00,02:30,32
+Wednesday,Waitstaff,02:30,03:00,31
+Wednesday,Waitstaff,03:00,03:30,28
+Wednesday,Waitstaff,03:30,04:00,28
+Wednesday,Waitstaff,04:00,04:30,30
+Wednesday,Waitstaff,04:30,05:00,33
+Wednesday,Waitstaff,05:00,05:30,34
+Wednesday,Waitstaff,05:30,06:00,30
+Wednesday,Waitstaff,06:00,06:30,27
+Wednesday,Waitstaff,06:30,07:00,28
+Wednesday,Waitstaff,07:00,07:30,32
+Wednesday,Waitstaff,07:30,08:00,30
+Wednesday,Waitstaff,08:00,08:30,30
+Wednesday,Waitstaff,08:30,09:00,32
+Wednesday,Waitstaff,09:00,09:30,32
+Wednesday,Waitstaff,09:30,10:00,31
+Wednesday,Waitstaff,10:00,10:30,34
+Wednesday,Waitstaff,10:30,11:00,33
+Wednesday,Waitstaff,11:00,11:30,30
+Wednesday,Waitstaff,11:30,12:00,35
+Wednesday,Waitstaff,12:00,12:30,32
+Wednesday,Waitstaff,12:30,13:00,32
+Wednesday,Waitstaff,13:00,13:30,37
+Wednesday,Waitstaff,13:30,14:00,33
+Wednesday,Waitstaff,14:00,14:30,28
+Wednesday,Waitstaff,14:30,15:00,32
+Wednesday,Waitstaff,15:00,15:30,28
+Wednesday,Waitstaff,15:30,16:00,27
+Wednesday,Waitstaff,16:00,16:30,30
+Wednesday,Waitstaff,16:30,17:00,31
+Wednesday,Waitstaff,17:00,17:30,33
+Wednesday,Waitstaff,17:30,18:00,34
+Wednesday,Waitstaff,18:00,18:30,30
+Wednesday,Waitstaff,18:30,19:00,31
+Thursday,Gardener,13:30,14:00,48
+Thursday,Gardener,14:00,14:30,44
+Thursday,Gardener,14:30,15:00,45
+Thursday,Gardener,15:00,15:30,48
+Thursday,Gardener,15:30,16:00,48
+Thursday,Gardener,16:00,16:30,47
+Thursday,Gardener,16:30,17:00,48
+Thursday,Gardener,17:00,17:30,50
+Thursday,Gardener,17:30,18:00,45
+Thursday,Gardener,18:00,18:30,49
+Thursday,Gardener,18:30,19:00,44
+Thursday,Gardener,19:00,19:30,45
+Thursday,Gardener,19:30,20:00,49
+Thursday,Gardener,20:00,20:30,51
+Thursday,Gardener,20:30,21:00,49
+Thursday,Gardener,21:00,21:30,54
+Thursday,Gardener,21:30,22:00,55
+Thursday,Gardener,22:00,22:30,52
+Thursday,Gardener,22:30,23:00,50
+Thursday,Gardener,23:00,23:30,45
+Thursday,Host/Hostess,07:30,08:00,24
+Thursday,Host/Hostess,08:00,08:30,19
+Thursday,Host/Hostess,08:30,09:00,18
+Thursday,Host/Hostess,09:00,09:30,23
+Thursday,Host/Hostess,09:30,10:00,26
+Thursday,Host/Hostess,10:00,10:30,24
+Thursday,Host/Hostess,10:30,11:00,21
+Thursday,Host/Hostess,11:00,11:30,18
+Thursday,Host/Hostess,11:30,12:00,15
+Thursday,Host/Hostess,12:00,12:30,19
+Thursday,Host/Hostess,12:30,13:00,20
+Thursday,Host/Hostess,13:00,13:30,23
+Thursday,Host/Hostess,13:30,14:00,28
+Thursday,Host/Hostess,14:00,14:30,23
+Thursday,Host/Hostess,14:30,15:00,24
+Thursday,Host/Hostess,15:00,15:30,28
+Thursday,Host/Hostess,15:30,16:00,30
+Thursday,Host/Hostess,16:00,16:30,25
+Thursday,Host/Hostess,16:30,17:00,29
+Thursday,Host/Hostess,17:00,17:30,24
+Thursday,Host/Hostess,17:30,18:00,21
+Thursday,Host/Hostess,18:00,18:30,21
+Thursday,Host/Hostess,18:30,19:00,19
+Thursday,Host/Hostess,19:00,19:30,18
+Thursday,Host/Hostess,19:30,20:00,20
+Thursday,Host/Hostess,20:00,20:30,22
+Thursday,Window Cleaner,01:30,02:00,59
+Thursday,Window Cleaner,02:00,02:30,62
+Thursday,Window Cleaner,02:30,03:00,66
+Thursday,Window Cleaner,03:00,03:30,66
+Thursday,Window Cleaner,03:30,04:00,66
+Thursday,Window Cleaner,04:00,04:30,67
+Thursday,Window Cleaner,04:30,05:00,70
+Thursday,Window Cleaner,05:00,05:30,75
+Thursday,Window Cleaner,05:30,06:00,79
+Thursday,Window Cleaner,06:00,06:30,82
+Thursday,Window Cleaner,06:30,07:00,87
+Thursday,Window Cleaner,07:00,07:30,89
+Thursday,Window Cleaner,07:30,08:00,85
+Thursday,Window Cleaner,08:00,08:30,82
+Thursday,Window Cleaner,08:30,09:00,82
+Thursday,Window Cleaner,09:00,09:30,80
+Thursday,Window Cleaner,09:30,10:00,83
+Thursday,Window Cleaner,10:00,10:30,78
+Thursday,Window Cleaner,10:30,11:00,79
+Thursday,Window Cleaner,11:00,11:30,78
+Thursday,Window Cleaner,11:30,12:00,77
+Thursday,Window Cleaner,12:00,12:30,79
+Thursday,Window Cleaner,12:30,13:00,75
+Thursday,Window Cleaner,13:00,13:30,79
+Thursday,Window Cleaner,13:30,14:00,80
+Thursday,Window Cleaner,14:00,14:30,75
+Thursday,Window Cleaner,14:30,15:00,75
+Thursday,Window Cleaner,15:00,15:30,77
+Thursday,Window Cleaner,15:30,16:00,72
+Thursday,Window Cleaner,16:00,16:30,75
+Thursday,Window Cleaner,16:30,17:00,70
+Thursday,Window Cleaner,17:00,17:30,73
+Thursday,Window Cleaner,17:30,18:00,70
+Thursday,Window Cleaner,18:00,18:30,73
+Thursday,Window Cleaner,18:30,19:00,71
+Thursday,Window Cleaner,19:00,19:30,67
+Thursday,Window Cleaner,19:30,20:00,67
+Thursday,Window Cleaner,20:00,20:30,69
+Thursday,Window Cleaner,20:30,21:00,74
+Thursday,Window Cleaner,21:00,21:30,78
+Thursday,Window Cleaner,21:30,22:00,79
+Thursday,Porter,07:00,07:30,45
+Thursday,Porter,07:30,08:00,40
+Thursday,Porter,08:00,08:30,42
+Thursday,Porter,08:30,09:00,39
+Thursday,Porter,09:00,09:30,44
+Thursday,Porter,09:30,10:00,46
+Thursday,Porter,10:00,10:30,44
+Thursday,Porter,10:30,11:00,42
+Thursday,Porter,11:00,11:30,47
+Thursday,Porter,11:30,12:00,50
+Thursday,Porter,12:00,12:30,49
+Thursday,Porter,12:30,13:00,49
+Thursday,Porter,13:00,13:30,51
+Thursday,Porter,13:30,14:00,46
+Thursday,Porter,14:00,14:30,42
+Thursday,Porter,14:30,15:00,45
+Thursday,Porter,15:00,15:30,44
+Thursday,Porter,15:30,16:00,41
+Thursday,Porter,16:00,16:30,42
+Thursday,Porter,16:30,17:00,39
+Thursday,Porter,17:00,17:30,39
+Thursday,Porter,17:30,18:00,40
+Thursday,Porter,18:00,18:30,35
+Thursday,Porter,18:30,19:00,30
+Thursday,Porter,19:00,19:30,29
+Thursday,Porter,19:30,20:00,25
+Thursday,Porter,20:00,20:30,21
+Thursday,Porter,20:30,21:00,24
+Thursday,Porter,21:00,21:30,20
+Thursday,Porter,21:30,22:00,21
+Thursday,Waitstaff,14:00,14:30,16
+Thursday,Waitstaff,14:30,15:00,11
+Thursday,Waitstaff,15:00,15:30,10
+Thursday,Waitstaff,15:30,16:00,8
+Thursday,Waitstaff,16:00,16:30,4
+Thursday,Waitstaff,16:30,17:00,2
+Thursday,Waitstaff,17:00,17:30,1
+Thursday,Waitstaff,17:30,18:00,1
+Thursday,Waitstaff,18:00,18:30,1
+Thursday,Waitstaff,18:30,19:00,6
+Thursday,Waitstaff,19:00,19:30,9
+Thursday,Waitstaff,19:30,20:00,6
+Thursday,Waitstaff,20:00,20:30,11
+Thursday,Waitstaff,20:30,21:00,15
+Thursday,Waitstaff,21:00,21:30,12
+Thursday,Waitstaff,21:30,22:00,12
+Thursday,Waitstaff,22:00,22:30,7
+Thursday,Waitstaff,22:30,23:00,8
+Thursday,Waitstaff,23:00,23:30,8
+Thursday,Waitstaff,23:30,24:00,11
+Friday,Gardener,09:00,09:30,54
+Friday,Gardener,09:30,10:00,53
+Friday,Gardener,10:00,10:30,58
+Friday,Gardener,10:30,11:00,59
+Friday,Gardener,11:00,11:30,56
+Friday,Gardener,11:30,12:00,56
+Friday,Gardener,12:00,12:30,56
+Friday,Gardener,12:30,13:00,56
+Friday,Gardener,13:00,13:30,52
+Friday,Gardener,13:30,14:00,48
+Friday,Gardener,14:00,14:30,52
+Friday,Gardener,14:30,15:00,56
+Friday,Gardener,15:00,15:30,53
+Friday,Gardener,15:30,16:00,49
+Friday,Gardener,16:00,16:30,48
+Friday,Gardener,16:30,17:00,50
+Friday,Gardener,17:00,17:30,54
+Friday,Gardener,17:30,18:00,56
+Friday,Gardener,18:00,18:30,59
+Friday,Gardener,18:30,19:00,57
+Friday,Gardener,19:00,19:30,61
+Friday,Gardener,19:30,20:00,59
+Friday,Host/Hostess,00:30,01:00,8
+Friday,Host/Hostess,01:00,01:30,3
+Friday,Host/Hostess,01:30,02:00,1
+Friday,Host/Hostess,02:00,02:30,1
+Friday,Host/Hostess,02:30,03:00,6
+Friday,Host/Hostess,03:00,03:30,5
+Friday,Host/Hostess,03:30,04:00,2
+Friday,Host/Hostess,04:00,04:30,1
+Friday,Host/Hostess,04:30,05:00,2
+Friday,Host/Hostess,05:00,05:30,4
+Friday,Host/Hostess,05:30,06:00,1
+Friday,Host/Hostess,06:00,06:30,1
+Friday,Host/Hostess,06:30,07:00,3
+Friday,Host/Hostess,07:00,07:30,1
+Friday,Host/Hostess,07:30,08:00,5
+Friday,Host/Hostess,08:00,08:30,9
+Friday,Host/Hostess,08:30,09:00,4
+Friday,Host/Hostess,09:00,09:30,7
+Friday,Host/Hostess,09:30,10:00,7
+Friday,Host/Hostess,10:00,10:30,2
+Friday,Host/Hostess,10:30,11:00,2
+Friday,Host/Hostess,11:00,11:30,2
+Friday,Host/Hostess,11:30,12:00,6
+Friday,Host/Hostess,12:00,12:30,5
+Friday,Host/Hostess,12:30,13:00,5
+Friday,Host/Hostess,13:00,13:30,1
+Friday,Host/Hostess,13:30,14:00,1
+Friday,Host/Hostess,14:00,14:30,2
+Friday,Host/Hostess,14:30,15:00,1
+Friday,Host/Hostess,15:00,15:30,6
+Friday,Host/Hostess,15:30,16:00,3
+Friday,Host/Hostess,16:00,16:30,8
+Friday,Host/Hostess,16:30,17:00,13
+Friday,Host/Hostess,17:00,17:30,9
+Friday,Host/Hostess,17:30,18:00,6
+Friday,Host/Hostess,18:00,18:30,5
+Friday,Host/Hostess,18:30,19:00,3
+Friday,Host/Hostess,19:00,19:30,1
+Friday,Host/Hostess,19:30,20:00,1
+Friday,Host/Hostess,20:00,20:30,1
+Friday,Host/Hostess,20:30,21:00,6
+Friday,Host/Hostess,21:00,21:30,1
+Friday,Host/Hostess,21:30,22:00,1
+Friday,Host/Hostess,22:00,22:30,2
+Friday,Host/Hostess,22:30,23:00,6
+Friday,Host/Hostess,23:00,23:30,9
+Friday,Window Cleaner,06:30,07:00,22
+Friday,Window Cleaner,07:00,07:30,27
+Friday,Window Cleaner,07:30,08:00,22
+Friday,Window Cleaner,08:00,08:30,24
+Friday,Window Cleaner,08:30,09:00,27
+Friday,Window Cleaner,09:00,09:30,26
+Friday,Window Cleaner,09:30,10:00,23
+Friday,Window Cleaner,10:00,10:30,25
+Friday,Window Cleaner,10:30,11:00,21
+Friday,Window Cleaner,11:00,11:30,20
+Friday,Window Cleaner,11:30,12:00,24
+Friday,Window Cleaner,12:00,12:30,24
+Friday,Window Cleaner,12:30,13:00,21
+Friday,Window Cleaner,13:00,13:30,25
+Friday,Window Cleaner,13:30,14:00,26
+Friday,Window Cleaner,14:00,14:30,28
+Friday,Window Cleaner,14:30,15:00,29
+Friday,Window Cleaner,15:00,15:30,31
+Friday,Window Cleaner,15:30,16:00,32
+Friday,Window Cleaner,16:00,16:30,28
+Friday,Window Cleaner,16:30,17:00,33
+Friday,Porter,14:00,14:30,13
+Friday,Porter,14:30,15:00,9
+Friday,Porter,15:00,15:30,13
+Friday,Porter,15:30,16:00,12
+Friday,Porter,16:00,16:30,8
+Friday,Porter,16:30,17:00,10
+Friday,Porter,17:00,17:30,11
+Friday,Porter,17:30,18:00,16
+Friday,Porter,18:00,18:30,12
+Friday,Porter,18:30,19:00,12
+Friday,Porter,19:00,19:30,9
+Friday,Porter,19:30,20:00,11
+Friday,Porter,20:00,20:30,11
+Friday,Porter,20:30,21:00,8
+Friday,Porter,21:00,21:30,5
+Friday,Porter,21:30,22:00,1
+Friday,Porter,22:00,22:30,1
+Friday,Porter,22:30,23:00,4
+Friday,Porter,23:00,23:30,9
+Friday,Porter,23:30,24:00,14
+Friday,Waitstaff,09:00,09:30,47
+Friday,Waitstaff,09:30,10:00,50
+Friday,Waitstaff,10:00,10:30,48
+Friday,Waitstaff,10:30,11:00,46
+Friday,Waitstaff,11:00,11:30,49
+Friday,Waitstaff,11:30,12:00,50
+Friday,Waitstaff,12:00,12:30,55
+Friday,Waitstaff,12:30,13:00,51
+Friday,Waitstaff,13:00,13:30,49
+Friday,Waitstaff,13:30,14:00,52
+Friday,Waitstaff,14:00,14:30,57
+Friday,Waitstaff,14:30,15:00,54
+Friday,Waitstaff,15:00,15:30,49
+Friday,Waitstaff,15:30,16:00,50
+Friday,Waitstaff,16:00,16:30,54
+Friday,Waitstaff,16:30,17:00,51
+Friday,Waitstaff,17:00,17:30,48
+Friday,Waitstaff,17:30,18:00,46
+Friday,Waitstaff,18:00,18:30,42
+Friday,Waitstaff,18:30,19:00,37
+Friday,Waitstaff,19:00,19:30,34
+Friday,Waitstaff,19:30,20:00,36
+Friday,Waitstaff,20:00,20:30,35
+Friday,Waitstaff,20:30,21:00,33
+Friday,Waitstaff,21:00,21:30,28
+Friday,Waitstaff,21:30,22:00,25
+Friday,Waitstaff,22:00,22:30,20
+Saturday,Gardener,01:00,01:30,10
+Saturday,Gardener,01:30,02:00,13
+Saturday,Gardener,02:00,02:30,10
+Saturday,Gardener,02:30,03:00,8
+Saturday,Gardener,03:00,03:30,3
+Saturday,Gardener,03:30,04:00,8
+Saturday,Gardener,04:00,04:30,10
+Saturday,Gardener,04:30,05:00,7
+Saturday,Gardener,05:00,05:30,6
+Saturday,Gardener,05:30,06:00,11
+Saturday,Gardener,06:00,06:30,8
+Saturday,Gardener,06:30,07:00,9
+Saturday,Gardener,07:00,07:30,8
+Saturday,Gardener,07:30,08:00,8
+Saturday,Gardener,08:00,08:30,8
+Saturday,Gardener,08:30,09:00,11
+Saturday,Gardener,09:00,09:30,12
+Saturday,Gardener,09:30,10:00,17
+Saturday,Gardener,10:00,10:30,19
+Saturday,Gardener,10:30,11:00,14
+Saturday,Gardener,11:00,11:30,11
+Saturday,Gardener,11:30,12:00,10
+Saturday,Gardener,12:00,12:30,15
+Saturday,Gardener,12:30,13:00,12
+Saturday,Gardener,13:00,13:30,7
+Saturday,Gardener,13:30,14:00,6
+Saturday,Gardener,14:00,14:30,1
+Saturday,Gardener,14:30,15:00,1
+Saturday,Gardener,15:00,15:30,3
+Saturday,Gardener,15:30,16:00,1
+Saturday,Gardener,16:00,16:30,4
+Saturday,Gardener,16:30,17:00,6
+Saturday,Gardener,17:00,17:30,8
+Saturday,Gardener,17:30,18:00,13
+Saturday,Gardener,18:00,18:30,11
+Saturday,Gardener,18:30,19:00,11
+Saturday,Gardener,19:00,19:30,14
+Saturday,Gardener,19:30,20:00,16
+Saturday,Gardener,20:00,20:30,11
+Saturday,Gardener,20:30,21:00,6
+Saturday,Host/Hostess,03:00,03:30,41
+Saturday,Host/Hostess,03:30,04:00,40
+Saturday,Host/Hostess,04:00,04:30,39
+Saturday,Host/Hostess,04:30,05:00,43
+Saturday,Host/Hostess,05:00,05:30,47
+Saturday,Host/Hostess,05:30,06:00,52
+Saturday,Host/Hostess,06:00,06:30,56
+Saturday,Host/Hostess,06:30,07:00,51
+Saturday,Host/Hostess,07:00,07:30,53
+Saturday,Host/Hostess,07:30,08:00,58
+Saturday,Host/Hostess,08:00,08:30,62
+Saturday,Host/Hostess,08:30,09:00,57
+Saturday,Host/Hostess,09:00,09:30,56
+Saturday,Host/Hostess,09:30,10:00,55
+Saturday,Host/Hostess,10:00,10:30,50
+Saturday,Host/Hostess,10:30,11:00,53
+Saturday,Host/Hostess,11:00,11:30,48
+Saturday,Host/Hostess,11:30,12:00,44
+Saturday,Host/Hostess,12:00,12:30,43
+Saturday,Host/Hostess,12:30,13:00,39
+Saturday,Host/Hostess,13:00,13:30,41
+Saturday,Host/Hostess,13:30,14:00,37
+Saturday,Host/Hostess,14:00,14:30,40
+Saturday,Host/Hostess,14:30,15:00,43
+Saturday,Host/Hostess,15:00,15:30,41
+Saturday,Host/Hostess,15:30,16:00,41
+Saturday,Host/Hostess,16:00,16:30,39
+Saturday,Host/Hostess,16:30,17:00,36
+Saturday,Host/Hostess,17:00,17:30,39
+Saturday,Host/Hostess,17:30,18:00,41
+Saturday,Host/Hostess,18:00,18:30,39
+Saturday,Host/Hostess,18:30,19:00,34
+Saturday,Host/Hostess,19:00,19:30,36
+Saturday,Host/Hostess,19:30,20:00,41
+Saturday,Host/Hostess,20:00,20:30,45
+Saturday,Host/Hostess,20:30,21:00,41
+Saturday,Window Cleaner,02:30,03:00,50
+Saturday,Window Cleaner,03:00,03:30,46
+Saturday,Window Cleaner,03:30,04:00,51
+Saturday,Window Cleaner,04:00,04:30,46
+Saturday,Window Cleaner,04:30,05:00,44
+Saturday,Window Cleaner,05:00,05:30,41
+Saturday,Window Cleaner,05:30,06:00,45
+Saturday,Window Cleaner,06:00,06:30,40
+Saturday,Window Cleaner,06:30,07:00,36
+Saturday,Window Cleaner,07:00,07:30,37
+Saturday,Window Cleaner,07:30,08:00,38
+Saturday,Window Cleaner,08:00,08:30,34
+Saturday,Window Cleaner,08:30,09:00,35
+Saturday,Window Cleaner,09:00,09:30,38
+Saturday,Window Cleaner,09:30,10:00,37
+Saturday,Window Cleaner,10:00,10:30,36
+Saturday,Window Cleaner,10:30,11:00,37
+Saturday,Window Cleaner,11:00,11:30,33
+Saturday,Window Cleaner,11:30,12:00,36
+Saturday,Window Cleaner,12:00,12:30,38
+Saturday,Window Cleaner,12:30,13:00,41
+Saturday,Window Cleaner,13:00,13:30,41
+Saturday,Window Cleaner,13:30,14:00,36
+Saturday,Window Cleaner,14:00,14:30,36
+Saturday,Window Cleaner,14:30,15:00,41
+Saturday,Window Cleaner,15:00,15:30,36
+Saturday,Window Cleaner,15:30,16:00,33
+Saturday,Window Cleaner,16:00,16:30,37
+Saturday,Window Cleaner,16:30,17:00,37
+Saturday,Window Cleaner,17:00,17:30,40
+Saturday,Window Cleaner,17:30,18:00,39
+Saturday,Window Cleaner,18:00,18:30,38
+Saturday,Window Cleaner,18:30,19:00,39
+Saturday,Porter,13:30,14:00,35
+Saturday,Porter,14:00,14:30,33
+Saturday,Porter,14:30,15:00,32
+Saturday,Porter,15:00,15:30,29
+Saturday,Porter,15:30,16:00,33
+Saturday,Porter,16:00,16:30,38
+Saturday,Porter,16:30,17:00,33
+Saturday,Porter,17:00,17:30,30
+Saturday,Porter,17:30,18:00,35
+Saturday,Porter,18:00,18:30,30
+Saturday,Porter,18:30,19:00,27
+Saturday,Porter,19:00,19:30,23
+Saturday,Porter,19:30,20:00,26
+Saturday,Porter,20:00,20:30,29
+Saturday,Porter,20:30,21:00,25
+Saturday,Porter,21:00,21:30,24
+Saturday,Porter,21:30,22:00,28
+Saturday,Porter,22:00,22:30,31
+Saturday,Porter,22:30,23:00,31
+Saturday,Porter,23:00,23:30,27
+Saturday,Porter,23:30,24:00,24
+Saturday,Waitstaff,10:00,10:30,41
+Saturday,Waitstaff,10:30,11:00,36
+Saturday,Waitstaff,11:00,11:30,32
+Saturday,Waitstaff,11:30,12:00,28
+Saturday,Waitstaff,12:00,12:30,24
+Saturday,Waitstaff,12:30,13:00,26
+Saturday,Waitstaff,13:00,13:30,22
+Saturday,Waitstaff,13:30,14:00,26
+Saturday,Waitstaff,14:00,14:30,23
+Saturday,Waitstaff,14:30,15:00,23
+Saturday,Waitstaff,15:00,15:30,25
+Saturday,Waitstaff,15:30,16:00,29
+Saturday,Waitstaff,16:00,16:30,29
+Saturday,Waitstaff,16:30,17:00,32
+Saturday,Waitstaff,17:00,17:30,31
+Saturday,Waitstaff,17:30,18:00,35
+Saturday,Waitstaff,18:00,18:30,38
+Saturday,Waitstaff,18:30,19:00,35
+Saturday,Waitstaff,19:00,19:30,35
+Saturday,Waitstaff,19:30,20:00,31
+Saturday,Waitstaff,20:00,20:30,35
+Saturday,Waitstaff,20:30,21:00,39
+Saturday,Waitstaff,21:00,21:30,44
+Saturday,Waitstaff,21:30,22:00,46
+Saturday,Waitstaff,22:00,22:30,43
