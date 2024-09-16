@@ -81,8 +81,6 @@ export default function EditResFile2({ initialTable, contracts, setInEdit, user,
         setIsGenerated(true)
     }, []);
 
-    useEffect(() => { console.log(linesFiltered.length) }, [linesFiltered])
-
     function getLineInfo(absuluteIndex) {
         const { overlapMsg, contractMsg } = model.getLineInfo(absuluteIndex, renderInfo.table, renderInfo.colors, shiftsInfo, contracts, shiftsPerWorkers, initialTable)
         setOverlapInfo(overlapMsg)
