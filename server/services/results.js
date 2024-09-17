@@ -363,7 +363,7 @@ const saveResults = async (results, userId) => {
         }));
 
         // Insert all shift lines at once
-        const insertedShiftLines = await ShiftLine.insertMany(shiftLinesToInsert);
+        const insertedShiftLines = await ShiftLine.create(shiftLinesToInsert);
 
         // Prepare shiftTables update in bulk
         const shiftTablesMap = {}; // Mapping of day-skill pair to shiftTable
@@ -447,7 +447,7 @@ const saveResults2 = async (results, userId) => {
     }
 
     // Insert all documents at once using insertMany
-    const insertedShiftLines = await AssignedShiftLine.insertMany(assignedShiftLines);
+    const insertedShiftLines = await AssignedShiftLine.create(assignedShiftLines);
 
     // Gather the inserted IDs for each day
     for (let shiftLine of insertedShiftLines) {

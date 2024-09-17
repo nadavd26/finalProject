@@ -38,6 +38,7 @@ const updateTable = async (tableNum, tableContent, email, googleId, userId) => {
         
         switch (tableNum) {
             case 1:
+                //Converting every line of table1 to be an object with the data the DB expects.
                 const tableLines1 = tableContent.map(lineData => ({
                     id: lineData[0],
                     name: lineData[1],
@@ -51,7 +52,7 @@ const updateTable = async (tableNum, tableContent, email, googleId, userId) => {
                 // Use insertMany to save all lines at once
                 const insertedLines1 = await TableLine1.insertMany(tableLines1);
 
-                const insertedIds1 = insertedLines1.map(line => line._id);
+                const insertedIds1 = insertedLines1.map(line => line._id); //Getting the ids of those lines in th DB.
 
                 // Update the user's table in a single operation
                 await User.findOneAndUpdate(
