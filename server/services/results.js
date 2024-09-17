@@ -7,6 +7,25 @@ const Table = require("../services/tables");
 const { getTableByUserId } = require("./user");
 const TableValidator = require("../services/tableValidator")
 const ResultsHelper = require("../services/resultsHelperFuncs")
+
+const daysOfWeek = { //Will be used to convert days to their form with the capital letter.
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday",
+    "sunday": "Sunday",
+    "Monday": "Monday",
+    "Tuesday": "Tuesday",
+    "Wednesday": "Wednesday",
+    "Thursday": "Thursday",
+    "Friday": "Friday",
+    "Saturday": "Saturday",
+    "Sunday": "Sunday"
+};
+
+
 //const fs = require('fs').promises; // Using fs.promises for async file operations
 
 //This function runs algorithm 1 and returns the results.
@@ -311,12 +330,12 @@ const deleteCurrentResults = async (userId) => {
 const deleteCurrentResults2 = async (userId) => {
 
     const user = await User.findById(userId)
-    // Going through each assigned shift table.
-    for (const assignedShiftTable of user.assignedShiftTables) {
-        //Inside each assigned shift table, going through each assigned shift line, in order to delete it.
-        for (const assignedShiftId of assignedShiftTable.assignedShifts) {
-            await AssignedShiftLine.findByIdAndDelete(assignedShiftId);
-        }
+    // Collect all assigned shift IDs
+    const assignedShiftIds = user.assignedShiftTables.flatMap(table => table.assignedShifts);
+
+    // Delete all assigned shift lines in a single operation
+    if (assignedShiftIds.length > 0) {
+        await AssignedShiftLine.deleteMany({ _id: { $in: assignedShiftIds } });
     }
     //Making the assigned shift table empty and saving it.
     user.assignedShiftTables = []
@@ -365,6 +384,7 @@ const saveResults = async (results, userId) => {
     return await ResultsHelper.transformShiftTablesToMap(user.shiftTables);
 }
 
+//This funciton gets the results of algorithm2 and saves them in the database.
 const saveResults2 = async (results, userId) => {
     await deleteCurrentResults2(userId); // Remove current results first
 
@@ -376,7 +396,7 @@ const saveResults2 = async (results, userId) => {
     for (let day in results) {
         for (let entry of results[day]) {
             assignedShiftLines.push({
-                day: entry[0],
+                day: day,
                 skill: entry[1],
                 startTime: entry[2],
                 finishTime: entry[3],
@@ -398,11 +418,12 @@ const saveResults2 = async (results, userId) => {
 
     // Gather the inserted IDs for each day
     for (let shiftLine of insertedShiftLines) {
-        assignedShiftIdsByDay[shiftLine.day].push(shiftLine._id);
+        assignedShiftIdsByDay[daysOfWeek[shiftLine.day]].push(shiftLine._id);
     }
 
     // Update the user's assignedShiftTables in bulk
     for (let day in assignedShiftIdsByDay) {
+        console.log(day)
         const existingAssignedShiftTable = user.assignedShiftTables.find(table => table.day === day);
         if (existingAssignedShiftTable) {
             // Append the new shift IDs to the existing table for that day
@@ -423,44 +444,6 @@ const saveResults2 = async (results, userId) => {
     await TableValidator.setTableBit(userId, 1, false);
     await TableValidator.setTableBit(userId, 4, false);
 }
-
-
-//This funciton gets the results of algorithm2 and saves them in the database.
-/*const saveResults2 = async (results, userId) => {
-
-    await deleteCurrentResults2(userId)
-    const user = await User.findById(userId)
-    const assignedShiftLines = [];
-    for (let day in results) {
-        for (let entry of results[day]) {
-            let newAssignedShiftLine = new AssignedShiftLine({
-                day: entry[0],
-                skill: entry[1],
-                startTime: entry[2],
-                finishTime: entry[3],
-                assignedWorkerName: entry[4],
-                shiftId: entry[5],
-                realShiftId: entry[6],
-                workerId: entry[7]
-            });
-            const savedLine = await newAssignedShiftLine.save();
-            const existingAssignedShiftTable = user.assignedShiftTables.find(table => table.day === day);
-            if (existingAssignedShiftTable) {
-                //Adding this line to the existing table.
-                existingAssignedShiftTable.assignedShifts.push(savedLine._id);
-            } else {
-                // Creating a new shift table for the pair of day and skill
-                user.assignedShiftTables.push({
-                    day: day,
-                    assignedShifts: [savedLine._id]
-                });
-            }
-        }
-        await user.save();
-        await TableValidator.setTableBit(userId, 1, false) //Resetting the bits to indicate that those tables are relevant to the current results.
-        await TableValidator.setTableBit(userId, 4, false)
-    }
-}*/
 
 const getResults1FromDB = async (userId) => {
 
