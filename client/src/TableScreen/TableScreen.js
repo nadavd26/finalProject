@@ -79,10 +79,10 @@ function TableScreen({ user, setUser }) {
 
     function areAllFieldsEmptyArrays(obj) {
         return Object.values(obj).every(
-          field => Array.isArray(field) && field.length === 0
+            field => Array.isArray(field) && field.length === 0
         );
-      }
-      
+    }
+
     function handleEdit() {
         if ((tableScreenState.get.tableNum == 1 && !tableScreenState.get.is1Generated) || (tableScreenState.get.tableNum == 2 && (!tableScreenState.get.is2Generated || areAllFieldsEmptyArrays(user.algo2Table))) || (tableScreenState.get.tableNum == 1 && (!reqs || reqs.length == 0 || !shifts || shifts.length == 0))) {
             return
@@ -154,7 +154,9 @@ function TableScreen({ user, setUser }) {
         }
 
         if (num == 2 && !tableScreenState.get.is2Generated) {
+            console.log("shshs")
             const validate = await algo1api.validateAlgo1Table1(user.token)
+            console.log(validate)
             setTable1Algo1Changed(validate.changed)
 
 
@@ -467,26 +469,24 @@ function TableScreen({ user, setUser }) {
                 </Modal>
 
                 <Modal show={showWarningModal} onHide={() => setShowWarningModal(false)} centered>
-                    <Modal.Header style={{ backgroundColor: '#FCFFA5', paddingRight: '1rem' }}>
-                        <Modal.Title className="text-center w-100" style={{ color: '#7F8307' }}>
-                            <ExclamationTriangleFill style={{ marginRight: '10px', color: '#7F8307' }} /> Warning
+                    <Modal.Header style={{ backgroundColor: '#FFD1D1', paddingRight: '1rem' }}>
+                        <Modal.Title className="text-center w-100" style={{ color: '#5A5A5A' }}>
+                            <ExclamationTriangleFill style={{ marginRight: '10px', color: '#5A5A5A' }} /> Error
                         </Modal.Title>
                         <button type="button" className="close" onClick={() => setShowWarningModal(false)} aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </Modal.Header>
-                    <Modal.Body style={{ backgroundColor: '#FCFFA5', color: '#7F8307', whiteSpace: 'pre-wrap' }}>
+                    <Modal.Body style={{ backgroundColor: '#FFD1D1', color: '#5A5A5A', whiteSpace: 'pre-wrap' }}>
                         {validationWarning}
                     </Modal.Body>
-                    <Modal.Footer style={{ backgroundColor: '#FCFFA5', display: 'flex', justifyContent: 'space-between' }}>
-                        <Button onClick={() => setShowWarningModal(false)} className="mr-auto" style={{ backgroundColor: '#7F8307', borderColor: '#7F8307' }}>
+                    <Modal.Footer style={{ backgroundColor: '#FFD1D1', display: 'flex', justifyContent: 'space-between' }}>
+                        <Button onClick={() => setShowWarningModal(false)} className="mr-auto" style={{ backgroundColor: '#5A5A5A', borderColor: '#5A5A5A' }}>
                             Ok
-                        </Button>
-                        <Button variant="danger" onClick={() => generateAnyway(table1Algo1Changed)} style={{ backgroundColor: '#7F8307', borderColor: '#7F8307' }}>
-                            Generate Anyway
                         </Button>
                     </Modal.Footer>
                 </Modal>
+
 
                 <Modal show={showInfo2Modal} onHide={() => setShowInfo2Modal(false)} centered>
                     <Modal.Header>

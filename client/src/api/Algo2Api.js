@@ -19,7 +19,7 @@ export async function generateAlgo2Results(token, getFromDatabase, autoComplete,
         }
 
         const responseData = await response.json(); // Parse JSON response
-
+        console.log(responseData)
         return responseData
     } catch (error) {
         console.error("Error fetching results:", error);
@@ -28,6 +28,7 @@ export async function generateAlgo2Results(token, getFromDatabase, autoComplete,
 }
 
 export async function postAlgo2Results(token, changeInfo) {
+    console.log(changeInfo)
     await fetch('http://localhost:12345/Results/GetResults2', {
         method: 'POST',
         headers: {
