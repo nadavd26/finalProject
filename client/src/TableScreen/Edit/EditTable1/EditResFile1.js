@@ -160,13 +160,7 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
             return
         }
         if (!isNumberOfWorkersValid(value)) {
-            // 
-            var newRowsToRender = {}
-            newRowsToRender[rowIndex] = true
-            var updatedContent = content
-            updatedContent[rowIndex][columnIndex] = oldValue
-            setRowsToRender(newRowsToRender)
-            setContent(updatedContent)
+            document.getElementById(`cell-${rowIndex}-${columnIndex}`).innerHTML = oldValue
             return
         }
         var updatedContent = content
