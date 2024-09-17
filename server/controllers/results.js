@@ -1,5 +1,7 @@
 const UserService = require("../services/user");
 const ResultsService = require("../services/results");
+const TableValidator = require("../services/tableValidator")
+
 
 const generateResults1 = async (req, res) => {
     const table2 = await UserService.getTable(req.user.email, req.user.googleId, 2);
@@ -83,7 +85,11 @@ const returnResults2 = async (req, res) => {
             await generateResults2(req, res);
         } else if (req.query.getFromDatabase === 'true') {
             const resultsMap = await ResultsService.getResults2FromDB(req.user._id);
-            if (resultsMap.size === 0) {
+            const bit = await TableValidator.getTableBit(req.user._id, 5)
+            if(!bit) {
+                res.status(404).send("The previus results are not relevant anymore.")
+            }
+            else if (resultsMap.size === 0) {
                 await generateResults2(req, res);
             } else {
                 const serializedResults = serializedResultsFromDB(resultsMap);
