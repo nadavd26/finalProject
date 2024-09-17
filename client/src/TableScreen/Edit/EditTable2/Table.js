@@ -10,7 +10,6 @@ import { memo } from 'react';
 
 
 const TableRow = ({ rowIndex, row, color, generateWorkerList, onCellEdit, getLineInfo, hidden }) => {
-    console.log("row " + rowIndex + " rendered")
     function capitalizeFirstLetter(str) {
         return str.charAt(0).toUpperCase() + str.slice(1);
     }
