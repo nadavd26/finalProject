@@ -74,10 +74,6 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
     const [rowsToRender, setRowsToRender] = useState({})
     var initialSumShifts = useRef([])
     var sumShifts = useRef([])
-
-    useEffect(() => {
-        console.log("content has changed", content);
-    }, [content]);
     
     const [wastedHoursKpi, setWastedHoursKpi] = useState(0)
     var intialWastedHours = useRef(0)
@@ -186,7 +182,6 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
 
         var newRowsToRender = {}
         newRowsToRender[rowIndex] = true
-        console.log("set content");
 
         setRowsToRender(newRowsToRender)
         setContent(updatedContent);
