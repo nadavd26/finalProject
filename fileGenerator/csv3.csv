@@ -1,286 +1,589 @@
-Chef,Sunday,00:00,06:00,54.0
-Chef,Sunday,03:00,08:30,49.5
-Chef,Sunday,04:00,12:00,72.0
-Chef,Sunday,07:00,12:30,49.5
-Chef,Sunday,11:30,15:30,36.0
-Chef,Sunday,13:00,22:30,85.5
-Chef,Sunday,21:00,24:00,27.0
-Chef,Sunday,22:30,24:00,13.5
-Chauffeur,Sunday,00:00,06:00,156.0
-Chauffeur,Sunday,03:00,08:30,143.0
-Chauffeur,Sunday,04:00,13:30,247.0
-Chauffeur,Sunday,06:30,18:00,299.0
-Chauffeur,Sunday,12:00,20:30,221.0
-Chauffeur,Sunday,15:00,20:00,130.0
-Chauffeur,Sunday,15:00,24:00,234.0
-Host/Hostess,Sunday,00:00,10:00,120.0
-Host/Hostess,Sunday,06:30,10:00,42.0
-Host/Hostess,Sunday,07:00,18:00,132.0
-Host/Hostess,Sunday,10:30,19:00,102.0
-Host/Hostess,Sunday,15:30,18:30,36.0
-Host/Hostess,Sunday,16:30,24:00,90.0
-Host/Hostess,Sunday,16:30,23:30,84.0
-Host/Hostess,Sunday,18:30,24:00,66.0
-Host/Hostess,Sunday,21:30,24:00,30.0
-Host/Hostess,Sunday,22:00,24:00,24.0
-Host/Hostess,Sunday,22:30,24:00,18.0
-Receptionist,Sunday,00:00,11:30,126.5
-Receptionist,Sunday,08:30,16:00,82.5
-Receptionist,Sunday,13:00,17:30,49.5
-Receptionist,Sunday,16:00,24:00,88.0
-Receptionist,Sunday,18:00,24:00,66.0
-Receptionist,Sunday,19:30,24:00,49.5
-Receptionist,Sunday,20:30,24:00,38.5
-Receptionist,Sunday,22:00,24:00,22.0
-Receptionist,Sunday,23:00,24:00,11.0
-Maintenance Worker,Sunday,00:00,12:00,336.0
-Maintenance Worker,Sunday,08:30,13:00,126.0
-Maintenance Worker,Sunday,09:00,20:00,308.0
-Maintenance Worker,Sunday,14:30,20:00,154.0
-Maintenance Worker,Sunday,17:30,24:00,182.0
-Maintenance Worker,Sunday,20:00,24:00,112.0
-Maintenance Worker,Sunday,21:30,24:00,70.0
-Maintenance Worker,Sunday,23:00,24:00,28.0
-Chef,Monday,00:00,05:00,45.0
-Chef,Monday,03:30,13:00,85.5
-Chef,Monday,08:30,18:00,85.5
-Chef,Monday,10:30,13:30,27.0
-Chef,Monday,12:30,22:00,85.5
-Chef,Monday,17:30,21:30,36.0
-Chef,Monday,20:00,24:00,36.0
-Chef,Monday,23:30,24:00,4.5
-Chauffeur,Monday,00:00,11:30,299.0
-Chauffeur,Monday,05:30,12:30,182.0
-Chauffeur,Monday,08:00,17:00,234.0
-Chauffeur,Monday,10:30,18:30,208.0
-Chauffeur,Monday,15:00,24:00,234.0
-Chauffeur,Monday,16:30,19:30,78.0
-Chauffeur,Monday,18:00,23:00,130.0
-Chauffeur,Monday,20:30,24:00,91.0
-Chauffeur,Monday,22:30,24:00,39.0
-Host/Hostess,Monday,00:00,05:30,66.0
-Host/Hostess,Monday,04:30,14:30,120.0
-Host/Hostess,Monday,07:30,14:00,78.0
-Host/Hostess,Monday,12:00,24:00,144.0
-Host/Hostess,Monday,17:00,23:00,72.0
-Host/Hostess,Monday,19:30,24:00,54.0
-Host/Hostess,Monday,22:00,24:00,24.0
-Host/Hostess,Monday,23:30,24:00,6.0
-Receptionist,Monday,00:00,11:00,121.0
-Receptionist,Monday,03:30,11:00,82.5
-Receptionist,Monday,05:30,14:30,99.0
-Receptionist,Monday,10:30,22:00,126.5
-Receptionist,Monday,21:00,24:00,33.0
-Receptionist,Monday,21:30,24:00,27.5
-Receptionist,Monday,23:30,24:00,5.5
-Maintenance Worker,Monday,00:00,04:00,112.0
-Maintenance Worker,Monday,04:00,09:30,154.0
-Maintenance Worker,Monday,05:00,08:30,98.0
-Maintenance Worker,Monday,06:00,09:00,84.0
-Maintenance Worker,Monday,06:00,13:00,196.0
-Maintenance Worker,Monday,10:00,19:30,266.0
-Maintenance Worker,Monday,16:00,20:30,126.0
-Maintenance Worker,Monday,19:00,22:30,98.0
-Maintenance Worker,Monday,20:30,24:00,98.0
-Maintenance Worker,Monday,22:00,24:00,56.0
-Maintenance Worker,Monday,23:30,24:00,14.0
-Chef,Tuesday,00:00,04:00,36.0
-Chef,Tuesday,02:30,06:00,31.5
-Chef,Tuesday,03:30,08:00,40.5
-Chef,Tuesday,06:30,11:30,45.0
-Chef,Tuesday,08:30,15:30,63.0
-Chef,Tuesday,11:00,19:30,76.5
-Chef,Tuesday,11:30,17:30,54.0
-Chef,Tuesday,14:00,22:30,76.5
-Chef,Tuesday,17:00,21:00,36.0
-Chef,Tuesday,18:30,23:00,40.5
-Chef,Tuesday,19:30,22:30,27.0
-Chef,Tuesday,19:30,24:00,40.5
-Chef,Tuesday,21:30,24:00,22.5
-Chef,Tuesday,23:30,24:00,4.5
-Chauffeur,Tuesday,00:00,05:30,143.0
-Chauffeur,Tuesday,02:00,09:30,195.0
-Chauffeur,Tuesday,05:00,12:30,195.0
-Chauffeur,Tuesday,09:00,19:30,273.0
-Chauffeur,Tuesday,15:30,24:00,221.0
-Chauffeur,Tuesday,20:00,24:00,104.0
-Chauffeur,Tuesday,21:30,24:00,65.0
-Chauffeur,Tuesday,22:00,24:00,52.0
-Host/Hostess,Tuesday,00:00,08:00,96.0
-Host/Hostess,Tuesday,04:00,16:00,144.0
-Host/Hostess,Tuesday,04:00,15:00,132.0
-Host/Hostess,Tuesday,07:30,16:30,108.0
-Host/Hostess,Tuesday,13:00,24:00,132.0
-Host/Hostess,Tuesday,17:00,24:00,84.0
-Host/Hostess,Tuesday,22:00,24:00,24.0
-Host/Hostess,Tuesday,22:30,24:00,18.0
-Receptionist,Tuesday,00:00,04:00,44.0
-Receptionist,Tuesday,02:30,14:30,132.0
-Receptionist,Tuesday,08:00,16:00,88.0
-Receptionist,Tuesday,14:00,21:00,77.0
-Receptionist,Tuesday,17:00,24:00,77.0
-Receptionist,Tuesday,23:00,24:00,11.0
-Maintenance Worker,Tuesday,00:00,10:00,280.0
-Maintenance Worker,Tuesday,08:00,16:00,224.0
-Maintenance Worker,Tuesday,12:30,19:00,182.0
-Maintenance Worker,Tuesday,15:30,24:00,238.0
-Maintenance Worker,Tuesday,19:30,23:30,112.0
-Maintenance Worker,Tuesday,22:00,24:00,56.0
-Maintenance Worker,Tuesday,23:00,24:00,28.0
-Chef,Wednesday,00:00,08:00,72.0
-Chef,Wednesday,04:00,13:00,81.0
-Chef,Wednesday,08:30,14:30,54.0
-Chef,Wednesday,12:30,20:30,72.0
-Chef,Wednesday,20:00,24:00,36.0
-Chef,Wednesday,22:00,24:00,18.0
-Chef,Wednesday,22:30,24:00,13.5
-Chauffeur,Wednesday,00:00,08:00,208.0
-Chauffeur,Wednesday,06:00,14:30,221.0
-Chauffeur,Wednesday,10:00,13:00,78.0
-Chauffeur,Wednesday,12:00,22:00,260.0
-Chauffeur,Wednesday,21:00,24:00,78.0
-Chauffeur,Wednesday,22:00,24:00,52.0
-Chauffeur,Wednesday,23:00,24:00,26.0
-Host/Hostess,Wednesday,00:00,07:30,90.0
-Host/Hostess,Wednesday,03:30,11:30,96.0
-Host/Hostess,Wednesday,06:00,14:00,96.0
-Host/Hostess,Wednesday,09:00,15:00,72.0
-Host/Hostess,Wednesday,10:30,15:30,60.0
-Host/Hostess,Wednesday,12:30,16:00,42.0
-Host/Hostess,Wednesday,13:30,17:30,48.0
-Host/Hostess,Wednesday,15:30,24:00,102.0
-Host/Hostess,Wednesday,20:30,24:00,42.0
-Host/Hostess,Wednesday,23:00,24:00,12.0
-Receptionist,Wednesday,00:00,08:30,93.5
-Receptionist,Wednesday,02:00,09:00,77.0
-Receptionist,Wednesday,03:00,10:00,77.0
-Receptionist,Wednesday,07:30,12:30,55.0
-Receptionist,Wednesday,10:30,15:00,49.5
-Receptionist,Wednesday,14:00,17:30,38.5
-Receptionist,Wednesday,16:00,24:00,88.0
-Receptionist,Wednesday,22:30,24:00,16.5
-Maintenance Worker,Wednesday,00:00,08:30,238.0
-Maintenance Worker,Wednesday,04:00,12:00,224.0
-Maintenance Worker,Wednesday,11:30,19:00,210.0
-Maintenance Worker,Wednesday,15:00,19:00,112.0
-Maintenance Worker,Wednesday,16:00,20:00,112.0
-Maintenance Worker,Wednesday,19:00,24:00,140.0
-Maintenance Worker,Wednesday,19:30,24:00,126.0
-Maintenance Worker,Wednesday,23:00,24:00,28.0
-Chef,Thursday,00:00,09:00,81.0
-Chef,Thursday,05:30,12:00,58.5
-Chef,Thursday,12:00,21:00,81.0
-Chef,Thursday,15:30,23:30,72.0
-Chef,Thursday,21:00,24:00,27.0
-Chef,Thursday,22:00,24:00,18.0
-Chauffeur,Thursday,00:00,09:00,234.0
-Chauffeur,Thursday,05:30,09:00,91.0
-Chauffeur,Thursday,07:30,18:00,273.0
-Chauffeur,Thursday,13:30,23:30,260.0
-Chauffeur,Thursday,19:00,24:00,130.0
-Chauffeur,Thursday,21:30,24:00,65.0
-Chauffeur,Thursday,23:30,24:00,13.0
-Host/Hostess,Thursday,00:00,11:30,138.0
-Host/Hostess,Thursday,11:30,16:00,54.0
-Host/Hostess,Thursday,15:00,19:30,54.0
-Host/Hostess,Thursday,15:00,24:00,108.0
-Receptionist,Thursday,00:00,07:30,82.5
-Receptionist,Thursday,03:00,11:00,88.0
-Receptionist,Thursday,08:30,13:00,49.5
-Receptionist,Thursday,09:30,15:30,66.0
-Receptionist,Thursday,12:00,23:30,126.5
-Receptionist,Thursday,17:00,24:00,77.0
-Receptionist,Thursday,20:30,24:00,38.5
-Receptionist,Thursday,23:00,24:00,11.0
-Maintenance Worker,Thursday,00:00,04:30,126.0
-Maintenance Worker,Thursday,02:00,13:00,308.0
-Maintenance Worker,Thursday,02:00,06:00,112.0
-Maintenance Worker,Thursday,02:30,05:30,84.0
-Maintenance Worker,Thursday,03:30,10:00,182.0
-Maintenance Worker,Thursday,07:00,16:00,252.0
-Maintenance Worker,Thursday,11:00,16:30,154.0
-Maintenance Worker,Thursday,12:30,20:00,210.0
-Maintenance Worker,Thursday,14:30,18:30,112.0
-Maintenance Worker,Thursday,17:30,24:00,182.0
-Maintenance Worker,Thursday,20:00,23:30,98.0
-Maintenance Worker,Thursday,23:00,24:00,28.0
-Chef,Friday,00:00,10:30,94.5
-Chef,Friday,06:00,13:30,67.5
-Chef,Friday,08:30,19:00,94.5
-Chef,Friday,12:30,23:30,99.0
-Chef,Friday,19:00,24:00,45.0
-Chef,Friday,20:00,24:00,36.0
-Chef,Friday,22:30,24:00,13.5
-Chauffeur,Friday,00:00,03:30,91.0
-Chauffeur,Friday,01:00,10:30,247.0
-Chauffeur,Friday,04:00,07:00,78.0
-Chauffeur,Friday,06:00,11:30,143.0
-Chauffeur,Friday,10:30,15:00,117.0
-Chauffeur,Friday,12:00,22:00,260.0
-Chauffeur,Friday,20:00,24:00,104.0
-Chauffeur,Friday,20:30,24:00,91.0
-Chauffeur,Friday,21:30,24:00,65.0
-Chauffeur,Friday,22:30,24:00,39.0
-Host/Hostess,Friday,00:00,08:00,96.0
-Host/Hostess,Friday,08:00,14:30,78.0
-Host/Hostess,Friday,08:30,17:00,102.0
-Host/Hostess,Friday,15:30,21:30,72.0
-Host/Hostess,Friday,20:00,24:00,48.0
-Host/Hostess,Friday,22:30,24:00,18.0
-Receptionist,Friday,00:00,11:30,126.5
-Receptionist,Friday,02:30,06:30,44.0
-Receptionist,Friday,03:00,12:00,99.0
-Receptionist,Friday,08:00,18:00,110.0
-Receptionist,Friday,16:00,24:00,88.0
-Receptionist,Friday,20:00,24:00,44.0
-Receptionist,Friday,22:00,24:00,22.0
-Receptionist,Friday,22:30,24:00,16.5
-Maintenance Worker,Friday,00:00,05:30,154.0
-Maintenance Worker,Friday,01:30,07:00,154.0
-Maintenance Worker,Friday,06:00,12:30,182.0
-Maintenance Worker,Friday,09:00,14:30,154.0
-Maintenance Worker,Friday,10:30,16:00,154.0
-Maintenance Worker,Friday,13:30,19:00,154.0
-Maintenance Worker,Friday,16:30,23:00,182.0
-Maintenance Worker,Friday,18:30,23:30,140.0
-Maintenance Worker,Friday,18:30,23:00,126.0
-Maintenance Worker,Friday,18:30,21:30,84.0
-Maintenance Worker,Friday,19:00,22:00,84.0
-Maintenance Worker,Friday,19:30,24:00,126.0
-Maintenance Worker,Friday,20:30,24:00,98.0
-Maintenance Worker,Friday,23:00,24:00,28.0
-Chef,Saturday,00:00,03:30,31.5
-Chef,Saturday,00:30,12:00,103.5
-Chef,Saturday,02:30,09:00,58.5
-Chef,Saturday,06:00,12:30,58.5
-Chef,Saturday,08:30,18:30,90.0
-Chef,Saturday,17:30,24:00,58.5
-Chef,Saturday,23:00,24:00,9.0
-Chauffeur,Saturday,00:00,10:00,260.0
-Chauffeur,Saturday,02:30,12:30,260.0
-Chauffeur,Saturday,03:00,11:00,208.0
-Chauffeur,Saturday,08:30,13:00,117.0
-Chauffeur,Saturday,12:00,20:30,221.0
-Chauffeur,Saturday,19:30,24:00,117.0
-Chauffeur,Saturday,22:30,24:00,39.0
-Host/Hostess,Saturday,00:00,05:00,60.0
-Host/Hostess,Saturday,04:00,10:00,72.0
-Host/Hostess,Saturday,10:00,21:00,132.0
-Host/Hostess,Saturday,18:30,24:00,66.0
-Host/Hostess,Saturday,22:30,24:00,18.0
-Receptionist,Saturday,00:00,08:30,93.5
-Receptionist,Saturday,00:00,03:30,38.5
-Receptionist,Saturday,03:00,10:30,82.5
-Receptionist,Saturday,07:30,10:30,33.0
-Receptionist,Saturday,10:00,15:30,60.5
-Receptionist,Saturday,13:30,21:30,88.0
-Receptionist,Saturday,19:00,24:00,55.0
-Receptionist,Saturday,21:00,24:00,33.0
-Receptionist,Saturday,23:30,24:00,5.5
-Maintenance Worker,Saturday,00:00,07:00,196.0
-Maintenance Worker,Saturday,02:00,08:30,182.0
-Maintenance Worker,Saturday,05:00,10:30,154.0
-Maintenance Worker,Saturday,08:00,11:00,84.0
-Maintenance Worker,Saturday,08:30,18:00,266.0
-Maintenance Worker,Saturday,13:30,19:30,168.0
-Maintenance Worker,Saturday,18:00,24:00,168.0
+Mechanic,Sunday,00:00,05:00,125.0
+Mechanic,Sunday,01:30,07:30,150.0
+Mechanic,Sunday,06:00,15:30,237.5
+Mechanic,Sunday,11:00,18:30,187.5
+Mechanic,Sunday,18:00,22:30,112.5
+Mechanic,Sunday,19:30,24:00,112.5
+Stocker,Sunday,00:00,04:30,4.5
+Stocker,Sunday,03:00,09:00,6.0
+Stocker,Sunday,07:30,17:00,9.5
+Stocker,Sunday,10:00,22:00,12.0
+Stocker,Sunday,19:00,24:00,5.0
+Stocker,Sunday,20:30,24:00,3.5
+Stocker,Sunday,21:30,24:00,2.5
+Stocker,Sunday,23:00,24:00,1.0
+Hairdresser,Sunday,00:00,10:30,199.5
+Hairdresser,Sunday,01:00,11:00,190.0
+Hairdresser,Sunday,05:00,12:00,133.0
+Hairdresser,Sunday,06:30,11:30,95.0
+Hairdresser,Sunday,10:30,19:00,161.5
+Hairdresser,Sunday,14:30,18:30,76.0
+Hairdresser,Sunday,15:30,20:30,95.0
+Hairdresser,Sunday,15:30,23:30,152.0
+Hairdresser,Sunday,18:30,24:00,104.5
+Hairdresser,Sunday,23:00,24:00,19.0
+Dishwasher,Sunday,00:00,04:00,100.0
+Dishwasher,Sunday,00:00,09:00,225.0
+Dishwasher,Sunday,00:30,11:00,262.5
+Dishwasher,Sunday,05:30,16:30,275.0
+Dishwasher,Sunday,13:30,19:00,137.5
+Dishwasher,Sunday,18:30,24:00,137.5
+Dishwasher,Sunday,20:30,24:00,87.5
+Dishwasher,Sunday,21:30,24:00,62.5
+Dishwasher,Sunday,22:00,24:00,50.0
+Dishwasher,Sunday,23:30,24:00,12.5
+Clerk,Sunday,00:00,04:30,99.0
+Clerk,Sunday,03:30,12:30,198.0
+Clerk,Sunday,06:30,11:00,99.0
+Clerk,Sunday,08:30,17:00,187.0
+Clerk,Sunday,13:30,23:00,209.0
+Clerk,Sunday,18:00,24:00,132.0
+Clerk,Sunday,19:00,24:00,110.0
+Clerk,Sunday,22:00,24:00,44.0
+Clerk,Sunday,22:30,24:00,33.0
+Lifeguard,Sunday,00:00,10:30,147.0
+Lifeguard,Sunday,01:30,12:00,147.0
+Lifeguard,Sunday,06:30,15:00,119.0
+Lifeguard,Sunday,12:30,17:30,70.0
+Lifeguard,Sunday,12:30,19:30,98.0
+Lifeguard,Sunday,15:30,21:00,77.0
+Lifeguard,Sunday,17:30,21:00,49.0
+Lifeguard,Sunday,19:00,24:00,70.0
+Lifeguard,Sunday,21:30,24:00,35.0
+Lifeguard,Sunday,22:00,24:00,28.0
+Lifeguard,Sunday,22:30,24:00,21.0
+Housekeeper,Sunday,00:00,11:00,154.0
+Housekeeper,Sunday,03:30,12:30,126.0
+Housekeeper,Sunday,10:00,15:00,70.0
+Housekeeper,Sunday,12:00,22:30,147.0
+Housekeeper,Sunday,19:00,24:00,70.0
+Housekeeper,Sunday,21:30,24:00,35.0
+Housekeeper,Sunday,22:30,24:00,21.0
+Cook,Sunday,00:00,06:00,36.0
+Cook,Sunday,02:30,11:30,54.0
+Cook,Sunday,05:00,13:00,48.0
+Cook,Sunday,08:00,12:00,24.0
+Cook,Sunday,09:30,14:00,27.0
+Cook,Sunday,12:30,17:30,30.0
+Cook,Sunday,14:00,17:30,21.0
+Cook,Sunday,15:00,18:00,18.0
+Cook,Sunday,16:00,20:30,27.0
+Cook,Sunday,17:00,24:00,42.0
+Cook,Sunday,21:30,24:00,15.0
+Cook,Sunday,23:30,24:00,3.0
+Receptionist,Sunday,00:00,06:00,180.0
+Receptionist,Sunday,01:30,08:30,210.0
+Receptionist,Sunday,05:30,14:30,270.0
+Receptionist,Sunday,12:30,21:00,255.0
+Receptionist,Sunday,13:30,20:00,195.0
+Receptionist,Sunday,13:30,17:00,105.0
+Receptionist,Sunday,15:00,23:30,255.0
+Receptionist,Sunday,20:00,24:00,120.0
+Receptionist,Sunday,22:00,24:00,60.0
+Receptionist,Sunday,23:00,24:00,30.0
+Sous Chef,Sunday,00:00,06:00,108.0
+Sous Chef,Sunday,01:30,11:30,180.0
+Sous Chef,Sunday,03:30,10:30,126.0
+Sous Chef,Sunday,05:00,16:30,207.0
+Sous Chef,Sunday,10:00,19:30,171.0
+Sous Chef,Sunday,16:00,20:30,81.0
+Sous Chef,Sunday,20:00,24:00,72.0
+Sous Chef,Sunday,21:00,24:00,54.0
+Sous Chef,Sunday,21:30,24:00,45.0
+Sous Chef,Sunday,22:30,24:00,27.0
+Mechanic,Monday,00:00,09:30,237.5
+Mechanic,Monday,06:30,14:30,200.0
+Mechanic,Monday,10:30,22:30,300.0
+Mechanic,Monday,17:30,24:00,162.5
+Mechanic,Monday,21:00,24:00,75.0
+Mechanic,Monday,23:00,24:00,25.0
+Stocker,Monday,00:00,06:00,6.0
+Stocker,Monday,02:00,10:00,8.0
+Stocker,Monday,05:30,11:30,6.0
+Stocker,Monday,08:00,13:00,5.0
+Stocker,Monday,10:00,17:00,7.0
+Stocker,Monday,10:00,14:30,4.5
+Stocker,Monday,11:30,15:00,3.5
+Stocker,Monday,15:00,21:30,6.5
+Stocker,Monday,16:00,24:00,8.0
+Stocker,Monday,17:30,23:30,6.0
+Stocker,Monday,20:00,23:30,3.5
+Stocker,Monday,21:30,24:00,2.5
+Stocker,Monday,22:30,24:00,1.5
+Hairdresser,Monday,00:00,09:00,171.0
+Hairdresser,Monday,04:00,07:30,66.5
+Hairdresser,Monday,04:30,07:30,57.0
+Hairdresser,Monday,05:30,17:30,228.0
+Hairdresser,Monday,07:00,18:00,209.0
+Hairdresser,Monday,16:00,24:00,152.0
+Dishwasher,Monday,00:00,06:00,150.0
+Dishwasher,Monday,04:00,13:00,225.0
+Dishwasher,Monday,06:30,13:00,162.5
+Dishwasher,Monday,11:00,14:30,87.5
+Dishwasher,Monday,13:30,18:00,112.5
+Dishwasher,Monday,14:30,20:00,137.5
+Dishwasher,Monday,17:30,24:00,162.5
+Dishwasher,Monday,21:30,24:00,62.5
+Dishwasher,Monday,22:00,24:00,50.0
+Dishwasher,Monday,23:30,24:00,12.5
+Clerk,Monday,00:00,07:30,165.0
+Clerk,Monday,01:30,07:30,132.0
+Clerk,Monday,04:00,14:00,220.0
+Clerk,Monday,07:30,18:30,242.0
+Clerk,Monday,15:30,19:00,77.0
+Clerk,Monday,17:00,24:00,154.0
+Clerk,Monday,19:00,23:00,88.0
+Clerk,Monday,21:00,24:00,66.0
+Clerk,Monday,21:30,24:00,55.0
+Clerk,Monday,23:00,24:00,22.0
+Lifeguard,Monday,00:00,11:00,154.0
+Lifeguard,Monday,06:00,12:30,91.0
+Lifeguard,Monday,07:00,16:30,133.0
+Lifeguard,Monday,07:00,16:00,126.0
+Lifeguard,Monday,11:00,17:30,91.0
+Lifeguard,Monday,13:00,21:30,119.0
+Lifeguard,Monday,18:00,24:00,84.0
+Lifeguard,Monday,22:00,24:00,28.0
+Lifeguard,Monday,23:00,24:00,14.0
+Housekeeper,Monday,00:00,05:30,77.0
+Housekeeper,Monday,03:30,09:30,84.0
+Housekeeper,Monday,06:30,15:00,119.0
+Housekeeper,Monday,10:30,13:30,42.0
+Housekeeper,Monday,12:00,16:30,63.0
+Housekeeper,Monday,13:00,24:00,154.0
+Housekeeper,Monday,15:00,24:00,126.0
+Housekeeper,Monday,18:00,24:00,84.0
+Housekeeper,Monday,19:30,24:00,63.0
+Housekeeper,Monday,21:30,24:00,35.0
+Housekeeper,Monday,23:00,24:00,14.0
+Cook,Monday,00:00,05:00,30.0
+Cook,Monday,01:00,09:00,48.0
+Cook,Monday,06:00,17:00,66.0
+Cook,Monday,12:30,21:00,51.0
+Cook,Monday,13:30,19:30,36.0
+Cook,Monday,17:00,21:00,24.0
+Cook,Monday,19:30,24:00,27.0
+Cook,Monday,21:00,24:00,18.0
+Cook,Monday,22:30,24:00,9.0
+Receptionist,Monday,00:00,08:30,255.0
+Receptionist,Monday,03:30,14:30,330.0
+Receptionist,Monday,14:30,22:00,225.0
+Receptionist,Monday,16:30,24:00,225.0
+Receptionist,Monday,23:00,24:00,30.0
+Sous Chef,Monday,00:00,07:30,135.0
+Sous Chef,Monday,01:00,09:30,153.0
+Sous Chef,Monday,03:00,11:00,144.0
+Sous Chef,Monday,03:00,09:00,108.0
+Sous Chef,Monday,06:30,15:00,153.0
+Sous Chef,Monday,12:30,15:30,54.0
+Sous Chef,Monday,12:30,22:30,180.0
+Sous Chef,Monday,22:30,24:00,27.0
+Mechanic,Tuesday,00:00,08:30,212.5
+Mechanic,Tuesday,01:00,08:30,187.5
+Mechanic,Tuesday,07:30,14:30,175.0
+Mechanic,Tuesday,08:00,19:30,287.5
+Mechanic,Tuesday,13:30,23:00,237.5
+Mechanic,Tuesday,17:30,24:00,162.5
+Mechanic,Tuesday,22:30,24:00,37.5
+Stocker,Tuesday,00:00,10:30,10.5
+Stocker,Tuesday,02:30,14:30,12.0
+Stocker,Tuesday,04:30,14:30,10.0
+Stocker,Tuesday,07:30,17:30,10.0
+Stocker,Tuesday,10:30,17:30,7.0
+Stocker,Tuesday,15:00,22:30,7.5
+Stocker,Tuesday,18:30,24:00,5.5
+Stocker,Tuesday,19:30,24:00,4.5
+Stocker,Tuesday,21:30,24:00,2.5
+Stocker,Tuesday,23:00,24:00,1.0
+Hairdresser,Tuesday,00:00,10:30,199.5
+Hairdresser,Tuesday,05:30,10:30,95.0
+Hairdresser,Tuesday,06:00,13:00,133.0
+Hairdresser,Tuesday,07:30,19:00,218.5
+Hairdresser,Tuesday,08:00,19:30,218.5
+Hairdresser,Tuesday,14:30,24:00,180.5
+Hairdresser,Tuesday,16:30,21:00,85.5
+Hairdresser,Tuesday,21:00,24:00,57.0
+Hairdresser,Tuesday,22:30,24:00,28.5
+Dishwasher,Tuesday,00:00,09:30,237.5
+Dishwasher,Tuesday,06:00,13:30,187.5
+Dishwasher,Tuesday,08:30,14:00,137.5
+Dishwasher,Tuesday,09:30,19:00,237.5
+Dishwasher,Tuesday,15:30,24:00,212.5
+Dishwasher,Tuesday,17:30,20:30,75.0
+Dishwasher,Tuesday,20:00,24:00,100.0
+Dishwasher,Tuesday,21:00,24:00,75.0
+Dishwasher,Tuesday,23:30,24:00,12.5
+Clerk,Tuesday,00:00,12:00,264.0
+Clerk,Tuesday,07:30,19:00,253.0
+Clerk,Tuesday,11:30,15:00,77.0
+Clerk,Tuesday,14:30,23:30,198.0
+Clerk,Tuesday,16:00,22:30,143.0
+Clerk,Tuesday,20:00,24:00,88.0
+Lifeguard,Tuesday,00:00,06:30,91.0
+Lifeguard,Tuesday,02:30,14:00,161.0
+Lifeguard,Tuesday,07:30,14:30,98.0
+Lifeguard,Tuesday,12:00,17:00,70.0
+Lifeguard,Tuesday,16:00,24:00,112.0
+Lifeguard,Tuesday,18:30,24:00,77.0
+Lifeguard,Tuesday,22:30,24:00,21.0
+Housekeeper,Tuesday,00:00,03:00,42.0
+Housekeeper,Tuesday,00:00,07:00,98.0
+Housekeeper,Tuesday,02:00,10:00,112.0
+Housekeeper,Tuesday,04:30,10:30,84.0
+Housekeeper,Tuesday,06:00,09:30,49.0
+Housekeeper,Tuesday,06:00,09:00,42.0
+Housekeeper,Tuesday,08:00,18:00,140.0
+Housekeeper,Tuesday,16:00,19:00,42.0
+Housekeeper,Tuesday,17:30,24:00,91.0
+Cook,Tuesday,00:00,05:00,30.0
+Cook,Tuesday,02:00,10:00,48.0
+Cook,Tuesday,02:30,12:30,60.0
+Cook,Tuesday,07:30,11:00,21.0
+Cook,Tuesday,09:30,16:00,39.0
+Cook,Tuesday,12:30,21:00,51.0
+Cook,Tuesday,19:30,24:00,27.0
+Cook,Tuesday,22:30,24:00,9.0
+Receptionist,Tuesday,00:00,12:00,360.0
+Receptionist,Tuesday,08:30,15:00,195.0
+Receptionist,Tuesday,11:00,17:00,180.0
+Receptionist,Tuesday,11:00,23:00,360.0
+Receptionist,Tuesday,18:30,24:00,165.0
+Receptionist,Tuesday,22:30,24:00,45.0
+Sous Chef,Tuesday,00:00,08:30,153.0
+Sous Chef,Tuesday,00:00,03:30,63.0
+Sous Chef,Tuesday,00:00,04:30,81.0
+Sous Chef,Tuesday,02:30,07:00,81.0
+Sous Chef,Tuesday,03:30,11:30,144.0
+Sous Chef,Tuesday,07:30,13:30,108.0
+Sous Chef,Tuesday,12:00,16:30,81.0
+Sous Chef,Tuesday,13:30,19:30,108.0
+Sous Chef,Tuesday,16:30,21:30,90.0
+Sous Chef,Tuesday,20:00,24:00,72.0
+Mechanic,Wednesday,00:00,08:30,212.5
+Mechanic,Wednesday,06:30,14:30,200.0
+Mechanic,Wednesday,10:00,16:30,162.5
+Mechanic,Wednesday,15:00,23:30,212.5
+Mechanic,Wednesday,19:00,23:00,100.0
+Mechanic,Wednesday,21:00,24:00,75.0
+Mechanic,Wednesday,22:30,24:00,37.5
+Stocker,Wednesday,00:00,10:00,10.0
+Stocker,Wednesday,02:30,05:30,3.0
+Stocker,Wednesday,05:00,13:30,8.5
+Stocker,Wednesday,08:00,14:30,6.5
+Stocker,Wednesday,11:00,14:30,3.5
+Stocker,Wednesday,13:30,24:00,10.5
+Stocker,Wednesday,17:30,24:00,6.5
+Stocker,Wednesday,18:30,24:00,5.5
+Stocker,Wednesday,21:00,24:00,3.0
+Stocker,Wednesday,23:00,24:00,1.0
+Hairdresser,Wednesday,00:00,04:30,85.5
+Hairdresser,Wednesday,00:00,03:00,57.0
+Hairdresser,Wednesday,01:00,09:30,161.5
+Hairdresser,Wednesday,06:00,15:00,171.0
+Hairdresser,Wednesday,10:30,15:00,85.5
+Hairdresser,Wednesday,13:30,17:30,76.0
+Hairdresser,Wednesday,15:00,24:00,171.0
+Hairdresser,Wednesday,20:30,24:00,66.5
+Hairdresser,Wednesday,22:30,24:00,28.5
+Dishwasher,Wednesday,00:00,11:30,287.5
+Dishwasher,Wednesday,04:00,10:00,150.0
+Dishwasher,Wednesday,04:30,10:30,150.0
+Dishwasher,Wednesday,06:30,11:30,125.0
+Dishwasher,Wednesday,09:30,16:30,175.0
+Dishwasher,Wednesday,11:30,17:00,137.5
+Dishwasher,Wednesday,13:30,22:00,212.5
+Dishwasher,Wednesday,15:30,24:00,212.5
+Dishwasher,Wednesday,22:30,24:00,37.5
+Clerk,Wednesday,00:00,12:00,264.0
+Clerk,Wednesday,07:30,16:30,198.0
+Clerk,Wednesday,11:30,22:00,231.0
+Clerk,Wednesday,22:00,24:00,44.0
+Clerk,Wednesday,22:30,24:00,33.0
+Lifeguard,Wednesday,00:00,04:00,56.0
+Lifeguard,Wednesday,03:30,15:00,161.0
+Lifeguard,Wednesday,05:00,12:30,105.0
+Lifeguard,Wednesday,09:30,18:30,126.0
+Lifeguard,Wednesday,13:00,18:00,70.0
+Lifeguard,Wednesday,18:00,24:00,84.0
+Lifeguard,Wednesday,23:00,24:00,14.0
+Housekeeper,Wednesday,00:00,04:30,63.0
+Housekeeper,Wednesday,04:30,15:30,154.0
+Housekeeper,Wednesday,08:00,17:00,126.0
+Housekeeper,Wednesday,13:30,19:30,84.0
+Housekeeper,Wednesday,15:30,24:00,119.0
+Housekeeper,Wednesday,23:30,24:00,7.0
+Cook,Wednesday,00:00,10:00,60.0
+Cook,Wednesday,05:00,14:00,54.0
+Cook,Wednesday,06:30,18:00,69.0
+Cook,Wednesday,15:30,22:00,39.0
+Cook,Wednesday,19:00,22:00,18.0
+Cook,Wednesday,20:30,24:00,21.0
+Cook,Wednesday,22:00,24:00,12.0
+Cook,Wednesday,23:00,24:00,6.0
+Receptionist,Wednesday,00:00,12:00,360.0
+Receptionist,Wednesday,07:00,14:00,210.0
+Receptionist,Wednesday,07:30,11:00,105.0
+Receptionist,Wednesday,09:30,20:30,330.0
+Receptionist,Wednesday,16:30,22:30,180.0
+Receptionist,Wednesday,21:00,24:00,90.0
+Receptionist,Wednesday,23:30,24:00,15.0
+Sous Chef,Wednesday,00:00,06:30,117.0
+Sous Chef,Wednesday,03:30,15:00,207.0
+Sous Chef,Wednesday,07:30,16:00,153.0
+Sous Chef,Wednesday,11:30,22:00,189.0
+Sous Chef,Wednesday,19:30,23:00,63.0
+Sous Chef,Wednesday,21:00,24:00,54.0
+Sous Chef,Wednesday,23:00,24:00,18.0
+Mechanic,Thursday,00:00,11:00,275.0
+Mechanic,Thursday,07:30,12:00,112.5
+Mechanic,Thursday,08:00,15:30,187.5
+Mechanic,Thursday,12:30,21:30,225.0
+Mechanic,Thursday,15:00,23:00,200.0
+Mechanic,Thursday,18:00,21:30,87.5
+Mechanic,Thursday,19:30,22:30,75.0
+Mechanic,Thursday,22:00,24:00,50.0
+Mechanic,Thursday,22:30,24:00,37.5
+Stocker,Thursday,00:00,07:30,7.5
+Stocker,Thursday,01:30,05:00,3.5
+Stocker,Thursday,02:30,09:00,6.5
+Stocker,Thursday,04:30,12:00,7.5
+Stocker,Thursday,08:30,16:30,8.0
+Stocker,Thursday,09:30,18:00,8.5
+Stocker,Thursday,17:30,24:00,6.5
+Stocker,Thursday,19:30,24:00,4.5
+Stocker,Thursday,22:00,24:00,2.0
+Stocker,Thursday,23:00,24:00,1.0
+Hairdresser,Thursday,00:00,03:30,66.5
+Hairdresser,Thursday,02:30,13:00,199.5
+Hairdresser,Thursday,08:30,15:30,133.0
+Hairdresser,Thursday,10:00,16:30,123.5
+Hairdresser,Thursday,10:30,21:00,199.5
+Hairdresser,Thursday,14:00,18:30,85.5
+Hairdresser,Thursday,16:30,24:00,142.5
+Hairdresser,Thursday,20:00,23:30,66.5
+Hairdresser,Thursday,21:30,24:00,47.5
+Hairdresser,Thursday,22:00,24:00,38.0
+Hairdresser,Thursday,22:30,24:00,28.5
+Dishwasher,Thursday,00:00,07:30,187.5
+Dishwasher,Thursday,03:30,15:00,287.5
+Dishwasher,Thursday,05:30,10:00,112.5
+Dishwasher,Thursday,08:00,12:00,100.0
+Dishwasher,Thursday,09:30,21:30,300.0
+Dishwasher,Thursday,17:00,20:00,75.0
+Dishwasher,Thursday,17:30,24:00,162.5
+Dishwasher,Thursday,22:00,24:00,50.0
+Dishwasher,Thursday,23:30,24:00,12.5
+Clerk,Thursday,00:00,07:00,154.0
+Clerk,Thursday,03:30,11:00,165.0
+Clerk,Thursday,05:00,10:30,121.0
+Clerk,Thursday,06:30,13:00,143.0
+Clerk,Thursday,10:00,22:00,264.0
+Clerk,Thursday,17:30,24:00,143.0
+Clerk,Thursday,22:30,24:00,33.0
+Lifeguard,Thursday,00:00,06:00,84.0
+Lifeguard,Thursday,03:00,09:30,91.0
+Lifeguard,Thursday,06:30,16:00,133.0
+Lifeguard,Thursday,07:30,12:30,70.0
+Lifeguard,Thursday,09:30,15:30,84.0
+Lifeguard,Thursday,13:30,24:00,147.0
+Lifeguard,Thursday,15:00,19:30,63.0
+Lifeguard,Thursday,17:30,24:00,91.0
+Lifeguard,Thursday,20:30,24:00,49.0
+Lifeguard,Thursday,22:00,24:00,28.0
+Lifeguard,Thursday,23:00,24:00,14.0
+Housekeeper,Thursday,00:00,06:00,84.0
+Housekeeper,Thursday,02:30,10:30,112.0
+Housekeeper,Thursday,07:30,18:00,147.0
+Housekeeper,Thursday,11:30,18:00,91.0
+Housekeeper,Thursday,14:30,19:30,70.0
+Housekeeper,Thursday,16:00,19:00,42.0
+Housekeeper,Thursday,17:30,24:00,91.0
+Housekeeper,Thursday,22:00,24:00,28.0
+Housekeeper,Thursday,22:30,24:00,21.0
+Cook,Thursday,00:00,06:30,39.0
+Cook,Thursday,01:30,07:00,33.0
+Cook,Thursday,06:00,14:00,48.0
+Cook,Thursday,11:00,20:00,54.0
+Cook,Thursday,15:30,23:30,48.0
+Cook,Thursday,16:00,24:00,48.0
+Cook,Thursday,23:30,24:00,3.0
+Receptionist,Thursday,00:00,09:30,285.0
+Receptionist,Thursday,02:00,12:00,300.0
+Receptionist,Thursday,09:00,13:00,120.0
+Receptionist,Thursday,11:00,22:30,345.0
+Receptionist,Thursday,13:30,22:30,270.0
+Receptionist,Thursday,19:30,24:00,135.0
+Receptionist,Thursday,21:00,24:00,90.0
+Receptionist,Thursday,21:30,24:00,75.0
+Receptionist,Thursday,23:00,24:00,30.0
+Sous Chef,Thursday,00:00,06:00,108.0
+Sous Chef,Thursday,01:30,04:30,54.0
+Sous Chef,Thursday,02:00,08:30,117.0
+Sous Chef,Thursday,05:30,11:00,99.0
+Sous Chef,Thursday,09:30,21:00,207.0
+Sous Chef,Thursday,15:30,24:00,153.0
+Sous Chef,Thursday,18:00,24:00,108.0
+Sous Chef,Thursday,18:30,21:30,54.0
+Sous Chef,Thursday,19:30,24:00,81.0
+Sous Chef,Thursday,22:00,24:00,36.0
+Sous Chef,Thursday,22:30,24:00,27.0
+Mechanic,Friday,00:00,05:30,137.5
+Mechanic,Friday,00:30,05:00,112.5
+Mechanic,Friday,02:30,12:30,250.0
+Mechanic,Friday,09:30,18:00,212.5
+Mechanic,Friday,15:30,19:30,100.0
+Mechanic,Friday,17:30,22:30,125.0
+Mechanic,Friday,20:00,24:00,100.0
+Mechanic,Friday,22:30,24:00,37.5
+Stocker,Friday,00:00,06:30,6.5
+Stocker,Friday,02:00,10:30,8.5
+Stocker,Friday,07:30,13:00,5.5
+Stocker,Friday,12:00,23:30,11.5
+Stocker,Friday,15:30,24:00,8.5
+Stocker,Friday,21:00,24:00,3.0
+Stocker,Friday,23:00,24:00,1.0
+Hairdresser,Friday,00:00,03:00,57.0
+Hairdresser,Friday,00:00,06:30,123.5
+Hairdresser,Friday,06:30,12:00,104.5
+Hairdresser,Friday,10:00,17:30,142.5
+Hairdresser,Friday,15:00,24:00,171.0
+Hairdresser,Friday,18:00,24:00,114.0
+Hairdresser,Friday,20:00,24:00,76.0
+Hairdresser,Friday,20:30,24:00,66.5
+Hairdresser,Friday,22:00,24:00,38.0
+Hairdresser,Friday,23:00,24:00,19.0
+Dishwasher,Friday,00:00,07:30,187.5
+Dishwasher,Friday,04:30,12:00,187.5
+Dishwasher,Friday,10:00,22:00,300.0
+Dishwasher,Friday,17:30,24:00,162.5
+Dishwasher,Friday,23:30,24:00,12.5
+Clerk,Friday,00:00,08:30,187.0
+Clerk,Friday,03:00,11:30,187.0
+Clerk,Friday,07:00,14:30,165.0
+Clerk,Friday,11:00,22:30,253.0
+Clerk,Friday,16:30,24:00,165.0
+Clerk,Friday,21:30,24:00,55.0
+Clerk,Friday,22:30,24:00,33.0
+Lifeguard,Friday,00:00,08:30,119.0
+Lifeguard,Friday,05:00,08:30,49.0
+Lifeguard,Friday,07:00,16:00,126.0
+Lifeguard,Friday,12:00,16:00,56.0
+Lifeguard,Friday,12:30,20:30,112.0
+Lifeguard,Friday,16:00,24:00,112.0
+Lifeguard,Friday,22:00,24:00,28.0
+Lifeguard,Friday,23:30,24:00,7.0
+Housekeeper,Friday,00:00,09:30,133.0
+Housekeeper,Friday,09:00,21:00,168.0
+Housekeeper,Friday,11:30,15:00,49.0
+Housekeeper,Friday,12:30,20:00,105.0
+Housekeeper,Friday,20:00,24:00,56.0
+Housekeeper,Friday,22:00,24:00,28.0
+Housekeeper,Friday,23:30,24:00,7.0
+Cook,Friday,00:00,05:00,30.0
+Cook,Friday,02:00,10:00,48.0
+Cook,Friday,09:30,13:00,21.0
+Cook,Friday,10:00,13:30,21.0
+Cook,Friday,12:00,23:00,66.0
+Cook,Friday,19:30,23:30,24.0
+Cook,Friday,22:30,24:00,9.0
+Receptionist,Friday,00:00,04:30,135.0
+Receptionist,Friday,01:00,11:00,300.0
+Receptionist,Friday,01:00,12:30,345.0
+Receptionist,Friday,10:00,15:30,165.0
+Receptionist,Friday,11:00,20:00,270.0
+Receptionist,Friday,18:30,24:00,165.0
+Receptionist,Friday,22:00,24:00,60.0
+Receptionist,Friday,23:00,24:00,30.0
+Sous Chef,Friday,00:00,08:00,144.0
+Sous Chef,Friday,03:30,10:30,126.0
+Sous Chef,Friday,07:00,17:30,189.0
+Sous Chef,Friday,13:30,22:30,162.0
+Sous Chef,Friday,19:30,24:00,81.0
+Sous Chef,Friday,22:00,24:00,36.0
+Sous Chef,Friday,23:30,24:00,9.0
+Mechanic,Saturday,00:00,05:00,125.0
+Mechanic,Saturday,02:30,13:00,262.5
+Mechanic,Saturday,09:00,18:00,225.0
+Mechanic,Saturday,11:00,18:30,187.5
+Mechanic,Saturday,15:00,20:00,125.0
+Mechanic,Saturday,15:00,18:00,75.0
+Mechanic,Saturday,16:30,24:00,187.5
+Mechanic,Saturday,19:00,23:00,100.0
+Mechanic,Saturday,22:00,24:00,50.0
+Mechanic,Saturday,23:30,24:00,12.5
+Stocker,Saturday,00:00,06:00,6.0
+Stocker,Saturday,06:00,12:30,6.5
+Stocker,Saturday,09:00,17:00,8.0
+Stocker,Saturday,13:30,19:30,6.0
+Stocker,Saturday,16:00,24:00,8.0
+Stocker,Saturday,20:00,24:00,4.0
+Stocker,Saturday,21:00,24:00,3.0
+Stocker,Saturday,22:00,24:00,2.0
+Stocker,Saturday,22:30,24:00,1.5
+Hairdresser,Saturday,00:00,10:00,190.0
+Hairdresser,Saturday,04:30,14:00,180.5
+Hairdresser,Saturday,09:00,12:30,66.5
+Hairdresser,Saturday,12:00,18:30,123.5
+Hairdresser,Saturday,12:00,22:30,199.5
+Hairdresser,Saturday,15:00,18:30,66.5
+Hairdresser,Saturday,17:00,24:00,133.0
+Hairdresser,Saturday,20:00,24:00,76.0
+Hairdresser,Saturday,20:30,24:00,66.5
+Hairdresser,Saturday,23:00,24:00,19.0
+Dishwasher,Saturday,00:00,06:00,150.0
+Dishwasher,Saturday,04:30,07:30,75.0
+Dishwasher,Saturday,06:00,18:00,300.0
+Dishwasher,Saturday,13:30,17:30,100.0
+Dishwasher,Saturday,15:30,19:30,100.0
+Dishwasher,Saturday,18:00,24:00,150.0
+Dishwasher,Saturday,21:30,24:00,62.5
+Dishwasher,Saturday,22:00,24:00,50.0
+Dishwasher,Saturday,22:30,24:00,37.5
+Clerk,Saturday,00:00,10:30,231.0
+Clerk,Saturday,05:30,10:30,110.0
+Clerk,Saturday,09:30,20:30,242.0
+Clerk,Saturday,09:30,19:00,209.0
+Clerk,Saturday,15:00,24:00,198.0
+Clerk,Saturday,20:00,24:00,88.0
+Clerk,Saturday,22:00,24:00,44.0
+Clerk,Saturday,23:00,24:00,22.0
+Lifeguard,Saturday,00:00,05:30,77.0
+Lifeguard,Saturday,00:00,11:00,154.0
+Lifeguard,Saturday,09:30,20:00,147.0
+Lifeguard,Saturday,13:00,17:30,63.0
+Lifeguard,Saturday,13:30,19:00,77.0
+Lifeguard,Saturday,14:30,20:30,84.0
+Lifeguard,Saturday,16:00,22:30,91.0
+Lifeguard,Saturday,18:00,24:00,84.0
+Lifeguard,Saturday,20:00,24:00,56.0
+Lifeguard,Saturday,22:30,24:00,21.0
+Housekeeper,Saturday,00:00,11:00,154.0
+Housekeeper,Saturday,06:30,17:00,147.0
+Housekeeper,Saturday,11:30,20:00,119.0
+Housekeeper,Saturday,16:30,23:00,91.0
+Housekeeper,Saturday,18:30,24:00,77.0
+Housekeeper,Saturday,20:30,24:00,49.0
+Housekeeper,Saturday,22:00,24:00,28.0
+Housekeeper,Saturday,22:30,24:00,21.0
+Cook,Saturday,00:00,08:00,48.0
+Cook,Saturday,06:00,16:00,60.0
+Cook,Saturday,10:00,19:00,54.0
+Cook,Saturday,16:30,24:00,45.0
+Cook,Saturday,19:00,23:30,27.0
+Cook,Saturday,22:30,24:00,9.0
+Receptionist,Saturday,00:00,10:30,315.0
+Receptionist,Saturday,04:30,14:00,285.0
+Receptionist,Saturday,09:00,13:30,135.0
+Receptionist,Saturday,12:00,24:00,360.0
+Receptionist,Saturday,17:00,24:00,210.0
+Receptionist,Saturday,20:30,24:00,105.0
+Receptionist,Saturday,22:30,24:00,45.0
+Sous Chef,Saturday,00:00,09:30,171.0
+Sous Chef,Saturday,03:30,13:30,180.0
+Sous Chef,Saturday,11:00,14:30,63.0
+Sous Chef,Saturday,11:00,15:00,72.0
+Sous Chef,Saturday,14:30,19:00,81.0
+Sous Chef,Saturday,16:00,22:30,117.0
+Sous Chef,Saturday,19:00,24:00,90.0
+Sous Chef,Saturday,19:30,24:00,81.0
+Sous Chef,Saturday,22:30,24:00,27.0
