@@ -449,7 +449,7 @@ const saveResults2 = async (results, userId) => {
     }
 
     // Insert all documents at once using insertMany
-    const insertedShiftLines = await AssignedShiftLine.create(assignedShiftLines);
+    const insertedShiftLines = await AssignedShiftLine.insertMany(assignedShiftLines);
 
     // Gather the inserted IDs for each day
     for (let shiftLine of insertedShiftLines) {
@@ -600,7 +600,7 @@ const editResults2 = async (req, userId) => {
     const editInfo = req.body
 
     for (const [assignedShiftLineId, workerId] of Object.entries(editInfo)) {
-        const assignedShiftLine = await AssignedShiftLine.findOne({ id: assignedShiftLineId })
+        const assignedShiftLine = await AssignedShiftLine.findOne({ _id: assignedShiftLineId })
         const table1 = await getTableByUserId(userId, 1)
         if (workerId === '') { //When its empty it means that the assigned worker needs to be deleted.
             assignedShiftLine.assignedWorkerName = '';
