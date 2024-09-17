@@ -77,8 +77,14 @@ function TableScreen({ user, setUser }) {
         setReqs(newReq)
     }
 
+    function areAllFieldsEmptyArrays(obj) {
+        return Object.values(obj).every(
+          field => Array.isArray(field) && field.length === 0
+        );
+      }
+      
     function handleEdit() {
-        if ((tableScreenState.get.tableNum == 1 && !tableScreenState.get.is1Generated) || (tableScreenState.get.tableNum == 2 && !tableScreenState.get.is2Generated) || (tableScreenState.get.tableNum == 1 && (!reqs || reqs.length == 0 || !shifts || shifts.length == 0))) {
+        if ((tableScreenState.get.tableNum == 1 && !tableScreenState.get.is1Generated) || (tableScreenState.get.tableNum == 2 && (!tableScreenState.get.is2Generated || areAllFieldsEmptyArrays(user.algo2Table))) || (tableScreenState.get.tableNum == 1 && (!reqs || reqs.length == 0 || !shifts || shifts.length == 0))) {
             return
         }
         editInfoState.setInEdit(true)
