@@ -190,12 +190,16 @@ def shifts_overlap(shift1, shift2):
     return start_time1 < end_time2 and start_time2 < end_time1
 
 
+def calculate_shift_hours(shift):
+    start_time = parse_time(shift.start_time)
+    end_time = parse_time(shift.end_time)
+    return round((end_time - start_time).seconds / 3600, 2)
+
+
 def calculate_employee_hours(schedule_of_employee):
     total_hours = 0.0
     for shift in schedule_of_employee:
-        start_time = parse_time(shift.start_time)
-        end_time = parse_time(shift.end_time)
-        total_hours += (end_time - start_time).seconds / 3600
+        total_hours += calculate_shift_hours(shift)
     return total_hours
 
 
@@ -226,9 +230,12 @@ def generate_random_schedule(employees, shift_requirements, fixed_schedule):
             found_shift = False
             for i in range(current_index, len(random_shift_requirements)):
                 shift = random_shift_requirements[i]
+                shift_hours = calculate_shift_hours(shift)
+
                 if (
                     shift_worker_count[shift.id] < shift.required_workers
                     and shift.skill in employee.skills
+                    and ((shift_hours + current_hours) <= employee.max_hours)
                     and not any(
                         shifts_overlap(shift, existing_shift)
                         for existing_shift in employee_shifts[employee.id]
@@ -236,10 +243,7 @@ def generate_random_schedule(employees, shift_requirements, fixed_schedule):
                 ):
                     # Assign the shift to the employee
                     shift_worker_count[shift.id] += 1
-                    additional_hours = (
-                        parse_time(shift.end_time) - parse_time(shift.start_time)
-                    ).seconds / 3600
-                    current_hours += additional_hours
+                    current_hours += shift_hours
                     employee_shifts[employee.id].append(shift)
                     current_index = i + 1
                     found_shift = True
@@ -250,6 +254,7 @@ def generate_random_schedule(employees, shift_requirements, fixed_schedule):
                         current_index -= 1
 
                     break
+
             if not found_shift:
                 break
 
@@ -261,9 +266,7 @@ def generate_random_schedule(employees, shift_requirements, fixed_schedule):
             found_shift = False
             for i in range(current_index, len(random_shift_requirements)):
                 shift = random_shift_requirements[i]
-                additional_hours = (
-                    parse_time(shift.end_time) - parse_time(shift.start_time)
-                ).seconds / 3600
+                additional_hours = calculate_shift_hours(shift)
                 if (
                     current_hours + additional_hours <= employee.max_hours
                     and shift_worker_count[shift.id] < shift.required_workers
@@ -460,10 +463,7 @@ def fill_shifts(
                 for existing_shift in employee_shifts[emp_id]
             ):
                 # Calculate the additional hours this shift would add
-                additional_hours = (
-                    parse_time(shift.end_time) - parse_time(shift.start_time)
-                ).seconds / 3600
-
+                additional_hours = calculate_shift_hours(shift)
                 # Check if assigning this shift exceeds the employee's maximum hours
                 current_hours = calculate_employee_hours(employee_shifts[emp_id])
                 if current_hours + additional_hours <= employee.max_hours:
