@@ -59,30 +59,12 @@ def create_time_array():
     times.append("24:00")        
     return (times)
 
-def generate_valid_time_intervals(times):
-    intervals = []
-    for i in range(len(times) - 1):
-        for j in range(i + 1, len(times)):
-            intervals.append((times[i], times[j]))
-    return intervals
-def minutes_to_time(minutes):
-    """Convert minutes since start of the day to HH:MM time string."""
-    hours = minutes // 60
-    minutes = minutes % 60
-    return f"{hours:02}:{minutes:02}"
 def time_to_minutes(time_str):
     """Convert HH:MM time string to minutes since start of the day."""
     hours, minutes = map(int, time_str.split(':'))
     return hours * 60 + minutes
 
 
-def generate_valid_time_points():
-    """Generate time points at hh:00 or hh:30."""
-    time_points = []
-    for hour in range(24):
-        time_points.append(hour * 60)      # hh:00
-        time_points.append(hour * 60 + 30)  # hh:30
-    return time_points
 
 
 def generate_valid_shifts_intervals():
@@ -91,10 +73,18 @@ def generate_valid_shifts_intervals():
     intervals_list = []
 
     while start < 48:
-        end = start + random.randint(12, 20)
+        if (start > 44):
+            end  = 48
+            intervals_list.append((times[start], times[end]))        
+            break
+        
+        end = start + random.randint(6, 24)
         end = min(end, 48)       
         intervals_list.append((times[start], times[end]))        
-        start = random.randint(int((start+end)/2),end)
+        mu = (start + end) / 2
+        sigma = (end - start) / 4
+        start = int(max(start, min(random.gauss(mu, sigma), end)))
+
     return intervals_list
 
 
@@ -103,11 +93,13 @@ def random_day():
     return random.choice(["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"])
 
 def random_min_hours():
-    return round(random.uniform(10, 82) * 2) / 2  # Ensures increments of 0.5 and min hours is at least 20
+    return round(random.gauss(40, 8) * 2) / 2  # Mean of 40 hours, SD of 5, rounded to 0.5 increments
 
 def random_max_hours(min_hours):
-    max_hours = round(random.uniform(min_hours + 0.5, 83) * 2) / 2  # Ensures increments of 0.5, max is at most 63
-    return min(max_hours, 83)  # Ensures max_hours does not exceed 63
+    while True:
+        max_hours = round(random.gauss(min_hours + 12.5, 5) * 2) / 2  # Mean is min_hours + 10, SD of 5
+        if (max_hours > min_hours):
+            return min(max_hours, 70)  # Ensures max_hours does not exceed 80
 
 def random_workers(total_workers):
     return random.randint(1, total_workers)
