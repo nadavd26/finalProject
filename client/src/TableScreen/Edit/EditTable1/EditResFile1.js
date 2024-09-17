@@ -75,8 +75,10 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
     var initialSumShifts = useRef([])
     var sumShifts = useRef([])
 
-
-
+    useEffect(() => {
+        console.log("content has changed", content);
+    }, [content]);
+    
     const [wastedHoursKpi, setWastedHoursKpi] = useState(0)
     var intialWastedHours = useRef(0)
 
@@ -133,6 +135,7 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
         intialMissingHours.current = intialMissingHoursTemp
 
 
+        
         setContent(initialTable.map(row => [...row]))
         var newRowsToRender = {}
         for (let i = 0; i < initialTable.length; i++) {
@@ -160,16 +163,10 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
             return
         }
         if (!isNumberOfWorkersValid(value)) {
-            // 
-            var newRowsToRender = {}
-            newRowsToRender[rowIndex] = true
-            var updatedContent = content
-            updatedContent[rowIndex][columnIndex] = oldValue
-            setRowsToRender(newRowsToRender)
-            setContent(updatedContent)
+            document.getElementById(`cell-${rowIndex}-${columnIndex}`).innerHTML = oldValue
             return
         }
-        var updatedContent = content
+        var updatedContent = [...content]
         var price = updatedContent[rowIndex][5]
         updatedContent[rowIndex][columnIndex] = value
         setCostKpi(prevCostKpi => prevCostKpi - (price * (oldValue - value))); // Functional update
@@ -189,6 +186,8 @@ export default function EditResFile1({ initialTable, setInEdit, user, setUser, c
 
         var newRowsToRender = {}
         newRowsToRender[rowIndex] = true
+        console.log("set content");
+
         setRowsToRender(newRowsToRender)
         setContent(updatedContent);
         sumShifts.current = newSumShifts

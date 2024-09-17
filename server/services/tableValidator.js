@@ -456,7 +456,6 @@ const checkResults2 = async (userId) => {
             }
         }
     }
-    console.log(info1)
     info2 = [true, "The following employees work more hour than required in their contracts: "]
     counter = 0
     for (const line1 of table1) {
@@ -475,7 +474,6 @@ const checkResults2 = async (userId) => {
             }
         }
     }
-    console.log(info2)
     info3 = [true, "The following shfits have less workers than required: "]
     counter = 0
     for (const line1 of results1) {
@@ -493,7 +491,6 @@ const checkResults2 = async (userId) => {
             }
         }
     }
-    console.log(info3)
 }
 
 //This function checks if there are workers that work less hours than what's required in their contracts.

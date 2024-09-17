@@ -161,7 +161,6 @@ const runAlgo2 = async (fixedSchedule, employees, shiftRequirements, userId) => 
         
 
         // Write JSON data to temporary files
-        console.log("fixed: " + fixedScheduleJson)
         await fs.promises.writeFile(fixedScheduleFileName, convertFixed(fixedScheduleJson));
         await fs.promises.writeFile(employeesFileName, convertEmployees(employeesJson));
         await fs.promises.writeFile(shiftRequirementsFileName, convertShifts(shiftRequirementsJson));
@@ -242,15 +241,10 @@ const getResults2 = async (userId, autoComplete) => {
     //First parameter fot the second algorithm. If autoComplete is off, then it's just an empty array.
     //Otherwise it is set according to the current results in the DB.
     const toAutoComplete = autoComplete === "true" ? ResultsHelper.getAssignedLines(user.assignedShiftTables) : []
-    console.log("toAutoComplete :", toAutoComplete)
     const results1 = ResultsHelper.transformShiftTablesToArray(user.shiftTables) //Third parameter for the second algorithm.
-    console.log("Results1: ", results1)
     const table1 = user['table1'] || [];  //Second parameter for the second algorithm.
-    console.log("Table1: ", table1)
     const results2 = await runAlgo2(toAutoComplete, table1, results1, userId);
-    console.log(results2)
     const transformedResults2 = ResultsHelper.transformToShiftEmployeesMap(results2)
-    console.log(transformedResults2)
     // Creating an empty map with all the days as keys.
     let results2Map = {
         Sunday: [],

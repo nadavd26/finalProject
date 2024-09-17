@@ -15,7 +15,7 @@ export async function generateAlgo2Results(token, getFromDatabase, autoComplete,
         });
 
         if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`); //cannot happen
+            return {Sunday: [], Monday: [], Tuesday: [], Wednesday: [], Thursday: [], Friday: [], Saturday: []}
         }
 
         const responseData = await response.json(); // Parse JSON response
@@ -48,6 +48,5 @@ export async function getTableInfomarion(token) {
     });
 
     const body = await res.text()
-    console.log(body)
     return body
 }

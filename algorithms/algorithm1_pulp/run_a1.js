@@ -1115,9 +1115,7 @@ algorithm1.on('close', (code) => {
     fs.unlinkSync('reqs.json');
     try {
         const outputArray = JSON.parse(outputBuffer); // Parse accumulated data
-        console.log(outputArray);
     } catch (error) {
-        console.error('Error parsing JSON:', error);
     }});
 
 // Pipe shifts JSON to the Python process
