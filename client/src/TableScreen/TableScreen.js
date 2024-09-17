@@ -154,9 +154,7 @@ function TableScreen({ user, setUser }) {
         }
 
         if (num == 2 && !tableScreenState.get.is2Generated) {
-            console.log("shshs")
             const validate = await algo1api.validateAlgo1Table1(user.token)
-            console.log(validate)
             setTable1Algo1Changed(validate.changed)
 
 
