@@ -1,6 +1,9 @@
 const UserService = require("../services/user");
 const jwt = require("jsonwebtoken");
 
+//This function creates and saves the user in the DB based on the information of his google account.
+//It also genrates a token for this user that will be used by him in future requests to prove it is actually him.
+//This token is sent to him as a reply.
 const createUser = async (req, res) => {
     try {
         await UserService.createUser(
@@ -25,6 +28,10 @@ const createUser = async (req, res) => {
     }
 };
 
+//This function is used to allow the user to log in to his account.
+//It is checked whether the user has already has an account or not.
+//If he does than the function generates him a token and sends it to him.
+//Otherwise it calls the createUser function described above.
 const login = async (req, res) => {
     try {
         bool = await UserService.isUserInDBByEmail(req.body.email)

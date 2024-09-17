@@ -134,7 +134,7 @@ const runAlgo2 = async (fixedSchedule, employees, shiftRequirements, userId) => 
         function convertFixed(fixed) {
             // Parse the JSON string into an array
             const fixedArray = JSON.parse(fixed);
-        
+
             // Convert the array to the desired format
             return fixedArray.map(item => `${item.shift_id},${item.emp_id}`).join("=");
         }
@@ -142,9 +142,9 @@ const runAlgo2 = async (fixedSchedule, employees, shiftRequirements, userId) => 
         function convertEmployees(employees) {
             // Parse the JSON string if necessary
             const employeesArray = typeof employees === 'string' ? JSON.parse(employees) : employees;
-        
+
             // Convert the array to the desired format
-            return employeesArray.map(employee => 
+            return employeesArray.map(employee =>
                 `${employee.id},${employee.name},${employee.skill1},${employee.skill2 || ''},${employee.skill3 || ''},${employee.min_hours || 0},${employee.max_hours || 168}`
             ).join("=");
         }
@@ -152,13 +152,13 @@ const runAlgo2 = async (fixedSchedule, employees, shiftRequirements, userId) => 
         function convertShifts(shifts) {
             // Parse the JSON string if necessary
             const shiftsArray = typeof shifts === 'string' ? JSON.parse(shifts) : shifts;
-        
+
             // Convert the array to the desired format
-            return shiftsArray.map(shift => 
+            return shiftsArray.map(shift =>
                 `${shift.id},${shift.skill},${shift.day},${shift.start_time},${shift.end_time},${shift.required_workers}`
             ).join("=");
         }
-        
+
 
         // Write JSON data to temporary files
         console.log("fixed: " + fixedScheduleJson)
@@ -371,8 +371,68 @@ const saveResults = async (results, userId) => {
     return await ResultsHelper.transformShiftTablesToMap(user.shiftTables);
 }
 
-//This funciton gets the results of algorithm2 and saves them in the database.
 const saveResults2 = async (results, userId) => {
+    await deleteCurrentResults2(userId); // Remove current results first
+
+    const user = await User.findById(userId);
+    const assignedShiftLines = []; // Array to hold new documents
+    const assignedShiftIdsByDay = {}; // Object to track assigned shift IDs by day
+
+    // Loop through results and accumulate new AssignedShiftLine documents
+    for (let day in results) {
+        for (let entry of results[day]) {
+            assignedShiftLines.push({
+                day: entry[0],
+                skill: entry[1],
+                startTime: entry[2],
+                finishTime: entry[3],
+                assignedWorkerName: entry[4],
+                shiftId: entry[5],
+                realShiftId: entry[6],
+                workerId: entry[7]
+            });
+
+            // Track the new shift IDs by day (to be updated later in user.assignedShiftTables)
+            if (!assignedShiftIdsByDay[day]) {
+                assignedShiftIdsByDay[day] = [];
+            }
+        }
+    }
+
+    // Insert all documents at once using insertMany
+    const insertedShiftLines = await AssignedShiftLine.insertMany(assignedShiftLines);
+
+    // Gather the inserted IDs for each day
+    for (let shiftLine of insertedShiftLines) {
+        assignedShiftIdsByDay[shiftLine.day].push(shiftLine._id);
+    }
+
+    // Update the user's assignedShiftTables in bulk
+    for (let day in assignedShiftIdsByDay) {
+        const existingAssignedShiftTable = user.assignedShiftTables.find(table => table.day === day);
+        if (existingAssignedShiftTable) {
+            // Append the new shift IDs to the existing table for that day
+            existingAssignedShiftTable.assignedShifts.push(...assignedShiftIdsByDay[day]);
+        } else {
+            // Create a new shift table for the day if it doesn't exist
+            user.assignedShiftTables.push({
+                day: day,
+                assignedShifts: assignedShiftIdsByDay[day]
+            });
+        }
+    }
+
+    // Save the updated user document
+    await user.save();
+
+    // Reset table bits to indicate that tables are updated with the new results
+    await TableValidator.setTableBit(userId, 1, false);
+    await TableValidator.setTableBit(userId, 4, false);
+}
+
+
+//This funciton gets the results of algorithm2 and saves them in the database.
+/*const saveResults2 = async (results, userId) => {
 
     await deleteCurrentResults2(userId)
     const user = await User.findById(userId)
@@ -406,7 +466,7 @@ const saveResults2 = async (results, userId) => {
         await TableValidator.setTableBit(userId, 1, false) //Resetting the bits to indicate that those tables are relevant to the current results.
         await TableValidator.setTableBit(userId, 4, false)
     }
-}
+}*/
 
 const getResults1FromDB = async (userId) => {
 
@@ -530,7 +590,7 @@ const editResults2 = async (req, userId) => {
 
     for (const [assignedShiftLineId, workerId] of Object.entries(editInfo)) {
         const assignedShiftLine = await AssignedShiftLine.findOne({ id: assignedShiftLineId })
-        const table1 =  await getTableByUserId(userId, 1)
+        const table1 = await getTableByUserId(userId, 1)
         if (workerId === '') { //When its empty it means that the assigned worker needs to be deleted.
             assignedShiftLine.assignedWorkerName = '';
         } else { //Otherwise we assign the the worker with the given ID.

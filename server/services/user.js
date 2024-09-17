@@ -1,6 +1,9 @@
 const User = require("../models/user");
 const Tables = require("./tables")
 
+//This function gets the relevant information and creates and saves the user in the DB with that info.
+//Tables 1, 2, and 3 are set to be empty arrays as they will be set in future requests from the user.
+//If there already is a user with that email, an error is thrown as we don't allow to different user with the same email.
 const createUser = async (email, familyName, givenName, googleId, imageUrl, name) => {
     try {
         const existingUser = await User.findOne({ email });
@@ -14,6 +17,7 @@ const createUser = async (email, familyName, givenName, googleId, imageUrl, name
     }
 };
 
+//This function checks whether there is a user with the given email, and returns a boolean value accordingly.
 const isUserInDBByEmail = async (email) => {
     try {
         const user = await User.findOne({ email });
@@ -23,10 +27,12 @@ const isUserInDBByEmail = async (email) => {
             return false; // User not found
         }
     } catch (error) {
-        throw false;
+        throw error;
     }
 };
 
+//This function returns the user with the given email and googleId.
+//If there is no user that matches, it throws an error.
 const getUser = async (email, googleId) => {
     const user = await User.findOne({ email, googleId });
     if (user === null) throw new Error("Incorrect email or google id.");
@@ -41,6 +47,7 @@ const getUser = async (email, googleId) => {
     return newUser;
 }
 
+//This function sets tableContent to be the given content, for the given user and the given tableNum.
 const setTable = async (email, googleId, tableContent, tableNum, userId) => {
     try {
         if (!tableContent || !Array.isArray(tableContent)) {
@@ -54,33 +61,15 @@ const setTable = async (email, googleId, tableContent, tableNum, userId) => {
         await User.findOneAndUpdate({ email, googleId }, { $set: { [tableField]: [] } });
         // Removing those lines from the TableLine doccument.
         await Tables.removeLinesByIds(parseInt(tableNum), oldTableLineIds)
-        /*await TableLine.deleteMany({
-            _id: { $in: oldTableLineIds }
-        });*/
-        /*const tableLines = [];
-        // Creating TableLine objects and save them in the database
-        for (const lineData of tableContent) {
-            const tableLine = new TableLine({
-                day: lineData[0],
-                skill: lineData[1],
-                startTime: lineData[2],
-                finishTime: lineData[3],
-                requiredNumOfWorkers: lineData[4],
-            });
-            const savedLine = await tableLine.save();
-            tableLines.push(savedLine._id);
-        }
-        // Updating the user's table array with the created TableLine objects
-        await User.findOneAndUpdate(
-            { email, googleId },
-            { $addToSet: { [tableField]: { $each: tableLines } } }
-        );*/
+        // Saving the new table content instead.
         await Tables.updateTable(parseInt(tableNum), tableContent, email, googleId, userId)
     } catch (err) {
         throw err
     }
 }
 
+//This function returns the asked table of the user with the given credentials.
+//It is returned in the format expected by the client.
 const getTable = async (email, googleId, tableNum) => {
     if (tableNum != 1 && tableNum != 2 && tableNum != 3) //Checking for invalid table number.
         return []
@@ -93,6 +82,8 @@ const getTable = async (email, googleId, tableNum) => {
     return { [`table${tableNum}Content`]: formattedTable };
 }
 
+//This function returns the asked table of the user with the given userId.
+//It is returned in the format expected by the client.
 const getTableByUserId = async (userId, tableNum) => {
     if (tableNum != 1 && tableNum != 2 && tableNum != 3) //Checking for invalid table number.
         return []
