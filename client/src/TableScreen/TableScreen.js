@@ -402,7 +402,7 @@ function TableScreen({ user, setUser }) {
                                 <div className="row" >
                                     <div className="col-1"></div>
                                     <div className="col-10">
-                                        <GraphMemo reqs={!(reqs) ? [] : reqs} shifts={!(shifts) ? [] : shifts} skill={tableAlgo1State.get.currentSkill} day={tableScreenState.get.currentDay} user={user} setUser={setUser}></GraphMemo>
+                                        <GraphMemo reqs={!(reqs) ? [] : reqs} shifts={!(shifts) ? [] : shifts.filter(line => line[4] != 0)} skill={tableAlgo1State.get.currentSkill} day={tableScreenState.get.currentDay} user={user} setUser={setUser}></GraphMemo>
                                     </div>
                                     <div className="col-1">
                                     </div>
