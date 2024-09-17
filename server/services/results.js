@@ -310,21 +310,23 @@ const getResults2 = async (userId, autoComplete) => {
     return results2Map;
 }
 
-//This function deletes every all the shift tables and lines of the user. 
+// This function deletes every all the shift tables and lines of the user.
 const deleteCurrentResults = async (userId) => {
+    const user = await User.findById(userId);
 
-    const user = await User.findById(userId)
-    // Going through each shift table.
-    for (const shiftTable of user.shiftTables) {
-        //Inside each shift table, going through each shift line, in order to delete it.
-        for (const shiftId of shiftTable.shifts) {
-            await ShiftLine.findByIdAndDelete(shiftId);
-        }
+    // Collect all shift IDs from shiftTables
+    const shiftIds = user.shiftTables.flatMap(table => table.shifts);
+
+    // Delete all shift lines in a single operation
+    if (shiftIds.length > 0) {
+        await ShiftLine.deleteMany({ _id: { $in: shiftIds } });
     }
-    //Making the shift table empty and saving it.
-    user.shiftTables = []
-    await user.save()
+
+    // Make the shift tables empty and save the user document
+    user.shiftTables = [];
+    await user.save();
 }
+
 
 //This function deletes all the assigned shift tables and lines of the user. 
 const deleteCurrentResults2 = async (userId) => {
