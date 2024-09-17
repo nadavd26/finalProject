@@ -20,9 +20,7 @@ const generateResults1 = async (req, res) => {
     //     return;
     // }
     const results = await ResultsService.getResults1(table2.table2Content, table3.table3Content, req.user._id);
-    console.log("python stop")
     const resultsMap = await ResultsService.saveResults(results, req.user._id);
-    console.log("save stop")
     const serializedResults = {};
     for (const [key, value] of resultsMap.entries()) {
         serializedResults[key] = value;
