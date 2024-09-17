@@ -30,79 +30,89 @@ const removeLinesByIds = async (tableNum, tableLineIDsToDelete) => {
         throw err
     }
 }
+
 //This function updates the relvant table in the db for the relvant user.
 const updateTable = async (tableNum, tableContent, email, googleId, userId) => {
     try {
         const tableField = `table${tableNum}`;
+        
         switch (tableNum) {
             case 1:
-                const tableLines1 = [];
-                for (const lineData of tableContent) {
-                    const tableLine1 = new TableLine1({
-                        id: lineData[0],
-                        name: lineData[1],
-                        skill1: lineData[2],
-                        skill2: lineData[3],
-                        skill3: lineData[4],
-                        min_hours: lineData[5],
-                        max_hours: lineData[6],
-                    });
-                    const savedLine = await tableLine1.save();
-                    tableLines1.push(savedLine._id);
-                }
+                const tableLines1 = tableContent.map(lineData => ({
+                    id: lineData[0],
+                    name: lineData[1],
+                    skill1: lineData[2],
+                    skill2: lineData[3],
+                    skill3: lineData[4],
+                    min_hours: lineData[5],
+                    max_hours: lineData[6],
+                }));
+
+                // Use insertMany to save all lines at once
+                const insertedLines1 = await TableLine1.insertMany(tableLines1);
+
+                const insertedIds1 = insertedLines1.map(line => line._id);
+
+                // Update the user's table in a single operation
                 await User.findOneAndUpdate(
                     { email, googleId },
-                    { $addToSet: { [tableField]: { $each: tableLines1 } } }
+                    { $addToSet: { [tableField]: { $each: insertedIds1 } } }
                 );
-                await tableValidator.setTableBit(userId, 1, true) //Setting the relevant bit to indicate that the table changed.
+
+                await tableValidator.setTableBit(userId, 1, true); // Set the relevant bit
                 break;
+            
             case 2:
-                const tableLines2 = [];
-                // Creating TableLine objects and save them in the database
-                for (const lineData of tableContent) {
-                    const tableLine2 = new TableLine2({
-                        day: lineData[0],
-                        skill: lineData[1],
-                        startTime: lineData[2],
-                        finishTime: lineData[3],
-                        requiredNumOfWorkers: lineData[4],
-                    });
-                    const savedLine = await tableLine2.save();
-                    tableLines2.push(savedLine._id);
-                }
-                // Updating the user's table array with the created TableLine objects
+                const tableLines2 = tableContent.map(lineData => ({
+                    day: lineData[0],
+                    skill: lineData[1],
+                    startTime: lineData[2],
+                    finishTime: lineData[3],
+                    requiredNumOfWorkers: lineData[4],
+                }));
+
+                const insertedLines2 = await TableLine2.insertMany(tableLines2);
+
+                const insertedIds2 = insertedLines2.map(line => line._id);
+
                 await User.findOneAndUpdate(
                     { email, googleId },
-                    { $addToSet: { [tableField]: { $each: tableLines2 } } }
+                    { $addToSet: { [tableField]: { $each: insertedIds2 } } }
                 );
-                await tableValidator.setTableBit(userId, 2, true)
+
+                await tableValidator.setTableBit(userId, 2, true);
                 break;
+            
             case 3:
-                const tableLines3 = [];
-                for (const lineData of tableContent) {
-                    const tableLine3 = new TableLine3({
-                        skill: lineData[0],
-                        day: lineData[1],
-                        startTime: lineData[2],
-                        finishTime: lineData[3],
-                        cost: lineData[4],
-                    });
-                    const savedLine = await tableLine3.save();
-                    tableLines3.push(savedLine._id);
-                }
+                const tableLines3 = tableContent.map(lineData => ({
+                    skill: lineData[0],
+                    day: lineData[1],
+                    startTime: lineData[2],
+                    finishTime: lineData[3],
+                    cost: lineData[4],
+                }));
+
+                const insertedLines3 = await TableLine3.insertMany(tableLines3);
+
+                const insertedIds3 = insertedLines3.map(line => line._id);
+
                 await User.findOneAndUpdate(
                     { email, googleId },
-                    { $addToSet: { [tableField]: { $each: tableLines3 } } }
+                    { $addToSet: { [tableField]: { $each: insertedIds3 } } }
                 );
-                await tableValidator.setTableBit(userId, 3, true)
+
+                await tableValidator.setTableBit(userId, 3, true);
                 break;
+            
             default:
-                
+                // Handle unexpected cases
+                break;
         }
     } catch (err) {
-        throw err
+        throw err;
     }
-}
+};
+
 //Getting rid of the id and v fields and converting from json to simple array.
 const formatTable = (tableNum, tableContent) => {
     try {
