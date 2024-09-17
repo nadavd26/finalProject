@@ -587,8 +587,6 @@ def genetic_algorithm(
 
 
 if __name__ == "__main__":
-    # employees = generate_employees(100)
-    # shift_requirements = generate_random_shift_requirements(100)
     fixed_schedule_str = sys.stdin.readline().strip()
     employees_str = sys.stdin.readline().strip()
     shift_requirements_str = sys.stdin.readline().strip()

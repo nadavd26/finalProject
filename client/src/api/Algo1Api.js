@@ -1,7 +1,7 @@
 export async function validateAlgo1Table1(token) {
     const table1algo1url = 'http://localhost:12345/Validation/validateTable1Algo1'
     const res = await fetch(table1algo1url, {
-        'method': 'get',
+        'method': 'get', 
         'headers': {
             'Content-Type': 'application/json',
             'authorization': 'bearer ' + token

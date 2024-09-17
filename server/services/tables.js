@@ -60,7 +60,8 @@ const updateTable = async (tableNum, tableContent, email, googleId, userId) => {
                     { $addToSet: { [tableField]: { $each: insertedIds1 } } }
                 );
 
-                await tableValidator.setTableBit(userId, 1, true); // Set the relevant bit
+                await tableValidator.setTableBit(userId, 1, true); // Set the relevant bit.
+                await tableValidator.setTableBit(userId, 5, false) // Results 2 is irelevant now.
                 break;
             
             case 2:
@@ -82,6 +83,7 @@ const updateTable = async (tableNum, tableContent, email, googleId, userId) => {
                 );
 
                 await tableValidator.setTableBit(userId, 2, true);
+                await tableValidator.setTableBit(userId, 5, false) // Results 2 is irelevant now.
                 break;
             
             case 3:
@@ -103,6 +105,7 @@ const updateTable = async (tableNum, tableContent, email, googleId, userId) => {
                 );
 
                 await tableValidator.setTableBit(userId, 3, true);
+                await tableValidator.setTableBit(userId, 5, false) // Results 2 is irelevant now.
                 break;
             
             default:

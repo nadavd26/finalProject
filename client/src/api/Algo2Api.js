@@ -19,7 +19,6 @@ export async function generateAlgo2Results(token, getFromDatabase, autoComplete,
         }
 
         const responseData = await response.json(); // Parse JSON response
-
         return responseData
     } catch (error) {
         console.error("Error fetching results:", error);

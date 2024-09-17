@@ -279,4 +279,4 @@ def main(num_skills, num_lines_1):
     generate_csv_2(skills_array,'csv2.csv', 'csv1.csv')
 
 # Example usage:
-main(num_skills=10, num_lines_1=1000)
+main(num_skills=10, num_lines_1=1200)
