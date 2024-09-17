@@ -344,45 +344,78 @@ const deleteCurrentResults2 = async (userId) => {
 
 //This funciton gets the results and saves them in the database.
 const saveResults = async (results, userId) => {
+    try {
+        // Sort the results and delete current results
+        sortedResults = Table.sortTable(results, 2); // Same sorting as for table2.
+        await deleteCurrentResults(userId);
+        const user = await User.findById(userId);
+        const table3 = await getTableByUserId(userId, 3);
+        const shiftCostMap = ResultsHelper.buildShiftCostMap(table3.table3Content);
 
-    sortedResults = Table.sortTable(results, 2) //Same sorting as for table2.
-    await deleteCurrentResults(userId)
-    const user = await User.findById(userId)
-    const table3 = await getTableByUserId(userId, 3)
-    for (line of sortedResults) {
-        //Creating the shiftLine
-        const shiftLine = new ShiftLine({
+        // Prepare all shift lines
+        const shiftLinesToInsert = sortedResults.map(line => ({
             day: line[0],
             skill: line[1],
             startTime: line[2],
             finishTime: line[3],
             numOfWorkers: line[4],
-            cost: ResultsHelper.getShiftCost(line[1], line[0], line[2], line[3], table3.table3Content)
+            cost: shiftCostMap[`${line[1]}_${line[0]}_${line[2]}_${line[3]}`]
+        }));
+
+        // Insert all shift lines at once
+        const insertedShiftLines = await ShiftLine.insertMany(shiftLinesToInsert);
+
+        // Prepare shiftTables update in bulk
+        const shiftTablesMap = {}; // Mapping of day-skill pair to shiftTable
+
+        insertedShiftLines.forEach((savedLine, index) => {
+            const line = sortedResults[index];
+            const daySkillKey = `${line[0]}_${line[1]}`;
+            
+            if (!shiftTablesMap[daySkillKey]) {
+                // Create a new shift table if it doesn't exist
+                shiftTablesMap[daySkillKey] = {
+                    day: line[0],
+                    skill: line[1],
+                    shifts: []
+                };
+            }
+
+            // Add the shift line to the corresponding shift table
+            shiftTablesMap[daySkillKey].shifts.push(savedLine._id);
         });
-        const savedLine = await shiftLine.save();
-        //Checking whether there already is a table of this pair of day and skill.
-        //The item in index 0 is a day and in 1 it is skill.
-        const existingShiftTable = user.shiftTables.find(table => table.day === line[0] && table.skill === line[1]);
-        if (existingShiftTable) {
-            //Adding this line to the existing table.
-            existingShiftTable.shifts.push(savedLine._id);
-        } else {
-            // Creating a new shift table for the pair of day and skill
-            user.shiftTables.push({
-                day: line[0],
-                skill: line[1],
-                shifts: [savedLine._id]
-            });
+
+        // Append new shift tables to the user's shiftTables array
+        for (const key in shiftTablesMap) {
+            const { day, skill, shifts } = shiftTablesMap[key];
+            const existingShiftTable = user.shiftTables.find(table => table.day === day && table.skill === skill);
+            if (existingShiftTable) {
+                // Append shifts to the existing shift table
+                existingShiftTable.shifts.push(...shifts);
+            } else {
+                // Create and add a new shift table
+                user.shiftTables.push(shiftTablesMap[key]);
+            }
         }
-        await user.save()
+
+        // Save the user document once with all updated shiftTables
+        await user.save();
+
+        // Populating the shift lines for each shift table
+        await user.populate('shiftTables.shifts');
+
+        // Set table validation bits
+        await TableValidator.setTableBit(userId, 4, true); // Indicate that the results changed
+        await TableValidator.setTableBit(userId, 2, false); // Reset bits for tables 2 and 3
+        await TableValidator.setTableBit(userId, 3, false);
+
+        return await ResultsHelper.transformShiftTablesToMap(user.shiftTables);
+
+    } catch (err) {
+        throw err;
     }
-    // Populating the shift lines for each shift table
-    await user.populate('shiftTables.shifts');
-    await TableValidator.setTableBit(userId, 4, true) //Setting the relevant bit to indicate that the results changed.
-    await TableValidator.setTableBit(userId, 2, false) //Resetting the bits to indicate that those tables are relevant to the current results.
-    await TableValidator.setTableBit(userId, 3, false)
-    return await ResultsHelper.transformShiftTablesToMap(user.shiftTables);
-}
+};
+
 
 //This funciton gets the results of algorithm2 and saves them in the database.
 const saveResults2 = async (results, userId) => {

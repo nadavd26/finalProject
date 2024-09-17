@@ -138,6 +138,18 @@ function getShiftCost(skill, day, startTime, finishTime, table3) {
     }
 }
 
+// Building a dictionary with the combination of skill, day, startTime, and finishTime as keys and cost as values.
+function buildShiftCostMap(table3) {
+    const shiftCostMap = {};
+
+    for (const line3 of table3) {
+        const key = `${line3[0]}_${line3[1]}_${line3[2]}_${line3[3]}`; // Combine skill, day, startTime, and finishTime as the key
+        shiftCostMap[key] = line3[4]; // Assign the cost as the value
+    }
+
+    return shiftCostMap;
+}
+
 // This function transforms the user's shiftTables data into a map
 const transformShiftTablesToMap = async (shiftTables) => {
     const resultMap = new Map();
@@ -226,4 +238,4 @@ const getWorkerNameByWorkerId = async (table1, workerId) => {
     return ''
 }
 
-module.exports = {getEmployeesHoursWorkedDict, getAssignedLines, transformToShiftEmployeesMap, transformShiftTablesToArray, getWorkerNamesMapByUserId, getShiftCost, transformShiftTablesToMap, transformAssignedShiftTablesToMap, transformAssignedShiftTablesToIdsDict, getWorkerNameByWorkerId}
+module.exports = {getEmployeesHoursWorkedDict, getAssignedLines, transformToShiftEmployeesMap, transformShiftTablesToArray, getWorkerNamesMapByUserId, getShiftCost, transformShiftTablesToMap, transformAssignedShiftTablesToMap, transformAssignedShiftTablesToIdsDict, getWorkerNameByWorkerId, buildShiftCostMap}
