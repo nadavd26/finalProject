@@ -423,7 +423,6 @@ const saveResults2 = async (results, userId) => {
 
     // Update the user's assignedShiftTables in bulk
     for (let day in assignedShiftIdsByDay) {
-        console.log(day)
         const existingAssignedShiftTable = user.assignedShiftTables.find(table => table.day === day);
         if (existingAssignedShiftTable) {
             // Append the new shift IDs to the existing table for that day

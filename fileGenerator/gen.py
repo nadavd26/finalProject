@@ -244,7 +244,7 @@ def generate_csv_2(skills_array, filename, table1_filename):
                 continue
             times = create_time_intervals()
             # Set the first worker count for 00:00-00:30
-            required_workers = random.randint(1, int(available_workers / 4))
+            required_workers = random.randint(1, int(available_workers / 2))
             for from_time, until_time in times:
                 key = (day, skill)
                 
@@ -279,4 +279,4 @@ def main(num_skills, num_lines_1):
     generate_csv_2(skills_array,'csv2.csv', 'csv1.csv')
 
 # Example usage:
-main(num_skills=5, num_lines_1=500)
+main(num_skills=10, num_lines_1=1000)
