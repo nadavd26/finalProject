@@ -76,6 +76,7 @@ const updateTable = async (tableNum, tableContent, email, googleId, userId) => {
                     { $addToSet: { [tableField]: { $each: tableLines2 } } }
                 );
                 await tableValidator.setTableBit(userId, 2, true)
+                break;
             case 3:
                 const tableLines3 = [];
                 for (const lineData of tableContent) {
