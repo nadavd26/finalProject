@@ -5,7 +5,8 @@ const bitFields = {
     1: 'table1Bit',
     2: 'table2Bit',
     3: 'table3Bit',
-    4: 'shiftTablesBit'
+    4: 'shiftTablesBit',
+    5: 'assignedShiftTablesBit'
 };
 
 //The function checks if the given argument is one of the days of the week(case insensetive)
@@ -391,11 +392,11 @@ const validateTable1Algo1 = (table1, resultsMap) => {
     return info
 }
 
-//This function returns the value of the bit of the given table index(shiftsTable is 4).
+//This function returns the value of the bit of the given table index(shiftsTable is 4, assignedShiftTablesBit is 5).
 const getTableBit = async (userId, tableNumber) => {
     const bitField = bitFields[tableNumber];
     if (!bitField) {
-        throw new Error('Invalid table number: ' + tableNumber + '. Must be between 1 and 4.');
+        throw new Error('Invalid table number: ' + tableNumber + '. Must be between 1 and 5.');
     }
     try {
         const user = await User.findById(userId).select(bitField);
@@ -411,7 +412,7 @@ const getTableBit = async (userId, tableNumber) => {
 const setTableBit = async (userId, tableNumber, newValue) => {
     const bitField = bitFields[tableNumber];
     if (!bitField) {
-        throw new Error('Invalid table number: ' + tableNumber + '. Must be between 1 and 4.');
+        throw new Error('Invalid table number: ' + tableNumber + '. Must be between 1 and 5.');
     }
     try {
         const update = {};

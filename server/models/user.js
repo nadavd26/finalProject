@@ -85,6 +85,10 @@ const User = new Schema(
             type: Boolean,
             default: false,
         },
+        assignedShiftTablesBit : {
+            type: Boolean,
+            default: false,
+        },
     },
     { autoIndex: false, autoCreate: false }
 );

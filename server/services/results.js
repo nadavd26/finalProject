@@ -410,6 +410,8 @@ const saveResults = async (results, userId) => {
         await TableValidator.setTableBit(userId, 4, true); // Indicate that the results changed
         await TableValidator.setTableBit(userId, 2, false); // Reset bits for tables 2 and 3
         await TableValidator.setTableBit(userId, 3, false);
+        await TableValidator.setTableBit(userId, 5, false) // Results 2 is irelevant now.
+
 
         return await ResultsHelper.transformShiftTablesToMap(user.shiftTables);
 
@@ -477,6 +479,7 @@ const saveResults2 = async (results, userId) => {
     // Reset table bits to indicate that tables are updated with the new results
     await TableValidator.setTableBit(userId, 1, false);
     await TableValidator.setTableBit(userId, 4, false);
+    await TableValidator.setTableBit(userId, 5, true) // Results 2 are irelevant now.
 }
 
 const getResults1FromDB = async (userId) => {
@@ -548,6 +551,7 @@ const editResults = async (newData, userId) => {
         }
         await user.save()
         await TableValidator.setTableBit(userId, 4, true) //Setting the relevant bit to indicate that the results changed.
+        await TableValidator.setTableBit(userId, 5, false) // Results 2 is irelevant now.
         //await TableValidator.setTableBit(userId, 2, false) //Resetting the bits to indicate that those tables are relevant to the current results.
         //await TableValidator.setTableBit(userId, 3, false)
     }

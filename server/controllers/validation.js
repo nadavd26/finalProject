@@ -56,7 +56,7 @@ const validateTable1Algo1 = async (req, res) => {
     if (JSON.stringify(table1) == JSON.stringify([]))
         res.status(404).send({ type: "error", msg: "Table1 was never set." })
     else if (resultsMap.size === 0) {
-        res.status(404).send({ type: "error", msg: "There is no shift schedule in the DB." })
+        res.status(404).send({ type: "error", msg: "No manpower table." })
     } else {
         const info = TableValidator.validateTable1Algo1(table1.table1Content, resultsMap)
         const info2 = await TableValidator.getTableBit(req.user._id, 1)
